@@ -5,37 +5,39 @@ import {
     Dimensions, 
     TextInput,
     TouchableOpacity,
-    Text
+    Text,
 } from 'react-native';
 
-const LoginForm = props => {
+const loginForm = props => {
     return (
-    <View style={styles.inputForm}>
-        <View style={styles.inputContainer}>
-         <TextInput 
-         style={styles.input}
-         placeholder={'Username'}
-         placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
-         onSubmitEditing={() => this.passwordInput.focus()} // så den fokuserar på password rutan när man infogar username
-         />
-     </View>
-         <View style={styles.inputContainer}>
-         <TextInput 
-         style={styles.input}
-         placeholder={'Password'}
-         secureTextEntry={true}
-         placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
-         ref={(input) => this.passwordInput = input} // ref så man kan hoppa till password efter username
-         />
-         </View> 
-        <TouchableOpacity style={styles.buttonContainer}>
-            <Text style = {styles.buttonText}>Login </Text>
-        </TouchableOpacity>
-        <Text style={styles.forgottenPasswordTxt}
-            onPress={() => Linking.openURL('#')}>
-            Forgotten your password?
-        </Text>
-     </View>
+    
+        <View style={styles.inputForm}>
+                <View style={styles.inputContainer}>
+                <TextInput 
+                style={styles.input}
+                placeholder={'Username'}
+                placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
+                onSubmitEditing={() => this.passwordInput.focus()} // så den fokuserar på password rutan när man infogar username
+                />
+            </View>
+                <View style={styles.inputContainer}>
+                <TextInput 
+                style={styles.input}
+                placeholder={'Password'}
+                secureTextEntry={true}
+                placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
+                ref={(input) => this.passwordInput = input} // ref så man kan hoppa till password efter username
+                />
+                </View> 
+                <TouchableOpacity style={styles.buttonContainer}>
+                    <Text style = {styles.buttonText}>Login </Text>
+                </TouchableOpacity>
+                <Text style={styles.forgottenPasswordTxt}
+                    onPress={() => Linking.openURL('#')}>
+                    Forgotten your password?
+                </Text>
+        </View>
+         
              
     );
 };
@@ -43,9 +45,9 @@ const LoginForm = props => {
 const styles = StyleSheet.create({
     inputForm:{
         width: Dimensions.get('window').width -55,
+        //TODO:inte bästa lösningen
     },
     input:{
-      //TODO:inte bästa lösningen
       fontSize: 16,
       backgroundColor: 'rgba(0, 0, 0, 0.6)',
       color: "#FFF",
@@ -79,4 +81,4 @@ const styles = StyleSheet.create({
 
   });
 
-export default LoginForm;
+export default loginForm;

@@ -12,10 +12,12 @@ import {
 } from 'react-native';
 
 import Login from './src/components/Login';
+import CreateAcc from './src/components/CreateAcc';
 
 const App = () => {
   return (
-    <Login/>
+    // <Login/>
+    <CreateAcc/>
   
   );
 };
