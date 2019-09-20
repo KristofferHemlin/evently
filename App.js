@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React from 'react';
 import {
   StyleSheet,
@@ -13,11 +5,13 @@ import {
 
 import Login from './src/components/Login';
 import CreateAcc from './src/components/CreateAcc';
+import Homepage from './src/components/Homepage';
 
 const App = () => {
   return (
     // <Login/>
-    <CreateAcc/>
+    // <CreateAcc/>
+    <Homepage/>
   
   );
 };

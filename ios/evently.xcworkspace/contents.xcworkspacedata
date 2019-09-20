@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../node_modules/react-native-vector-icons/Fonts">
+   </FileRef>
+   <FileRef
       location = "group:evently.xcodeproj">
    </FileRef>
    <FileRef
