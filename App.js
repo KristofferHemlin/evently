@@ -9,9 +9,9 @@ import Homepage from './src/components/Homepage';
 
 const App = () => {
   return (
-    // <Login/>
+    <Login/>
     // <CreateAcc/>
-    <Homepage/>
+    // <Homepage/>
   
   );
 };

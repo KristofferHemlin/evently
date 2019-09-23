@@ -7,11 +7,11 @@ import {
     Text,
 } from 'react-native';
 
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import bgImage from '../../images/login-bg.png'; // TODO: Hitta bättre bild??
+// import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+// import bgImage from '../../images/login-bg.png'; // TODO: Hitta bättre bild??
 
-const bell_icon = <FontAwesome5 size={25} name={'bell'} brand color="white" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
-const user_cog = <FontAwesome5 size={25} name={'user-cog'} brand color="white" />;
+// const bell_icon = <FontAwesome5 size={25} name={'bell'} brand color="white" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
+// const user_cog = <FontAwesome5 size={25} name={'user-cog'} brand color="white" />;
 
 const header = props => {
     return (
@@ -23,12 +23,12 @@ const header = props => {
                 </View>
                 <View style={styles.notIconContainer}> 
                     <TouchableOpacity style={styles.notificationIcon}>
-                    {bell_icon}
+                    {/* {bell_icon} */}
                     </TouchableOpacity>
                 </View>
                 <View style={styles.profileIconContainer}> 
                     <TouchableOpacity style={styles.profileIcon}>
-                    {user_cog}
+                    {/* {user_cog} */}
                     </TouchableOpacity>
                 </View>
         </ImageBackground>
