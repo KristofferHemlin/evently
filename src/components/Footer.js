@@ -40,7 +40,9 @@ const styles = StyleSheet.create({
         borderTopColor: 'rgb(230,230,230)',
         justifyContent: "center",
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        flex:1,
+        backgroundColor: 'yellow'
     }, 
     footerButton: {
         flex: 1,
