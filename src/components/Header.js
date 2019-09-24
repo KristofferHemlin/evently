@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 // import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-// import bgImage from '../../images/login-bg.png'; // TODO: Hitta bättre bild??
+import bgImage from '../../images/login-bg.png'; // TODO: Hitta bättre bild??
 
 // const bell_icon = <FontAwesome5 size={25} name={'bell'} brand color="white" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
 // const user_cog = <FontAwesome5 size={25} name={'user-cog'} brand color="white" />;
