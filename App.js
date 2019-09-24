@@ -6,12 +6,13 @@ import {
 import Login from './src/components/Login';
 import CreateAcc from './src/components/CreateAcc';
 import Homepage from './src/components/Homepage';
+import EventDesc from './src/components/EventDesc/EventDesc';
 
 const App = () => {
   return (
-    <Login/>
+    // <Login/>
     // <CreateAcc/>
-    // <Homepage/>
+    <EventDesc/>
   
   );
 };
