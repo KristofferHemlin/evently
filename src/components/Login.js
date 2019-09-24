@@ -10,7 +10,7 @@ import {
 import bgImage from '../../images/login-bg.png';
 import LoginForm from './LoginForm';
 
-class Login2 extends Component{
+class Login extends Component{
     render(){
         return(
             <ImageBackground source={bgImage} style={styles.pageContainer}>
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Login2;
+export default Login;
