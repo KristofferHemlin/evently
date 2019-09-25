@@ -4,14 +4,14 @@ import {
 } from 'react-native';
 
 import Login from './src/components/Login';
-import CreateAcc from './src/components/CreateAcc';
+import CreateAcc from './src/components/CreateAcc/CreateAcc';
 import Homepage from './src/components/Homepage';
 
 const App = () => {
   return (
     // <Login/>
-    // <CreateAcc/>
-    <Homepage/>
+    <CreateAcc/>
+    // <Homepage/>
   
   );
 };
