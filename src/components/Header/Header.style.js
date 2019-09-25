@@ -4,7 +4,7 @@ export default StyleSheet.create({
     headerContainer:{
         height: 80,
         flexDirection: 'row',
-        justifyContent: "flex-start",
+        justifyContent: 'space-between',
         flex: 1,
     }, 
     headerLogo:{
@@ -16,18 +16,15 @@ export default StyleSheet.create({
         fontWeight: '700',
         marginLeft: 15,
     },
-    notIconContainer:{
+    iconContainer:{
         marginTop: 40,
-        marginLeft: 170,
-    },
-    profileIconContainer:{
-        marginTop: 40,
-        marginLeft: 25
+        flexDirection: 'row',
     },
     notificationIcon:{
-        
+        marginRight: 30,
     },
     profileIcon:{
+        marginRight: 20,
 
     }
 });

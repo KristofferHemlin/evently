@@ -22,12 +22,10 @@ const header = props => {
                     <Text style={styles.headerTxt}>Claremont</Text> 
                     {/*TODO: borde inte vara hårdkodat */}
                 </View>
-                <View style={styles.notIconContainer}> 
+                <View style={styles.iconContainer}> 
                     <TouchableOpacity style={styles.notificationIcon}>
                     {bell_icon}
                     </TouchableOpacity>
-                </View>
-                <View style={styles.profileIconContainer}> 
                     <TouchableOpacity style={styles.profileIcon}>
                     {user_cog}
                     </TouchableOpacity>
