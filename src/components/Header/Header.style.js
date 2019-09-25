@@ -5,7 +5,6 @@ export default StyleSheet.create({
         height: 80,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        flex: 1,
     }, 
     headerLogo:{
         marginTop: 40,
