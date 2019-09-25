@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import {
-    StyleSheet, 
     View,
     Text,
-    Dimensions,
     TextInput,
     ScrollView,
     TouchableOpacity,
-    KeyboardAvoidingView,
 } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view' // Använde ett package då vanliga avoidkeybord inte funka
 
-import FormHeader from './FormHeader';
-import FormDescription from './FormDescription';
+import styles from './CreateAcc.style';
+import FormHeader from '../FormHeader';
+import FormDescription from '../FormDescription';
+import ImageSelector from '../ImageSelector/ImageSelector';
 
 class CreateAcc extends Component{
 
@@ -75,14 +74,14 @@ class CreateAcc extends Component{
                 value: '',
                 secureText: true,
               },
-              {
-                key: 'rePassword',
-                name: 'rePassword',
-                type: 'password',
-                label: 'Re-type Password',
-                value: '',
-                secureText: true,
-              },
+              // {
+              //   key: 'rePassword',
+              //   name: 'rePassword',
+              //   type: 'password',
+              //   label: 'Re-type Password',
+              //   value: '',
+              //   secureText: true,
+              // }
         ],
         firstName : null,
     }
@@ -91,6 +90,7 @@ class CreateAcc extends Component{
         let fields = [...this.state.fields];
         fields[i].value = value;
         this.setState({fields : fields});
+        console.log(fields);
         
     };
 
@@ -107,6 +107,7 @@ class CreateAcc extends Component{
                 <View style={styles.creatAccContainer}>
                     <FormHeader>Create your profile</FormHeader>
                     <FormDescription>Welcome! Fill in the form below to set up your company and user account.</FormDescription>
+                    <ImageSelector>Please upload a photo of yourself</ImageSelector>
                         <View style={styles.inputForm}>
                         {this.state.fields.map((input, idx) => {
                             return <TextInput
@@ -125,7 +126,7 @@ class CreateAcc extends Component{
                                 style={styles.buttonContainer}
                                 onPress={this.handleSubmit}
                                 >
-                                <Text style = {styles.buttonText}>Login </Text>
+                                <Text style = {styles.buttonText}>Submit </Text>
                             </TouchableOpacity>
                         </View> 
                     </View>
@@ -134,46 +135,4 @@ class CreateAcc extends Component{
         )
     }
 }
-
-
-  const styles = StyleSheet.create({
-    creatAccContainer:{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-    },
-    inputForm:{
-        width: Dimensions.get('window').width -55,
-    },
-    input:{
-      //TODO:inte bästa lösningen
-      fontSize: 16,
-      backgroundColor: '#FFF',
-      color: "grey",
-      // TODO:inputfärgen blir werid, beror förmodligen på background color
-      borderWidth: 2,
-      borderColor: "black",
-      paddingHorizontal: 15,
-      paddingVertical: 20,
-      marginBottom: 20,
-    },
-    inputContainer:{
-      marginBottom: 10,
-    },
-    buttonContainer:{
-        backgroundColor: '#5A90DC',
-        height: 50,
-        opacity: 0.8,
-        justifyContent: 'center',
-        borderRadius: 5,
-        marginBottom: 40,
-    },
-    buttonText:{
-        textAlign: 'center',
-        color: '#FFF',
-        fontSize: 16,
-        fontWeight: '700',
-    },
-  });
-
   export default CreateAcc; 
