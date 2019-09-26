@@ -6,12 +6,14 @@ import {
 import Login from './src/components/Login';
 import CreateAcc from './src/components/CreateAcc';
 import Homepage from './src/components/Homepage';
+import EventOverview from './src/components/EventOverview/EventOverview';
 
 const App = () => {
   return (
     // <Login/>
     // <CreateAcc/>
-    <Homepage/>
+    // <Homepage/>
+    <EventOverview/>
   
   );
 };

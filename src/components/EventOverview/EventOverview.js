@@ -13,6 +13,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import Croatia from '../../../images/CROT.jpg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { blue, red } from 'ansi-colors';
 
 const infoCircleIcon = <FontAwesome5 size={20} name={'info-circle'} solid color="rgba(74,144,226,1)" />;
 
@@ -30,13 +31,21 @@ class EventOverview extends Component{
                     </ImageBackground>
                     <View style={styles.eventInfo}>
                         <View style={styles.mainTitleView}>
-                            <Text style={[styles.titles, styles.mainTitle]}>Event overview</Text>
-                            <TouchableOpacity style={styles.infoButton}>
-                                {infoCircleIcon}
+                            <View style={styles.mainTitleViewLeft}> 
+                                <Text style={[styles.titles, styles.mainTitle]}>Event overview</Text>
+                                <TouchableOpacity style={styles.infoButton}>
+                                 {infoCircleIcon}
+                                </TouchableOpacity>
+                            </View>
+                            <TouchableOpacity>
+                            <Text style={styles.editButton}> Edit </Text>
                             </TouchableOpacity>
-                            <Button title="Press me" onPress={() => Alert.alert('Simple Button pressed')} style={styles.editButton}/>
                         </View>
                         <View style={styles.line}></View>
+                        <Text style={[styles.titles, styles.subTitles]}>Event description</Text>
+                        <Text style={styles.ordinaryText}>Snart åker vi till Kroatien!</Text>
+                        <Text style={[styles.titles, styles.subTitles]}>Location</Text>
+                        <Text style={styles.ordinaryText}>Kroatien!</Text>
                     </View>
                 </ScrollView>
                 
@@ -79,13 +88,26 @@ const styles = StyleSheet.create({
     },
 
     mainTitleView:{
+        justifyContent: 'space-between',
         flexDirection: 'row',
         padding: 30,
         paddingBottom: 1,
     },
 
+    mainTitleViewLeft:{
+        flexDirection: 'row',
+    // inte den snyggaste lösningen...?
+    },
+
     editButton:{
         //Ska CCS:as till höger.
+        // alignItems: 'self-end',
+       color: 'rgba(74,144,226,1)',
+       borderWidth: 1,
+       borderColor: 'rgba(74,144,226,1)',
+       borderRadius: 2,
+       fontSize: 16,
+
     },
 
     infoButton:{
@@ -96,10 +118,24 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 16,
         color: 'black',
+      
     },
 
     mainTitle:{
         fontSize: 22,
+    },
+
+    subTitles:{
+        marginLeft: 30,
+        marginTop: 30,
+
+    },
+
+   ordinaryText:{
+        color: 'gray',
+        marginLeft: 30,
+        marginRight: 30,
+        marginTop: 10,
     },
 
     line:{
