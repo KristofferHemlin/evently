@@ -8,7 +8,7 @@ import {
     Text,
     ActivityIndicator
 } from 'react-native';
-import { is } from '@babel/types';
+import axios from 'axios';
 
 class LoginForm extends Component{
     
@@ -17,31 +17,29 @@ class LoginForm extends Component{
         username: '',
         password: '',
         isLoading: false,
+        token: null,
     }
 
     authUser = () => {
-        this.setState({isLoading:true}, () => { // so we can show loading indicator while fetchind data
-            return fetch('http://192.168.12.117:3000/authenticate', {
-                method: 'POST',
-                body: JSON.stringify({
-                    email: this.state.username,
-                    password: this.state.password,
-                    // jane.doe@test.com
-                    // cocacola123
-
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                }
+        this.setState({isLoading:true}, () => { // so we can show loading indicator while fetching data
+            axios.post('http://192.168.12.117:3000/authenticate', {
+                email: this.state.username,
+                password: this.state.password
+                 // jane.doe@test.com
+                // cocacola123
             })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson)
-                alert(JSON.stringify(responseJson.message))
-                this.setState({isLoading:false})
-            })
-            .catch((error) =>{
-              console.error(error);
+            .then((response) => {
+                
+                alert(response.data.message)
+                this.setState({
+                    token: response.data.token,
+                    isLoading: false});
+                })
+                
+            .catch((error) => {
+                alert(error);
+                console.log(error);
+                this.setState({isLoading: false})
             });
         })
       
@@ -52,6 +50,7 @@ class LoginForm extends Component{
             <View style={styles.inputForm}>
                     <View style={styles.inputContainer}>
                     <TextInput 
+                    value = {this.state.username}
                     style={styles.input}
                     placeholder={'Username'}
                     placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
@@ -61,6 +60,7 @@ class LoginForm extends Component{
                 </View>
                     <View style={styles.inputContainer}>
                     <TextInput 
+                    value = {this.state.password}
                     style={styles.input}
                     placeholder={'Password'}
                     onChangeText={(password) => this.setState({password})}
