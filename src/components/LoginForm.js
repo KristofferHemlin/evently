@@ -6,8 +6,9 @@ import {
     TextInput,
     TouchableOpacity,
     Text,
+    ActivityIndicator
 } from 'react-native';
-import { extend } from 'dayjs';
+import { is } from '@babel/types';
 
 class LoginForm extends Component{
     
@@ -19,23 +20,31 @@ class LoginForm extends Component{
     }
 
     authUser = () => {
-        return fetch('http://192.168.12.117:3000/authenticate', {
-            method: 'POST',
-            body: JSON.stringify({
-                email: this.state.username,
-                password: this.state.password,
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            }
+        this.setState({isLoading:true}, () => { // so we can show loading indicator while fetchind data
+            return fetch('http://192.168.12.117:3000/authenticate', {
+                method: 'POST',
+                body: JSON.stringify({
+                    email: this.state.username,
+                    password: this.state.password,
+                    // jane.doe@test.com
+                    // cocacola123
+
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson)
+                alert(JSON.stringify(responseJson.message))
+                this.setState({isLoading:false})
+            })
+            .catch((error) =>{
+              console.error(error);
+            });
         })
-        .then((response) => response.json())
-        .then((responseJson) => {
-            console.log(responseJson)
-        })
-        .catch((error) =>{
-          console.error(error);
-        });
+      
     }
     render(){
         return (
@@ -61,7 +70,7 @@ class LoginForm extends Component{
                     />
                     </View> 
                     <TouchableOpacity style={styles.buttonContainer} onPress={this.authUser}>
-                        <Text style = {styles.buttonText}>Login </Text>
+                    {this.state.isLoading ? <ActivityIndicator size={'small'} color={'#FFF'}/> :<Text style = {styles.buttonText}>Login </Text>}
                     </TouchableOpacity>
                     <Text style={styles.forgottenPasswordTxt}
                         onPress={() => Linking.openURL('#')}>
