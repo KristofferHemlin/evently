@@ -8,7 +8,6 @@ import {
     Text,
     ActivityIndicator
 } from 'react-native';
-
 import axios from 'axios';
 
 import styles from './LoginForm.style'
@@ -35,8 +34,8 @@ class LoginForm extends Component{
                 this.setState({
                     token: response.data.token,
                     isLoading: false});
+                this.props.navigation.navigate('EventOverviewRoute') 
                 })
-            this.props.navigation.navigate('EventOverviewRoute')
             .catch((error) => {
                 alert(error);
                 console.log(error);
