@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
     View, 
     StyleSheet, 
@@ -7,39 +7,73 @@ import {
     TouchableOpacity,
     Text,
 } from 'react-native';
+import { extend } from 'dayjs';
 
-const loginForm = props => {
-    return (
+class LoginForm extends Component{
     
-        <View style={styles.inputForm}>
-                <View style={styles.inputContainer}>
-                <TextInput 
-                style={styles.input}
-                placeholder={'Username'}
-                placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
-                onSubmitEditing={() => this.passwordInput.focus()} // så den fokuserar på password rutan när man infogar username
-                />
+
+    state = {
+        username: '',
+        password: '',
+        isLoading: false,
+    }
+
+    authUser = () => {
+        return fetch('http://192.168.12.117:3000/authenticate', {
+            method: 'POST',
+            body: JSON.stringify({
+                email: this.state.username,
+                password: this.state.password,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            console.log(responseJson)
+        })
+        .catch((error) =>{
+          console.error(error);
+        });
+    }
+    render(){
+        return (
+    
+            <View style={styles.inputForm}>
+                    <View style={styles.inputContainer}>
+                    <TextInput 
+                    style={styles.input}
+                    placeholder={'Username'}
+                    placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
+                    onChangeText={(username) => this.setState({username})}
+                    onSubmitEditing={() => this.passwordInput.focus()} // så den fokuserar på password rutan när man infogar username
+                    />
+                </View>
+                    <View style={styles.inputContainer}>
+                    <TextInput 
+                    style={styles.input}
+                    placeholder={'Password'}
+                    onChangeText={(password) => this.setState({password})}
+                    secureTextEntry={true}
+                    placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
+                    ref={(input) => this.passwordInput = input} // ref så man kan hoppa till password efter username
+                    />
+                    </View> 
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.authUser}>
+                        <Text style = {styles.buttonText}>Login </Text>
+                    </TouchableOpacity>
+                    <Text style={styles.forgottenPasswordTxt}
+                        onPress={() => Linking.openURL('#')}>
+                        Forgotten your password?
+                    </Text>
             </View>
-                <View style={styles.inputContainer}>
-                <TextInput 
-                style={styles.input}
-                placeholder={'Password'}
-                secureTextEntry={true}
-                placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
-                ref={(input) => this.passwordInput = input} // ref så man kan hoppa till password efter username
-                />
-                </View> 
-                <TouchableOpacity style={styles.buttonContainer}>
-                    <Text style = {styles.buttonText}>Login </Text>
-                </TouchableOpacity>
-                <Text style={styles.forgottenPasswordTxt}
-                    onPress={() => Linking.openURL('#')}>
-                    Forgotten your password?
-                </Text>
-        </View>
-         
              
-    );
+                 
+        );
+
+    }
+
 };
 
 const styles = StyleSheet.create({
@@ -81,4 +115,4 @@ const styles = StyleSheet.create({
 
   });
 
-export default loginForm;
+export default LoginForm;
