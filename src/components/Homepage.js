@@ -10,6 +10,9 @@ import Header from './Header';
 import Footer from './Footer';
 
 class Homepage extends Component{
+    static navigationOptions = {
+        header : null,
+      };
     
     render(){
         return(
