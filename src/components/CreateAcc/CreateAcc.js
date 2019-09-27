@@ -96,6 +96,7 @@ class CreateAcc extends Component{
 
     handleSubmit = () =>{
         console.log("CLICK!")
+        this.props.navigation.navigate('EventOverviewRoute')
         // TODO: FIX SUBMIT LOGIC
     }
 
