@@ -1,18 +1,13 @@
+import axios from 'axios';
 import React, { Component } from 'react';
-import {
-    View,
-    Text,
-    TextInput,
-    ScrollView,
-    TouchableOpacity,
-} from 'react-native';
-
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view' // Använde ett package då vanliga avoidkeybord inte funka
-
-import styles from './CreateAcc.style';
-import FormHeader from '../FormHeader';
+import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 import FormDescription from '../FormDescription';
+import FormHeader from '../FormHeader';
 import ImageSelector from '../ImageSelector/ImageSelector';
+import styles from './CreateAcc.style';
+
+
 
 class CreateAcc extends Component{
 
@@ -49,23 +44,23 @@ class CreateAcc extends Component{
                 value: '',
                 secureText: false,
               },
-              {
-                key: 'companyName',
-                name: 'Company Name',
-                type: 'text',
-                label: 'Company Name',
-                placeholder: 'Test Company',
-                value: '',
-                secureText: false,
-              },
-              {
-                key: 'companyDepartment',
-                name: 'Company Department',
-                type: 'text',
-                label: 'Company Department',
-                value: '',
-                secureText: false,
-              },
+            //   {
+            //     key: 'companyName',
+            //     name: 'Company Name',
+            //     type: 'text',
+            //     label: 'Company Name',
+            //     placeholder: 'Test Company',
+            //     value: '',
+            //     secureText: false,
+            //   },
+            //   {
+            //     key: 'companyDepartment',
+            //     name: 'Company Department',
+            //     type: 'text',
+            //     label: 'Company Department',
+            //     value: '',
+            //     secureText: false,
+            //   },
               {
                 key: 'password',
                 name: 'Password',
@@ -83,9 +78,39 @@ class CreateAcc extends Component{
               //   secureText: true,
               // }
         ],
-        firstName : null,
     }
 
+    
+
+    componentDidMount(){
+        axios.get('http://192.168.12.117:3000/users/1')
+        .then((response) => {            
+            let responseArray = []
+            let fields = [...this.state.fields];
+            for (key in response) {
+                responseArray.push(response[key]);
+              }
+              fields.forEach(field => {
+                if(field.key === 'firstName'){
+                    field.value = responseArray[0].firstName
+                }
+                if(field.key === 'lastName'){
+                field.value = responseArray[0].lastName
+                }
+                if(field.key === 'email'){
+                    field.value = responseArray[0].email
+                }    
+                if(field.key === 'phone'){
+                    field.value = responseArray[0].phone
+                }  
+              })
+
+            this.setState({fields: fields});
+        })
+        .catch((error) => {
+            console.log(error);
+        });          
+}
     handleInputChange = (value, i) => {
         let fields = [...this.state.fields];
         fields[i].value = value;
@@ -111,7 +136,7 @@ class CreateAcc extends Component{
                         <View style={styles.inputForm}>
                         {this.state.fields.map((input, idx) => {
                             return <TextInput
-                                value={this.state.value}
+                                value={input.value}
                                 style={styles.input}
                                 name={input.name}
                                 key={input.key}
