@@ -6,8 +6,8 @@ import {
     Button
 } from 'react-native';
 
-import Header from './Header';
-import Footer from './Footer';
+import Header from './Header/Header';
+import Footer from './Footer/Footer';
 
 class Homepage extends Component{
     static navigationOptions = {
@@ -17,10 +17,11 @@ class Homepage extends Component{
     render(){
         return(
             <View style={styles.homepageContainer}>
+            <Header/>
                 <ScrollView style ={styles.bodyContainer}> 
                   
                 </ScrollView>
-                <Header/>
+                
                 <Footer/>
             </View>
             
