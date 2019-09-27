@@ -24,7 +24,6 @@ class Login extends Component{
                         <Text style = {styles.signText}>Click here to sign up!</Text>
                     </TouchableOpacity>
                 </View>
-
             </ImageBackground>
         )
     }

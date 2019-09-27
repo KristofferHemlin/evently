@@ -10,7 +10,6 @@ import {
 
 const loginForm = props => {
     return (
-    
         <View style={styles.inputForm}>
                 <View style={styles.inputContainer}>
                 <TextInput 
