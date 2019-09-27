@@ -10,8 +10,8 @@ import Homepage from './src/components/Homepage';
 const App = () => {
   return (
     // <Login/>
-    <CreateAcc/>
-    // <Homepage/>
+    // <CreateAcc/>
+    <Homepage/>
   
   );
 };
