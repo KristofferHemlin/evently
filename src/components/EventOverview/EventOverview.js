@@ -11,6 +11,7 @@ import {
 
 import Header from '../Header';
 import Footer from '../Footer';
+import ProfilePreview from '../ProfilePreview';
 import Croatia from '../../../images/CROT.jpg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { blue, red } from 'ansi-colors';
@@ -18,6 +19,14 @@ import { blue, red } from 'ansi-colors';
 const infoCircleIcon = <FontAwesome5 size={20} name={'info-circle'} solid color="rgba(74,144,226,1)" />;
 
 class EventOverview extends Component{
+
+    state = {
+            location: 'Kroatien, DUHH', 
+            description: 'Snart åker vi till Kroatien!',
+            dates: '24/09/09 - 25/12/12',
+            niceToKnow: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        }
+
     render(){
         return(
             <View style={styles.pageContainer}>
@@ -43,9 +52,17 @@ class EventOverview extends Component{
                         </View>
                         <View style={styles.line}></View>
                         <Text style={[styles.titles, styles.subTitles]}>Event description</Text>
-                        <Text style={styles.ordinaryText}>Snart åker vi till Kroatien!</Text>
+                        <Text style={styles.ordinaryText}>{this.state.description}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>Location</Text>
-                        <Text style={styles.ordinaryText}>Kroatien!</Text>
+                        <Text style={styles.ordinaryText}>{this.state.location}</Text>
+                        <Text style={[styles.titles, styles.subTitles]}>Dates</Text>
+                        <Text style={styles.ordinaryText}>{this.state.dates}</Text>
+                        <Text style={[styles.titles, styles.subTitles]}>Organizers</Text>
+
+                        <ProfilePreview/>
+
+                        <Text style={[styles.titles, styles.subTitles]}>Nice to know</Text>
+                        <Text style={styles.ordinaryText}>{this.state.niceToKnow}</Text>
                     </View>
                 </ScrollView>
                 
@@ -105,9 +122,12 @@ const styles = StyleSheet.create({
        color: 'rgba(74,144,226,1)',
        borderWidth: 1,
        borderColor: 'rgba(74,144,226,1)',
-       borderRadius: 2,
+       borderRadius: 3,
        fontSize: 16,
-
+       paddingTop: 3,
+       paddingBottom: 3,
+       paddingLeft: 7,
+       paddingRight: 7,
     },
 
     infoButton:{
@@ -118,7 +138,6 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 16,
         color: 'black',
-      
     },
 
     mainTitle:{
@@ -128,7 +147,6 @@ const styles = StyleSheet.create({
     subTitles:{
         marginLeft: 30,
         marginTop: 30,
-
     },
 
    ordinaryText:{
