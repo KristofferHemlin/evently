@@ -1,6 +1,13 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { 
+    ScrollView, 
+    Text, 
+    TextInput, 
+    TouchableOpacity, 
+    View,
+    ActivityIndicator
+} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 import FormDescription from '../FormDescription';
 import FormHeader from '../FormHeader';
@@ -78,12 +85,13 @@ class CreateAcc extends Component{
               //   secureText: true,
               // }
         ],
+        isLoading: false,
     }
 
     
 
     componentDidMount(){
-        axios.get('http://192.168.12.197:3000/users/38')
+        axios.get('http://192.168.12.197:3000/users/99')
         .then((response) => {            
             let responseArray = []
             let fields = [...this.state.fields];
@@ -120,7 +128,8 @@ class CreateAcc extends Component{
 
     handleSubmit = () =>{
         console.log("CLICK!")
-        axios.put('http://192.168.12.197:3000/users/38/firstlogin', {
+        this.setState({isLoading:true}, () => {
+        axios.put('http://192.168.12.197:3000/users/99/firstlogin', {
             firstName: this.state.fields[0].value,
             lastName: this.state.fields[1].value,
             email: this.state.fields[2].value,
@@ -130,14 +139,14 @@ class CreateAcc extends Component{
         .then((response) => {
             alert(response.data.message)
             console.log(response)
-            // this.setState({
-            //     isLoading: false});
+            this.setState({isLoading: false});
             // this.props.navigation.navigate('EventOverviewRoute') 
         })
         .catch((error) => {
             console.log(error);
-            // this.setState({isLoading: false})
+            this.setState({isLoading: false})
         })
+     })
     }
 
 
@@ -163,11 +172,10 @@ class CreateAcc extends Component{
                                 onChangeText={(value) => this.handleInputChange(value, idx)}
                             />
                             })}
-                            <TouchableOpacity 
+                            <TouchableOpacity   
                                 style={styles.buttonContainer}
-                                onPress={this.handleSubmit}
-                                >
-                                <Text style = {styles.buttonText}>Submit </Text>
+                                onPress={this.handleSubmit}>
+                            {this.state.isLoading ? <ActivityIndicator size='small' color='white'/> : <Text style = {styles.buttonText}>Submit </Text>} 
                             </TouchableOpacity>
                         </View> 
                     </View>
