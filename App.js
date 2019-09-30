@@ -25,3 +25,5 @@ export default createAppContainer(createSwitchNavigator(
     AuthStack: AuthStack,
     AppStackr: Appstack, 
   }
+))
+
