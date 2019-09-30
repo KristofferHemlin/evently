@@ -83,7 +83,7 @@ class CreateAcc extends Component{
     
 
     componentDidMount(){
-        axios.get('http://192.168.12.197:3000/users/50')
+        axios.get('http://192.168.12.197:3000/users/38')
         .then((response) => {            
             let responseArray = []
             let fields = [...this.state.fields];
@@ -115,30 +115,29 @@ class CreateAcc extends Component{
         let fields = [...this.state.fields];
         fields[i].value = value;
         this.setState({fields : fields});
-        console.log(fields);
         
     };
 
     handleSubmit = () =>{
         console.log("CLICK!")
-        axios.put('http://192.168.12.197:3000//users/50/firstlogin', {
+        axios.put('http://192.168.12.197:3000/users/38/firstlogin', {
             firstName: this.state.fields[0].value,
             lastName: this.state.fields[1].value,
             email: this.state.fields[2].value,
             phone: this.state.fields[3].value,
-            newPassword: this.state.fields[4].value
+            password: this.state.fields[4].value
         })
         .then((response) => {
             alert(response.data.message)
-            this.setState({
-                isLoading: false});
+            console.log(response)
+            // this.setState({
+            //     isLoading: false});
             // this.props.navigation.navigate('EventOverviewRoute') 
         })
         .catch((error) => {
-            console.log[error];
-            this.setState({isLoading: false})
+            console.log(error);
+            // this.setState({isLoading: false})
         })
-        // TODO: FIX SUBMIT LOGIC
     }
 
 
