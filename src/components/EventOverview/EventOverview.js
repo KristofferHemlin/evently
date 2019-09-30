@@ -3,20 +3,16 @@ import {
     View,
     ImageBackground,
     Text,
-    TouchableOpacity,
     ScrollView,
-    Button,
 } from 'react-native';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ProfilePreview from '../ProfilePreview/ProfilePreview';
-import Croatia from '../../../images/CROT.jpg';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Croatia from './images/CROT.jpg';
 import { blue, red } from 'ansi-colors';
 import styles from './EventOverview.style.js';
-
-const infoCircleIcon = <FontAwesome5 size={20} name={'info-circle'} solid color="rgba(74,144,226,1)" />;
+import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
 class EventOverview extends Component{
 
@@ -43,29 +39,20 @@ class EventOverview extends Component{
                         </View>
                     </ImageBackground>
                     <View style={styles.eventInfo}>
-                        <View style={styles.mainTitleView}>
-                            <View style={styles.mainTitleViewLeft}> 
-                                <Text style={[styles.titles, styles.mainTitle]}>Event overview</Text>
-                                <TouchableOpacity style={styles.infoButton}>
-                                 {infoCircleIcon}
-                                </TouchableOpacity>
-                            </View>
-                            <TouchableOpacity>
-                            <Text style={styles.editButton}> Edit </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.line}></View>
-                        <Text style={[styles.titles, styles.subTitles]}>Event description</Text>
+
+                        <HeadlineOverview infoButtonStatus={true}>Event Overview</HeadlineOverview>
+
+                        <Text style={styles.subTitles}>Event description</Text>
                         <Text style={styles.ordinaryText}>{this.state.description}</Text>
-                        <Text style={[styles.titles, styles.subTitles]}>Location</Text>
+                        <Text style={styles.subTitles}>Location</Text>
                         <Text style={styles.ordinaryText}>{this.state.location}</Text>
-                        <Text style={[styles.titles, styles.subTitles]}>Dates</Text>
+                        <Text style={styles.subTitles}>Dates</Text>
                         <Text style={styles.ordinaryText}>{this.state.dates}</Text>
-                        <Text style={[styles.titles, styles.subTitles]}>Organizers</Text>
+                        <Text style={styles.subTitles}>Organizers</Text>
 
                         <ProfilePreview/>
 
-                        <Text style={[styles.titles, styles.subTitles]}>Nice to know</Text>
+                        <Text style={styles.subTitles}>Nice to know</Text>
                         <Text style={styles.ordinaryText}>{this.state.niceToKnow}</Text>
                     </View>
                 </ScrollView>

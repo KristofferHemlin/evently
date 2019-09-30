@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-import bgImage from '../../../images/login-bg.png';
+import bgImage from './login-bg.png';
 import LoginForm from '../LoginForm/LoginForm';
 
 import styles from './Login.style';
