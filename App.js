@@ -1,18 +1,15 @@
 import React from 'react';
-import {
-  StyleSheet,
-} from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 
 import Login from './src/components/Login/Login';
 import CreateAcc from './src/components/CreateAcc/CreateAcc';
-import Homepage from './src/components/Homepage';
+import EventOverview from './src/components/EventOverview/EventOverview';
 
 const Appstack = createStackNavigator(
   {
-    EventOverviewRoute: Homepage,
+    EventOverviewRoute: EventOverview,
   },
 )
 

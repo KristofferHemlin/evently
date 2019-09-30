@@ -8,8 +8,8 @@ import {
     Button,
 } from 'react-native';
 
-import Header from '../Header';
-import Footer from '../Footer';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import ProfilePreview from '../ProfilePreview/ProfilePreview';
 import Croatia from '../../../images/CROT.jpg';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -19,6 +19,10 @@ import styles from './EventOverview.style.js';
 const infoCircleIcon = <FontAwesome5 size={20} name={'info-circle'} solid color="rgba(74,144,226,1)" />;
 
 class EventOverview extends Component{
+
+    static navigationOptions = {
+        header : null,
+      };
 
     state = {
             location: 'Kroatien, DUHH', 
