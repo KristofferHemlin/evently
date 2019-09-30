@@ -29,52 +29,10 @@ export default StyleSheet.create({
         fontWeight: '800',
     },
 
-    eventInfo:{
-        height:1000,
-        backgroundColor: 'white',
-    },
-
-    mainTitleView:{
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        padding: 30,
-        paddingBottom: 1,
-    },
-
-    mainTitleViewLeft:{
-        flexDirection: 'row',
-    // inte den snyggaste lösningen...?
-    },
-
-    editButton:{
-        //Ska CCS:as till höger.
-        // alignItems: 'self-end',
-       color: 'rgba(74,144,226,1)',
-       borderWidth: 1,
-       borderColor: 'rgba(74,144,226,1)',
-       borderRadius: 3,
-       fontSize: 16,
-       paddingTop: 3,
-       paddingBottom: 3,
-       paddingLeft: 7,
-       paddingRight: 7,
-    },
-
-    infoButton:{
-        margin:5,
-    },
-
-    titles:{
+    subTitles:{
         fontWeight: '600',
         fontSize: 16,
         color: 'black',
-    },
-
-    mainTitle:{
-        fontSize: 22,
-    },
-
-    subTitles:{
         marginLeft: 30,
         marginTop: 30,
     },
@@ -84,13 +42,6 @@ export default StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         marginTop: 10,
-    },
-
-    line:{
-        borderBottomColor: 'lightgray',
-        borderBottomWidth: 1,
-        marginLeft: 30,
-        marginRight: 30,
     },
 
 });
