@@ -24,11 +24,10 @@ const headlineOverview = props => {
                     }
                 </View>
 
-                    {props.editButtonStatus ?
+                    {props.editButtonStatus &&
                         <TouchableOpacity>
                             <Text style={styles.editButton}> Edit </Text>
-                        </TouchableOpacity>:
-                        null
+                        </TouchableOpacity>
                     }
             </View>
             <View style={styles.line}></View>

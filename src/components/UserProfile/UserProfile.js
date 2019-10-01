@@ -4,6 +4,8 @@ import {
     Text,
     ScrollView,
     Image,
+    TextInput,
+    TouchableOpacity,
 } from 'react-native';
 
 import Header from '../Header/Header';
@@ -12,7 +14,7 @@ import Croatia from '../EventOverview/images/CROT.jpg';
 import styles from './UserProfile.style.js';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
-class EventOverview extends Component{
+class UserProfile extends Component{
 
     static navigationOptions = {
         header : null,
@@ -29,13 +31,79 @@ class EventOverview extends Component{
             image: Croatia,
 
             isLoggedIn: true,
+
+
+            fields: [
+                {
+                    key: 'firstName',
+                    name: 'First Name',
+                    type: 'text',
+                    label: 'First Name',
+                    value: '',
+                    secureText: false,      
+                },
+                {
+                    key: 'lastName',
+                    name: 'Last Name',
+                    type: 'text',
+                    label: 'Last Name',
+                    value: '',
+                    secureText: false,
+                  },
+                  {
+                    key: 'email',
+                    name: 'Email',
+                    type: 'text',
+                    label: 'Email',
+                    value: '',
+                    secureText: false,
+                  },
+                  {
+                    key: 'phone',
+                    name: 'Phone',
+                    type: 'text',
+                    value: '',
+                    secureText: false,
+                  },
+            ]
         }
+
+    
 
     render(){
 
         const isLoggedIn = this.state.isLoggedIn;
 
-        
+        console.log("testing: ", this.state.fields[3].type);
+
+        let inputForm;
+        if (isLoggedIn) {
+            inputForm = <View style={styles.inputForm}>
+                            {this.state.fields.map((input, idx) => {
+                                return <TextInput
+                                    value={input.value}
+                                    style={styles.input}
+                                    name={input.name}
+                                    key={input.key}
+                                    type={input.type}
+                                    label={input.label}
+                                    placeholder={input.name}
+                                    secureTextEntry={input.secureText}
+                                    onChangeText={(value) => this.handleInputChange(value, idx)}
+                                />
+                                })}
+                            <TouchableOpacity   
+                                style={styles.buttonContainer}
+                                onPress={this.handleSubmit}>
+                            {this.state.isLoading ? <ActivityIndicator size='small' color='white'/> : <Text style = {styles.buttonText}>Submit </Text>} 
+                            </TouchableOpacity>
+                         </View>;
+        }
+
+        else{
+            console.log("Render nothing");
+
+        }
 
         return(
             <View style={styles.pageContainer}>
@@ -53,6 +121,8 @@ class EventOverview extends Component{
                         </View>
 
                         <View style={styles.line}></View>
+
+                        {inputForm}
 
                         <Text style={styles.subTitles}>Role</Text>
                         <Text style={styles.ordinaryText}>{this.state.role}</Text>
@@ -74,4 +144,4 @@ class EventOverview extends Component{
     }
 }
 
-export default EventOverview;
+export default UserProfile;
