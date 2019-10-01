@@ -8,7 +8,9 @@ import {
 } from 'react-native';
 
 import bgImage from '../../../images/login-bg.png';
+
 import LoginForm from '../LoginForm/LoginForm';
+import ForgotPassword from '../ResetPassword/ResetPassword';
 
 import styles from './Login.style';
 
@@ -16,6 +18,16 @@ class Login extends Component{
     static navigationOptions = {
         header : null,
       };
+
+      state = {
+          forgottenPassword: true,
+      }
+
+      lostPasswordHandler = () => {
+          let forgottenPassword = this.state.forgottenPassword
+          this.setState({forgottenPassword: !forgottenPassword})
+          console.log("Click!!")
+      }
     
     render(){
         return(
@@ -23,12 +35,17 @@ class Login extends Component{
                 <View style = {styles.logoContainer}>
                     <Text style = {styles.logoText}>EVENTLY</Text>
                 </View>
-                <LoginForm navigation={this.props.navigation}/>
+                {this.state.forgottenPassword  ? <ForgotPassword/> : <LoginForm navigation={this.props.navigation}/>}    
                 <View style={styles.signUpContainer}>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={() => this.props.navigation.navigate('CreateAccRoute')}>
                         <Text style = {styles.signText}>Don't have an account yet?</Text>
                         <Text style = {styles.signText}>Click here to sign up!</Text>
+                    </TouchableOpacity> */}
+
+                    <TouchableOpacity
+                        onPress={this.lostPasswordHandler}>
+                        {this.state.forgottenPassword ? <Text style = {styles.signText}>Go back</Text> : <Text style = {styles.signText}>Forgotten your password?</Text>}                        
                     </TouchableOpacity>
                 </View>
 
