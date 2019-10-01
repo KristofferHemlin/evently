@@ -47,6 +47,7 @@ class ForgotPassword extends Component{
                     value = {this.state.email}
                     autoCapitalize = {'none'}
                     autoCorrect = {false}
+                    type = {'email'}
                     style={styles.input}
                     placeholder={'Email'}
                     placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
