@@ -25,9 +25,14 @@ class EventOverview extends Component{
             description: 'Snart åker vi till Kroatien!',
             dates: '24/09/09 - 25/12/12',
             niceToKnow: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+            
+            isEditUser: true,
         }
 
     render(){
+
+        const isEditUser = this.state.isEditUser;
+
         return(
             <View style={styles.pageContainer}>
                 <Header/>
@@ -40,7 +45,7 @@ class EventOverview extends Component{
                     </ImageBackground>
                     <View style={styles.eventInfo}>
 
-                        <HeadlineOverview infoButtonStatus={true}>Event Overview</HeadlineOverview>
+                        <HeadlineOverview infoButtonStatus={true} editButtonStatus={isEditUser}>Event Overview</HeadlineOverview>
 
                         <Text style={styles.subTitles}>Event description</Text>
                         <Text style={styles.ordinaryText}>{this.state.description}</Text>
