@@ -57,20 +57,25 @@ export default StyleSheet.create({
     },
 
     inputForm:{
-        // width: "100%",
         marginLeft: 30,
         marginRight: 30,
+    },
+
+    inputFormTitle:{
+        paddingTop: 10,
+        paddingBottom: 10,
     },
 
     input:{
         fontSize: 16,
         backgroundColor: '#FFF',
-        color: "grey",
-        borderWidth: 2,
-        borderColor: "black",
+        color: "gray",
+        borderWidth: 1,
+        borderColor: "gray",
         paddingHorizontal: 15,
         paddingVertical: 20,
         marginBottom: 20,
+        borderRadius: 3,
       },
     
     inputContainer:{
