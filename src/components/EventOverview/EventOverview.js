@@ -41,14 +41,20 @@ class EventOverview extends Component{
         uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
         axios.get('http://10.100.134.115:3000/users/' + uID + '/currentevent')
         .then((response) => {     
-        console.log(response.data)       
+    
+        // convertion of the date to right format.
+        const sTime = response.data.startTime.replace('T', ' ');
+        startTime = sTime.split('.')[0]   
+        const eTime = response.data.endTime.replace('T', ' '); 
+        endTime = eTime.split('.')[0]  
+
           this.setState({
               eventTitle: response.data.title,
               eventId: response.data.id,
               eventDesc: response.data.description,
               eventLocation: response.data.location,
-              startTime: response.data.startTime,
-              endTime: response.data.endTime,
+              startTime: startTime,
+              endTime: endTime,
               uID: uID
             }
           )
