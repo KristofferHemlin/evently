@@ -27,9 +27,16 @@ class EventOverview extends Component{
             about: 'nah bruh',
             allergies: 'Ogillar papaya',
             image: Croatia,
+
+            isLoggedIn: true,
         }
 
     render(){
+
+        const isLoggedIn = this.state.isLoggedIn;
+
+        
+
         return(
             <View style={styles.pageContainer}>
                 <Header/>
@@ -37,7 +44,7 @@ class EventOverview extends Component{
                 <ScrollView>
                     <View style={styles.userInfo}>
 
-                        <HeadlineOverview infoButtonStatus={false}>User Profile</HeadlineOverview>
+                        <HeadlineOverview infoButtonStatus={false} editButtonStatus={isLoggedIn}>User Profile</HeadlineOverview>
 
                         <View style={styles.profilePictureView}>
                             <Image source={this.state.image} style={styles.profilePicture}/>
