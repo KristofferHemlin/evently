@@ -4,6 +4,11 @@ import {
     Text,
     ScrollView,
     Image,
+<<<<<<< HEAD
+=======
+    TextInput,
+    TouchableOpacity,
+>>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
 } from 'react-native';
 
 import Header from '../Header/Header';
@@ -12,7 +17,11 @@ import Croatia from '../EventOverview/images/CROT.jpg';
 import styles from './UserProfile.style.js';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
+<<<<<<< HEAD
 class EventOverview extends Component{
+=======
+class UserProfile extends Component{
+>>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
 
     static navigationOptions = {
         header : null,
@@ -29,13 +38,88 @@ class EventOverview extends Component{
             image: Croatia,
 
             isLoggedIn: true,
+<<<<<<< HEAD
         }
 
+=======
+
+
+            fields: [
+                {
+                    key: 'firstName',
+                    name: 'First Name',
+                    type: 'text',
+                    label: 'First Name',
+                    value: '',
+                    secureText: false,      
+                },
+                {
+                    key: 'lastName',
+                    name: 'Last Name',
+                    type: 'text',
+                    label: 'Last Name',
+                    value: '',
+                    secureText: false,
+                  },
+                  {
+                    key: 'email',
+                    name: 'Email',
+                    type: 'text',
+                    label: 'Email',
+                    value: '',
+                    secureText: false,
+                  },
+                  {
+                    key: 'phone',
+                    name: 'Phone',
+                    type: 'text',
+                    value: '',
+                    secureText: false,
+                  },
+            ]
+        }
+
+    
+
+>>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
     render(){
 
         const isLoggedIn = this.state.isLoggedIn;
 
+<<<<<<< HEAD
         
+=======
+        console.log("testing: ", this.state.fields[3].type);
+
+        let inputForm;
+        if (isLoggedIn) {
+            inputForm = <View style={styles.inputForm}>
+                            {this.state.fields.map((input, idx) => {
+                                return <TextInput
+                                    value={input.value}
+                                    style={styles.input}
+                                    name={input.name}
+                                    key={input.key}
+                                    type={input.type}
+                                    label={input.label}
+                                    placeholder={input.name}
+                                    secureTextEntry={input.secureText}
+                                    onChangeText={(value) => this.handleInputChange(value, idx)}
+                                />
+                                })}
+                            <TouchableOpacity   
+                                style={styles.buttonContainer}
+                                onPress={this.handleSubmit}>
+                            {this.state.isLoading ? <ActivityIndicator size='small' color='white'/> : <Text style = {styles.buttonText}>Submit </Text>} 
+                            </TouchableOpacity>
+                         </View>;
+        }
+
+        else{
+            console.log("Render nothing");
+
+        }
+>>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
 
         return(
             <View style={styles.pageContainer}>
@@ -54,6 +138,11 @@ class EventOverview extends Component{
 
                         <View style={styles.line}></View>
 
+<<<<<<< HEAD
+=======
+                        {inputForm}
+
+>>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
                         <Text style={styles.subTitles}>Role</Text>
                         <Text style={styles.ordinaryText}>{this.state.role}</Text>
                         <Text style={styles.subTitles}>Email</Text>
@@ -74,4 +163,8 @@ class EventOverview extends Component{
     }
 }
 
+<<<<<<< HEAD
 export default EventOverview;
+=======
+export default UserProfile;
+>>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
