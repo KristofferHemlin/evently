@@ -17,24 +17,35 @@ class LoginForm extends Component{
     state = {
         username: '',
         password: '',
+        userID: null,
         isLoading: false,
         token: null,
     }
 
     authUser = () => {
         this.setState({isLoading:true}, () => { // so we can show loading indicator while fetching data
-            axios.post('http://192.168.12.117:3000/authenticate', {
+            axios.post('http://192.168.12.197:3000/authenticate', {
                 email: this.state.username,
                 password: this.state.password
                  // jane.doe@test.com
                 // cocacola123
             })
             .then((response) => {
+                console.log(response.data)
                 alert(response.data.message)
                 this.setState({
                     token: response.data.token,
-                    isLoading: false});
-                this.props.navigation.navigate('EventOverviewRoute') 
+                    isLoading: false,
+                    userID: response.data.user.id
+                });
+
+                if(response.data.user.signupComplete === true){
+                    this.props.navigation.navigate('EventOverviewRoute') 
+                } else {
+                    this.props.navigation.navigate('CreateAccRoute', {
+                        uID: this.state.userID   
+                    })
+                }
                 })
             .catch((error) => {
                 alert(error);

@@ -86,12 +86,13 @@ class CreateAcc extends Component{
               // }
         ],
         isLoading: false,
+        uID: JSON.stringify(this.props.navigation.getParam('uID', '')),
     }
 
     
 
     componentDidMount(){
-        axios.get('http://192.168.12.197:3000/users/99')
+        axios.get('http://192.168.12.197:3000/users/' + this.state.uID)
         .then((response) => {            
             let responseArray = []
             let fields = [...this.state.fields];
@@ -129,7 +130,7 @@ class CreateAcc extends Component{
     handleSubmit = () =>{
         console.log("CLICK!")
         this.setState({isLoading:true}, () => {
-        axios.put('http://192.168.12.197:3000/users/99/firstlogin', {
+        axios.put('http://192.168.12.197:3000/users/' + this.state.uID + '/firstlogin', {
             firstName: this.state.fields[0].value,
             lastName: this.state.fields[1].value,
             email: this.state.fields[2].value,
@@ -140,7 +141,7 @@ class CreateAcc extends Component{
             alert(response.data.message)
             console.log(response)
             this.setState({isLoading: false});
-            // this.props.navigation.navigate('EventOverviewRoute') 
+            this.props.navigation.navigate('EventOverviewRoute') 
         })
         .catch((error) => {
             console.log(error);

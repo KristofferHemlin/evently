@@ -25,11 +25,11 @@ class Login extends Component{
                 </View>
                 <LoginForm navigation={this.props.navigation}/>
                 <View style={styles.signUpContainer}>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={() => this.props.navigation.navigate('CreateAccRoute')}>
                         <Text style = {styles.signText}>Don't have an account yet?</Text>
                         <Text style = {styles.signText}>Click here to sign up!</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
 
             </ImageBackground>
