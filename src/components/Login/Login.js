@@ -10,7 +10,7 @@ import {
 import bgImage from '../../../images/login-bg.png';
 
 import LoginForm from '../LoginForm/LoginForm';
-import ForgotPassword from '../ResetPassword/ResetPassword';
+import ForgotPassword from '../MailResetPassword/MailResetPassword';
 
 import styles from './Login.style';
 

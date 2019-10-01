@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 
-import styles from './ResetPassword.style'
+import styles from './MailResetPassword.style'
 
 class ForgotPassword extends Component{
 
