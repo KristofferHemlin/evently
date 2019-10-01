@@ -9,8 +9,8 @@ import {
     ActivityIndicator
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
-import FormDescription from '../FormDescription';
-import FormHeader from '../FormHeader';
+import FormDescription from '../FormDescription/FormDescription';
+import FormHeader from '../FormHeader/FormHeader';
 import ImageSelector from '../ImageSelector/ImageSelector';
 import styles from './CreateAcc.style';
 
