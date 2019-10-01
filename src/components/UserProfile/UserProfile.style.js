@@ -56,6 +56,8 @@ export default StyleSheet.create({
         marginTop: 10,
     },
 
+<<<<<<< HEAD
+=======
 
     inputForm:{
         // width: "100%",
@@ -94,4 +96,5 @@ export default StyleSheet.create({
         fontWeight: '700',
     },
 
+>>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
 });
