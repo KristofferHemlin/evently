@@ -32,7 +32,6 @@ class LoginForm extends Component{
             })
             .then((response) => {
                 console.log(response.data)
-                alert(response.data.message)
                 this.setState({
                     token: response.data.token,
                     isLoading: false,

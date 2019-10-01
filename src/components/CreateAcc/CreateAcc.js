@@ -138,7 +138,6 @@ class CreateAcc extends Component{
             password: this.state.fields[4].value
         })
         .then((response) => {
-            alert(response.data.message)
             this.setState({isLoading: false});
             this.props.navigation.navigate('EventOverviewRoute', {
                 uID: this.state.uID
