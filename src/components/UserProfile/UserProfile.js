@@ -79,6 +79,7 @@ class UserProfile extends Component{
         let inputForm;
         if (isLoggedIn) {
             inputForm = <View style={styles.inputForm}>
+                            <Text>qwe</Text>
                             {this.state.fields.map((input, idx) => {
                                 return <TextInput
                                     value={input.value}
