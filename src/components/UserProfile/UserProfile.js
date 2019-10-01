@@ -4,11 +4,8 @@ import {
     Text,
     ScrollView,
     Image,
-<<<<<<< HEAD
-=======
     TextInput,
     TouchableOpacity,
->>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
 } from 'react-native';
 
 import Header from '../Header/Header';
@@ -17,11 +14,7 @@ import Croatia from '../EventOverview/images/CROT.jpg';
 import styles from './UserProfile.style.js';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
-<<<<<<< HEAD
-class EventOverview extends Component{
-=======
 class UserProfile extends Component{
->>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
 
     static navigationOptions = {
         header : null,
@@ -38,10 +31,6 @@ class UserProfile extends Component{
             image: Croatia,
 
             isLoggedIn: true,
-<<<<<<< HEAD
-        }
-
-=======
 
 
             fields: [
@@ -81,20 +70,15 @@ class UserProfile extends Component{
 
     
 
->>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
     render(){
 
         const isLoggedIn = this.state.isLoggedIn;
 
-<<<<<<< HEAD
-        
-=======
         console.log("testing: ", this.state.fields[3].type);
 
         let inputForm;
         if (isLoggedIn) {
             inputForm = <View style={styles.inputForm}>
-                            <Text>qwe</Text>
                             {this.state.fields.map((input, idx) => {
                                 return <TextInput
                                     value={input.value}
@@ -120,7 +104,6 @@ class UserProfile extends Component{
             console.log("Render nothing");
 
         }
->>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
 
         return(
             <View style={styles.pageContainer}>
@@ -139,11 +122,8 @@ class UserProfile extends Component{
 
                         <View style={styles.line}></View>
 
-<<<<<<< HEAD
-=======
                         {inputForm}
 
->>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
                         <Text style={styles.subTitles}>Role</Text>
                         <Text style={styles.ordinaryText}>{this.state.role}</Text>
                         <Text style={styles.subTitles}>Email</Text>
@@ -164,8 +144,4 @@ class UserProfile extends Component{
     }
 }
 
-<<<<<<< HEAD
-export default EventOverview;
-=======
 export default UserProfile;
->>>>>>> 47aea082d8275b087f78c2870d0dcba1a2328242
