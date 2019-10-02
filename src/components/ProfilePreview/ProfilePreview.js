@@ -6,7 +6,7 @@ import {
     Image,
 } from 'react-native';
 
-import Croatia from '../../../images/CROT.jpg';
+import Croatia from '../EventOverview/images/CROT.jpg';
 import leftPad from 'left-pad';
 import styles from './ProfilePreview.style.js'
 

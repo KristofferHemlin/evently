@@ -3,7 +3,6 @@ import {
     View,
     ImageBackground,
     Text,
-    TouchableOpacity,
     ScrollView,
 } from 'react-native';
 
@@ -13,6 +12,7 @@ import axios from 'axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ProfilePreview from '../ProfilePreview/ProfilePreview';
+
 import styles from './EventOverview.style.js';
 
 import Croatia from '../../../images/CROT.jpg';
@@ -66,6 +66,9 @@ class EventOverview extends Component{
 
  
     render(){
+
+        const isEditUser = this.state.isEditUser;
+
         return(
             <View style={styles.pageContainer}>
                 <Header/>
@@ -77,6 +80,7 @@ class EventOverview extends Component{
                         </View>
                     </ImageBackground>
                     <View style={styles.eventInfo}>
+
                         <View style={styles.mainTitleView}>
                             <View style={styles.mainTitleViewLeft}> 
                                 <Text style={[styles.titles, styles.mainTitle]}>Event overview</Text>
@@ -99,7 +103,7 @@ class EventOverview extends Component{
 
                         <ProfilePreview/>
 
-                        <Text style={[styles.titles, styles.subTitles]}>Nice to know</Text>
+                        <Text style={styles.subTitles}>Nice to know</Text>
                         <Text style={styles.ordinaryText}>{this.state.niceToKnow}</Text>
                     </View>
                 </ScrollView>
