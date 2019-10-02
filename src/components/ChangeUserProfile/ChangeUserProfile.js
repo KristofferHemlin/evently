@@ -124,6 +124,7 @@ class ChangeUserProfile extends Component {
                         isLoading: false,
                         wantToEdit: false,
                     });
+                    this.props.navigation.navigate('UserProfileRoute')
                 })
                 .catch((error) => {
                     console.log(error);
@@ -148,7 +149,7 @@ class ChangeUserProfile extends Component {
                             <HeadlineOverview
                                 infoButtonStatus={false}
                                 editButtonStatus={this.state.wantToEdit}
-                            >User Profile</HeadlineOverview>
+                            >Change User Profile Info</HeadlineOverview>
 
                             <View style={styles.profilePictureView}>
                                 <Image source={this.state.image} style={styles.profilePicture} />
