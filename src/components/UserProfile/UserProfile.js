@@ -12,6 +12,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import styles from './UserProfile.style';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+import SettingsModal from '../SettingsModal/SettingsModal';
 
 import Croatia from '../EventImageHeader/images/CROT.jpg';
 
@@ -36,6 +37,7 @@ class UserProfile extends Component {
         image: Croatia,
 
         ownProfilePage: true,
+        showModal: true,
 
 
     }
@@ -76,10 +78,20 @@ class UserProfile extends Component {
         this.props.navigation.navigate('ChangeUserProfileRoute')
     }
 
+    exitModalHandler = () => {
+        this.setState({showModal: false})
+        console.log(this.state.showModal)
+    }
+
+    showModalHandler = () => {
+        this.setState({showModal:true})
+    }
+
     render() {
         return (
             <View style={styles.pageContainer}>
-                <Header />
+            {this.state.showModal  ? <SettingsModal exitModal = {this.exitModalHandler}/> : null }
+                <Header showModal={this.showModalHandler}/>
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
