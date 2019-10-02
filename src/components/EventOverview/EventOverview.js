@@ -14,10 +14,11 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ProfilePreview from '../ProfilePreview/ProfilePreview';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+import EventImageHeader from '../EventImageHeader/EventImageHeader';
 
 import styles from './EventOverview.style.js';
 
-import Croatia from './images/CROT.jpg';
+// import Croatia from './images/CROT.jpg';
 
 const infoCircleIcon = <FontAwesome5 size={20} name={'info-circle'} solid color="rgba(74,144,226,1)" />;
 
@@ -41,7 +42,8 @@ class EventOverview extends Component{
 
     componentDidMount () {
         uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-        axios.get('http://localhost:3000/users/' + uID + '/currentevent')
+        // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
+        axios.get('http://localhost:3000/users/6/currentevent')
         .then((response) => {     
     
         // convertion of the date to right format.
@@ -76,14 +78,12 @@ class EventOverview extends Component{
                 <Header/>
 
                 <ScrollView>
-                    <ImageBackground source={Croatia} style={styles.eventImage}>
-                        <View style={styles.eventNameView}>
-                            <Text style={styles.eventName}>{this.state.eventTitle}</Text>
-                        </View>
-                    </ImageBackground>
+
+                    <EventImageHeader eventTitle = {this.state.eventTitle}></EventImageHeader>
+
                     <View style={styles.eventInfo}>
 
-                        <HeadlineOverview infoButtonStatus={true} editButtonStatus={true} >Event Overview</HeadlineOverview>
+                        <HeadlineOverview infoButtonStatus={true} editButtonStatus={true}>Event Overview</HeadlineOverview>
                         {/* <View style={styles.mainTitleView}>
                             <View style={styles.mainTitleViewLeft}> 
                                 <Text style={[styles.titles, styles.mainTitle]}>Event overview</Text>
