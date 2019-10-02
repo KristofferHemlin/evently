@@ -26,7 +26,9 @@ const header = props => {
                     <TouchableOpacity style={styles.notificationIcon}>
                     {bell_icon}
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.profileIcon}>
+                    <TouchableOpacity 
+                    style={styles.profileIcon}
+                    onPress={props.showModal}>
                     {user_cog}
                     </TouchableOpacity>
                 </View>
