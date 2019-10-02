@@ -57,6 +57,7 @@ class UserProfile extends Component {
     }
 
     componentDidUpdate() {
+        // TODO kolla om dåligt för prestandan att ha componentdidupdate såhär
         // uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
         axios.get('http://localhost:3000/users/109')
             .then((response) => {
