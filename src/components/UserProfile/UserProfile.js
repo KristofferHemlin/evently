@@ -14,7 +14,7 @@ import Footer from '../Footer/Footer';
 import styles from './UserProfile.style.js';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
-import Croatia from '../EventOverview/images/CROT.jpg';
+import Croatia from '../EventImageHeader/images/CROT.jpg';
 
 
 
