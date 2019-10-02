@@ -24,7 +24,7 @@ class LoginForm extends Component{
 
     authUser = () => {
         this.setState({isLoading:true}, () => { // so we can show loading indicator while fetching data
-            axios.post('http://192.168.12.197:3000/authenticate', {
+            axios.post('http:/10.100.134.115:3000/authenticate', {
                 email: this.state.username,
                 password: this.state.password
                  // jane.doe@test.com
@@ -32,15 +32,16 @@ class LoginForm extends Component{
             })
             .then((response) => {
                 console.log(response.data)
-                alert(response.data.message)
                 this.setState({
                     token: response.data.token,
                     isLoading: false,
-                    userID: response.data.user.id
+                    userID: response.data.user.id   
                 });
 
                 if(response.data.user.signupComplete === true){
-                    this.props.navigation.navigate('EventOverviewRoute') 
+                    this.props.navigation.navigate('EventOverviewRoute', {
+                        uID: this.state.userID   
+                    }) 
                 } else {
                     this.props.navigation.navigate('CreateAccRoute', {
                         uID: this.state.userID   

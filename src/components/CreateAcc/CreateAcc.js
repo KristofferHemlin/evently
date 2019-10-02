@@ -9,8 +9,8 @@ import {
     ActivityIndicator
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
-import FormDescription from '../FormDescription';
-import FormHeader from '../FormHeader';
+import FormDescription from '../FormDescription/FormDescription';
+import FormHeader from '../FormHeader/FormHeader';
 import ImageSelector from '../ImageSelector/ImageSelector';
 import styles from './CreateAcc.style';
 
@@ -92,7 +92,7 @@ class CreateAcc extends Component{
     
 
     componentDidMount(){
-        axios.get('http://192.168.12.197:3000/users/' + this.state.uID)
+        axios.get('http://10.100.134.115:3000/users/' + this.state.uID)
         .then((response) => {            
             let responseArray = []
             let fields = [...this.state.fields];
@@ -130,7 +130,7 @@ class CreateAcc extends Component{
     handleSubmit = () =>{
         console.log("CLICK!")
         this.setState({isLoading:true}, () => {
-        axios.put('http://192.168.12.197:3000/users/' + this.state.uID + '/firstlogin', {
+        axios.put('http://10.100.134.115:3000/users/' + this.state.uID + '/firstlogin', {
             firstName: this.state.fields[0].value,
             lastName: this.state.fields[1].value,
             email: this.state.fields[2].value,
@@ -138,10 +138,10 @@ class CreateAcc extends Component{
             password: this.state.fields[4].value
         })
         .then((response) => {
-            alert(response.data.message)
-            console.log(response)
             this.setState({isLoading: false});
-            this.props.navigation.navigate('EventOverviewRoute') 
+            this.props.navigation.navigate('EventOverviewRoute', {
+                uID: this.state.uID
+            }) 
         })
         .catch((error) => {
             console.log(error);
