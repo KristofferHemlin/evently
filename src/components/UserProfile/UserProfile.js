@@ -56,6 +56,25 @@ class UserProfile extends Component {
             });
     }
 
+    componentDidUpdate() {
+        // uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
+        axios.get('http://localhost:3000/users/109')
+            .then((response) => {
+                this.setState({
+                    firstName: response.data.firstName,
+                    lastName: response.data.lastName,
+                    email: response.data.email,
+                    phone: response.data.phone
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+    editButtonHandler = () => {
+        this.props.navigation.navigate('ChangeUserProfileRoute')
+    }
+
     render() {
         return (
             <View style={styles.pageContainer}>
@@ -67,6 +86,7 @@ class UserProfile extends Component {
                             <HeadlineOverview
                                 infoButtonStatus={false}
                                 editButtonStatus={true}
+                                onEditPress={this.editButtonHandler}
                             >User Profile</HeadlineOverview>
 
                             <View style={styles.profilePictureView}>
