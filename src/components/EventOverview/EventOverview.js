@@ -4,6 +4,7 @@ import {
     ImageBackground,
     Text,
     ScrollView,
+    TouchableOpacity
 } from 'react-native';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -12,10 +13,11 @@ import axios from 'axios';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ProfilePreview from '../ProfilePreview/ProfilePreview';
+import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
 import styles from './EventOverview.style.js';
 
-import Croatia from '../../../images/CROT.jpg';
+import Croatia from './images/CROT.jpg';
 
 const infoCircleIcon = <FontAwesome5 size={20} name={'info-circle'} solid color="rgba(74,144,226,1)" />;
 
@@ -39,7 +41,7 @@ class EventOverview extends Component{
 
     componentDidMount () {
         uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-        axios.get('http://10.100.134.115:3000/users/' + uID + '/currentevent')
+        axios.get('http://localhost:3000/users/' + uID + '/currentevent')
         .then((response) => {     
     
         // convertion of the date to right format.
@@ -81,7 +83,8 @@ class EventOverview extends Component{
                     </ImageBackground>
                     <View style={styles.eventInfo}>
 
-                        <View style={styles.mainTitleView}>
+                        <HeadlineOverview infoButtonStatus={true} editButtonStatus={true} >Event Overview</HeadlineOverview>
+                        {/* <View style={styles.mainTitleView}>
                             <View style={styles.mainTitleViewLeft}> 
                                 <Text style={[styles.titles, styles.mainTitle]}>Event overview</Text>
                                 <TouchableOpacity style={styles.infoButton}>
@@ -91,7 +94,7 @@ class EventOverview extends Component{
                             <TouchableOpacity>
                             <Text style={styles.editButton}> Edit </Text>
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
                         <View style={styles.line}></View>
                         <Text style={[styles.titles, styles.subTitles]}>Event description</Text>
                         <Text style={styles.ordinaryText}>{this.state.eventDesc}</Text>
