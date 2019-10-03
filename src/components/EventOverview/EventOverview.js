@@ -42,8 +42,7 @@ class EventOverview extends Component{
 
     componentDidMount () {
         uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-        // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
-        axios.get('http://localhost:3000/users/6/currentevent')
+        axios.get('http://localhost:3000/users/' + uID + '/currentevent')
         .then((response) => {     
     
         // convertion of the date to right format.
