@@ -15,13 +15,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import BackButton from '../BackButton/BackButton';
 import styles from './ChangeUserProfile.style';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
 import Croatia from '../EventImageHeader/images/CROT.jpg';
-
-const backArrowIcon = <FontAwesome5 size={20} name={'arrow-circle-left'} solid color="rgba(0,0,0,1)" />;
-
 
 
 class ChangeUserProfile extends Component {
@@ -143,9 +141,6 @@ class ChangeUserProfile extends Component {
         })
 
     }
-
-
-
     render() {
 
         return (
@@ -154,10 +149,7 @@ class ChangeUserProfile extends Component {
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
-                            <TouchableOpacity style={styles.backButton}
-                                onPress={() => this.props.navigation.goBack()}>
-                                <View style={styles.backButtonIconContainer}>{backArrowIcon}</View><Text style={styles.backButtonTxt}>Back</Text>
-                            </TouchableOpacity>
+                            <BackButton />
                             <HeadlineOverview
                                 infoButtonStatus={false}
                                 editButtonStatus={this.state.wantToEdit}
