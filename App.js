@@ -19,7 +19,7 @@ const Appstack = createStackNavigator(
 
 const AuthStack = createStackNavigator (
   {
-   LoginRoute: Login, 
+   LoginRoute: Login,
    CreateAccRoute: CreateAcc
   },
 )
@@ -27,7 +27,7 @@ const AuthStack = createStackNavigator (
 export default createAppContainer(createSwitchNavigator(
   {
     AuthStack: AuthStack,
-    AppStackr: Appstack, 
+    AppStackr: Appstack,  
   }
 ))
 
