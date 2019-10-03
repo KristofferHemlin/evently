@@ -17,13 +17,23 @@ import Footer from '../Footer/Footer';
 import styles from './ChangeUserProfile.style';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
+<<<<<<< HEAD
 import Croatia from '../EventImageHeader/images/CROT.jpg';
+=======
+import Croatia from '../EventOverview/images/CROT.jpg';
+>>>>>>> 92f007f646eae3ebc0a94512de0546d9cefae036
 
 
 
 class ChangeUserProfile extends Component {
 
+<<<<<<< HEAD
    
+=======
+    static navigationOptions = {
+        header: null,
+    };
+>>>>>>> 92f007f646eae3ebc0a94512de0546d9cefae036
 
     state = {
         fields: [
@@ -60,6 +70,7 @@ class ChangeUserProfile extends Component {
             },
         ],
         image: Croatia,
+<<<<<<< HEAD
         uID: null,
     }
 
@@ -68,6 +79,13 @@ class ChangeUserProfile extends Component {
         
         axios.get('http://localhost:3000/users/' + uID)
         // axios.get('http://10.100.134.115:3000/users/' + uID)
+=======
+    }
+
+    componentDidMount() {
+        // uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
+        axios.get('http://localhost:3000/users/109')
+>>>>>>> 92f007f646eae3ebc0a94512de0546d9cefae036
             .then((response) => {
                 // console.log(response)
                 let responseArray = []
@@ -94,8 +112,12 @@ class ChangeUserProfile extends Component {
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
                     email: response.data.email,
+<<<<<<< HEAD
                     phone: response.data.phone,
                     uID: uID,
+=======
+                    phone: response.data.phone
+>>>>>>> 92f007f646eae3ebc0a94512de0546d9cefae036
                 })
             })
             .catch((error) => {
@@ -109,12 +131,20 @@ class ChangeUserProfile extends Component {
         this.setState({ fields: fields });
         console.log(this.state.fields)
     };
+<<<<<<< HEAD
     
     handleSubmit = () => {
         console.log("CLICK!", this.state.uID)
         this.setState({ isLoading: true }, () => {
             axios.put('http://localhost:3000/users/' + this.state.uID, {
                 // axios.put('http://10.100.134.115:3000/users/' + this.state.uID, {
+=======
+
+    handleSubmit = () => {
+        console.log("CLICK!")
+        this.setState({ isLoading: true }, () => {
+            axios.put('http://localhost:3000/users/109', {
+>>>>>>> 92f007f646eae3ebc0a94512de0546d9cefae036
                 firstName: this.state.fields[0].value,
                 lastName: this.state.fields[1].value,
                 email: this.state.fields[2].value,
@@ -127,9 +157,13 @@ class ChangeUserProfile extends Component {
                         isLoading: false,
                         wantToEdit: false,
                     });
+<<<<<<< HEAD
                     this.props.navigation.navigate('UserProfileRoute', {
                         uID: this.state.uID,
                     });
+=======
+                    this.props.navigation.navigate('UserProfileRoute')
+>>>>>>> 92f007f646eae3ebc0a94512de0546d9cefae036
                 })
                 .catch((error) => {
                     console.log(error);

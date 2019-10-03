@@ -40,7 +40,7 @@ export default StyleSheet.create({
         fontWeight: '300',
     },
     line:{
-        borderBottomColor: 'lightgray',
+        borderBottomColor: 'white',
         borderBottomWidth: 2,
         marginTop: 5,
     },

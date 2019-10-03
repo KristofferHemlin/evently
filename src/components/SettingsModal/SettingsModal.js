@@ -15,7 +15,11 @@ class SettingsModal extends Component {
     };
 
     changeUserInfoNavigationHandler = () => {
+<<<<<<< HEAD
         this.props.navigation.navigate('UserProfileRoute')
+=======
+        this.props.navigation.navigate('CreateAccRoute')
+>>>>>>> 92f007f646eae3ebc0a94512de0546d9cefae036
     }
 
     render() {
@@ -33,11 +37,19 @@ class SettingsModal extends Component {
                     <View style={styles.menuTitle}>
                         <Text style={styles.menuTitle}>User Profile Menu</Text>
                     </View>
+<<<<<<< HEAD
                     <View style={styles.line}></View>
                     <View style={styles.menuAlternatives}>
                         <TouchableOpacity onPress={this.props.navigationModal}>
                             <Text style={styles.menuTxt}>User Profile Info</Text>
                         </TouchableOpacity>
+=======
+                    <View style={styles.menuAlternatives}>
+                        <TouchableOpacity onPress={this.changeUserInfoNavigationHandler}>
+                            <Text style={styles.menuTxt}>User Profile Info</Text>
+                        </TouchableOpacity>
+
+>>>>>>> 92f007f646eae3ebc0a94512de0546d9cefae036
                         <Text style={styles.menuTxt}>Change Account Password</Text>
                     </View>
                 </View>
