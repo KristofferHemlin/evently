@@ -32,14 +32,16 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 36,
         fontWeight: '500',
-        borderBottomColor: 'white',
-        borderBottomWidth: 2,
-        paddingBottom: 10, 
     },
     menuTxt:{
         color: 'white',
         fontSize: 24,
         paddingTop: 30,
         fontWeight: '300',
-    }
+    },
+    line:{
+        borderBottomColor: 'lightgray',
+        borderBottomWidth: 2,
+        marginTop: 5,
+    },
 })

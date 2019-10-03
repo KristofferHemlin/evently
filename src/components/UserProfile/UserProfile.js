@@ -34,23 +34,26 @@ class UserProfile extends Component {
         phone: '070 999 999',
         about: 'nah bruh',
         allergies: 'Ogillar papaya',
+        uID: null,
         image: Croatia,
 
         ownProfilePage: true,
-        showModal: true,
+        showModal: false,
 
 
     }
 
-    componentDidMount() {
-        // uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-        axios.get('http://localhost:3000/users/109')
+    fetchUserData = (uID) => {
+        console.log(uID);
+        axios.get('http://localhost:3000/users/' + uID)
+        // axios.get('http://10.100.134.115:3000/users/' + uID)
             .then((response) => {
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
                     email: response.data.email,
-                    phone: response.data.phone
+                    phone: response.data.phone,
+                    uID: uID,
                 })
             })
             .catch((error) => {
@@ -58,37 +61,54 @@ class UserProfile extends Component {
             });
     }
 
+    componentDidMount() {
+        console.log("componentDidMount");
+        uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
+        this.fetchUserData(uID);
+    }
+
     componentDidUpdate() {
         // TODO kolla om dåligt för prestandan att ha componentdidupdate såhär
-        // uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-        axios.get('http://localhost:3000/users/109')
+        console.log("UPDATEEEEE!")
+        uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
+        axios.get('http://localhost:3000/users/' + uID)
+        // axios.get('http://10.100.134.115:3000/users/' + uID)
             .then((response) => {
-                this.setState({
-                    firstName: response.data.firstName,
-                    lastName: response.data.lastName,
-                    email: response.data.email,
-                    phone: response.data.phone
-                })
+                // sorry för fulkod, fixar det sen
+                if (this.state.firstName !== response.data.firstName ||
+                    this.state.lastName !== response.data.lastName ||
+                    this.state.email !== response.data.email ||
+                    this.state.phone !== response.data.phone) {
+                    this.setState({
+                        firstName: response.data.firstName,
+                        lastName: response.data.lastName,
+                        email: response.data.email,
+                        phone: response.data.phone,
+                        uID: uID,
+                    })
+                }
             })
             .catch((error) => {
                 console.log(error);
             });
     }
     editButtonHandler = () => {
-        this.props.navigation.navigate('ChangeUserProfileRoute')
+        this.props.navigation.navigate('ChangeUserProfileRoute', {
+            uID: this.state.uID
+        });
     }
 
     showModalHandler = () => {
         let showModal = this.state.showModal
-        this.setState({showModal: !showModal})
+        this.setState({ showModal: !showModal })
         console.log(this.state.showModal)
     }
 
     render() {
         return (
             <View style={styles.pageContainer}>
-            {this.state.showModal  ? <SettingsModal exitModal = {this.showModalHandler}/> : null }
-                <Header showModal={this.showModalHandler}/>
+                {this.state.showModal ? <SettingsModal exitModal={this.showModalHandler} /> : null}
+                <Header showModal={this.showModalHandler} />
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
