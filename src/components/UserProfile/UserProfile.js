@@ -78,19 +78,16 @@ class UserProfile extends Component {
         this.props.navigation.navigate('ChangeUserProfileRoute')
     }
 
-    exitModalHandler = () => {
-        this.setState({showModal: false})
-        console.log(this.state.showModal)
-    }
-
     showModalHandler = () => {
-        this.setState({showModal:true})
+        let showModal = this.state.showModal
+        this.setState({showModal: !showModal})
+        console.log(this.state.showModal)
     }
 
     render() {
         return (
             <View style={styles.pageContainer}>
-            {this.state.showModal  ? <SettingsModal exitModal = {this.exitModalHandler}/> : null }
+            {this.state.showModal  ? <SettingsModal exitModal = {this.showModalHandler}/> : null }
                 <Header showModal={this.showModalHandler}/>
                 <ScrollView>
                     <KeyboardAwareScrollView>
