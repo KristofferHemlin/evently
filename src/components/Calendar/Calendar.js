@@ -5,6 +5,7 @@ import EventCalendar from 'react-native-events-calendar'
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import HeadlineOverview from '../HeadlineOverview/HeadlineOverview'
 import styles from './Calendar.style';
 
 
@@ -42,10 +43,11 @@ class Calendar extends Component {
         return (
             <View style={styles.pageContainer}>
             <Header />
-
-            <View style={{ flex: 1, marginTop: 20 }}>
+            <HeadlineOverview infoButtonStatus={true} editButtonStatus={true}>Schedule</HeadlineOverview>
+            <View style={styles.calendarContainer}>
             <EventCalendar
                 format24h
+                eventTapped={this.eventClicked.bind(this)}
                //Function on event press
               events={this.state.events}
               //passing the Array of event
