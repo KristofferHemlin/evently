@@ -17,7 +17,8 @@ export default StyleSheet.create({
         marginTop: 20,
         marginLeft: 30,
         marginRight: 30,
-        textAlign:'center',
+        // textAlign:'center',
+        paddingLeft: 15,
         color: "lightgray",
     },
 

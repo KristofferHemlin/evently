@@ -31,12 +31,59 @@ class EventParticipants extends Component{
         uID: null,
 
         filterWord: '',
+
+        profileArray:[
+            {
+                //FirstObject
+                name: 'Marcus',
+            },
+            {
+                //SecondObject
+                name: 'Maggio',
+            },
+            {
+                //ThirdObject
+                name: 'Marcus',
+            },
+            {
+                //FourthObject
+                name: 'Martin',
+            },
+            {
+                //etc
+                name: 'David',
+            },
+            {
+                //etc
+                name: 'Danneboi',
+            },
+            {
+                //etc
+                name: 'Dalé',
+            },
+            {
+                //etc
+                name: 'Pitbull',
+            }
+        ]
     }
  
     render(){
 
         const filterWord = this.state.filterWord;
-        console.log("Steh auf", filterWord);
+        console.log("filterWord: ", filterWord);
+
+        // console.log(this.state.profileArray.filter, this.state.profileArray,{ name: 'Marcus' });
+        console.log(this.state.profileArray);
+
+        this.state.profileArray = this.state.profileArray.filter(function(person) {
+            // return person.name == 'Marcus';
+
+            return person.name.includes(filterWord);
+            // return person.name == 'Marcus';
+        });
+
+        console.log(this.state.profileArray);
 
         return(
             <View style={styles.pageContainer}>
@@ -55,7 +102,12 @@ class EventParticipants extends Component{
                     <Text style={styles.subTitles}>Participants</Text>
                     <View style={styles.line}></View>
 
-                    <ProfilePreview/>
+
+                    <View style={styles.profileList}>
+                        {this.state.profileArray.map(() => {
+                            return <ProfilePreview/>
+                            })}
+                    </View>
 
                 </ScrollView>
                 <Footer/>
