@@ -89,10 +89,10 @@ class CreateAcc extends Component{
         uID: JSON.stringify(this.props.navigation.getParam('uID', '')),
     }
 
-    
 
     componentDidMount(){
         axios.get('http://localhost:3000/users/' + this.state.uID)
+        // axios.get('http://10.100.134.115:3000/users/' + this.state.uID)
         .then((response) => {            
             let responseArray = []
             let fields = [...this.state.fields];
@@ -131,6 +131,7 @@ class CreateAcc extends Component{
         console.log("CLICK!")
         this.setState({isLoading:true}, () => {
         axios.put('http://localhost:3000/users/' + this.state.uID + '/firstlogin', {
+            // axios.put('http://10.100.134.115:3000/users/' + this.state.uID + '/firstlogin', {
             firstName: this.state.fields[0].value,
             lastName: this.state.fields[1].value,
             email: this.state.fields[2].value,

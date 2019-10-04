@@ -18,12 +18,11 @@ export default StyleSheet.create({
     editButton:{
         // alignItems: 'self-end',
        color: 'rgba(74,144,226,1)',
-       borderWidth: 1,
+       borderWidth: 2,
        borderColor: 'rgba(74,144,226,1)',
        borderRadius: 3,
        fontSize: 16,
-       paddingTop: 3,
-       paddingBottom: 3,
+       fontWeight: '500',
        paddingLeft: 7,
        paddingRight: 7,
     },
@@ -31,7 +30,7 @@ export default StyleSheet.create({
     infoButton:{
         margin:5,
     },
-
+    
     eventInfo:{
         height:1000,
         backgroundColor: 'white',
