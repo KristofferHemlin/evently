@@ -25,90 +25,53 @@ class EventParticipants extends Component{
       state = {
         firstName: '',
         lastName: '', 
+        companyDepartment: '',
         uID: null,
 
         filterWord: '',
+        profileArray: [],
 
-        profileArray:[
-            {
-                //FirstObject
-                name: 'Marcus',
-            },
-            {
-                //SecondObject
-                name: 'Maggio',
-            },
-            {
-                //ThirdObject
-                name: 'Marcus',
-            },
-            {
-                //FourthObject
-                name: 'Martin',
-            },
-            {
-                //etc
-                name: 'David',
-            },
-            {
-                //etc
-                name: 'Danneboi',
-            },
-            {
-                //etc
-                name: 'Dalé',
-            },
-            {
-                //etc
-                name: 'Pitbull',
-            }
-        ]
+        eventName: 'Kroatien'
     }
 
-    //Tommygun
     componentDidMount () {
         uID = Number(this.props.navigation.getParam('uID', ''));
         // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
         axios.get('http://localhost:3000/events/1/users')
         .then((response) => {
 
-        console.log(response);
-        // console.log(response.data[1].firstName);
-        // console.log(response.data[1].lastName);
-        // console.log(response.data[1].id);
-        // console.log(response.data[1].profileImageUrl);
+        // console.log(response);
 
-          this.setState({
-              firstName: response.data[0].firstName,
-              lastName: response.data[0].lastName,
-              uID: response.data[0].id,
-            }
-          )
+        profileArray = response.data.map((user) => ({
+            firstName:user.firstName,
+            lastName:user.lastName,
+            companyDepartment:user.companyDepartment
+        }));
+
+        this.setState({
+            profileArray: profileArray
+        })
+
         })
         .catch((error) => {
             console.log(error);
         });     
     }
-    //Tommygun
  
     render(){
 
         const filterWord = this.state.filterWord;
-        // console.log("filterWord: ", filterWord);
 
         this.state.profileArray = this.state.profileArray.filter(function(person) {
-            // return person.name == 'Marcus';
-            return person.name.includes(filterWord);
+            return person.firstName.includes(filterWord);
         });
-
-        // console.log(this.state.profileArray);
 
         return(
             <View style={styles.pageContainer}>
                 <Header/>
                 <ScrollView>
-                    <EventImageHeader/>
-                    <HeadlineOverview infoButtonStatus={true} editButtonStatus={true}>Event Participants</HeadlineOverview>
+                    <EventImageHeader eventTitle={this.state.eventName}/>
+                    <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Event Participants</HeadlineOverview>
 
                     <TextInput style={styles.searchBar}
                         placeholder = "Search current event participants ..."
@@ -123,7 +86,11 @@ class EventParticipants extends Component{
 
                     <View style={styles.profileList}>
                         {this.state.profileArray.map((input, index) => {
-                            return <ProfilePreview key={index}>{this.state.firstName} {this.state.lastName}</ProfilePreview>
+                            return <ProfilePreview
+                                key={index}
+                                companyDepartment={profileArray[index].companyDepartment}>
+                                {profileArray[index].firstName} {profileArray[index].lastName}
+                                </ProfilePreview>
                             })}
                     </View>
 
