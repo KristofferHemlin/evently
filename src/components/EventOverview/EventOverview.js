@@ -68,6 +68,7 @@ class EventOverview extends Component {
             .catch((error) => {
                 console.log(error);
             });
+
     }
 
     showModalHandler = () => {
