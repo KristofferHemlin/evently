@@ -20,28 +20,25 @@ class Calendar extends Component {
   };
 
   state = {
-    activities: [
-      // { start: '2019-09-27 09:10:00', end: '2019-09-27 11:40:00', title: 'Dr. Mariana Joseph', summary: '3412 Piedmont Rd NE, GA 3032 ' },
-      // { start: '2019-09-27 08:10:00', end: '2019-09-27 08:45:00', title: 'Dr. Mariana Joseph', summary: '3412 Piedmont Rd NE, GA 3032,' },
-    ],
+    activities: [],
     isUpdated: false,
   }
 
   componentDidMount() {
     // axios.get('http://localhost:3000/events/1/activities')
-    axios.get('http://192.168.0.100:3000/events/1/activities')
+    axios.get('http://10.110.171.120:3000/events/1/activities')
       .then((response) => {
         console.log(response.data)
         responseArray = response.data.map(activity => ({
           start: moment(new Date(activity.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm:ss'),
           end: moment(new Date(activity.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm:ss'),
           title: activity.title,
-          summary: activity.description
+          summary: activity.location + '. ' + activity.description,
+          
         })
         )
 
-        this.setState({ activities: responseArray, isUpdated: true }, () => console.log("denna", this.state.activities))
-        // this.setState({activities: respsoneMap},() => console.log("denna", this.state.activities))
+        this.setState({ activities: responseArray, isUpdated: true })
 
       })
       .catch((error) => {
@@ -49,15 +46,17 @@ class Calendar extends Component {
       })
   }
   eventClicked(event) {
-    console.log("CLIKC")
-    // this.props.navigation.navigate('EventOverviewRoute')
+    // console.log("CLIKC")
+    this.props.navigation.navigate('EventOverviewRoute')
   }
 
   render() {
+    const todaysDate = moment().format('YYYY-MM-DD')
     return (
       <View style={styles.pageContainer}>
         <Header />
-        <HeadlineOverview infoButtonStatus={true} editButtonStatus={true}>Schedule</HeadlineOverview>
+        <HeadlineOverview infoButtonStatus={true} editButtonStatus={false}>Schedule</HeadlineOverview> 
+        {/* TODO: fixa informationstext */}
         <View style={styles.calendarContainer}>
           {this.state.isUpdated ?
            <EventCalendar
@@ -71,7 +70,8 @@ class Calendar extends Component {
             size={30}
             //number of date will render before and after initDate 
             //(default is 30 will render 30 day before initDate and 29 day after initDate)
-            initDate={'2019-10-19'}
+            initDate={'2019-10-19'} // för att testa
+            // initDate={todaysDate} rätt datum
             //show initial date (default is today)
             scrollToFirst
           //scroll to first event of the day (default true)
