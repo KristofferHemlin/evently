@@ -47,7 +47,7 @@ class Calendar extends Component {
   }
   eventClicked(event) {
     // console.log("CLIKC")
-    this.props.navigation.navigate('EventOverviewRoute')
+    this.props.navigation.navigate('ActivityOverviewRoute')
   }
 
   render() {

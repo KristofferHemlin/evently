@@ -9,12 +9,14 @@ import EventOverview from './src/components/EventOverview/EventOverview';
 import UserProfile from './src/components/UserProfile/UserProfile';
 import ChangeUserProfile from './src/components/ChangeUserProfile/ChangeUserProfile';
 import EventParticipants from './src/components/EventParticipants/EventParticipants'
+import ActivityOverview from './src/components/ActivityOverview/ActivityOverview'
 
 import Calendar from './src/components/Calendar/Calendar';
 
 const Appstack = createStackNavigator(
   {
     EventOverviewRoute: EventOverview,
+    ActivityOverviewRoute: ActivityOverview,
     CalendarRoute: Calendar,
     EventParticipantsRoute: EventParticipants,
     UserProfileRoute: UserProfile,
@@ -24,7 +26,6 @@ const Appstack = createStackNavigator(
 
 const AuthStack = createStackNavigator (
   {
-    
    LoginRoute: Login,
    CreateAccRoute: CreateAcc
   },
