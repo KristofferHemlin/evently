@@ -38,7 +38,7 @@ class EventParticipants extends Component {
     componentDidMount() {
         uID = Number(this.props.navigation.getParam('uID', ''));
         // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
-        axios.get('http://localhost:3000/events/1/users')
+        axios.get('http://localhost:3000/events/1/users?sort=firstName:asc')
             .then((response) => {
 
                 // console.log(response);
