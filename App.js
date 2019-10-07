@@ -6,16 +6,20 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import Login from './src/components/Login/Login';
 import CreateAcc from './src/components/CreateAcc/CreateAcc';
 import EventOverview from './src/components/EventOverview/EventOverview';
+import UserProfile from './src/components/UserProfile/UserProfile';
+import ChangeUserProfile from './src/components/ChangeUserProfile/ChangeUserProfile';
 
 const Appstack = createStackNavigator(
   {
     EventOverviewRoute: EventOverview,
+    UserProfileRoute: UserProfile,
+    ChangeUserProfileRoute: ChangeUserProfile,
   },
 )
 
 const AuthStack = createStackNavigator (
   {
-   LoginRoute: Login, 
+   LoginRoute: Login,
    CreateAccRoute: CreateAcc
   },
 )
@@ -23,7 +27,7 @@ const AuthStack = createStackNavigator (
 export default createAppContainer(createSwitchNavigator(
   {
     AuthStack: AuthStack,
-    AppStackr: Appstack, 
+    AppStackr: Appstack,  
   }
 ))
 
