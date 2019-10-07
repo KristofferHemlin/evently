@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* eventlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* eventlyTests.m */; };
 		01002F562819D69B03C9CE5C /* libPods-evently-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E14F45E9D36BE994B65BD85 /* libPods-evently-tvOS.a */; };
