@@ -23,7 +23,10 @@ const footer = props => {
                     Event info
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.footerButton}>
+            <TouchableOpacity
+                style={styles.footerButton}
+                onPress = {() => props.navigation.navigate('EventParticipantsRoute')}
+            >
                 {usersIcon}
                 <Text style={styles.footerIconTxt}>
                     Participants
