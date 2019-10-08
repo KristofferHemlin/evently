@@ -24,7 +24,7 @@ class ActivityOverview extends Component {
 
     state = {
         eventTitle: '',
-        activityId: null,
+        activityID: null,
         activityLocation: '',
         activityDesc: '',
         startTime: '',
@@ -54,7 +54,7 @@ class ActivityOverview extends Component {
 
                 this.setState({
                     activityTitle: response.data.title,
-                    activityId: response.data.id,
+                    activityID: activityID,
                     activityDesc: response.data.description,
                     activityLocation: response.data.location,
                     startTime: startTime,
@@ -71,8 +71,13 @@ class ActivityOverview extends Component {
     }
 
 
-    eventParticipantsHandler = () => {
-        this.props.navigation.navigate('EventParticipantsRoute', {
+    showParticipantsHandler = () => {
+        console.log('activityID', this.state.activityID);
+
+        this.props.navigation.navigate('ShowParticipantsRoute', {
+            activity: true,
+            activityID: this.state.activityID,
+            activityTitle: this.state.activityTitle,
         })
     }
 
@@ -102,7 +107,7 @@ class ActivityOverview extends Component {
 
                         <Text style={styles.subTitles}>Participants</Text>
                         <TouchableOpacity
-                            onPress = {this.eventParticipantsHandler}
+                            onPress = {this.showParticipantsHandler}
                         >
                             <Text style={[styles.ordinaryText, styles.participantsText]}>Click here to see activity participants</Text>
                         </TouchableOpacity>
