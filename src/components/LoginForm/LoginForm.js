@@ -26,7 +26,7 @@ class LoginForm extends Component{
     authUser = () => {
         this.setState({isLoading:true}, () => { // so we can show loading indicator while fetching data
             axios.post('http://localhost:3000/authenticate', {
-            // axios.post('http://10.100.134.115:3000/authenticate', {
+            // axios.post('http://10.110.171.68:3000/authenticate', {
                 email: this.state.username,
                 password: this.state.password
                  // jane.doe@test.com

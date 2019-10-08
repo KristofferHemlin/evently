@@ -23,8 +23,8 @@ class ActivityOverview extends Component {
     };
 
     state = {
-        activityTitle: '',
-        activityId: null,
+        eventTitle: '',
+        activityID: null,
         activityLocation: '',
         activityDesc: '',
         startTime: '',
@@ -35,8 +35,12 @@ class ActivityOverview extends Component {
     
 
     componentDidMount() {
-        uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-        axios.get('http://localhost:3000/activities/1')
+        const uID = Number(this.props.navigation.getParam('uID', ''))
+        const activityID = Number(this.props.navigation.getParam('activityID', null))
+        const eventTitle = this.props.navigation.getParam('eventTitle', null)
+        console.log('eventTitle', eventTitle);
+        axios.get('http://localhost:3000/activities/' + activityID)
+        // axios.get('http://10.110.171.68:3000/activities/' + activityID)
 
             .then((response) => {
 
@@ -50,11 +54,12 @@ class ActivityOverview extends Component {
 
                 this.setState({
                     activityTitle: response.data.title,
-                    activityId: response.data.id,
+                    activityID: activityID,
                     activityDesc: response.data.description,
                     activityLocation: response.data.location,
                     startTime: startTime,
                     endTime: endTime,
+                    eventTitle: eventTitle,
                     // uID: uID
                 }
                 )
@@ -67,7 +72,12 @@ class ActivityOverview extends Component {
 
 
     showParticipantsHandler = () => {
+        console.log('activityID', this.state.activityID);
+
         this.props.navigation.navigate('ShowParticipantsRoute', {
+            activity: true,
+            activityID: this.state.activityID,
+            activityTitle: this.state.activityTitle,
         })
     }
 
@@ -76,9 +86,10 @@ class ActivityOverview extends Component {
 
         return (
             <View style={styles.pageContainer}>
+            <Header showModal={this.showModalHandler} />
                 <ScrollView>
 
-                    <EventImageHeader activityTitle={this.state.activityTitle}></EventImageHeader>
+                    <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
 
                     <View style={styles.eventInfo}>
 
@@ -86,7 +97,7 @@ class ActivityOverview extends Component {
 
                         <View style={styles.line}></View>
                         <Text style={[styles.titles, styles.subTitles]}>When?</Text>
-                        <Text style={styles.ordinaryText}>{this.state.startTime}</Text>
+                        <Text style={styles.ordinaryText}>{this.state.startTime} - {this.state.endTime}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>Where?</Text>
                         <Text style={styles.ordinaryText}>{this.state.activityLocation}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>What?</Text>
@@ -103,7 +114,7 @@ class ActivityOverview extends Component {
                     </View>
                 </ScrollView>
 
-                <Footer />
+                <Footer  uID={this.state.uID} eventTitle={this.state.eventTitle}/>
             </View>
         )
     }

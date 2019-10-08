@@ -13,6 +13,7 @@ import Footer from '../Footer/Footer';
 import ProfilePreview from '../ProfilePreview/ProfilePreview';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
+import SettingsModal from '../SettingsModal/SettingsModal';
 
 import styles from './ShowParticipants.style.js';
 
@@ -23,79 +24,93 @@ class ShowParticipants extends Component {
         header: null,
     };
 
-    state = {
-        firstName: '',
-        lastName: '',
-        companyDepartment: '',
-        uID: null,
+    constructor(props) {
+        super(props)
 
-        filterWord: '',
-        profileArray: [],
-        profileArrayFiltered: [],
+        this.state = {
+            firstName: '',
+            lastName: '',
+            companyDepartment: '',
+            uID: null,
+            eventTitle: '',
+            filterWord: '',
+            profileArray: [],
+            profileArrayFiltered: [],
+            showModal: false,
+            activityID: null,
+            headlineName: '',
+        }
 
-        eventName: 'Kroatien',
+        props.navigation.addListener('willFocus', () => {
+            console.log('willFocus showparticipants');
+            this.fetchParticipants()
+        })
 
-        headlineName: '',
     }
 
-    componentDidMount() {
-        let isEvent = this.props.navigation.getParam('event', false);
-        let isActivity = this.props.navigation.getParam('activity', false);
+    // componentWillUnmount () {
+    //     removeEventListener('willFocus');
+    // }
 
-        if(isEvent == true){
-            console.log("Showing Event");
-            this.setState({headlineName: 'Event Participants'})
 
-            uID = Number(this.props.navigation.getParam('uID', ''));
-            // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
-            axios.get('http://localhost:3000/events/1/users?sort=firstName:asc')
-                .then((response) => {
-                    profileArray = response.data.map((user) => ({
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        fullName: user.firstName + " " + user.lastName,
-                        companyDepartment: user.companyDepartment
-                    }));
-    
-                    this.setState({
-                        profileArray: profileArray,
-                        profileArrayFiltered: profileArray
-                    })
-    
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+
+  
+
+    fetchParticipants () {
+        const uID = Number(this.props.navigation.getParam('uID', ''));
+        const isEvent = this.props.navigation.getParam('event', false);
+        const isActivity = this.props.navigation.getParam('activity', false);
+        const activityID = this.props.navigation.getParam('activityID', null);
+        const eventTitle = this.props.navigation.getParam('eventTitle', '');
+        const activityTitle = this.props.navigation.getParam('activityTitle', '');
+        let url;
+        if(isEvent === true){
+            url = 'http://localhost:3000/events/1/users?sort=firstName:asc'
+            this.setState({headlineName: 'Event Participants', eventTitle: eventTitle,})
         }
-
-        if(isActivity == true){
-            console.log("Showing Activity");
-            this.setState({headlineName: 'Activity Participants'})
-
-            uID = Number(this.props.navigation.getParam('uID', ''));
-            // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
-
-            axios.get('http://localhost:3000/activities/1/users?sort=firstName:asc')
-                .then((response) => {
-    
-                    profileArray = response.data.map((user) => ({
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        fullName: user.firstName + " " + user.lastName,
-                        companyDepartment: user.companyDepartment
-                    }));
-    
-                    this.setState({
-                        profileArray: profileArray,
-                        profileArrayFiltered: profileArray
-                    })
-    
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        if(isActivity === true){
+            url = 'http://localhost:3000/activities/' + activityID + '/users?sort=firstName:asc'
+            this.setState({headlineName: activityTitle,  eventTitle: eventTitle,})
         }
+        axios.get(url)
+        .then((response) => {
+            profileArray = response.data.map((user) => ({
+                firstName: user.firstName,
+                lastName: user.lastName,
+                fullName: user.firstName + " " + user.lastName,
+                companyDepartment: user.companyDepartment
+            }));
 
+            this.setState({
+                profileArray: profileArray,
+                profileArrayFiltered: profileArray,
+                uID: uID,
+                activityID: activityID,
+            })
+
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    }
+    // componentDidMount() {
+    //     this.fetchParticipants()
+    // }
+
+    showModalHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal });
+        console.log(this.state.showModal);
+    }
+
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal });
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+        });
     }
 
     filterHandler(filterWord) {
@@ -104,9 +119,9 @@ class ShowParticipants extends Component {
 
         tempArray = tempArray.filter(function (user) {
             return user.firstName.toLowerCase().includes(filterWord.toLowerCase())
-            || user.lastName.toLowerCase().includes(filterWord.toLowerCase())
-            || user.fullName.toLowerCase().includes(filterWord.toLowerCase())
-            || user.companyDepartment.toLowerCase().includes(filterWord.toLowerCase())
+                || user.lastName.toLowerCase().includes(filterWord.toLowerCase())
+                || user.fullName.toLowerCase().includes(filterWord.toLowerCase())
+                || user.companyDepartment.toLowerCase().includes(filterWord.toLowerCase())
         }).map(function ({ firstName, lastName, companyDepartment }) {
             return { firstName, lastName, companyDepartment };
         });
@@ -117,19 +132,23 @@ class ShowParticipants extends Component {
 
     render() {
 
-        const filterWord = this.state.filterWord;
-
         return (
             <View style={styles.pageContainer}>
-                <Header />
+                {this.state.showModal ?
+                    <SettingsModal
+                        exitModal={this.showModalHandler}
+                        navigationModal={this.modalNavigationHandler}
+
+                    /> : null}
+                <Header showModal={this.showModalHandler} />
                 <ScrollView>
-                    <EventImageHeader eventTitle={this.state.eventName} />
-        <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.headlineName}</HeadlineOverview>
+                    <EventImageHeader eventTitle={this.state.eventTitle} />
+                    <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.headlineName}</HeadlineOverview>
 
                     <TextInput style={styles.searchBar}
                         placeholder="Search current event participants ..."
                         onChangeText={(filterWord) => this.filterHandler(filterWord)}
-                        // autoCapitalize={'none'}
+                    // autoCapitalize={'none'}
                     >
                     </TextInput>
 
@@ -148,7 +167,7 @@ class ShowParticipants extends Component {
                     </View>
 
                 </ScrollView>
-                <Footer />
+                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }

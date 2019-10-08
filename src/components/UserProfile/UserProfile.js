@@ -35,6 +35,7 @@ class UserProfile extends Component {
         about: 'nah bruh',
         allergies: 'Ogillar papaya',
         uID: null,
+        eventTitle: '',
         image: Croatia,
 
         ownProfilePage: true,
@@ -43,10 +44,10 @@ class UserProfile extends Component {
 
     }
 
-    fetchUserData = (uID) => {
+    fetchUserData = (uID, eventTitle) => {
         console.log(uID);
         axios.get('http://localhost:3000/users/' + uID)
-        // axios.get('http://10.100.134.115:3000/users/' + uID)
+        // axios.get('http://10.110.171.68:3000/users/' + uID)
             .then((response) => {
                 this.setState({
                     firstName: response.data.firstName,
@@ -54,6 +55,7 @@ class UserProfile extends Component {
                     email: response.data.email,
                     phone: response.data.phone,
                     uID: uID,
+                    eventTitle: eventTitle,
                 })
             })
             .catch((error) => {
@@ -62,9 +64,9 @@ class UserProfile extends Component {
     }
 
     componentDidMount() {
-        console.log("componentDidMount");
-        uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-        this.fetchUserData(uID);
+        const uID = Number(this.props.navigation.getParam('uID', ''));
+        const eventTitle = this.props.navigation.getParam('eventTitle', '');
+        this.fetchUserData(uID, eventTitle);
     }
 
     componentDidUpdate() {
@@ -72,7 +74,7 @@ class UserProfile extends Component {
         console.log("UPDATEEEEE!")
         uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
         axios.get('http://localhost:3000/users/' + uID)
-        // axios.get('http://10.100.134.115:3000/users/' + uID)
+        // axios.get('http://10.110.171.68:3000/users/' + uID)
             .then((response) => {
                 // sorry för fulkod, fixar det sen
                 if (this.state.firstName !== response.data.firstName ||
@@ -94,7 +96,8 @@ class UserProfile extends Component {
     }
     editButtonHandler = () => {
         this.props.navigation.navigate('ChangeUserProfileRoute', {
-            uID: this.state.uID
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
         });
     }
 
@@ -142,7 +145,7 @@ class UserProfile extends Component {
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer />
+                <Footer  uID={this.state.uID} eventTitle={this.state.eventTitle}/>
             </View>
         )
     }
