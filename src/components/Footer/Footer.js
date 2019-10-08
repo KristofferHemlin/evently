@@ -25,7 +25,9 @@ const footer = props => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.footerButton}
-                onPress = {() => props.navigation.navigate('EventParticipantsRoute')}
+                onPress = {() => props.navigation.navigate('ShowParticipantsRoute',{
+                    event: true,
+                })}
             >
                 {usersIcon}
                 <Text style={styles.footerIconTxt}>
