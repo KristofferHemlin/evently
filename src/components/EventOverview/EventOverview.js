@@ -85,6 +85,12 @@ class EventOverview extends Component {
         });          
     }
 
+    handleEditPress = () => {
+        this.props.navigation.navigate('ChangeEventRoute', {
+            uID: this.state.uID
+        }); 
+    }
+
 
     render() {
 
@@ -105,7 +111,12 @@ class EventOverview extends Component {
 
                     <View style={styles.eventInfo}>
 
-                        <HeadlineOverview infoButtonStatus={true} editButtonStatus={true}>Event Overview</HeadlineOverview>
+                        <HeadlineOverview
+                            onEditPress={() => this.handleEditPress()}
+                            infoButtonStatus={true}
+                            editButtonStatus={true}>
+                                Event Overview
+                        </HeadlineOverview>
                         {/* <View style={styles.mainTitleView}>
                             <View style={styles.mainTitleViewLeft}> 
                                 <Text style={[styles.titles, styles.mainTitle]}>Event overview</Text>

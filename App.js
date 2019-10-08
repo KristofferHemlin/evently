@@ -8,7 +8,8 @@ import CreateAcc from './src/components/CreateAcc/CreateAcc';
 import EventOverview from './src/components/EventOverview/EventOverview';
 import UserProfile from './src/components/UserProfile/UserProfile';
 import ChangeUserProfile from './src/components/ChangeUserProfile/ChangeUserProfile';
-import EventParticipants from './src/components/EventParticipants/EventParticipants'
+import EventParticipants from './src/components/EventParticipants/EventParticipants';
+import ChangeEvent from './src/components/ChangeEvent/ChangeEvent';
 
 import Calendar from './src/components/Calendar/Calendar';
 
@@ -19,7 +20,8 @@ const Appstack = createStackNavigator(
     EventParticipantsRoute: EventParticipants,
     UserProfileRoute: UserProfile,
     ChangeUserProfileRoute: ChangeUserProfile,
-  },
+    ChangeEventRoute: ChangeEvent
+  }
 )
 
 const AuthStack = createStackNavigator (
