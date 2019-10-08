@@ -66,8 +66,8 @@ class ActivityOverview extends Component {
     }
 
 
-    eventParticipantsHandler = () => {
-        this.props.navigation.navigate('EventParticipantsRoute', {
+    showParticipantsHandler = () => {
+        this.props.navigation.navigate('ShowParticipantsRoute', {
         })
     }
 
@@ -96,7 +96,7 @@ class ActivityOverview extends Component {
 
                         <Text style={styles.subTitles}>Participants</Text>
                         <TouchableOpacity
-                            onPress = {this.eventParticipantsHandler}
+                            onPress = {this.showParticipantsHandler}
                         >
                             <Text style={[styles.ordinaryText, styles.participantsText]}>Click here to see activity participants</Text>
                         </TouchableOpacity>

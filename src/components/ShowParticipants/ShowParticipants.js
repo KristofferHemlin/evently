@@ -14,9 +14,10 @@ import ProfilePreview from '../ProfilePreview/ProfilePreview';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
 
-import styles from './EventParticipants.style.js';
+import styles from './ShowParticipants.style.js';
 
-class EventParticipants extends Component {
+//SHOULD BE RENAMED TO 'ShowParticipants'
+class ShowParticipants extends Component {
 
     static navigationOptions = {
         header: null,
@@ -32,33 +33,69 @@ class EventParticipants extends Component {
         profileArray: [],
         profileArrayFiltered: [],
 
-        eventName: 'Kroatien'
+        eventName: 'Kroatien',
+
+        headlineName: '',
     }
 
     componentDidMount() {
-        uID = Number(this.props.navigation.getParam('uID', ''));
-        // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
-        axios.get('http://localhost:3000/events/1/users?sort=firstName:asc')
-            .then((response) => {
+        let isEvent = this.props.navigation.getParam('event', false);
+        let isActivity = this.props.navigation.getParam('activity', false);
 
-                // console.log(response);
+        if(isEvent == true){
+            console.log("Showing Event");
+            this.setState({headlineName: 'Event Participants'})
 
-                profileArray = response.data.map((user) => ({
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    fullName: user.firstName + " " + user.lastName,
-                    companyDepartment: user.companyDepartment
-                }));
-
-                this.setState({
-                    profileArray: profileArray,
-                    profileArrayFiltered: profileArray
+            uID = Number(this.props.navigation.getParam('uID', ''));
+            // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
+            axios.get('http://localhost:3000/events/1/users?sort=firstName:asc')
+                .then((response) => {
+                    profileArray = response.data.map((user) => ({
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        fullName: user.firstName + " " + user.lastName,
+                        companyDepartment: user.companyDepartment
+                    }));
+    
+                    this.setState({
+                        profileArray: profileArray,
+                        profileArrayFiltered: profileArray
+                    })
+    
                 })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
 
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        if(isActivity == true){
+            console.log("Showing Activity");
+            this.setState({headlineName: 'Activity Participants'})
+
+            uID = Number(this.props.navigation.getParam('uID', ''));
+            // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
+
+            axios.get('http://localhost:3000/activities/1/users?sort=firstName:asc')
+                .then((response) => {
+    
+                    profileArray = response.data.map((user) => ({
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        fullName: user.firstName + " " + user.lastName,
+                        companyDepartment: user.companyDepartment
+                    }));
+    
+                    this.setState({
+                        profileArray: profileArray,
+                        profileArrayFiltered: profileArray
+                    })
+    
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+
     }
 
     filterHandler(filterWord) {
@@ -87,7 +124,7 @@ class EventParticipants extends Component {
                 <Header />
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventName} />
-                    <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Event Participants</HeadlineOverview>
+        <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.headlineName}</HeadlineOverview>
 
                     <TextInput style={styles.searchBar}
                         placeholder="Search current event participants ..."
@@ -117,4 +154,4 @@ class EventParticipants extends Component {
     }
 }
 
-export default EventParticipants;
+export default ShowParticipants;
