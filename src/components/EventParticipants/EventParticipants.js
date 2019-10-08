@@ -13,6 +13,7 @@ import Footer from '../Footer/Footer';
 import ProfilePreview from '../ProfilePreview/ProfilePreview';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
+import SettingsModal from '../SettingsModal/SettingsModal';
 
 import styles from './EventParticipants.style.js';
 
@@ -31,6 +32,7 @@ class EventParticipants extends Component {
         filterWord: '',
         profileArray: [],
         profileArrayFiltered: [],
+        showModal: false,
 
         eventName: 'Kroatien'
     }
@@ -52,13 +54,28 @@ class EventParticipants extends Component {
 
                 this.setState({
                     profileArray: profileArray,
-                    profileArrayFiltered: profileArray
+                    profileArrayFiltered: profileArray,
+                    uID: uID,
                 })
 
             })
             .catch((error) => {
                 console.log(error);
             });
+    }
+
+    showModalHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal });
+        console.log(this.state.showModal);
+    }
+
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal }); 
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID
+        });          
     }
 
     filterHandler(filterWord) {
@@ -84,7 +101,13 @@ class EventParticipants extends Component {
 
         return (
             <View style={styles.pageContainer}>
-                <Header />
+            {this.state.showModal ? 
+                    <SettingsModal 
+                    exitModal={this.showModalHandler} 
+                    navigationModal={this.modalNavigationHandler}
+
+                /> : null}
+                <Header showModal={this.showModalHandler}/>
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventName} />
                     <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Event Participants</HeadlineOverview>

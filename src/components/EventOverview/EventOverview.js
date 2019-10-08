@@ -133,7 +133,7 @@ class EventOverview extends Component {
                     </View>
                 </ScrollView>
 
-                <Footer />
+                <Footer uID={this.state.uID}/>
             </View>
         )
     }

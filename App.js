@@ -16,8 +16,8 @@ import Calendar from './src/components/Calendar/Calendar';
 const Appstack = createStackNavigator(
   {
     EventOverviewRoute: EventOverview,
-    ActivityOverviewRoute: ActivityOverview,
     CalendarRoute: Calendar,
+    ActivityOverviewRoute: ActivityOverview,
     EventParticipantsRoute: EventParticipants,
     UserProfileRoute: UserProfile,
     ChangeUserProfileRoute: ChangeUserProfile,
