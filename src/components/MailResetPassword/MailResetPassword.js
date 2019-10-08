@@ -12,7 +12,7 @@ import axios from 'axios';
 
 import styles from './MailResetPassword.style'
 
-class ForgotPassword extends Component{
+class MailResetPassword extends Component{
 
     state = {
         email: '',
@@ -24,11 +24,7 @@ class ForgotPassword extends Component{
             axios.post('http://192.168.12.117:3000/authenticate', {
             })
             .then((response) => {
-                alert(response.data.message)
-                this.setState({
-                    token: response.data.token,
-                    isLoading: false});
-                this.props.navigation.navigate('EventOverviewRoute') 
+                console.log(response);
                 })
             .catch((error) => {
                 alert(error);
@@ -40,7 +36,6 @@ class ForgotPassword extends Component{
     }
     render(){
         return (
-    
             <View style={styles.inputForm}>
                     <View style={styles.inputContainer}>
                     <TextInput 
@@ -55,7 +50,7 @@ class ForgotPassword extends Component{
                     />
                     </View>
                      <TouchableOpacity style={styles.buttonContainer} onPress={this.checkEmail}>
-                    {this.state.isLoading ? <ActivityIndicator size={'small'} color={'#FFF'}/> :<Text style = {styles.buttonText}> Reset Password </Text>}
+                    {this.state.isLoading ? <ActivityIndicator size={'small'} color={'#FFF'}/> :<Text style = {styles.buttonText}> Send Mail</Text>}
                     </TouchableOpacity>
                 
             </View>
@@ -67,4 +62,4 @@ class ForgotPassword extends Component{
 
 };
 
-export default ForgotPassword;
+export default MailResetPassword;
