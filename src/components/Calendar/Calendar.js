@@ -25,8 +25,8 @@ class Calendar extends Component {
   }
 
   componentDidMount() {
-    // axios.get('http://localhost:3000/events/1/activities')
-    axios.get('http://10.110.171.120:3000/events/1/activities')
+    axios.get('http://localhost:3000/events/1/activities')
+    // axios.get('http://10.110.171.120:3000/events/1/activities')
       .then((response) => {
         console.log(response.data)
         responseArray = response.data.map(activity => ({
