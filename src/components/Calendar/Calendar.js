@@ -25,12 +25,16 @@ class Calendar extends Component {
     isUpdated: false,
     uID: null,
     showModal: false,
+    eventTitle: '',
+    // activityID: null,
+
   }
 
   componentDidMount() {
-    uID = Number(this.props.navigation.getParam('uID', ''));
+    const uID = Number(this.props.navigation.getParam('uID', ''));
+    const eventTitle = this.props.navigation.getParam('eventTitle', '');
     axios.get('http://localhost:3000/events/1/activities')
-      // axios.get('http://10.110.171.120:3000/events/1/activities')
+      // axios.get('http://10.110.171.68:3000/events/1/activities')
       .then((response) => {
         console.log(response.data)
         responseArray = response.data.map(activity => ({
@@ -38,7 +42,7 @@ class Calendar extends Component {
           end: moment(new Date(activity.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm:ss'),
           title: activity.title,
           summary: activity.location + '. ' + activity.description,
-
+          id: activity.id
         })
         )
 
@@ -46,6 +50,7 @@ class Calendar extends Component {
           activities: responseArray,
           isUpdated: true,
           uID: uID,
+          eventTitle: eventTitle,
         })
 
       })
@@ -64,13 +69,18 @@ class Calendar extends Component {
     let showModal = this.state.showModal;
     this.setState({ showModal: !showModal });
     this.props.navigation.navigate('UserProfileRoute', {
-      uID: this.state.uID
+      uID: this.state.uID,
+      eventTitle: this.state.eventTitle,
     });
   }
 
   eventClicked(event) {
-    // console.log("CLIKC")
-    this.props.navigation.navigate('ActivityOverviewRoute')
+    console.log(event)
+    console.log("this.state.eventTitle",this.state.eventTitle)
+    this.props.navigation.navigate('ActivityOverviewRoute', {
+      activityID: event.id,
+      eventTitle: this.state.eventTitle,
+    })
   }
 
   render() {
@@ -106,7 +116,7 @@ class Calendar extends Component {
             //scroll to first event of the day (default true)
             /> : null}
         </View>
-        <Footer />
+        <Footer uID={this.state.uID} eventTitle={this.state.eventTitle}/>
       </View>
 
     )

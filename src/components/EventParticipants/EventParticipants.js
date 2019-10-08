@@ -28,19 +28,18 @@ class EventParticipants extends Component {
         lastName: '',
         companyDepartment: '',
         uID: null,
-
+        eventTitle: '',
         filterWord: '',
         profileArray: [],
         profileArrayFiltered: [],
         showModal: false,
-
-        eventName: 'Kroatien'
     }
 
     componentDidMount() {
-        uID = Number(this.props.navigation.getParam('uID', ''));
-        // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
-        axios.get('http://localhost:3000/events/1/users?sort=firstName:asc')
+        const uID = Number(this.props.navigation.getParam('uID', ''));
+        const eventTitle = this.props.navigation.getParam('eventTitle', '');
+        // axios.get('http://10.110.171.68/events/1/users')
+        axios.get('http://localhost:3000/events/1/users')
             .then((response) => {
 
                 // console.log(response);
@@ -56,6 +55,7 @@ class EventParticipants extends Component {
                     profileArray: profileArray,
                     profileArrayFiltered: profileArray,
                     uID: uID,
+                    eventTitle: eventTitle,
                 })
 
             })
@@ -74,7 +74,8 @@ class EventParticipants extends Component {
         let showModal = this.state.showModal;
         this.setState({ showModal: !showModal }); 
         this.props.navigation.navigate('UserProfileRoute', {
-            uID: this.state.uID
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
         });          
     }
 
@@ -109,7 +110,7 @@ class EventParticipants extends Component {
                 /> : null}
                 <Header showModal={this.showModalHandler}/>
                 <ScrollView>
-                    <EventImageHeader eventTitle={this.state.eventName} />
+                    <EventImageHeader eventTitle={this.state.eventTitle} />
                     <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Event Participants</HeadlineOverview>
 
                     <TextInput style={styles.searchBar}
@@ -134,7 +135,7 @@ class EventParticipants extends Component {
                     </View>
 
                 </ScrollView>
-                <Footer />
+                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle}/>
             </View>
         )
     }

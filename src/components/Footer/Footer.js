@@ -21,6 +21,7 @@ const footer = props => {
                 style={styles.footerButton}
                 onPress={() => props.navigation.navigate('EventOverviewRoute', {
                     uID: props.uID,
+                    eventTitle: props.eventTitle
                 })}
             >
                 {infoIcon}
@@ -32,6 +33,7 @@ const footer = props => {
                 style={styles.footerButton}
                 onPress={() => props.navigation.navigate('EventParticipantsRoute', {
                     uID: props.uID,
+                    eventTitle: props.eventTitle
                 })}
             >
                 {usersIcon}
@@ -43,6 +45,7 @@ const footer = props => {
                 style={styles.footerButton}
                 onPress={() => props.navigation.navigate('CalendarRoute', {
                     uID: props.uID,
+                    eventTitle: props.eventTitle
                 })}
             >
                 {calendarIcon}
