@@ -28,7 +28,6 @@ class ChangeInfo extends Component {
             title: props.navigation.getParam('title', ''),
             parentRoute: props.navigation.getParam('parentRoute', ''),
             http_update_url: props.navigation.getParam('http_update_url', ''),
-            http_get_url: props.navigation.getParam('http_get_url', ''),
             fields: props.navigation.getParam('fields', ''),
             isLoading: false,
             wantToEdit: false,
@@ -51,7 +50,7 @@ class ChangeInfo extends Component {
         }, {})
         fields.title = this.state.title
 
-
+        console.log('asdasdfa', this.state.http_update_url)
         this.setState({ isLoading: true }, () => {
             axios.put(this.state.http_update_url, fields)
                 .then(() => {
@@ -71,31 +70,6 @@ class ChangeInfo extends Component {
                     this.setState({ isLoading: false })
                 })
         })
-    }
-
-
-
-
-    componentDidMount() {
-
-        uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-
-        axios.get(this.props.http_get_url)
-            .then((response) => {
-                let responseArray = []
-                let fields = this.state.fields
-                for (key in response) {
-                    responseArray.push(response[key]);
-                }
-                fields.forEach(field => { field.value = responseArray[0][field.key] })
-                this.setState({
-                    fields: fields,
-                    uID: uID,
-                })
-            })
-            .catch((error) => {
-                console.log(error);
-            });
     }
 
     render() {

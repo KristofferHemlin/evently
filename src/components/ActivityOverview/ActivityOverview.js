@@ -32,16 +32,14 @@ class ActivityOverview extends Component {
         contact: '',
         uID: null,
     }
-    
+
 
     componentDidMount() {
         const uID = Number(this.props.navigation.getParam('uID', ''))
         const activityID = Number(this.props.navigation.getParam('activityID', null))
         const eventTitle = this.props.navigation.getParam('eventTitle', null)
-        console.log('eventTitle', eventTitle);
-        axios.get('http://localhost:3000/activities/' + activityID)
-        // axios.get('http://10.110.171.68:3000/activities/' + activityID)
 
+        axios.get('http://localhost:3000/activities/' + activityID)
             .then((response) => {
 
                 console.log(response);
@@ -81,19 +79,64 @@ class ActivityOverview extends Component {
         })
     }
 
+    onEditSubmit(input) {
+        this.setState({
+            activityDesc: input.description,
+            activityLocation: input.location,
+            startTime: input.startTime,
+            endTime: input.endTime,
+        })
+    }
+
+    handleEditPress = () => {
+        this.onEditSubmit = this.onEditSubmit.bind(this)
+        var uID = this.state.uID
+        console.log(this.state.activityID)
+        this.props.navigation.navigate('ChangeInfoRoute', {
+            onEditSubmit: (input) => this.onEditSubmit(input),
+            uID: uID,
+            title: this.state.activityTitle,
+            parentRoute: 'ActivityOverviewRoute',
+            http_update_url: 'http://localhost:3000/activites/' + this.state.activityID,
+            fields: {
+                description: {
+                    label: 'Description',
+                    value: this.state.activityDesc
+                },
+                location: {
+                    label: 'Location',
+                    value: this.state.activityLocation
+                },
+                startTime: {
+                    label: 'startTime',
+                    value: this.state.startTime
+                },
+                endTime: {
+                    label: 'endTime',
+                    value: this.state.endTime
+                },
+            }
+        });
+        console.log('leaving ActivityOverview', this.state.uID)
+    }
 
     render() {
 
         return (
             <View style={styles.pageContainer}>
-            <Header showModal={this.showModalHandler} />
+                <Header showModal={this.showModalHandler} />
                 <ScrollView>
 
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
 
                     <View style={styles.eventInfo}>
 
-                        <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.activityTitle}</HeadlineOverview>
+                        <HeadlineOverview
+                            infoButtonStatus={false}
+                            onEditPress={() => this.handleEditPress()}
+                            editButtonStatus={true}>
+                            {this.state.activityTitle}
+                        </HeadlineOverview>
 
                         <View style={styles.line}></View>
                         <Text style={[styles.titles, styles.subTitles]}>When?</Text>
@@ -103,18 +146,17 @@ class ActivityOverview extends Component {
                         <Text style={[styles.titles, styles.subTitles]}>What?</Text>
                         <Text style={styles.ordinaryText}>{this.state.activityDesc}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>Who to contact?</Text>
-                        {/* Finns ingen att kontakta i databasen atm */}
 
                         <Text style={styles.subTitles}>Participants</Text>
                         <TouchableOpacity
-                            onPress = {this.showParticipantsHandler}
+                            onPress={this.showParticipantsHandler}
                         >
                             <Text style={[styles.ordinaryText, styles.participantsText]}>Click here to see activity participants</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
 
-                <Footer  uID={this.state.uID} eventTitle={this.state.eventTitle}/>
+                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }
