@@ -8,8 +8,7 @@ import {
     Linking,
 } from 'react-native';
 
-import bgImage from '../../../images/login-bg.png';
-
+import bgImage from './login-bg.png';
 import LoginForm from '../LoginForm/LoginForm';
 import ForgotPassword from '../MailResetPassword/MailResetPassword';
 
@@ -90,6 +89,7 @@ class Login extends Component {
                         onPress={this.lostPasswordHandler}>
                         {this.state.forgottenPassword ? <Text style={styles.signText}>Go back</Text> : <Text style={styles.signText}>Forgotten your password?</Text>}
                     </TouchableOpacity>
+
                 </View>
 
             </ImageBackground>

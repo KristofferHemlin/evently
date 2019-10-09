@@ -1,6 +1,7 @@
 import {
     StyleSheet,
 } from 'react-native';
+import { blue } from 'ansi-colors';
 
 export default StyleSheet.create({
 
@@ -21,6 +22,10 @@ export default StyleSheet.create({
         marginLeft: 30,
         marginRight: 30,
         marginTop: 10,
+    },
+
+    participantsText:{
+        color: 'cornflowerblue',
     },
 
 });
