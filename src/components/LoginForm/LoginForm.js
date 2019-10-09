@@ -70,6 +70,7 @@ class LoginForm extends Component{
                     placeholder={'Username'}
                     placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
                     onChangeText={(username) => this.setState({username})}
+                    autoCorrect = {false}
                     onSubmitEditing={() => this.passwordInput.focus()} // så den fokuserar på password rutan när man infogar username
                     />
                 </View>
@@ -82,16 +83,17 @@ class LoginForm extends Component{
                     onChangeText={(password) => this.setState({password})}
                     secureTextEntry={true}
                     placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
+                    autoCorrect = {false}
                     ref={(input) => this.passwordInput = input} // ref så man kan hoppa till password efter username
                     />
                     </View> 
                     <TouchableOpacity style={styles.buttonContainer} onPress={this.authUser}>
                     {this.state.isLoading ? <ActivityIndicator size={'small'} color={'#FFF'}/> :<Text style = {styles.buttonText}>Login </Text>}
                     </TouchableOpacity>
-                    <Text style={styles.forgottenPasswordTxt}
+                    {/* <Text style={styles.forgottenPasswordTxt}
                         onPress={() => Linking.openURL('#')}>
                         Forgotten your password?
-                    </Text>
+                    </Text> */}
             </View>
              
                  
