@@ -17,13 +17,26 @@ const commentsIcon = <FontAwesome5 size={25} name={'comments'} solid color="blac
 const footer = props => {
     return (
         <View style={styles.footerContainer}>
-            <TouchableOpacity style={styles.footerButton}>
+            <TouchableOpacity
+                style={styles.footerButton}
+                onPress={() => props.navigation.navigate('EventOverviewRoute', {
+                    uID: props.uID,
+                    eventTitle: props.eventTitle
+                })}
+            >
                 {infoIcon}
                 <Text style={styles.footerIconTxt}>
                     Event info
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.footerButton}>
+            <TouchableOpacity
+                style={styles.footerButton}
+                onPress={() => props.navigation.navigate('ShowParticipantsRoute', {
+                    uID: props.uID,
+                    eventTitle: props.eventTitle,
+                    event: true,                   
+                })}
+            >
                 {usersIcon}
                 <Text style={styles.footerIconTxt}>
                     Participants
@@ -31,7 +44,10 @@ const footer = props => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.footerButton}
-                onPress = {() => props.navigation.navigate('CalendarRoute')}
+                onPress={() => props.navigation.navigate('CalendarRoute', {
+                    uID: props.uID,
+                    eventTitle: props.eventTitle
+                })}
             >
                 {calendarIcon}
                 <Text style={styles.footerIconTxt}>
