@@ -9,7 +9,7 @@ import EventOverview from './src/components/EventOverview/EventOverview';
 import UserProfile from './src/components/UserProfile/UserProfile';
 import ChangeUserProfile from './src/components/ChangeUserProfile/ChangeUserProfile';
 import EventParticipants from './src/components/EventParticipants/EventParticipants';
-import ChangeEvent from './src/components/ChangeEvent/ChangeEvent';
+import ChangeInfo from './src/components/ChangeInfo/ChangeInfo';
 
 import Calendar from './src/components/Calendar/Calendar';
 
@@ -20,7 +20,7 @@ const Appstack = createStackNavigator(
     EventParticipantsRoute: EventParticipants,
     UserProfileRoute: UserProfile,
     ChangeUserProfileRoute: ChangeUserProfile,
-    ChangeEventRoute: ChangeEvent
+    ChangeInfoRoute: ChangeInfo
   }
 )
 

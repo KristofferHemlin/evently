@@ -86,10 +86,40 @@ class EventOverview extends Component {
     }
 
     handleEditPress = () => {
-        this.props.navigation.navigate('ChangeEventRoute', {
-            uID: this.state.uID
+        var uID = this.state.uID
+        this.props.navigation.navigate('ChangeInfoRoute', {
+            uID: uID,
+            title: this.state.eventTitle,
+            parentRoute: 'EventOverviewRoute',
+            http_update_url:  'http://localhost:3000/events/' + 1,
+            http_get_url: 'http://localhost:3000/users/' + uID + '/currentevent',
+            fields: {
+                description: {
+                    label: 'Description',
+                    value: this.state.eventDesc
+                },
+                location: {
+                    label: 'Location',
+                    value: this.state.eventLocation
+                },
+                startTime: {
+                    label: 'Start Date',
+                    value: this.state.startTime
+                },
+                endTime: {
+                    label: 'End Date',
+                    value: this.state.endTime
+                },
+                niceToKnow: {
+                    label: 'Nice-to-know',
+                    value: this.state.niceToKnow
+                },
+            }
         }); 
+        console.log('leaving EventOverview', this.state.uID)
     }
+
+
 
 
     render() {
