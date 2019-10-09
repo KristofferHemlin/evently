@@ -45,19 +45,16 @@ class ChangeInfo extends Component {
     };
 
     handleSubmit = () => {
-        console.log("CLICK!", this.state.fields)
         var fields = Object.keys(this.state.fields).reduce((map, key) => {
             map[key] = this.state.fields[key].value
             return map
         }, {})
         fields.title = this.state.title
-        console.log('handleSubmit', fields)
+
+
         this.setState({ isLoading: true }, () => {
-            axios.put(this.state.http_update_url, fields
-            )
-                .then((response) => {
-                    console.log(response)
-                    alert("Information changed");
+            axios.put(this.state.http_update_url, fields)
+                .then(() => {
                     this.setState({
                         isLoading: false,
                         wantToEdit: false,
@@ -67,7 +64,6 @@ class ChangeInfo extends Component {
                     });
                 }).
                 then(() => {
-                    console.log('bla blal', this.props)
                     this.props.navigation.state.params.onEditSubmit(fields)
                 })
                 .catch((error) => {
@@ -75,11 +71,10 @@ class ChangeInfo extends Component {
                     this.setState({ isLoading: false })
                 })
         })
-
     }
 
 
-    
+
 
     componentDidMount() {
 
@@ -93,7 +88,6 @@ class ChangeInfo extends Component {
                     responseArray.push(response[key]);
                 }
                 fields.forEach(field => { field.value = responseArray[0][field.key] })
-                console.log('component did mount', fields)
                 this.setState({
                     fields: fields,
                     uID: uID,
@@ -109,29 +103,29 @@ class ChangeInfo extends Component {
 
         return (
             !this.state ? <View /> :
-            <View style={styles.pageContainer}>
-                <Header />
-                <ScrollView>
-                    <KeyboardAwareScrollView>
-                        <View style={styles.userInfo}>
-                            <BackButton />
-                            <HeadlineOverview
-                                infoButtonStatus={false}
-                                editButtonStatus={this.state.wantToEdit ? true : false}
-                            >{'Edit ' + this.state.title}
-                            </HeadlineOverview>
-                            <View style={styles.line}></View>
-                            <EditableForm
-                                fields={this.state.fields}
-                                handleSubmit={this.handleSubmit}
-                                isLoading={this.state.isLoading}
-                                handleInputChange={this.handleInputChange}
-                                formStyle={styles} />
-                        </View>
-                    </KeyboardAwareScrollView>
-                </ScrollView>
-                <Footer />
-            </View>)
+                <View style={styles.pageContainer}>
+                    <Header />
+                    <ScrollView>
+                        <KeyboardAwareScrollView>
+                            <View style={styles.userInfo}>
+                                <BackButton />
+                                <HeadlineOverview
+                                    infoButtonStatus={false}
+                                    editButtonStatus={this.state.wantToEdit ? true : false}
+                                >{'Edit ' + this.state.title}
+                                </HeadlineOverview>
+                                <View style={styles.line}></View>
+                                <EditableForm
+                                    fields={this.state.fields}
+                                    handleSubmit={this.handleSubmit}
+                                    isLoading={this.state.isLoading}
+                                    handleInputChange={this.handleInputChange}
+                                    formStyle={styles} />
+                            </View>
+                        </KeyboardAwareScrollView>
+                    </ScrollView>
+                    <Footer />
+                </View>)
     }
 }
 
