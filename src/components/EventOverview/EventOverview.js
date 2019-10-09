@@ -42,6 +42,8 @@ class EventOverview extends Component {
     }
     
 
+
+
     componentDidMount() {
         uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
         axios.get('http://localhost:3000/users/' + uID + '/currentevent')
@@ -62,8 +64,7 @@ class EventOverview extends Component {
                     startTime: startTime,
                     endTime: endTime,
                     uID: uID
-                }
-                )
+                })
             })
             .catch((error) => {
                 console.log(error);
@@ -74,7 +75,6 @@ class EventOverview extends Component {
     showModalHandler = () => {
         let showModal = this.state.showModal;
         this.setState({ showModal: !showModal });
-        console.log(this.state.showModal);
     }
 
     modalNavigationHandler = () => {
@@ -86,9 +86,21 @@ class EventOverview extends Component {
         });          
     }
 
+    onEditSubmit(input) {
+        this.setState({
+            eventDesc: input.description,
+            niceToKnow: input.niceToKnow,
+            eventLocation: input.location,
+            startTime: input.startTime,
+            endTime: input.endTime,
+        })
+    }
+
     handleEditPress = () => {
+        this.onEditSubmit = this.onEditSubmit.bind(this)
         var uID = this.state.uID
         this.props.navigation.navigate('ChangeInfoRoute', {
+            onEditSubmit: (input) => this.onEditSubmit(input),
             uID: uID,
             title: this.state.eventTitle,
             parentRoute: 'EventOverviewRoute',

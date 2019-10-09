@@ -65,6 +65,10 @@ class ChangeInfo extends Component {
                     this.props.navigation.navigate(this.state.parentRoute, {
                         uID: this.state.uID,
                     });
+                }).
+                then(() => {
+                    console.log('bla blal', this.props)
+                    this.props.navigation.state.params.onEditSubmit(fields)
                 })
                 .catch((error) => {
                     console.log(error);
