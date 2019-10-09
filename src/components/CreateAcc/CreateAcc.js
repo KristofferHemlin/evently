@@ -39,7 +39,7 @@ class CreateAcc extends Component{
               {
                 key: 'email',
                 name: 'Email',
-                type: 'text',
+                type: 'email',
                 label: 'Email',
                 value: '',
                 secureText: false,
