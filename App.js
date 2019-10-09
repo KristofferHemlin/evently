@@ -1,3 +1,4 @@
+  
 import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
@@ -6,52 +7,25 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import Login from './src/components/Login/Login';
 import CreateAcc from './src/components/CreateAcc/CreateAcc';
 import EventOverview from './src/components/EventOverview/EventOverview';
-import ResetPassword from './src/components/ResetPassword/ResetPassword'
+import ResetPassword from './src/components/ResetPassword/ResetPassword';
 
-
-// const Appstack = createStackNavigator(
-//   {
-//     EventOverviewRoute:{ 
-//       screen: EventOverview,
-//       path: 'eventoverview',
-//     }
-    
-//   },
-// )
-
-
-
-const AuthStack = createStackNavigator(
+const Appstack = createStackNavigator(
   {
-    LoginRoute: {
-      screen: Login,
-    },
-    ResetPasswordRoute: {
-      screen: ResetPassword,
-    },
-    CreateAccRoute:{
-      screen: CreateAcc,
-    } 
+    EventOverviewRoute: EventOverview,
   },
 )
 
+const AuthStack = createStackNavigator (
+  {
+   LoginRoute: Login, 
+   CreateAccRoute: CreateAcc,
+   ResetPasswordRoute: ResetPassword,
+  },
+)
 
-
-// const prefix = 'evently://evently/';
-const App = createAppContainer(AuthStack)
-// const MainApp = () => <App uriPrefix={prefix} />;
-export default App;
-
-// export default createAppContainer(createSwitchNavigator(
-//   {
-//     AuthStack: {
-//       screen: AuthStack,
-//       path: 'auth',
-//     },
-//     // AppStack: {
-//     //   screen: Appstack,
-//     //   path: 'app'
-//     // } 
-//   }
-// ))
-
+export default createAppContainer(createSwitchNavigator(
+  {
+    AuthStack: AuthStack,
+    AppStackr: Appstack, 
+  }
+))
