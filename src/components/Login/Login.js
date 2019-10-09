@@ -24,28 +24,9 @@ class Login extends Component {
         forgottenPassword: false,
     }
 
-    // componentDidMount() {
-    //     // if (Platform.OS === 'android') {
-    //     //     Linking.getInitialURL().then(url => {
-    //     //         this.navigate(url);
-    //     //     });
-    //     // } else {
-    //     //     console.log('addEventListener');
-    //     //     Linking.addEventListener('url', this.handleOpenURL);
-    //     // }
-
-    //     Linking.getInitialURL().then((ev) => {
-    //         console.log('getInitialURL');
-    //         if (ev) {
-    //             this._handleOpenURL(ev);
-    //         }
-    //     }).catch(err => {
-    //         console.warn('An error occurred', err);
-    //     });
-    //     Linking.addEventListener('url', this.handleOpenURL);
-    // }
-
     componentDidMount() {
+
+// deep linking stuff
         Linking.addEventListener('url', this.handleOpenURL)
         console.log('addEventListener');
         Linking.getInitialURL().then((url) => {
@@ -53,18 +34,22 @@ class Login extends Component {
                 this.handleOpenURL({ url });
             }
         })
+
     }
 
 
 
     componentWillUnmount() {
+        // deep linking stuff
         Linking.removeEventListener('url', this.handleOpenURL);
     }
 
     handleOpenURL = (event) => {
+        // deep linking stuff
         this.navigate(event.url);
     }
 
+    // deep linking stuff
     navigate = (url) => {
         console.log('url', url);
         const { navigate } = this.props.navigation;
