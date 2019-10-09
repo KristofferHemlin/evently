@@ -21,18 +21,41 @@ class Login extends Component {
     };
 
     state = {
-        forgottenPassword: true,
+        forgottenPassword: false,
     }
 
+    // componentDidMount() {
+    //     // if (Platform.OS === 'android') {
+    //     //     Linking.getInitialURL().then(url => {
+    //     //         this.navigate(url);
+    //     //     });
+    //     // } else {
+    //     //     console.log('addEventListener');
+    //     //     Linking.addEventListener('url', this.handleOpenURL);
+    //     // }
+
+    //     Linking.getInitialURL().then((ev) => {
+    //         console.log('getInitialURL');
+    //         if (ev) {
+    //             this._handleOpenURL(ev);
+    //         }
+    //     }).catch(err => {
+    //         console.warn('An error occurred', err);
+    //     });
+    //     Linking.addEventListener('url', this.handleOpenURL);
+    // }
+
     componentDidMount() {
-        if (Platform.OS === 'android') {
-            Linking.getInitialURL().then(url => {
-                this.navigate(url);
-            });
-        } else {
-            Linking.addEventListener('url', this.handleOpenURL);
-        }
+        Linking.addEventListener('url', this.handleOpenURL)
+        console.log('addEventListener');
+        Linking.getInitialURL().then((url) => {
+            if (url) {
+                this.handleOpenURL({ url });
+            }
+        })
     }
+
+
 
     componentWillUnmount() {
         Linking.removeEventListener('url', this.handleOpenURL);
@@ -43,13 +66,19 @@ class Login extends Component {
     }
 
     navigate = (url) => {
-
+        console.log('url', url);
+        const { navigate } = this.props.navigation;
         const route = url.replace(/.*?:\/\//g, '');
-        const id = route.match(/\/([^\/]+)\/?$/)[1];
+        console.log('route', route);
         const routeName = route.split('/')[0];
-
         console.log('routeName', routeName);
+
+        if (routeName === 'resetpassword') {
+            navigate('ResetPasswordRoute')
+        }
     }
+
+
 
 
     lostPasswordHandler = () => {
