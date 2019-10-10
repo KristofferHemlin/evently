@@ -75,7 +75,7 @@ class Login extends Component {
         return (
             <ImageBackground source={bgImage} style={styles.pageContainer}>
                 <View style={styles.logoContainer}>
-                    <Text style={styles.logoText}>EVENTLY</Text>
+                    <Text style={styles.logoText}>Claremont Event</Text>
                 </View>
                 {this.state.forgottenPassword ? <ForgotPassword /> : <LoginForm navigation={this.props.navigation} />}
                 <View style={styles.signUpContainer}>
