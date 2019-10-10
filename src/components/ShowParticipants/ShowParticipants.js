@@ -46,7 +46,7 @@ class ShowParticipants extends Component {
         })
     }
 
-    fetchParticipants () {
+    fetchParticipants() {
         const uID = Number(this.props.navigation.getParam('uID', ''));
         const isEvent = this.props.navigation.getParam('event', false);
         const isActivity = this.props.navigation.getParam('activity', false);
@@ -54,38 +54,38 @@ class ShowParticipants extends Component {
         const eventTitle = this.props.navigation.getParam('eventTitle', '');
         const activityTitle = this.props.navigation.getParam('activityTitle', '');
         let url;
-        if(isEvent === true){
+        if (isEvent === true) {
             url = 'http://localhost:3000/events/1/users?sort=firstName:asc'
-            this.setState({headlineName: 'Event Participants', eventTitle: eventTitle,})
+            this.setState({ headlineName: 'Event Participants', eventTitle: eventTitle, })
         }
-        if(isActivity === true){
+        if (isActivity === true) {
             url = 'http://localhost:3000/activities/' + activityID + '/users?sort=firstName:asc'
-            this.setState({headlineName: activityTitle,  eventTitle: eventTitle,})
+            this.setState({ headlineName: activityTitle, eventTitle: eventTitle, })
         }
-        {isLoading:true}
-        this.setState({isLoading:true}, () => {
+        this.setState({ isLoading: true }, () => {
             axios.get(url)
-            .then((response) => {
-                profileArray = response.data.map((user) => ({
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    fullName: user.firstName + " " + user.lastName,
-                    companyDepartment: user.companyDepartment,
-                }));
+                .then((response) => {
+                    profileArray = response.data.map((user) => ({
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        participantID: user.id,
+                        fullName: user.firstName + " " + user.lastName,
+                        companyDepartment: user.companyDepartment,
+                    }));
 
-                this.setState({
-                    profileArray: profileArray,
-                    profileArrayFiltered: profileArray,
-                    uID: uID,
-                    activityID: activityID,
-                    isLoading: false,
+                    this.setState({
+                        profileArray: profileArray,
+                        profileArrayFiltered: profileArray,
+                        uID: uID,
+                        activityID: activityID,
+                        isLoading: false,
+                    })
+
                 })
-
-            })
-            .catch((error) => {
-                console.log(error);
-                this.setState({isLoading: false})
-            });
+                .catch((error) => {
+                    console.log(error);
+                    this.setState({ isLoading: false })
+                });
         })
     }
 
@@ -121,6 +121,15 @@ class ShowParticipants extends Component {
 
     }
 
+    profilePreviewOnClickHandler = (participantID) => {
+        console.log('participantID', participantID);
+        this.props.navigation.navigate('UserProfileRoute', {
+            participantID: participantID,
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+        });
+    }
+
     render() {
 
         return (
@@ -145,16 +154,17 @@ class ShowParticipants extends Component {
                     <Text style={styles.subTitles}>Participants</Text>
                     <View style={styles.line}></View>
 
-                    {this.state.isLoading ? <ActivityIndicator size={'small'} style={styles.loadingIcon} color={'#rgba(74,144,226,1)'}/> :
-                    <View style={styles.profileList}>
-                        {this.state.profileArrayFiltered.map((input, index) => {
-                            return <ProfilePreview
-                                key={index}
-                                companyDepartment={this.state.profileArrayFiltered[index].companyDepartment}>
-                                {this.state.profileArrayFiltered[index].firstName} {this.state.profileArrayFiltered[index].lastName}
-                            </ProfilePreview>
-                        })}
-                    </View>
+                    {this.state.isLoading ? <ActivityIndicator size={'small'} style={styles.loadingIcon} color={'#rgba(74,144,226,1)'} /> :
+                        <View style={styles.profileList}>
+                            {this.state.profileArrayFiltered.map((input, index) => {
+                                return <ProfilePreview
+                                    onClick={() => this.profilePreviewOnClickHandler(input.participantID)}
+                                    key={index}
+                                    companyDepartment={this.state.profileArrayFiltered[index].companyDepartment}>
+                                    {this.state.profileArrayFiltered[index].firstName} {this.state.profileArrayFiltered[index].lastName}
+                                </ProfilePreview>
+                            })}
+                        </View>
                     }
 
                 </ScrollView>

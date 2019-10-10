@@ -38,16 +38,29 @@ class UserProfile extends Component {
             uID: null,
             eventTitle: '',
             image: Croatia,
-
             ownProfilePage: true,
             showModal: false,
         }
         props.navigation.addListener('willFocus', () => {
             console.log('willfocus');
             const uID = Number(this.props.navigation.getParam('uID', ''));
+            const participantID = Number(this.props.navigation.getParam('participantID', null));
             const eventTitle = this.props.navigation.getParam('eventTitle', '');
-            this.fetchUserData(uID, eventTitle);
-            
+            console.log('participantID', participantID);
+            console.log('uID', uID);
+            if(participantID === 0){
+                console.log('null');
+                this.fetchUserData(uID, eventTitle);
+            } else {
+                console.log('not null');
+                this.fetchUserData(participantID, eventTitle);
+            }
+            if(participantID === uID || participantID === 0){
+                this.setState({ownProfilePage: true})
+            } else {
+                this.setState({ownProfilePage: false})
+            }
+                          
         })
     }
 
@@ -108,7 +121,7 @@ class UserProfile extends Component {
 
                             <HeadlineOverview
                                 infoButtonStatus={false}
-                                editButtonStatus={true}
+                                editButtonStatus={this.state.ownProfilePage}
                                 onEditPress={this.editButtonHandler}
                             >User Profile</HeadlineOverview>
 
