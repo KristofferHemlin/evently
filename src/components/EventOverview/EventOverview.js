@@ -42,6 +42,8 @@ class EventOverview extends Component {
     }
     
 
+
+
     componentDidMount() {
         uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
         axios.get('http://localhost:3000/users/' + uID + '/currentevent')
@@ -62,8 +64,7 @@ class EventOverview extends Component {
                     startTime: startTime,
                     endTime: endTime,
                     uID: uID
-                }
-                )
+                })
             })
             .catch((error) => {
                 console.log(error);
@@ -74,7 +75,6 @@ class EventOverview extends Component {
     showModalHandler = () => {
         let showModal = this.state.showModal;
         this.setState({ showModal: !showModal });
-        console.log(this.state.showModal);
     }
 
     modalNavigationHandler = () => {
@@ -85,6 +85,54 @@ class EventOverview extends Component {
             eventTitle: this.state.eventTitle,
         });          
     }
+
+    onEditSubmit(input) {
+        this.setState({
+            eventDesc: input.description,
+            niceToKnow: input.niceToKnow,
+            eventLocation: input.location,
+            startTime: input.startTime,
+            endTime: input.endTime,
+        })
+    }
+
+    handleEditPress = () => {
+        this.onEditSubmit = this.onEditSubmit.bind(this)
+        var uID = this.state.uID
+        this.props.navigation.navigate('ChangeInfoRoute', {
+            onEditSubmit: (input) => this.onEditSubmit(input),
+            uID: uID,
+            title: this.state.eventTitle,
+            parentRoute: 'EventOverviewRoute',
+            http_update_url:  'http://localhost:3000/events/' + 1,
+            http_get_url: 'http://localhost:3000/users/' + uID + '/currentevent',
+            fields: {
+                description: {
+                    label: 'Description',
+                    value: this.state.eventDesc
+                },
+                location: {
+                    label: 'Location',
+                    value: this.state.eventLocation
+                },
+                startTime: {
+                    label: 'Start Date',
+                    value: this.state.startTime
+                },
+                endTime: {
+                    label: 'End Date',
+                    value: this.state.endTime
+                },
+                niceToKnow: {
+                    label: 'Nice-to-know',
+                    value: this.state.niceToKnow
+                },
+            }
+        }); 
+        console.log('leaving EventOverview', this.state.uID)
+    }
+
+
 
 
     render() {
@@ -106,7 +154,12 @@ class EventOverview extends Component {
 
                     <View style={styles.eventInfo}>
 
-                        <HeadlineOverview infoButtonStatus={true} editButtonStatus={true}>Event Overview</HeadlineOverview>
+                        <HeadlineOverview
+                            onEditPress={() => this.handleEditPress()}
+                            infoButtonStatus={true}
+                            editButtonStatus={true}>
+                                Event Overview
+                        </HeadlineOverview>
                         {/* <View style={styles.mainTitleView}>
                             <View style={styles.mainTitleViewLeft}> 
                                 <Text style={[styles.titles, styles.mainTitle]}>Event overview</Text>
