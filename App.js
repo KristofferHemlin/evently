@@ -20,6 +20,7 @@ const Appstack = createStackNavigator(
     EventOverviewRoute: EventOverview,
     CalendarRoute: Calendar,
     ActivityOverviewRoute: ActivityOverview,
+    ResetPasswordRoute: ResetPassword,
     ShowParticipantsRoute: ShowParticipants,
     UserProfileRoute: UserProfile,
     ChangeUserProfileRoute: ChangeUserProfile,
