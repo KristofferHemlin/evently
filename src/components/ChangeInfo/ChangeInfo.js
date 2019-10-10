@@ -22,20 +22,15 @@ class ChangeInfo extends Component {
     static navigationOptions = {
         header: null
     };
-    constructor(props) {
-        super(props)
-        this.state = {
-            title: props.navigation.getParam('title', ''),
-            parentRoute: props.navigation.getParam('parentRoute', ''),
-            http_update_url: props.navigation.getParam('http_update_url', ''),
-            http_get_url: props.navigation.getParam('http_get_url', ''),
-            fields: props.navigation.getParam('fields', ''),
+
+    state = {
+            title: this.props.navigation.getParam('title', ''),
+            parentRoute: this.props.navigation.getParam('parentRoute', ''),
+            http_update_url: this.props.navigation.getParam('http_update_url', ''),
+            fields: this.props.navigation.getParam('fields', ''),
             isLoading: false,
             wantToEdit: false,
-            uID: props.navigation.getParam('uID', '')
-        }
-        this.handleInputChange = this.handleInputChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+            uID: this.props.navigation.getParam('uID', '')
     }
 
     handleInputChange = (value, key) => {
@@ -51,21 +46,10 @@ class ChangeInfo extends Component {
         }, {})
         fields.title = this.state.title
 
-
         this.setState({ isLoading: true }, () => {
             axios.put(this.state.http_update_url, fields)
-                .then(() => {
-                    this.setState({
-                        isLoading: false,
-                        wantToEdit: false,
-                    });
-                    this.props.navigation.navigate(this.state.parentRoute, {
-                        uID: this.state.uID,
-                    });
-                }).
-                then(() => {
-                    this.props.navigation.state.params.onEditSubmit(fields)
-                })
+                .then(() => this.props.navigation.state.params.onEditSubmit(fields))
+                .then(() => this.props.navigation.navigate(this.state.parentRoute))
                 .catch((error) => {
                     console.log(error);
                     this.setState({ isLoading: false })
@@ -73,34 +57,7 @@ class ChangeInfo extends Component {
         })
     }
 
-
-
-
-    componentDidMount() {
-
-        uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-
-        axios.get(this.props.http_get_url)
-            .then((response) => {
-                let responseArray = []
-                let fields = this.state.fields
-                for (key in response) {
-                    responseArray.push(response[key]);
-                }
-                fields.forEach(field => { field.value = responseArray[0][field.key] })
-                this.setState({
-                    fields: fields,
-                    uID: uID,
-                })
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
     render() {
-        console.log('render', this.state)
-
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
@@ -111,7 +68,7 @@ class ChangeInfo extends Component {
                                 <BackButton />
                                 <HeadlineOverview
                                     infoButtonStatus={false}
-                                    editButtonStatus={this.state.wantToEdit ? true : false}
+                                    editButtonStatus={this.state.wantToEdit}
                                 >{'Edit ' + this.state.title}
                                 </HeadlineOverview>
                                 <EditableForm
@@ -120,6 +77,7 @@ class ChangeInfo extends Component {
                                     isLoading={this.state.isLoading}
                                     handleInputChange={this.handleInputChange}
                                     formStyle={styles} />
+                                    
                             </View>
                         </KeyboardAwareScrollView>
                     </ScrollView>
@@ -143,12 +101,12 @@ const EditableForm = ({ fields, handleSubmit, isLoading, handleInputChange, form
                     <Text style={styles.inputFormTitle}>{fields[key].label}</Text>
                     <TextInput
                         value={fields[key].value}
-                        style={formStyle.input}
                         type={fields[key].type}
                         label={fields[key].label}
                         placeholder={fields[key].value}
-                        secureTextEntry={false}
                         onChangeText={(value) => handleInputChange(value, key)}
+                        secureTextEntry={false}
+                        style={formStyle.input}
                     />
                 </View>
             )
