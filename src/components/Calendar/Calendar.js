@@ -80,6 +80,8 @@ class Calendar extends Component {
     this.props.navigation.navigate('ActivityOverviewRoute', {
       activityID: event.id,
       eventTitle: this.state.eventTitle,
+      uID: this.state.uID,
+      
     })
   }
 

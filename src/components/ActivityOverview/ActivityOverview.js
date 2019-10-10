@@ -13,6 +13,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
+import SettingsModal from '../SettingsModal/SettingsModal';
 
 import styles from './ActivityOverview.style.js';
 
@@ -31,11 +32,13 @@ class ActivityOverview extends Component {
         endTime: '',
         contact: '',
         uID: null,
+        showModal: false,
     }
 
 
     componentDidMount() {
         const uID = Number(this.props.navigation.getParam('uID', ''))
+        console.log('activityoverview this.state.uID', uID);
         const activityID = Number(this.props.navigation.getParam('activityID', null))
         const eventTitle = this.props.navigation.getParam('eventTitle', null)
 
@@ -58,7 +61,7 @@ class ActivityOverview extends Component {
                     startTime: startTime,
                     endTime: endTime,
                     eventTitle: eventTitle,
-                    // uID: uID
+                    uID: uID
                 }
                 )
             })
@@ -120,10 +123,31 @@ class ActivityOverview extends Component {
         console.log('leaving ActivityOverview', this.state.uID)
     }
 
+
+    showModalHandler = () => {
+        let showModal = this.state.showModal
+        this.setState({ showModal: !showModal })
+        console.log(this.state.showModal)
+    }
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal });
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+        });
+    }
+
     render() {
 
         return (
             <View style={styles.pageContainer}>
+                {this.state.showModal ?
+                    <SettingsModal
+                        exitModal={this.showModalHandler}
+                        navigationModal={this.modalNavigationHandler}
+
+                    /> : null}
                 <Header showModal={this.showModalHandler} />
                 <ScrollView>
 

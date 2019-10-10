@@ -24,30 +24,38 @@ class UserProfile extends Component {
         header: null,
     };
 
-    state = {
+    constructor(props) {
+        super(props)
+        this.state = {
+            firstName: '',
+            lastName: '',
+            // company: '',
+            // role: '', 
+            email: '',
+            phone: '070 999 999',
+            about: 'nah bruh',
+            allergies: 'Ogillar papaya',
+            uID: null,
+            eventTitle: '',
+            image: Croatia,
 
-        firstName: '',
-        lastName: '',
-        // company: '',
-        // role: '', 
-        email: '',
-        phone: '070 999 999',
-        about: 'nah bruh',
-        allergies: 'Ogillar papaya',
-        uID: null,
-        eventTitle: '',
-        image: Croatia,
-
-        ownProfilePage: true,
-        showModal: false,
-
-
+            ownProfilePage: true,
+            showModal: false,
+        }
+        props.navigation.addListener('willFocus', () => {
+            console.log('willfocus');
+            const uID = Number(this.props.navigation.getParam('uID', ''));
+            const eventTitle = this.props.navigation.getParam('eventTitle', '');
+            this.fetchUserData(uID, eventTitle);
+            
+        })
     }
 
+
+
     fetchUserData = (uID, eventTitle) => {
-        console.log(uID);
         axios.get('http://localhost:3000/users/' + uID)
-        // axios.get('http://10.110.171.68:3000/users/' + uID)
+            // axios.get('http://10.110.171.68:3000/users/' + uID)
             .then((response) => {
                 this.setState({
                     firstName: response.data.firstName,
@@ -63,37 +71,6 @@ class UserProfile extends Component {
             });
     }
 
-    componentDidMount() {
-        const uID = Number(this.props.navigation.getParam('uID', ''));
-        const eventTitle = this.props.navigation.getParam('eventTitle', '');
-        this.fetchUserData(uID, eventTitle);
-    }
-
-    componentDidUpdate() {
-        // TODO kolla om dåligt för prestandan att ha componentdidupdate såhär
-        console.log("UPDATEEEEE!")
-        uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-        axios.get('http://localhost:3000/users/' + uID)
-        // axios.get('http://10.110.171.68:3000/users/' + uID)
-            .then((response) => {
-                // sorry för fulkod, fixar det sen
-                if (this.state.firstName !== response.data.firstName ||
-                    this.state.lastName !== response.data.lastName ||
-                    this.state.email !== response.data.email ||
-                    this.state.phone !== response.data.phone) {
-                    this.setState({
-                        firstName: response.data.firstName,
-                        lastName: response.data.lastName,
-                        email: response.data.email,
-                        phone: response.data.phone,
-                        uID: uID,
-                    })
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
     editButtonHandler = () => {
         this.props.navigation.navigate('ChangeUserProfileRoute', {
             uID: this.state.uID,
@@ -106,11 +83,24 @@ class UserProfile extends Component {
         this.setState({ showModal: !showModal })
         console.log(this.state.showModal)
     }
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal });
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+        });
+    }
 
     render() {
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ? <SettingsModal exitModal={this.showModalHandler} /> : null}
+                {this.state.showModal ?
+                    <SettingsModal
+                        exitModal={this.showModalHandler}
+                        navigationModal={this.modalNavigationHandler}
+
+                    /> : null}
                 <Header showModal={this.showModalHandler} />
                 <ScrollView>
                     <KeyboardAwareScrollView>
@@ -145,7 +135,7 @@ class UserProfile extends Component {
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer  uID={this.state.uID} eventTitle={this.state.eventTitle}/>
+                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }

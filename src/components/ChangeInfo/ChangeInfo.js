@@ -15,6 +15,7 @@ import BackButton from '../BackButton/BackButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import styles from './ChangeInfo.style';
+import SettingsModal from '../SettingsModal/SettingsModal';
 
 class ChangeInfo extends Component {
 
@@ -30,7 +31,8 @@ class ChangeInfo extends Component {
             fields: this.props.navigation.getParam('fields', ''),
             isLoading: false,
             wantToEdit: false,
-            uID: this.props.navigation.getParam('uID', '')
+            uID: this.props.navigation.getParam('uID', ''),
+            showModal: false,
     }
 
     handleInputChange = (value, key) => {
@@ -57,11 +59,31 @@ class ChangeInfo extends Component {
         })
     }
 
+    showModalHandler = () => {
+        let showModal = this.state.showModal
+        this.setState({ showModal: !showModal })
+        console.log(this.state.showModal)
+    }
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal }); 
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+        });          
+    }
+
     render() {
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
-                    <Header />
+                  {this.state.showModal ?
+                        <SettingsModal
+                            exitModal={this.showModalHandler}
+                            navigationModal={this.modalNavigationHandler}
+
+                        /> : null}
+                    <Header showModal={this.showModalHandler} />
                     <ScrollView>
                         <KeyboardAwareScrollView>
                             <View style={styles.userInfo}>

@@ -12,7 +12,7 @@ import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-
+import SettingsModal from '../SettingsModal/SettingsModal';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import BackButton from '../BackButton/BackButton';
@@ -65,6 +65,7 @@ class ChangeUserProfile extends Component {
         image: Croatia,
         uID: null,
         eventTitle: '',
+        showModal: false,
     }
 
     componentDidMount() {
@@ -143,11 +144,31 @@ class ChangeUserProfile extends Component {
         })
 
     }
+
+    showModalHandler = () => {
+        let showModal = this.state.showModal
+        this.setState({ showModal: !showModal })
+        console.log(this.state.showModal)
+    }
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal }); 
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+        });          
+    }
     render() {
 
         return (
             <View style={styles.pageContainer}>
-                <Header />
+                {this.state.showModal ?
+                    <SettingsModal
+                        exitModal={this.showModalHandler}
+                        navigationModal={this.modalNavigationHandler}
+
+                    /> : null}
+                <Header showModal={this.showModalHandler} />
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
@@ -193,7 +214,7 @@ class ChangeUserProfile extends Component {
 
                 </ScrollView>
 
-                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle}/>
+                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }
