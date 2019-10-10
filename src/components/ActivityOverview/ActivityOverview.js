@@ -36,14 +36,11 @@ class ActivityOverview extends Component {
 
     componentDidMount() {
         const uID = Number(this.props.navigation.getParam('uID', ''))
-        const activityID = Number(this.props.navigation.getParam('activityID', null))
+        const activityID = Number(this.props.navigation.getParam('itemID', null))
         const eventTitle = this.props.navigation.getParam('eventTitle', null)
 
         axios.get('http://localhost:3000/activities/' + activityID)
             .then((response) => {
-
-                console.log(response);
-
                 // convertion of the date to right format.
                 const sTime = response.data.startTime.replace('T', ' ');
                 startTime = sTime.split('.')[0]

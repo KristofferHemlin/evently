@@ -38,7 +38,6 @@ class EventOverview extends Component {
         endTime: '',
         niceToKnow: '',
         uID: null,
-        showModal: false,
     }
     
 
@@ -72,19 +71,7 @@ class EventOverview extends Component {
 
     }
 
-    showModalHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-    }
 
-    modalNavigationHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal }); 
-        this.props.navigation.navigate('UserProfileRoute', {
-            uID: this.state.uID,
-            eventTitle: this.state.eventTitle,
-        });          
-    }
 
     onEditSubmit(input) {
         this.setState({
@@ -137,23 +124,13 @@ class EventOverview extends Component {
 
     render() {
 
-        const isEditUser = this.state.isEditUser;
 
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ? 
-                    <SettingsModal 
-                    exitModal={this.showModalHandler} 
-                    navigationModal={this.modalNavigationHandler}
-
-                /> : null}
-                <Header showModal={this.showModalHandler} />
+                <Header eventTitle={this.state.eventTitle || 'test'} uID={this.state.uID || '169'} />
                 <ScrollView>
-
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
-
                     <View style={styles.eventInfo}>
-
                         <HeadlineOverview
                             onEditPress={() => this.handleEditPress()}
                             infoButtonStatus={true}
