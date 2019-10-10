@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     View, 
-    ImageBackground,
     TouchableOpacity,
     Text,
 } from 'react-native';
@@ -16,7 +15,7 @@ const user_cog = <FontAwesome5 size={25} name={'user-cog'} light color="white" /
 
 const header = props => {
     return (
-        <ImageBackground style={styles.headerContainer}>
+        <View style={styles.headerContainer}>
              
                 <View style={styles.headerLogo}>
                     <Text style={styles.headerTxt}>Claremont</Text> 
@@ -32,7 +31,7 @@ const header = props => {
                     {user_cog}
                     </TouchableOpacity>
                 </View>
-        </ImageBackground>
+        </View>
     );
 };
 

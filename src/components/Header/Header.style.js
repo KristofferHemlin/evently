@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { blue } from 'ansi-colors';
 
 export default StyleSheet.create({
     headerContainer:{
