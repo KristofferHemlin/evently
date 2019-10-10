@@ -97,7 +97,7 @@ class ActivityOverview extends Component {
             uID: uID,
             title: this.state.activityTitle,
             parentRoute: 'ActivityOverviewRoute',
-            http_update_url: 'http://localhost:3000/activites/' + this.state.activityID,
+            http_update_url: 'http://localhost:3000/activities/' + this.state.activityID,
             fields: {
                 description: {
                     label: 'Description',
