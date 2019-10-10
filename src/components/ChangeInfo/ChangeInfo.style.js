@@ -49,6 +49,8 @@ export default StyleSheet.create({
     inputFormTitle:{
         paddingTop: 10,
         paddingBottom: 10,
+        marginTop: 20,
+        
     },
 
     input:{
@@ -59,12 +61,11 @@ export default StyleSheet.create({
         borderColor: "gray",
         paddingHorizontal: 15,
         paddingVertical: 20,
-        marginBottom: 20,
+        // marginBottom: 20,
         borderRadius: 3,
       },
     
     inputContainer:{
-        marginBottom: 10,
       },
     
       buttonContainer:{
@@ -74,6 +75,7 @@ export default StyleSheet.create({
           justifyContent: 'center',
           borderRadius: 5,
           marginBottom: 40,
+          marginTop: 30,
       },
 
     buttonText:{

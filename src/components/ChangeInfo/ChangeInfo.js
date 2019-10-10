@@ -114,7 +114,6 @@ class ChangeInfo extends Component {
                                     editButtonStatus={this.state.wantToEdit ? true : false}
                                 >{'Edit ' + this.state.title}
                                 </HeadlineOverview>
-                                <View style={styles.line}></View>
                                 <EditableForm
                                     fields={this.state.fields}
                                     handleSubmit={this.handleSubmit}
