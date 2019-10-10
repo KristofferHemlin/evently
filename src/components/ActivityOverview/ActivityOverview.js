@@ -14,6 +14,7 @@ import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
 
+import URL from '../../config';
 import styles from './ActivityOverview.style.js';
 
 class ActivityOverview extends Component {
@@ -39,8 +40,8 @@ class ActivityOverview extends Component {
         const activityID = Number(this.props.navigation.getParam('activityID', null))
         const eventTitle = this.props.navigation.getParam('eventTitle', null)
         console.log('eventTitle', eventTitle);
-        axios.get('http://localhost:3000/activities/' + activityID)
-        // axios.get('http://10.110.171.68:3000/activities/' + activityID)
+        // axios.get('http://localhost:3000/activities/' + activityID)
+        axios.get( URL + 'activities/' + activityID)
 
             .then((response) => {
 

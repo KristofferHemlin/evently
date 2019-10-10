@@ -7,7 +7,6 @@ import {
     TouchableOpacity,
     Linking,
 } from 'react-native';
-import OneSignal from 'react-native-onesignal';
 
 import bgImage from './login-bg.png';
 import LoginForm from '../LoginForm/LoginForm';
@@ -22,11 +21,6 @@ class Login extends Component {
 
     constructor(properties) {
         super(properties);
-        OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
-        console.log('init!');
-        OneSignal.addEventListener('received', this.onReceived);
-        OneSignal.addEventListener('opened', this.onOpened);
-        OneSignal.addEventListener('ids', this.onIds);
 
         this.state = {
             forgottenPassword: false,
@@ -48,9 +42,6 @@ class Login extends Component {
     componentWillUnmount() {
         // deep linking stuff
         Linking.removeEventListener('url', this.handleOpenURL);
-        OneSignal.removeEventListener('received', this.onReceived);
-        OneSignal.removeEventListener('opened', this.onOpened);
-        OneSignal.removeEventListener('ids', this.onIds);
     }
 
     handleOpenURL = (event) => {

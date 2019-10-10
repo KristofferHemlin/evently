@@ -14,6 +14,8 @@ import styles from './UserProfile.style';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import SettingsModal from '../SettingsModal/SettingsModal';
 
+import URL from '../../config';
+
 import Croatia from '../EventImageHeader/images/CROT.jpg';
 
 
@@ -46,8 +48,8 @@ class UserProfile extends Component {
 
     fetchUserData = (uID, eventTitle) => {
         console.log(uID);
-        axios.get('http://localhost:3000/users/' + uID)
-        // axios.get('http://10.110.171.68:3000/users/' + uID)
+        // axios.get('http://localhost:3000/users/' + uID)
+        axios.get(URL + 'users/' + uID)
             .then((response) => {
                 this.setState({
                     firstName: response.data.firstName,
@@ -73,8 +75,8 @@ class UserProfile extends Component {
         // TODO kolla om dåligt för prestandan att ha componentdidupdate såhär
         console.log("UPDATEEEEE!")
         uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-        axios.get('http://localhost:3000/users/' + uID)
-        // axios.get('http://10.110.171.68:3000/users/' + uID)
+        // axios.get('http://localhost:3000/users/' + uID)
+        axios.get(URL + 'users/' + uID)
             .then((response) => {
                 // sorry för fulkod, fixar det sen
                 if (this.state.firstName !== response.data.firstName ||

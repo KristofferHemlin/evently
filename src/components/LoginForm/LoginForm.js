@@ -11,6 +11,7 @@ import {
 import axios from 'axios';
 
 import styles from './LoginForm.style'
+import URL from '../../config';
 
 class LoginForm extends Component{
 
@@ -25,8 +26,8 @@ class LoginForm extends Component{
     
     authUser = () => {
         this.setState({isLoading:true}, () => { // so we can show loading indicator while fetching data
-            axios.post('http://localhost:3000/authenticate', {
-            // axios.post('http://10.110.171.68:3000/authenticate', {
+            // axios.post('http://localhost:3000/authenticate', {
+            axios.post(URL + 'authenticate', {
                 email: this.state.username,
                 password: this.state.password
                  // jane.doe@test.com

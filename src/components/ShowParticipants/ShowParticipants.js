@@ -15,6 +15,7 @@ import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
 import SettingsModal from '../SettingsModal/SettingsModal';
 
+import URL from '../../config';
 import styles from './ShowParticipants.style.js';
 
 //SHOULD BE RENAMED TO 'ShowParticipants'
@@ -65,11 +66,13 @@ class ShowParticipants extends Component {
         const activityTitle = this.props.navigation.getParam('activityTitle', '');
         let url;
         if(isEvent === true){
-            url = 'http://localhost:3000/events/1/users?sort=firstName:asc'
+            // url = 'http://localhost:3000/events/1/users?sort=firstName:asc'
+            url = URL + 'events/1/users?sort=firstName:asc'
             this.setState({headlineName: 'Event Participants', eventTitle: eventTitle,})
         }
         if(isActivity === true){
-            url = 'http://localhost:3000/activities/' + activityID + '/users?sort=firstName:asc'
+            // url = 'http://localhost:3000/activities/' + activityID + '/users?sort=firstName:asc'
+            url = URL + 'activities/' + activityID + '/users?sort=firstName:asc'
             this.setState({headlineName: activityTitle,  eventTitle: eventTitle,})
         }
         axios.get(url)

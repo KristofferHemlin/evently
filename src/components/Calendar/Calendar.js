@@ -8,6 +8,8 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview'
 import SettingsModal from '../SettingsModal/SettingsModal';
+
+import URL from '../../config';
 import styles from './Calendar.style';
 
 
@@ -33,8 +35,8 @@ class Calendar extends Component {
   componentDidMount() {
     const uID = Number(this.props.navigation.getParam('uID', ''));
     const eventTitle = this.props.navigation.getParam('eventTitle', '');
-    axios.get('http://localhost:3000/events/1/activities')
-      // axios.get('http://10.110.171.68:3000/events/1/activities')
+    // axios.get('http://localhost:3000/events/1/activities')
+      axios.get(URL + 'events/1/activities')
       .then((response) => {
         console.log(response.data)
         responseArray = response.data.map(activity => ({
