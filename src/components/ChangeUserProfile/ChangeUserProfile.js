@@ -135,6 +135,7 @@ class ChangeUserProfile extends Component {
                     });
                     this.props.navigation.navigate('UserProfileRoute', {
                         uID: this.state.uID,
+                        roleID: this.state.roleID,
                     });
                 })
                 .catch((error) => {
@@ -156,6 +157,7 @@ class ChangeUserProfile extends Component {
         this.props.navigation.navigate('UserProfileRoute', {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
         });          
     }
     render() {
@@ -214,7 +216,7 @@ class ChangeUserProfile extends Component {
 
                 </ScrollView>
 
-                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }

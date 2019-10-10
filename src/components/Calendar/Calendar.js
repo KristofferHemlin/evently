@@ -33,6 +33,7 @@ class Calendar extends Component {
   componentDidMount() {
     const uID = Number(this.props.navigation.getParam('uID', ''));
     const eventTitle = this.props.navigation.getParam('eventTitle', '');
+    const roleID = Number(this.props.navigation.getParam('roleID', ''));
     axios.get('http://localhost:3000/events/1/activities')
       // axios.get('http://10.110.171.68:3000/events/1/activities')
       .then((response) => {
@@ -51,6 +52,7 @@ class Calendar extends Component {
           isUpdated: true,
           uID: uID,
           eventTitle: eventTitle,
+          roleID: roleID,
         })
 
       })
@@ -71,6 +73,7 @@ class Calendar extends Component {
     this.props.navigation.navigate('UserProfileRoute', {
       uID: this.state.uID,
       eventTitle: this.state.eventTitle,
+      roleID: this.state.roleID,
     });
   }
 
@@ -81,6 +84,7 @@ class Calendar extends Component {
       activityID: event.id,
       eventTitle: this.state.eventTitle,
       uID: this.state.uID,
+      roleID: this.state.roleID,
       
     })
   }
@@ -118,7 +122,7 @@ class Calendar extends Component {
             //scroll to first event of the day (default true)
             /> : null}
         </View>
-        <Footer uID={this.state.uID} eventTitle={this.state.eventTitle}/>
+        <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle}/>
       </View>
 
     )

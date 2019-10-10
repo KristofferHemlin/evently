@@ -33,6 +33,7 @@ class ChangeInfo extends Component {
             wantToEdit: false,
             uID: this.props.navigation.getParam('uID', ''),
             showModal: false,
+            roleID: this.props.navigation.getParam('roleID', ''),
     }
 
     handleInputChange = (value, key) => {
@@ -70,6 +71,7 @@ class ChangeInfo extends Component {
         this.props.navigation.navigate('UserProfileRoute', {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
         });          
     }
 

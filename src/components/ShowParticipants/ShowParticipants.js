@@ -53,6 +53,7 @@ class ShowParticipants extends Component {
         const activityID = this.props.navigation.getParam('activityID', null);
         const eventTitle = this.props.navigation.getParam('eventTitle', '');
         const activityTitle = this.props.navigation.getParam('activityTitle', '');
+        roleID = Number(this.props.navigation.getParam('roleID', ''));
         let url;
         if (isEvent === true) {
             url = 'http://localhost:3000/events/1/users?sort=firstName:asc'
@@ -79,6 +80,7 @@ class ShowParticipants extends Component {
                         uID: uID,
                         activityID: activityID,
                         isLoading: false,
+                        roleID: roleID,
                     })
 
                 })
@@ -101,6 +103,7 @@ class ShowParticipants extends Component {
         this.props.navigation.navigate('UserProfileRoute', {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
         });
     }
 
@@ -127,6 +130,7 @@ class ShowParticipants extends Component {
             participantID: participantID,
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
         });
     }
 
@@ -168,7 +172,7 @@ class ShowParticipants extends Component {
                     }
 
                 </ScrollView>
-                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }

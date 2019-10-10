@@ -141,7 +141,8 @@ class CreateAcc extends Component{
         .then((response) => {
             this.setState({isLoading: false});
             this.props.navigation.navigate('EventOverviewRoute', {
-                uID: this.state.uID
+                uID: this.state.uID,
+                roleID: this.state.roleID,
             }) 
         })
         .catch((error) => {

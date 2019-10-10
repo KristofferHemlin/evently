@@ -23,17 +23,36 @@ class ActivityOverview extends Component {
         header: null,
     };
 
-    state = {
-        eventTitle: '',
-        activityID: null,
-        activityLocation: '',
-        activityDesc: '',
-        startTime: '',
-        endTime: '',
-        contact: '',
-        uID: null,
-        showModal: false,
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            eventTitle: '',
+            activityID: null,
+            activityLocation: '',
+            activityDesc: '',
+            startTime: '',
+            endTime: '',
+            contact: '',
+            uID: null,
+            showEditButton: false,
+            showModal: false,
+        }
+
+        props.navigation.addListener('willFocus', () => {
+            roleID = Number(this.props.navigation.getParam('roleID', ''))
+            console.log('roleID', roleID);
+            if (roleID === 1) {
+                this.setState({ showEditButton: true })
+            } else {
+                this.setState({ showEditButton: false })
+            }
+            this.setState({ roleID: roleID })
+        })
     }
+
+
+
 
 
     componentDidMount() {
@@ -79,6 +98,7 @@ class ActivityOverview extends Component {
             activity: true,
             activityID: this.state.activityID,
             activityTitle: this.state.activityTitle,
+            roleID: this.state.roleID,
         })
     }
 
@@ -99,6 +119,7 @@ class ActivityOverview extends Component {
             onEditSubmit: (input) => this.onEditSubmit(input),
             uID: uID,
             title: this.state.activityTitle,
+            roleID: this.state.roleID,
             parentRoute: 'ActivityOverviewRoute',
             http_update_url: 'http://localhost:3000/activities/' + this.state.activityID,
             fields: {
@@ -135,6 +156,7 @@ class ActivityOverview extends Component {
         this.props.navigation.navigate('UserProfileRoute', {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
         });
     }
 
@@ -158,7 +180,7 @@ class ActivityOverview extends Component {
                         <HeadlineOverview
                             infoButtonStatus={false}
                             onEditPress={() => this.handleEditPress()}
-                            editButtonStatus={true}>
+                            editButtonStatus={this.state.showEditButton}>
                             {this.state.activityTitle}
                         </HeadlineOverview>
 
@@ -180,7 +202,7 @@ class ActivityOverview extends Component {
                     </View>
                 </ScrollView>
 
-                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }

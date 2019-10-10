@@ -40,14 +40,14 @@ class UserProfile extends Component {
             image: Croatia,
             ownProfilePage: true,
             showModal: false,
+            roleID: null,
         }
         props.navigation.addListener('willFocus', () => {
-            console.log('willfocus');
             const uID = Number(this.props.navigation.getParam('uID', ''));
             const participantID = Number(this.props.navigation.getParam('participantID', null));
             const eventTitle = this.props.navigation.getParam('eventTitle', '');
-            console.log('participantID', participantID);
-            console.log('uID', uID);
+            const roleID = Number(this.props.navigation.getParam('roleID', ''));
+            
             if(participantID === 0){
                 console.log('null');
                 this.fetchUserData(uID, eventTitle);
@@ -60,6 +60,8 @@ class UserProfile extends Component {
             } else {
                 this.setState({ownProfilePage: false})
             }
+
+            this.setState({roleID: roleID})
                           
         })
     }
@@ -88,6 +90,7 @@ class UserProfile extends Component {
         this.props.navigation.navigate('ChangeUserProfileRoute', {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
         });
     }
 
@@ -102,6 +105,7 @@ class UserProfile extends Component {
         this.props.navigation.navigate('UserProfileRoute', {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
         });
     }
 
@@ -148,7 +152,7 @@ class UserProfile extends Component {
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }

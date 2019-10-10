@@ -21,23 +21,46 @@ class EventOverview extends Component {
         header: null,
     };
 
-    state = {
-        eventTitle: '',
-        eventId: null,
-        eventLocation: '',
-        eventDesc: '',
-        startTime: '',
-        endTime: '',
-        niceToKnow: '',
-        uID: null,
-        showModal: false,
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            eventTitle: '',
+            eventId: null,
+            eventLocation: '',
+            eventDesc: '',
+            startTime: '',
+            endTime: '',
+            niceToKnow: '',
+            uID: null,
+            showModal: false,
+            showEditButton: false,
+            roleID: null
+        }
+
+        props.navigation.addListener('willFocus', () => {
+            roleID = Number(this.props.navigation.getParam('roleID', ''))
+            console.log('roleID', roleID);
+            if (roleID === 1) {
+                this.setState({ showEditButton: true })
+            } else {
+                this.setState({ showEditButton: false })
+            }
+            this.setState({ roleID: roleID })
+        })
     }
+
+
+
+
 
     componentDidMount() {
         uID = Number(this.props.navigation.getParam('uID', ''))
+
         axios.get('http://localhost:3000/users/' + uID + '/currentevent')
-        // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
+            // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
             .then((response) => {
+                console.log('response', response);
                 const sTime = response.data.startTime.replace('T', ' ');
                 startTime = sTime.split('.')[0]
                 const eTime = response.data.endTime.replace('T', ' ');
@@ -50,7 +73,8 @@ class EventOverview extends Component {
                     eventLocation: response.data.location,
                     startTime: startTime,
                     endTime: endTime,
-                    uID: uID
+                    uID: uID,
+                    roleID: roleID
                 })
             })
             .catch((error) => {
@@ -66,11 +90,12 @@ class EventOverview extends Component {
 
     modalNavigationHandler = () => {
         let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal }); 
+        this.setState({ showModal: !showModal });
         this.props.navigation.navigate('UserProfileRoute', {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
-        });          
+            roleID: this.state.roleID,
+        });
     }
 
     onEditSubmit(input) {
@@ -89,9 +114,10 @@ class EventOverview extends Component {
         this.props.navigation.navigate('ChangeInfoRoute', {
             onEditSubmit: (input) => this.onEditSubmit(input),
             uID: uID,
+            roleID: this.state.roleID,
             title: this.state.eventTitle,
             parentRoute: 'EventOverviewRoute',
-            http_update_url:  'http://localhost:3000/events/' + 1,
+            http_update_url: 'http://localhost:3000/events/' + 1,
             http_get_url: 'http://localhost:3000/users/' + uID + '/currentevent',
             fields: {
                 description: {
@@ -115,22 +141,21 @@ class EventOverview extends Component {
                     value: this.state.niceToKnow
                 },
             }
-        }); 
+        });
     }
 
 
     render() {
 
-        const isEditUser = this.state.isEditUser;
 
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ? 
-                    <SettingsModal 
-                    exitModal={this.showModalHandler} 
-                    navigationModal={this.modalNavigationHandler}
+                {this.state.showModal ?
+                    <SettingsModal
+                        exitModal={this.showModalHandler}
+                        navigationModal={this.modalNavigationHandler}
 
-                /> : null}
+                    /> : null}
                 <Header showModal={this.showModalHandler} />
                 <ScrollView>
 
@@ -141,8 +166,8 @@ class EventOverview extends Component {
                         <HeadlineOverview
                             onEditPress={() => this.handleEditPress()}
                             infoButtonStatus={false}
-                            editButtonStatus={true}>
-                                Event Overview
+                            editButtonStatus={this.state.showEditButton}>
+                            Event Overview
                         </HeadlineOverview>
                         <View style={styles.line}></View>
                         <Text style={[styles.titles, styles.subTitles]}>Event description</Text>
@@ -156,7 +181,7 @@ class EventOverview extends Component {
                     </View>
                 </ScrollView>
 
-                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle}/>
+                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }

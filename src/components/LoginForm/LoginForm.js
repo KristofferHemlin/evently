@@ -20,6 +20,8 @@ class LoginForm extends Component{
         userID: null,
         isLoading: false,
         token: null,
+        roleID: null,
+
     }
 
     
@@ -33,20 +35,23 @@ class LoginForm extends Component{
                 // cocacola123
             })
             .then((response) => {
-                console.log(response.data)
+                console.log(response)
                 this.setState({
                     token: response.data.token,
                     isLoading: false,
-                    userID: response.data.user.id   
+                    userID: response.data.user.id,
+                    roleID: response.data.user.role.id,   
                 });
 
                 if(response.data.user.signupComplete === true){
                     this.props.navigation.navigate('EventOverviewRoute', {
-                        uID: this.state.userID   
+                        uID: this.state.userID,
+                        roleID: this.state.roleID
                     }) 
                 } else {
                     this.props.navigation.navigate('CreateAccRoute', {
-                        uID: this.state.userID   
+                        uID: this.state.userID,
+                        roleID: this.state.roleID,
                     })
                 }
                 })
