@@ -16,7 +16,7 @@ const user_cog = <FontAwesome5 size={25} name={'user-cog'} light color="white" /
 
 const header = props => {
     return (
-        <ImageBackground  source={bgImage} style={styles.headerContainer}>
+        <ImageBackground style={styles.headerContainer}>
              
                 <View style={styles.headerLogo}>
                     <Text style={styles.headerTxt}>Claremont</Text> 
