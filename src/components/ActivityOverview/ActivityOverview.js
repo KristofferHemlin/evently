@@ -36,7 +36,7 @@ class ActivityOverview extends Component {
 
     componentDidMount() {
         const uID = Number(this.props.navigation.getParam('uID', ''))
-        const activityID = Number(this.props.navigation.getParam('itemID', null))
+        const activityID = Number(this.props.navigation.getParam('activityID', null))
         const eventTitle = this.props.navigation.getParam('eventTitle', null)
 
         axios.get('http://localhost:3000/activities/' + activityID)

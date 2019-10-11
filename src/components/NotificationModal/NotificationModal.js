@@ -30,7 +30,7 @@ class NotificationOverview extends Component {
 
     navigateTo(routeType, itemID) {
         console.log('asdagsdf', routeType, itemID)
-        this.props.navigation.navigate(routeType, { itemID: itemID })
+        this.props.navigation.navigate(routeType, { activityID: itemID })
         this.props.exitModal()
     }
 
