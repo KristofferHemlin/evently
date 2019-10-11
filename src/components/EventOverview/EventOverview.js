@@ -35,18 +35,22 @@ class EventOverview extends Component {
             uID: null,
             showModal: false,
             showEditButton: false,
-            roleID: null
+            roleID: null,
+            token: '',
         }
 
         props.navigation.addListener('willFocus', () => {
             roleID = Number(this.props.navigation.getParam('roleID', ''))
+            token = (this.props.navigation.getParam('token', ''))
             console.log('roleID', roleID);
             if (roleID === 1) {
                 this.setState({ showEditButton: true })
             } else {
                 this.setState({ showEditButton: false })
             }
-            this.setState({ roleID: roleID })
+            this.setState({ 
+                roleID: roleID,
+                token: token })
         })
     }
 
@@ -146,8 +150,6 @@ class EventOverview extends Component {
 
 
     render() {
-
-
         return (
             <View style={styles.pageContainer}>
                 {this.state.showModal ?

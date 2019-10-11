@@ -46,12 +46,14 @@ class LoginForm extends Component{
                 if(response.data.user.signupComplete === true){
                     this.props.navigation.navigate('EventOverviewRoute', {
                         uID: this.state.userID,
-                        roleID: this.state.roleID
+                        roleID: this.state.roleID,
+                        token: this.state.token
                     }) 
                 } else {
                     this.props.navigation.navigate('CreateAccRoute', {
                         uID: this.state.userID,
                         roleID: this.state.roleID,
+                        token: this.state.token
                     })
                 }
                 })
