@@ -7,6 +7,7 @@ import {
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
+import moment from 'moment';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -65,10 +66,14 @@ class EventOverview extends Component {
             // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
             .then((response) => {
                 console.log('response', response);
-                const sTime = response.data.startTime.replace('T', ' ');
-                startTime = sTime.split('.')[0]
-                const eTime = response.data.endTime.replace('T', ' ');
-                endTime = eTime.split('.')[0]
+                
+                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                
+                // const sTime = response.data.startTime.replace('T', ' ');
+                // startTime = sTime.split('.')[0]
+                // const eTime = response.data.endTime.replace('T', ' ');
+                // endTime = eTime.split('.')[0]
 
                 this.setState({
                     eventTitle: response.data.title,

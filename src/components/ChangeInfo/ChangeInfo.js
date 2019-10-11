@@ -105,7 +105,7 @@ class ChangeInfo extends Component {
                             </View>
                         </KeyboardAwareScrollView>
                     </ScrollView>
-                    <Footer />
+                    <Footer roleID={this.state.roleID} uID={this.state.uID} />
                 </View>)
     }
 }

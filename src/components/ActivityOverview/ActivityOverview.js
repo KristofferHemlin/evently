@@ -6,7 +6,7 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native';
-
+import moment from 'moment';
 import axios from 'axios';
 
 import Header from '../Header/Header';
@@ -66,11 +66,13 @@ class ActivityOverview extends Component {
 
                 console.log(response);
 
+                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
                 // convertion of the date to right format.
-                const sTime = response.data.startTime.replace('T', ' ');
-                startTime = sTime.split('.')[0]
-                const eTime = response.data.endTime.replace('T', ' ');
-                endTime = eTime.split('.')[0]
+                // const sTime = response.data.startTime.replace('T', ' ');
+                // startTime = sTime.split('.')[0]
+                // const eTime = response.data.endTime.replace('T', ' ');
+                // endTime = eTime.split('.')[0]
 
                 this.setState({
                     activityTitle: response.data.title,
