@@ -15,7 +15,7 @@ export default StyleSheet.create({
     logoText:{
         color: "white",
         fontSize: 40,
-        fontWeight: '300',
+        fontWeight: '700',
     },
 
     signUpContainer:{
