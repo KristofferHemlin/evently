@@ -14,7 +14,7 @@ export default StyleSheet.create({
 
     logoText:{
         color: "white",
-        fontSize: 40,
+        fontSize: 20,
         fontWeight: '700',
     },
 
@@ -30,5 +30,9 @@ export default StyleSheet.create({
         fontSize: 20,
         fontWeight: '400',
         alignSelf:'center',
+    },
+    logotype:{
+       width: 300,
+       height: 100,
     }
 });
