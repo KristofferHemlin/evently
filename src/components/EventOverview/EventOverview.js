@@ -83,23 +83,33 @@ class EventOverview extends Component {
             fields: {
                 description: {
                     label: 'Description',
-                    value: this.state.eventDesc
+                    value: this.state.eventDesc,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences', 
                 },
                 location: {
                     label: 'Location',
-                    value: this.state.eventLocation
+                    value: this.state.eventLocation,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
                 },
                 startTime: {
                     label: 'Start Date',
-                    value: this.state.startTime
+                    value: this.state.startTime,
+                    secureTextEntry: false,
+                    autoCapitalize: 'none', 
                 },
                 endTime: {
                     label: 'End Date',
-                    value: this.state.endTime
+                    value: this.state.endTime,
+                    secureTextEntry: false,
+                    autoCapitalize: 'none', 
                 },
                 niceToKnow: {
-                    label: 'Nice-to-know',
-                    value: this.state.niceToKnow
+                    label: 'Good-to-know',
+                    value: this.state.niceToKnow,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences', 
                 },
             }
         }); 
@@ -128,7 +138,7 @@ class EventOverview extends Component {
                         <Text style={styles.ordinaryText}>{this.state.eventLocation}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>Dates</Text>
                         <Text style={styles.ordinaryText}>{this.state.startTime} - {this.state.endTime}</Text>
-                        <Text style={styles.subTitles}>Nice to know</Text>
+                        <Text style={styles.subTitles}>Good-to-know</Text>
                         <Text style={styles.ordinaryText}>{this.state.niceToKnow}</Text>
                     </View>
                 </ScrollView>

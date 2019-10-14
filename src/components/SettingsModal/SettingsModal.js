@@ -30,13 +30,17 @@ class SettingsModal extends Component {
             fields: {
                 currentPassword: {
                     label: 'Current Password',
-                    value: ''
+                    value: '',
+                    autoCapitalize: 'none', 
+                    secureText: true,
+
                 },
                 newPassword: {
                     label: 'New Password',
-                    value: ''
+                    value: '',
+                    autoCapitalize: 'none', 
+                    secureText: true,
                 }
-               
             }
         })
     }

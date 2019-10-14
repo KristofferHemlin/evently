@@ -104,7 +104,8 @@ const EditableForm = ({ fields, handleSubmit, isLoading, handleInputChange, form
                         label={fields[key].label}
                         placeholder={fields[key].value}
                         onChangeText={(value) => handleInputChange(value, key)}
-                        secureTextEntry={false}
+                        secureTextEntry={fields[key].secureText}
+                        autoCapitalize={fields[key].autoCapitalize}
                         style={formStyle.input}
                     />
                 </View>
