@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import Toaster, { ToastStyles } from 'react-native-toaster';
 import {
     View,
     Text,
@@ -15,6 +15,7 @@ import BackButton from '../BackButton/BackButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import styles from './ChangeInfo.style';
+import ToasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
 class ChangeInfo extends Component {
 
@@ -30,7 +31,7 @@ class ChangeInfo extends Component {
             fields: this.props.navigation.getParam('fields', ''),
             isLoading: false,
             wantToEdit: false,
-            uID: this.props.navigation.getParam('uID', '')
+            uID: this.props.navigation.getParam('uID', ''),
     }
 
     handleInputChange = (value, key) => {
@@ -48,8 +49,11 @@ class ChangeInfo extends Component {
 
         this.setState({ isLoading: true }, () => {
             axios.put(this.state.http_update_url, fields)
-                .then(() => this.props.navigation.state.params.onEditSubmit(fields))
-                .then(() => this.props.navigation.navigate(this.state.parentRoute))
+                .then(() => {
+                    let actionMessage = { text: 'Your changes have been submitted!', styles: ToasterStyle.editSuccess };
+                    this.props.navigation.state.params.onEditSubmit(fields)
+                    this.props.navigation.navigate(this.state.parentRoute, {actionMessage:actionMessage, willChange:true})
+                })
                 .catch((error) => {
                     console.log(error);
                     this.setState({ isLoading: false })

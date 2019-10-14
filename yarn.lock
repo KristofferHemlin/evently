@@ -5175,7 +5175,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -5313,6 +5313,13 @@ react-native-safe-area-view@^0.14.1:
   integrity sha512-tOxHGQUN83MTmQB4ghoQkibqOdGiX4JQEmeyEv96MKWO/x8T2PJv84ECUos9hD3blPRQwVwSpAid1PPPhrVEaw==
   dependencies:
     debounce "^1.2.0"
+
+react-native-toaster@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-toaster/-/react-native-toaster-1.2.2.tgz#2f009441bbfe3d9eb94a0060292d1d44f8c395fc"
+  integrity sha512-TJI2qV8IfxezhznDW/ngSDb4Zxy1RiBRFU5FUsUxfcMO8FwUX2Ly8ua2MjFvUG+ms66GaH3jeocGVriOiBfxYg==
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-vector-icons@^6.6.0:
   version "6.6.0"
