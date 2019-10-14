@@ -29,8 +29,6 @@ class UserProfile extends Component {
         this.state = {
             firstName: '',
             lastName: '',
-            // company: '',
-            // role: '', 
             email: '',
             phone: '070 999 999',
             about: '',
@@ -39,40 +37,46 @@ class UserProfile extends Component {
             eventTitle: '',
             image: Croatia,
             ownProfilePage: true,
+            isCompanyManager: false,
             showModal: false,
             roleID: null,
         }
         props.navigation.addListener('willFocus', () => {
             const uID = Number(this.props.navigation.getParam('uID', ''));
             const participantID = Number(this.props.navigation.getParam('participantID', null));
+            let ifParticipant = this.props.navigation.getParam('showParticipant', false);
             const eventTitle = this.props.navigation.getParam('eventTitle', '');
             const roleID = Number(this.props.navigation.getParam('roleID', ''));
-            
-            if(participantID === 0){
-                console.log('null');
-                this.fetchUserData(uID, eventTitle);
-            } else {
-                console.log('not null');
+
+
+            if (ifParticipant === true) {
                 this.fetchUserData(participantID, eventTitle);
-            }
-            if(participantID === uID || participantID === 0){
-                this.setState({ownProfilePage: true})
             } else {
-                this.setState({ownProfilePage: false})
+                this.fetchUserData(uID, eventTitle);
+            }
+            if (participantID === uID || participantID === 0) {
+                this.setState({ ownProfilePage: true })
+            } else {
+                this.setState({ ownProfilePage: false })
+            }
+            if (roleID === 1) {
+                this.setState({ isCompanyManager: true })
             }
 
-            this.setState({roleID: roleID})
-                          
+            this.setState({ 
+                roleID: roleID,
+                uID: uID })
+
         })
     }
 
 
 
-    fetchUserData = (uID, eventTitle) => {
-        axios.get('http://localhost:3000/users/' + uID)
-            // axios.get('http://10.110.171.68:3000/users/' + uID)
+    fetchUserData = (fetchedUser, eventTitle) => {
+        axios.get('http://localhost:3000/users/' + fetchedUser)
+            // axios.get('http://10.110.171.68:3000/users/' + fetchedUser)
             .then((response) => {
-                console.log('USerprof response',response);
+                console.log('USerprof response', response);
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
@@ -80,7 +84,6 @@ class UserProfile extends Component {
                     phone: response.data.phone,
                     about: response.data.aboutMe,
                     allergies: response.data.allergiesOrPreferences,
-                    uID: uID,
                     eventTitle: eventTitle,
                 })
             })
@@ -100,16 +103,12 @@ class UserProfile extends Component {
     showModalHandler = () => {
         let showModal = this.state.showModal
         this.setState({ showModal: !showModal })
-        console.log(this.state.showModal)
     }
-    modalNavigationHandler = () => {
+    updateUserProfileHandler = () => {
         let showModal = this.state.showModal;
         this.setState({ showModal: !showModal });
-        this.props.navigation.navigate('UserProfileRoute', {
-            uID: this.state.uID,
-            eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
-        });
+        this.fetchUserData(this.state.uID, this.state.eventTitle);
+        
     }
 
     render() {
@@ -118,7 +117,7 @@ class UserProfile extends Component {
                 {this.state.showModal ?
                     <SettingsModal
                         exitModal={this.showModalHandler}
-                        navigationModal={this.modalNavigationHandler}
+                        navigationModal={this.updateUserProfileHandler}
 
                     /> : null}
                 <Header showModal={this.showModalHandler} />
@@ -149,8 +148,13 @@ class UserProfile extends Component {
                                 <Text style={styles.ordinaryText}>{this.state.phone}</Text>
                                 <Text style={styles.subTitles}>About Me</Text>
                                 <Text style={styles.ordinaryText}>{this.state.about}</Text>
-                                <Text style={styles.subTitles}>Allergies</Text>
-                                <Text style={styles.ordinaryText}>{this.state.allergies}</Text>
+                                {this.state.ownProfilePage || this.state.isCompanyManager ?
+                                    <View>
+                                        <Text style={styles.subTitles}>Allergies</Text>
+                                        <Text style={styles.ordinaryText}>{this.state.allergies}</Text>
+                                    </View> : null}
+
+
                             </View>
                         </View>
                     </KeyboardAwareScrollView>

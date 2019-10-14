@@ -22,7 +22,7 @@ const footer = props => {
                 onPress={() => props.navigation.navigate('EventOverviewRoute', {
                     uID: props.uID,
                     eventTitle: props.eventTitle,
-                    roleID: props.roleID
+                    roleID: props.roleID,
                 })}
             >
                 {infoIcon}

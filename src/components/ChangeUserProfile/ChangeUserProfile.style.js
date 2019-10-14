@@ -54,7 +54,8 @@ export default StyleSheet.create({
     input:{
         fontSize: 16,
         backgroundColor: '#FFF',
-        color: "gray",
+        color: "rgb(56,56,56)",
+        fontWeight: '500',
         borderWidth: 1,
         borderColor: "gray",
         paddingHorizontal: 15,

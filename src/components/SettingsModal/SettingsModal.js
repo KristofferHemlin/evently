@@ -14,10 +14,6 @@ class SettingsModal extends Component {
         header: null,
     };
 
-    changeUserInfoNavigationHandler = () => {
-        this.props.navigation.navigate('UserProfileRoute')
-    }
-
     render() {
         return (
             <View style={styles.modalContainer}>

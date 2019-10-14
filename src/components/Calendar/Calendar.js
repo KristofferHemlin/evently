@@ -111,6 +111,7 @@ class Calendar extends Component {
       uID: this.state.uID,
       eventTitle: this.state.eventTitle,
       roleID: this.state.roleID,
+      showParticipant: false,
     });
   }
 

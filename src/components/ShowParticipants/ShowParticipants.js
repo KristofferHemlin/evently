@@ -110,15 +110,17 @@ class ShowParticipants extends Component {
     filterHandler(filterWord) {
 
         let tempArray = this.state.profileArray;
-
+        console.log('tempArray1', tempArray);
         tempArray = tempArray.filter(function (user) {
             return user.firstName.toLowerCase().includes(filterWord.toLowerCase())
                 || user.lastName.toLowerCase().includes(filterWord.toLowerCase())
                 || user.fullName.toLowerCase().includes(filterWord.toLowerCase())
                 || user.companyDepartment.toLowerCase().includes(filterWord.toLowerCase())
-        }).map(function ({ firstName, lastName, companyDepartment }) {
-            return { firstName, lastName, companyDepartment };
+        }).map(function ({ firstName, lastName, companyDepartment, participantID }) {
+            return { firstName, lastName, companyDepartment, participantID };
         });
+
+        console.log('tempArray2', tempArray);
 
         this.setState({ profileArrayFiltered: tempArray });
 
@@ -131,6 +133,7 @@ class ShowParticipants extends Component {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
             roleID: this.state.roleID,
+            showParticipant: true,
         });
     }
 
