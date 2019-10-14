@@ -61,7 +61,7 @@ class ChangeInfo extends Component {
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
-                    <Header />
+                    <View  style={{height: 40}}/>
                     <ScrollView>
                         <KeyboardAwareScrollView>
                             <View style={styles.userInfo}>
@@ -81,7 +81,6 @@ class ChangeInfo extends Component {
                             </View>
                         </KeyboardAwareScrollView>
                     </ScrollView>
-                    <Footer />
                 </View>)
     }
 }
