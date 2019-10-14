@@ -32,7 +32,7 @@ class EventOverview extends Component {
             eventDesc: '',
             startTime: '',
             endTime: '',
-            niceToKnow: '',
+            goodToKnow: '',
             uID: null,
             showModal: false,
             showEditButton: false,
@@ -80,6 +80,7 @@ class EventOverview extends Component {
                     eventId: response.data.id,
                     eventDesc: response.data.description,
                     eventLocation: response.data.location,
+                    goodToKnow:response.data.goodToKnow,
                     startTime: startTime,
                     endTime: endTime,
                     uID: uID,
@@ -110,7 +111,7 @@ class EventOverview extends Component {
     onEditSubmit(input) {
         this.setState({
             eventDesc: input.description,
-            niceToKnow: input.niceToKnow,
+            goodToKnow: input.goodToKnow,
             eventLocation: input.location,
             startTime: input.startTime,
             endTime: input.endTime,
@@ -145,9 +146,9 @@ class EventOverview extends Component {
                     label: 'End Date',
                     value: this.state.endTime
                 },
-                niceToKnow: {
-                    label: 'Nice-to-know',
-                    value: this.state.niceToKnow
+                goodToKnow: {
+                    label: 'Good-to-know',
+                    value: this.state.goodToKnow
                 },
             }
         });
@@ -183,8 +184,8 @@ class EventOverview extends Component {
                         <Text style={styles.ordinaryText}>{this.state.eventLocation}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>Dates</Text>
                         <Text style={styles.ordinaryText}>{this.state.startTime} - {this.state.endTime}</Text>
-                        <Text style={styles.subTitles}>Nice to know</Text>
-                        <Text style={styles.ordinaryText}>{this.state.niceToKnow}</Text>
+                        <Text style={styles.subTitles}>Good-to-know</Text>
+                        <Text style={styles.ordinaryText}>{this.state.goodToKnow}</Text>
                     </View>
                 </ScrollView>
 

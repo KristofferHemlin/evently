@@ -31,6 +31,7 @@ class ActivityOverview extends Component {
             activityID: null,
             activityLocation: '',
             activityDesc: '',
+            goodToKnow: '',
             startTime: '',
             endTime: '',
             contact: '',
@@ -79,6 +80,7 @@ class ActivityOverview extends Component {
                     activityID: activityID,
                     activityDesc: response.data.description,
                     activityLocation: response.data.location,
+                    goodToKnow: response.data.goodToKnow,
                     startTime: startTime,
                     endTime: endTime,
                     eventTitle: eventTitle,
@@ -110,6 +112,7 @@ class ActivityOverview extends Component {
             activityLocation: input.location,
             startTime: input.startTime,
             endTime: input.endTime,
+            goodToKnow: input.goodToKnow,
         })
     }
 
@@ -140,6 +143,14 @@ class ActivityOverview extends Component {
                 endTime: {
                     label: 'endTime',
                     value: this.state.endTime
+                },
+                endTime: {
+                    label: 'endTime',
+                    value: this.state.endTime
+                },
+                goodToKnow: {
+                    label: 'Good-to-know',
+                    value: this.state.goodToKnow
                 },
             }
         });
@@ -194,6 +205,9 @@ class ActivityOverview extends Component {
                         <Text style={[styles.titles, styles.subTitles]}>What?</Text>
                         <Text style={styles.ordinaryText}>{this.state.activityDesc}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>Who to contact?</Text>
+                        <Text style={styles.ordinaryText}>{this.state.activityDesc}</Text>
+                        <Text style={[styles.titles, styles.subTitles]}>Good-to-know</Text>
+                        <Text style={styles.ordinaryText}>{this.state.goodToKnow}</Text>
 
                         <Text style={styles.subTitles}>Participants</Text>
                         <TouchableOpacity
