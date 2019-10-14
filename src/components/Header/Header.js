@@ -12,7 +12,7 @@ import NotificationModal from '../NotificationModal/NotificationModal'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import styles from './Header.style';
-import bgImage from './images/login-bg.png'; // TODO: Hitta bättre bild??
+import bgImage from '../Login/images/login-bg.jpeg'; // TODO: Hitta bättre bild??
 
 const bell_icon = <FontAwesome5 size={25} name={'bell'} light color="white" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
 const user_cog =  <FontAwesome5 size={25} name={'user-cog'} light color="white" />;
@@ -60,7 +60,5 @@ class Header extends Component {
                 </View>
             </ImageBackground>
         </View>
-    }
-}
 
 export default Header
