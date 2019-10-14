@@ -11,19 +11,32 @@ var SERVER_ENDPOINT = 'http://localhost:3000'
 
 class NotificationOverview extends Component {
 
-    state = {
-        notifications: []
+    constructor(props) {
+        super(props)
 
-
+        this.state = {
+            notifications: [{
+                itemTitle: '',
+                itemID: '',
+                routeType: ''
+            }]  
+        }
+        props.navigation.addListener('willFocus', () => {
+            console.log('willFocus showparticipants');
+            this.fetchNotifications()
+        })
     }
 
-    onComponentDidMount() {
+
+    fetchNotifications() {
         var uID = this.props.navigation.getParam('uID', '')
-        console.log('uID', uID)
+        console.log('uID') 
+        
         axios.get(SERVER_ENDPOINT + '/users/' + uID + '/notifications')
             .then((results) => { 
-                console.log('notificatiobn', notifications)
-                this.setState({ notifications: results }, ...notifications); 
+                console.log('notificatiobn')
+
+                this.setState({...{ notifications: results }, routeType: 'ActivityOverviewRoute'}); 
             })
             
     }
@@ -47,7 +60,6 @@ class NotificationOverview extends Component {
             </View >
             <View style={styles.menuContainer}>
             {this.state.notifications.map(({ itemTitle, itemID, routeType }) => {
-                console.log(itemTitle)
                 return <NotificationLine
                     key={itemID}
                     id={itemID}
