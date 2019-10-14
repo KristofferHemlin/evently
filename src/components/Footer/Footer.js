@@ -12,7 +12,7 @@ import styles from './Footer.style';
 const infoIcon = <FontAwesome5 size={25} name={'info-circle'} solid color="black" />;
 const usersIcon = <FontAwesome5 size={25} name={'users'} solid color="black" />;
 const calendarIcon = <FontAwesome5 size={25} name={'calendar-alt'} solid color="black" />;
-const commentsIcon = <FontAwesome5 size={25} name={'comments'} solid color="black" />;
+// const commentsIcon = <FontAwesome5 size={25} name={'comments'} solid color="black" />; //Should be re-imported in V0.2
 
 const footer = props => {
     return (
@@ -54,12 +54,12 @@ const footer = props => {
                     Schedule
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.footerButton}>
+            {/* <TouchableOpacity style={styles.footerButton}>
                 {commentsIcon}
                 <Text style={styles.footerIconTxt}>
                     Event Updates
                 </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </View>
     );
 };

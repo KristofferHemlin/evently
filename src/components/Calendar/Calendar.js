@@ -94,7 +94,7 @@ class Calendar extends Component {
 
           /> : null}
         <Header showModal={this.showModalHandler} />
-        <HeadlineOverview infoButtonStatus={true} editButtonStatus={false}>Schedule</HeadlineOverview>
+        <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Schedule</HeadlineOverview>
         {/* TODO: fixa informationstext */}
         <View style={styles.calendarContainer}>
           {this.state.isUpdated ?
