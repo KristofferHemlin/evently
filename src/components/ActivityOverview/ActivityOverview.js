@@ -41,9 +41,6 @@ class ActivityOverview extends Component {
 
         axios.get('http://localhost:3000/activities/' + activityID)
             .then((response) => {
-
-                console.log(response);
-
                 // convertion of the date to right format.
                 const sTime = response.data.startTime.replace('T', ' ');
                 startTime = sTime.split('.')[0]
