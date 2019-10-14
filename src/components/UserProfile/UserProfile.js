@@ -33,8 +33,8 @@ class UserProfile extends Component {
             // role: '', 
             email: '',
             phone: '070 999 999',
-            about: 'nah bruh',
-            allergies: 'Ogillar papaya',
+            about: '',
+            allergies: '',
             uID: null,
             eventTitle: '',
             image: Croatia,
@@ -72,11 +72,14 @@ class UserProfile extends Component {
         axios.get('http://localhost:3000/users/' + uID)
             // axios.get('http://10.110.171.68:3000/users/' + uID)
             .then((response) => {
+                console.log('USerprof response',response);
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
                     email: response.data.email,
                     phone: response.data.phone,
+                    about: response.data.aboutMe,
+                    allergies: response.data.allergiesOrPreferences,
                     uID: uID,
                     eventTitle: eventTitle,
                 })
@@ -144,7 +147,7 @@ class UserProfile extends Component {
                                 <Text style={styles.ordinaryText}>{this.state.email}</Text>
                                 <Text style={styles.subTitles}>Phone</Text>
                                 <Text style={styles.ordinaryText}>{this.state.phone}</Text>
-                                <Text style={styles.subTitles}>About</Text>
+                                <Text style={styles.subTitles}>About Me</Text>
                                 <Text style={styles.ordinaryText}>{this.state.about}</Text>
                                 <Text style={styles.subTitles}>Allergies</Text>
                                 <Text style={styles.ordinaryText}>{this.state.allergies}</Text>

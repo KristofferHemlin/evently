@@ -61,6 +61,20 @@ class ChangeUserProfile extends Component {
                 value: '',
                 secureText: false,
             },
+            {
+                key: 'aboutMe',
+                name: 'About Me',
+                type: 'text',
+                value: '',
+                secureText: false,
+            },
+            {
+                key: 'allergies',
+                name: 'Allergies',
+                type: 'text',
+                value: '',
+                secureText: false,
+            },
         ],
         image: Croatia,
         uID: null,
@@ -74,7 +88,7 @@ class ChangeUserProfile extends Component {
         axios.get('http://localhost:3000/users/' + uID)
             // axios.get('http://10.110.171.68:3000/users/' + uID)
             .then((response) => {
-                // console.log(response)
+                console.log(response)
                 let responseArray = []
                 let fields = [...this.state.fields];
                 for (key in response) {
@@ -92,6 +106,12 @@ class ChangeUserProfile extends Component {
                     }
                     if (field.key === 'phone') {
                         field.value = responseArray[0].phone
+                    }
+                    if (field.key === 'aboutMe') {
+                        field.value = responseArray[0].aboutMe
+                    }
+                    if (field.key === 'allergies') {
+                        field.value = responseArray[0].allergiesOrPreferences
                     }
                 })
                 this.setState({
@@ -125,6 +145,8 @@ class ChangeUserProfile extends Component {
                 lastName: this.state.fields[1].value,
                 email: this.state.fields[2].value,
                 phone: this.state.fields[3].value,
+                aboutMe: this.state.fields[4].value,
+                allergiesOrPreferences: this.state.fields[5].value,
             })
                 .then((response) => {
                     console.log(response)
