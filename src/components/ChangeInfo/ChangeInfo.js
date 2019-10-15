@@ -99,6 +99,7 @@ const EditableForm = ({ fields, handleSubmit, isLoading, handleInputChange, form
                 <View key={key}>
                     <Text style={styles.inputFormTitle}>{fields[key].label}</Text>
                     <TextInput
+                        multiline={true}
                         value={fields[key].value}
                         type={fields[key].type}
                         label={fields[key].label}
