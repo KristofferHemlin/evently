@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Toaster, { ToastStyles } from 'react-native-toaster';
 import {
     View,
     Text,
@@ -7,6 +8,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
+import {toasterCallback} from '../../helpers/toasterCallback';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -16,6 +18,7 @@ import SettingsModal from '../SettingsModal/SettingsModal';
 
 import Croatia from '../EventImageHeader/images/CROT.jpg';
 
+import ToasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
 
 class UserProfile extends Component {
@@ -40,8 +43,13 @@ class UserProfile extends Component {
             isCompanyManager: false,
             showModal: false,
             roleID: null,
+
+            actionMessage: null,
+            haveChanged: false,
         }
         props.navigation.addListener('willFocus', () => {
+            console.log("haveChanged: ", this.state.haveChanged);
+            toasterCallback(this)
             const uID = Number(this.props.navigation.getParam('uID', ''));
             const participantID = Number(this.props.navigation.getParam('participantID', null));
             let ifParticipant = this.props.navigation.getParam('showParticipant', false);
@@ -63,9 +71,10 @@ class UserProfile extends Component {
                 this.setState({ isCompanyManager: true })
             }
 
-            this.setState({ 
+            this.setState({
                 roleID: roleID,
-                uID: uID })
+                uID: uID,
+            })
 
         })
     }
@@ -108,12 +117,21 @@ class UserProfile extends Component {
         let showModal = this.state.showModal;
         this.setState({ showModal: !showModal });
         this.fetchUserData(this.state.uID, this.state.eventTitle);
-        
     }
 
     render() {
+
+        console.log("render User haveChanged: ", this.state.haveChanged);
         return (
             <View style={styles.pageContainer}>
+
+                {!!this.state.actionMessage &&
+                    (
+                        <View style={{ ...styles.toasterMessage, zIndex: 2 }}>
+                            <Toaster message={this.state.actionMessage} />
+                        </View>
+                    )
+                }
                 {this.state.showModal ?
                     <SettingsModal
                         exitModal={this.showModalHandler}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Toaster, { ToastStyles } from 'react-native-toaster';
 import {
     View,
     ImageBackground,
@@ -9,6 +10,8 @@ import {
 import moment from 'moment';
 import axios from 'axios';
 
+import { toasterCallback } from '../../helpers/toasterCallback';
+
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
@@ -16,6 +19,7 @@ import EventImageHeader from '../EventImageHeader/EventImageHeader';
 import SettingsModal from '../SettingsModal/SettingsModal';
 
 import styles from './ActivityOverview.style.js';
+import ToasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
 class ActivityOverview extends Component {
 
@@ -38,9 +42,13 @@ class ActivityOverview extends Component {
             uID: null,
             showEditButton: false,
             showModal: false,
+            
+            actionMessage: null,
+            haveChanged: false,
         }
 
         props.navigation.addListener('willFocus', () => {
+            toasterCallback(this)
             roleID = Number(this.props.navigation.getParam('roleID', ''))
             if (roleID === 1) {
                 this.setState({ showEditButton: true })
@@ -62,7 +70,7 @@ class ActivityOverview extends Component {
 
         axios.get('http://localhost:3000/activities/' + activityID)
             .then((response) => {
-          
+
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
                 const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
 
@@ -121,7 +129,7 @@ class ActivityOverview extends Component {
                     label: 'Description',
                     value: this.state.activityDesc,
                     secureTextEntry: false,
-                    autoCapitalize: 'sentences', 
+                    autoCapitalize: 'sentences',
                 },
                 location: {
                     label: 'Location',
@@ -133,13 +141,13 @@ class ActivityOverview extends Component {
                     label: 'startTime',
                     value: this.state.startTime,
                     secureTextEntry: false,
-                    autoCapitalize: 'none', 
+                    autoCapitalize: 'none',
                 },
                 endTime: {
                     label: 'endTime',
                     value: this.state.endTime,
                     secureTextEntry: false,
-                    autoCapitalize: 'none', 
+                    autoCapitalize: 'none',
                 },
                 endTime: {
                     label: 'endTime',
@@ -172,6 +180,15 @@ class ActivityOverview extends Component {
 
         return (
             <View style={styles.pageContainer}>
+
+                {!!this.state.actionMessage &&
+                    (
+                        <View style={{ ...styles.toasterMessage, zIndex: 2 }}>
+                            <Toaster message={this.state.actionMessage} />
+                        </View>
+                    )
+                }
+
                 {this.state.showModal ?
                     <SettingsModal
                         exitModal={this.showModalHandler}
@@ -185,10 +202,16 @@ class ActivityOverview extends Component {
 
                     <View style={styles.eventInfo}>
 
-                        <HeadlineOverview
+                        {/* <HeadlineOverview
                             infoButtonStatus={false}
                             onEditPress={() => this.handleEditPress()}
                             editButtonStatus={this.state.showEditButton}>
+                            {this.state.activityTitle}
+                        </HeadlineOverview> */}
+                        <HeadlineOverview
+                            infoButtonStatus={false}
+                            onEditPress={() => this.handleEditPress()}
+                            editButtonStatus={true}>
                             {this.state.activityTitle}
                         </HeadlineOverview>
 

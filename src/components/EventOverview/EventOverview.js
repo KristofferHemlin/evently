@@ -69,8 +69,6 @@ class EventOverview extends Component {
 
     componentDidMount() {
         uID = Number(this.props.navigation.getParam('uID', ''))
-        uID = 3;//remove this
-
         axios.get('http://localhost:3000/users/' + uID + '/currentevent')
             // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
             .then((response) => {
@@ -167,26 +165,14 @@ class EventOverview extends Component {
         });
     }
 
-    handleButtonPress = () => {
-        let actionMessage = { text: 'Something went wrong!', styles: ToasterStyle.editFail };
-        console.log("handleButtonPress: ", actionMessage);
-        this.setState({
-            actionMessage: actionMessage
-        })
-        toasterCallback(this)
-    };
-
-
     render() {
-
-        console.log("Render: ", this.state.actionMessage);
 
         return (
             <View style={styles.pageContainer}>
 
                 {!!this.state.actionMessage &&
                     (
-                        <View style={{ ...styles.toasterMessage, zIndex: 1 }}>
+                        <View style={{ ...styles.toasterMessage, zIndex: 2 }}>
                             <Toaster message={this.state.actionMessage} />
                         </View>
                     )
@@ -203,22 +189,13 @@ class EventOverview extends Component {
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
 
-                    <Button title="Press me" onPress={this.handleButtonPress}></Button>
-
                     <View style={styles.eventInfo}>
-                        {/* <HeadlineOverview
+                        <HeadlineOverview
                             onEditPress={() => this.handleEditPress()}
                             infoButtonStatus={false}
                             editButtonStatus={this.state.showEditButton}>
                             Event Overview
-                        </HeadlineOverview> */}
-                        <HeadlineOverview
-                            onEditPress={() => this.handleEditPress()}
-                            infoButtonStatus={false}
-                            editButtonStatus={true}>
-                            Event Overview
                         </HeadlineOverview>
-                        {/* REMOVE THIS HEADER */}
                         <View style={styles.line}></View>
                         <Text style={[styles.titles, styles.subTitles]}>Event description</Text>
                         <Text style={styles.ordinaryText}>{this.state.eventDesc}</Text>

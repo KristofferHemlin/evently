@@ -18,6 +18,7 @@ import Footer from '../Footer/Footer';
 import BackButton from '../BackButton/BackButton';
 import styles from './ChangeUserProfile.style';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+import ToasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
 import Croatia from '../EventImageHeader/images/CROT.jpg';
 
@@ -150,7 +151,8 @@ class ChangeUserProfile extends Component {
             })
                 .then((response) => {
                     console.log(response)
-                    alert("Information changed");
+                    // alert("Information changed");
+                    let actionMessage = { text: 'Your profile changes have been submitted!', styles: ToasterStyle.editSuccess };
                     this.setState({
                         isLoading: false,
                         wantToEdit: false,
@@ -158,6 +160,8 @@ class ChangeUserProfile extends Component {
                     this.props.navigation.navigate('UserProfileRoute', {
                         uID: this.state.uID,
                         roleID: this.state.roleID,
+                        actionMessage:actionMessage,
+                        willChange:true,
                     });
                 })
                 .catch((error) => {
