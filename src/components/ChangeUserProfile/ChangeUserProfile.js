@@ -19,6 +19,7 @@ import BackButton from '../BackButton/BackButton';
 import styles from './ChangeUserProfile.style';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
+import URL from '../../config';
 import Croatia from '../EventImageHeader/images/CROT.jpg';
 
 
@@ -85,8 +86,8 @@ class ChangeUserProfile extends Component {
     componentDidMount() {
         const uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
         const eventTitle = this.props.navigation.getParam('eventTitle', '');
-        axios.get('http://localhost:3000/users/' + uID)
-            // axios.get('http://10.110.171.68:3000/users/' + uID)
+        // axios.get('http://localhost:3000/users/' + uID)
+            axios.get( URL + 'users/' + uID)
             .then((response) => {
                 console.log(response)
                 let responseArray = []
@@ -139,8 +140,8 @@ class ChangeUserProfile extends Component {
     handleSubmit = () => {
         console.log("CLICK!", this.state.uID)
         this.setState({ isLoading: true }, () => {
-            axios.put('http://localhost:3000/users/' + this.state.uID, {
-                // axios.put('http://10.110.171.68:3000/users/' + this.state.uID, {
+            // axios.put('http://localhost:3000/users/' + this.state.uID, {
+                axios.put(URL + 'users/' + this.state.uID, {
                 firstName: this.state.fields[0].value,
                 lastName: this.state.fields[1].value,
                 email: this.state.fields[2].value,

@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* eventlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* eventlyTests.m */; };
 		01002F562819D69B03C9CE5C /* libPods-evently-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E14F45E9D36BE994B65BD85 /* libPods-evently-tvOS.a */; };
@@ -18,7 +19,10 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* eventlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* eventlyTests.m */; };
 		38E13C180E1DAB03510947DA /* libPods-evently-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 80747351D1F1E95A59DB2DE8 /* libPods-evently-tvOSTests.a */; };
+		669BFFBBA568D422B837594A /* libPods-evently-tvOS-OneSignalNotificationServiceExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6182FBB16C2EED187AFC970B /* libPods-evently-tvOS-OneSignalNotificationServiceExtension.a */; };
 		94D8B6105672EE0B323F657B /* libPods-evently.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC6DF6FD29D201472F0654EC /* libPods-evently.a */; };
+		95A489A9234E1D490044D50D /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 95A489A8234E1D490044D50D /* NotificationService.m */; };
+		95A489AD234E1D490044D50D /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 95A489A5234E1D490044D50D /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,17 +40,42 @@
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
 			remoteInfo = "evently-tvOS";
 		};
+		95A489AB234E1D490044D50D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 95A489A4234E1D490044D50D;
+			remoteInfo = OneSignalNotificationServiceExtension;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		95A489B1234E1D490044D50D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				95A489AD234E1D490044D50D /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		00106E29C69FCB3DF612D79C /* Pods-evently-tvOS-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-tvOS-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-evently-tvOS-OneSignalNotificationServiceExtension/Pods-evently-tvOS-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* eventlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eventlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* eventlyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = eventlyTests.m; sourceTree = "<group>"; };
 		0381686D3AC84AA4A719933F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		04CF8828598D4050BFD4CF05 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		060709BD0C9D7CEEB138E96D /* Pods-evently-tvOS-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-tvOS-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-evently-tvOS-OneSignalNotificationServiceExtension/Pods-evently-tvOS-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		06B082CA4B6B3782C98532CF /* Pods-evently-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-evently-OneSignalNotificationServiceExtension/Pods-evently-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		094DEFBF4E9B3FCFD6910F4E /* Pods-evently.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently.debug.xcconfig"; path = "Target Support Files/Pods-evently/Pods-evently.debug.xcconfig"; sourceTree = "<group>"; };
 		0D1BAD32D82F43DB867B918F /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
+		0F9E9455BE697DF2BC6EB06E /* Pods-evently-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-evently-OneSignalNotificationServiceExtension/Pods-evently-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* evently.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = evently.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = evently/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = evently/AppDelegate.m; sourceTree = "<group>"; };
@@ -62,6 +91,7 @@
 		3056E2A29B01CB8A049C6A70 /* Pods-evently-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-evently-tvOS/Pods-evently-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		3703794C94BBB5CF6CA874E8 /* Pods-evently-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-evently-tvOSTests/Pods-evently-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		39D9EEBE0C994AE0A01A1F94 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		6182FBB16C2EED187AFC970B /* libPods-evently-tvOS-OneSignalNotificationServiceExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-evently-tvOS-OneSignalNotificationServiceExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B83DCA31A5A0C8316BC6A2C /* Pods-evently.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently.release.xcconfig"; path = "Target Support Files/Pods-evently/Pods-evently.release.xcconfig"; sourceTree = "<group>"; };
 		6FA0E56E04144DA9B4EDDC74 /* Pods-evently-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-evently-tvOSTests/Pods-evently-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		6FB2A3914A60FEE3E9F2B38F /* Pods-eventlyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eventlyTests.debug.xcconfig"; path = "Target Support Files/Pods-eventlyTests/Pods-eventlyTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -88,6 +118,11 @@
 		9509F2E12334F21A006CDAB9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		9509F2E22334F21A006CDAB9 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		952F705C9552492FBD73E211 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		95A489A0234E1CA10044D50D /* evently.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = evently.entitlements; path = evently/evently.entitlements; sourceTree = "<group>"; };
+		95A489A5234E1D490044D50D /* OneSignalNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OneSignalNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		95A489A7234E1D490044D50D /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
+		95A489A8234E1D490044D50D /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
+		95A489AA234E1D490044D50D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A02E58E7D6339797FF071B5C /* Pods-evently-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-tvOS.release.xcconfig"; path = "Target Support Files/Pods-evently-tvOS/Pods-evently-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		A09D2384EA7A4F6B92D84C91 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		A960127D16D6440B9D8C596F /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
@@ -130,6 +165,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				38E13C180E1DAB03510947DA /* libPods-evently-tvOSTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95A489A2234E1D490044D50D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				669BFFBBA568D422B837594A /* libPods-evently-tvOS-OneSignalNotificationServiceExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +222,7 @@
 		13B07FAE1A68108700A75B9A /* evently */ = {
 			isa = PBXGroup;
 			children = (
+				95A489A0234E1CA10044D50D /* evently.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -199,6 +243,7 @@
 				7E14F45E9D36BE994B65BD85 /* libPods-evently-tvOS.a */,
 				80747351D1F1E95A59DB2DE8 /* libPods-evently-tvOSTests.a */,
 				932557DDAAB2E77DEE5AD35C /* libPods-eventlyTests.a */,
+				6182FBB16C2EED187AFC970B /* libPods-evently-tvOS-OneSignalNotificationServiceExtension.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -217,6 +262,7 @@
 				13B07FAE1A68108700A75B9A /* evently */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* eventlyTests */,
+				95A489A6234E1D490044D50D /* OneSignalNotificationServiceExtension */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				DC830396B17619D125C05123 /* Pods */,
@@ -234,6 +280,7 @@
 				00E356EE1AD99517003FC87E /* eventlyTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* evently-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* evently-tvOSTests.xctest */,
+				95A489A5234E1D490044D50D /* OneSignalNotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -262,6 +309,16 @@
 			path = "../node_modules/react-native-vector-icons/Fonts";
 			sourceTree = "<group>";
 		};
+		95A489A6234E1D490044D50D /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				95A489A7234E1D490044D50D /* NotificationService.h */,
+				95A489A8234E1D490044D50D /* NotificationService.m */,
+				95A489AA234E1D490044D50D /* Info.plist */,
+			);
+			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
 		DC830396B17619D125C05123 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +330,10 @@
 				6FA0E56E04144DA9B4EDDC74 /* Pods-evently-tvOSTests.release.xcconfig */,
 				6FB2A3914A60FEE3E9F2B38F /* Pods-eventlyTests.debug.xcconfig */,
 				F0EBF0C0524BEAF99B51BA5A /* Pods-eventlyTests.release.xcconfig */,
+				0F9E9455BE697DF2BC6EB06E /* Pods-evently-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				06B082CA4B6B3782C98532CF /* Pods-evently-OneSignalNotificationServiceExtension.release.xcconfig */,
+				00106E29C69FCB3DF612D79C /* Pods-evently-tvOS-OneSignalNotificationServiceExtension.debug.xcconfig */,
+				060709BD0C9D7CEEB138E96D /* Pods-evently-tvOS-OneSignalNotificationServiceExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -310,10 +371,12 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				CDE4C9CBEADDA835FA0F619A /* [CP] Copy Pods Resources */,
+				95A489B1234E1D490044D50D /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				95A489AC234E1D490044D50D /* PBXTargetDependency */,
 			);
 			name = evently;
 			productName = evently;
@@ -359,6 +422,24 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* evently-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		95A489A4234E1D490044D50D /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 95A489AE234E1D490044D50D /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */;
+			buildPhases = (
+				2E4AB33DE2782C7EC44CE81B /* [CP] Check Pods Manifest.lock */,
+				95A489A1234E1D490044D50D /* Sources */,
+				95A489A2234E1D490044D50D /* Frameworks */,
+				95A489A3234E1D490044D50D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OneSignalNotificationServiceExtension;
+			productName = OneSignalNotificationServiceExtension;
+			productReference = 95A489A5234E1D490044D50D /* OneSignalNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -385,6 +466,11 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
+					95A489A4234E1D490044D50D = {
+						CreatedOnToolsVersion = 11.0;
+						DevelopmentTeam = H56G7WQUR9;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "evently" */;
@@ -404,6 +490,7 @@
 				00E356ED1AD99517003FC87E /* eventlyTests */,
 				2D02E47A1E0B4A5D006451C7 /* evently-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* evently-tvOSTests */,
+				95A489A4234E1D490044D50D /* OneSignalNotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -434,6 +521,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2D02E48E1E0B4A5D006451C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95A489A3234E1D490044D50D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -492,6 +586,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		2E4AB33DE2782C7EC44CE81B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-evently-tvOS-OneSignalNotificationServiceExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		562010F485ECFFE2AA104554 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -682,6 +798,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		95A489A1234E1D490044D50D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95A489A9234E1D490044D50D /* NotificationService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -694,6 +818,11 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* evently-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		95A489AC234E1D490044D50D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 95A489A4234E1D490044D50D /* OneSignalNotificationServiceExtension */;
+			targetProxy = 95A489AB234E1D490044D50D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -728,7 +857,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "se.eventapp.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/evently.app/evently";
 			};
@@ -760,6 +889,7 @@
 			baseConfigurationReference = 094DEFBF4E9B3FCFD6910F4E /* Pods-evently.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = evently/evently.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = H56G7WQUR9;
@@ -770,7 +900,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = se.eventapp;
 				PRODUCT_NAME = evently;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -781,6 +911,7 @@
 			baseConfigurationReference = 6B83DCA31A5A0C8316BC6A2C /* Pods-evently.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = evently/evently.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H56G7WQUR9;
 				INFOPLIST_FILE = evently/Info.plist;
@@ -790,7 +921,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = se.eventapp;
 				PRODUCT_NAME = evently;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1007,6 +1138,58 @@
 			};
 			name = Release;
 		};
+		95A489AF234E1D490044D50D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 00106E29C69FCB3DF612D79C /* Pods-evently-tvOS-OneSignalNotificationServiceExtension.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = H56G7WQUR9;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = se.eventapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		95A489B0234E1D490044D50D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 060709BD0C9D7CEEB138E96D /* Pods-evently-tvOS-OneSignalNotificationServiceExtension.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H56G7WQUR9;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = OneSignalNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = se.eventapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1051,6 +1234,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		95A489AE234E1D490044D50D /* Build configuration list for PBXNativeTarget "OneSignalNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95A489AF234E1D490044D50D /* Debug */,
+				95A489B0234E1D490044D50D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

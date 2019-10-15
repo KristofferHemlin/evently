@@ -22,15 +22,18 @@ class Login extends Component {
         header: null,
     };
 
-    state = {
-        forgottenPassword: false,
+    constructor(properties) {
+        super(properties);
+
+        this.state = {
+            forgottenPassword: false,
+        }
     }
 
-    componentDidMount() {
 
-// deep linking stuff
+    componentDidMount() {
+        // deep linking stuff
         Linking.addEventListener('url', this.handleOpenURL)
-        console.log('addEventListener');
         Linking.getInitialURL().then((url) => {
             if (url) {
                 this.handleOpenURL({ url });
@@ -38,8 +41,6 @@ class Login extends Component {
         })
 
     }
-
-
 
     componentWillUnmount() {
         // deep linking stuff
@@ -65,8 +66,20 @@ class Login extends Component {
         }
     }
 
+    onReceived(notification) {
+        console.log("Notification received: ", notification);
+    }
 
+    onOpened(openResult) {
+        console.log('Message: ', openResult.notification.payload.body);
+        console.log('Data: ', openResult.notification.payload.additionalData);
+        console.log('isActive: ', openResult.notification.isAppInFocus);
+        console.log('openResult: ', openResult);
+    }
 
+    onIds(device) {
+        console.log('Device info: ', device);
+    }
 
     lostPasswordHandler = () => {
         let forgottenPassword = this.state.forgottenPassword

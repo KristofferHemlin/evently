@@ -16,6 +16,7 @@ import SettingsModal from '../SettingsModal/SettingsModal';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Croatia from '../EventImageHeader/images/CROT.jpg';  
 
+import URL from '../../config';
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
 class UserProfile extends Component {
@@ -71,11 +72,10 @@ class UserProfile extends Component {
         })
     }
 
-
-
-    fetchUserData = (fetchedUser, eventTitle) => {
-        axios.get('http://localhost:3000/users/' + fetchedUser)
-            // axios.get('http://10.110.171.68:3000/users/' + fetchedUser)
+    fetchUserData = (uID, eventTitle) => {
+        console.log(uID);
+        // axios.get('http://localhost:3000/users/' + uID)
+        axios.get(URL + 'users/' + uID)
             .then((response) => {
                 console.log('USerprof response', response);
                 this.setState({
@@ -92,7 +92,7 @@ class UserProfile extends Component {
                 console.log(error);
             });
     }
-
+    
     editButtonHandler = () => {
         this.props.navigation.navigate('ChangeUserProfileRoute', {
             uID: this.state.uID,

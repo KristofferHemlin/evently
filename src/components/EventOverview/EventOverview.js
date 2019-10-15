@@ -7,24 +7,29 @@ import {
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
+import OneSignal from 'react-native-onesignal';
 import moment from 'moment';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
-import SettingsModal from '../SettingsModal/SettingsModal'
+import SettingsModal from '../SettingsModal/SettingsModal';
+
+import URL from '../../config';
 import styles from './EventOverview.style.js';
 
 class EventOverview extends Component {
+
 
     static navigationOptions = {
         header: null,
     };
 
     constructor(props) {
-        super(props)
-
+        super(props);
+        OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
+      
         this.state = {
             eventTitle: '',
             eventId: null,
@@ -39,7 +44,7 @@ class EventOverview extends Component {
             roleID: null,
             token: '',
         }
-
+        
         props.navigation.addListener('willFocus', () => {
             roleID = Number(this.props.navigation.getParam('roleID', ''))
             token = (this.props.navigation.getParam('token', ''))
@@ -54,10 +59,10 @@ class EventOverview extends Component {
             })
         })
     }
+
         componentDidMount() {
             uID = Number(this.props.navigation.getParam('uID', ''))
-
-            axios.get('http://localhost:3000/users/' + uID + '/currentevent')
+            axios.get(URL + 'users/' + uID + '/currentevent')
                 // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
                 .then((response) => {
 
@@ -82,14 +87,19 @@ class EventOverview extends Component {
 
         }
 
-
+    showModalHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal });
+        console.log(this.state.showModal);
+    }
+    
     modalNavigationHandler = () => {
         let showModal = this.state.showModal;
         this.setState({ showModal: !showModal });
         this.props.navigation.navigate('UserProfileRoute', {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
+           roleID: this.state.roleID,
         });
     }
 
@@ -159,6 +169,7 @@ class EventOverview extends Component {
                         navigationModal={this.modalNavigationHandler}
 
                     /> : null}
+
                 <Header showModal={this.showModalHandler} />
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
@@ -181,7 +192,6 @@ class EventOverview extends Component {
 
                     </View>
                 </ScrollView>
-
                 <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
