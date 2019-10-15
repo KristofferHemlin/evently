@@ -52,11 +52,6 @@ class EventOverview extends Component {
                 roleID: roleID,
                 token: token })
         })
-    }
-
-
-
-
 
     componentDidMount() {
         uID = Number(this.props.navigation.getParam('uID', ''))
@@ -86,10 +81,6 @@ class EventOverview extends Component {
 
     }
 
-    showModalHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-    }
 
     modalNavigationHandler = () => {
         let showModal = this.state.showModal;
@@ -125,23 +116,33 @@ class EventOverview extends Component {
             fields: {
                 description: {
                     label: 'Description',
-                    value: this.state.eventDesc
+                    value: this.state.eventDesc,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences', 
                 },
                 location: {
                     label: 'Location',
-                    value: this.state.eventLocation
+                    value: this.state.eventLocation,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
                 },
                 startTime: {
                     label: 'Start Date',
-                    value: this.state.startTime
+                    value: this.state.startTime,
+                    secureTextEntry: false,
+                    autoCapitalize: 'none', 
                 },
                 endTime: {
                     label: 'End Date',
-                    value: this.state.endTime
+                    value: this.state.endTime,
+                    secureTextEntry: false,
+                    autoCapitalize: 'none', 
                 },
                 goodToKnow: {
                     label: 'Good-to-know',
                     value: this.state.goodToKnow
+               secureTextEntry: false,
+                    autoCapitalize: 'sentences', 
                 },
             }
         });
@@ -159,11 +160,8 @@ class EventOverview extends Component {
                     /> : null}
                 <Header showModal={this.showModalHandler} />
                 <ScrollView>
-
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
-
                     <View style={styles.eventInfo}>
-
                         <HeadlineOverview
                             onEditPress={() => this.handleEditPress()}
                             infoButtonStatus={false}
@@ -179,6 +177,7 @@ class EventOverview extends Component {
                         <Text style={styles.ordinaryText}>{this.state.startTime} - {this.state.endTime}</Text>
                         <Text style={styles.subTitles}>Good-to-know</Text>
                         <Text style={styles.ordinaryText}>{this.state.goodToKnow}</Text>
+
                     </View>
                 </ScrollView>
 

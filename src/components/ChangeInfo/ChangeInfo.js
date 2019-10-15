@@ -43,16 +43,23 @@ class ChangeInfo extends Component {
     };
 
     handleSubmit = () => {
-        var fields = Object.keys(this.state.fields).reduce((map, key) => {
+        var body = Object.keys(this.state.fields).reduce((map, key) => {
             map[key] = this.state.fields[key].value
             return map
         }, {})
-        fields.title = this.state.title
+        body.title = this.state.title
+        body.token = this.state.token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwiY29tcGFueV9pZCI6MSwicm9sZSI6eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAxOS0xMC0wMVQxMToyMzoxNS44MzBaIiwidXBkYXRlZEF0IjoiMjAxOS0xMC0wMVQxMToyMzoxNS44MzBaIiwicm9sZSI6IkNPTVBBTllfTUFOQUdFUiJ9LCJpYXQiOjE1NzEwNjI3OTEsImV4cCI6MTU3MTE0OTE5MX0.O0T6zCJ_GxURvdVL8qInldh7FRQh6gfAEAPIq1rJ-0U"
 
         this.setState({ isLoading: true }, () => {
-            axios.put(this.state.http_update_url, fields)
-                .then(() => this.props.navigation.state.params.onEditSubmit(fields))
-                .then(() => this.props.navigation.navigate(this.state.parentRoute))
+            axios.put(this.state.http_update_url, body)
+                .then(() => this.props.navigation.state.params.onEditSubmit(body))
+                .then(() =>
+                    this.setState({ isLoading: false }, () => {
+                        this.props.navigation.navigate(this.state.parentRoute, {
+                            uID: this.state.uID
+                        })
+                    })
+                )
                 .catch((error) => {
                     console.log(error);
                     this.setState({ isLoading: false })
@@ -101,7 +108,7 @@ class ChangeInfo extends Component {
                                     isLoading={this.state.isLoading}
                                     handleInputChange={this.handleInputChange}
                                     formStyle={styles} />
-                                    
+
                             </View>
                         </KeyboardAwareScrollView>
                     </ScrollView>
@@ -129,7 +136,8 @@ const EditableForm = ({ fields, handleSubmit, isLoading, handleInputChange, form
                         label={fields[key].label}
                         placeholder={fields[key].value}
                         onChangeText={(value) => handleInputChange(value, key)}
-                        secureTextEntry={false}
+                        secureTextEntry={fields[key].secureText}
+                        autoCapitalize={fields[key].autoCapitalize}
                         style={formStyle.input}
                     />
                 </View>

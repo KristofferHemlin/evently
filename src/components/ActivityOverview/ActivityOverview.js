@@ -62,7 +62,7 @@ class ActivityOverview extends Component {
 
         axios.get('http://localhost:3000/activities/' + activityID)
             .then((response) => {
-
+          
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
                 const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
 
@@ -119,19 +119,27 @@ class ActivityOverview extends Component {
             fields: {
                 description: {
                     label: 'Description',
-                    value: this.state.activityDesc
+                    value: this.state.activityDesc,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences', 
                 },
                 location: {
                     label: 'Location',
-                    value: this.state.activityLocation
+                    value: this.state.activityLocation,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
                 },
                 startTime: {
                     label: 'startTime',
-                    value: this.state.startTime
+                    value: this.state.startTime,
+                    secureTextEntry: false,
+                    autoCapitalize: 'none', 
                 },
                 endTime: {
                     label: 'endTime',
-                    value: this.state.endTime
+                    value: this.state.endTime,
+                    secureTextEntry: false,
+                    autoCapitalize: 'none', 
                 },
                 endTime: {
                     label: 'endTime',
