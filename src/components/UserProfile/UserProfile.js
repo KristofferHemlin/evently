@@ -65,7 +65,8 @@ class UserProfile extends Component {
 
             this.setState({ 
                 roleID: roleID,
-                uID: uID })
+                uID: uID,
+                eventTitle: eventTitle, })
 
         })
     }

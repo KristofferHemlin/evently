@@ -48,38 +48,39 @@ class EventOverview extends Component {
             } else {
                 this.setState({ showEditButton: false })
             }
-            this.setState({ 
+            this.setState({
                 roleID: roleID,
-                token: token })
-        })
-
-    componentDidMount() {
-        uID = Number(this.props.navigation.getParam('uID', ''))
-
-        axios.get('http://localhost:3000/users/' + uID + '/currentevent')
-            // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
-            .then((response) => {
-                
-                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-
-                this.setState({
-                    eventTitle: response.data.title,
-                    eventId: response.data.id,
-                    eventDesc: response.data.description,
-                    eventLocation: response.data.location,
-                    goodToKnow:response.data.goodToKnow,
-                    startTime: startTime,
-                    endTime: endTime,
-                    uID: uID,
-                    roleID: roleID
-                })
+                token: token
             })
-            .catch((error) => {
-                console.log(error);
-            });
-
+        })
     }
+        componentDidMount() {
+            uID = Number(this.props.navigation.getParam('uID', ''))
+
+            axios.get('http://localhost:3000/users/' + uID + '/currentevent')
+                // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
+                .then((response) => {
+
+                    const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                    const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+
+                    this.setState({
+                        eventTitle: response.data.title,
+                        eventId: response.data.id,
+                        eventDesc: response.data.description,
+                        eventLocation: response.data.location,
+                        goodToKnow: response.data.goodToKnow,
+                        startTime: startTime,
+                        endTime: endTime,
+                        uID: uID,
+                        roleID: roleID
+                    })
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+        }
 
 
     modalNavigationHandler = () => {
@@ -118,7 +119,7 @@ class EventOverview extends Component {
                     label: 'Description',
                     value: this.state.eventDesc,
                     secureTextEntry: false,
-                    autoCapitalize: 'sentences', 
+                    autoCapitalize: 'sentences',
                 },
                 location: {
                     label: 'Location',
@@ -130,19 +131,19 @@ class EventOverview extends Component {
                     label: 'Start Date',
                     value: this.state.startTime,
                     secureTextEntry: false,
-                    autoCapitalize: 'none', 
+                    autoCapitalize: 'none',
                 },
                 endTime: {
                     label: 'End Date',
                     value: this.state.endTime,
                     secureTextEntry: false,
-                    autoCapitalize: 'none', 
+                    autoCapitalize: 'none',
                 },
                 goodToKnow: {
                     label: 'Good-to-know',
-                    value: this.state.goodToKnow
-               secureTextEntry: false,
-                    autoCapitalize: 'sentences', 
+                    value: this.state.goodToKnow,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
                 },
             }
         });
