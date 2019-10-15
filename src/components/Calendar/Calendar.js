@@ -8,6 +8,8 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview'
 import SettingsModal from '../SettingsModal/SettingsModal';
+
+import URL from '../../config';
 import styles from './Calendar.style';
 
 
@@ -62,11 +64,6 @@ class Calendar extends Component {
           console.log(error)
         })
     })
-  }
-
-
-
-  componentDidMount() {
   }
 
   showModalHandler = () => {

@@ -11,6 +11,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 import FormDescription from '../FormDescription/FormDescription';
 import FormHeader from '../FormHeader/FormHeader';
+import URL from '../../config';
 // import ImageSelector from '../ImageSelector/ImageSelector';
 import styles from './CreateAcc.style';
 
@@ -94,10 +95,9 @@ class CreateAcc extends Component{
 
 
     componentDidMount(){
-        axios.get('http://localhost:3000/users/' + this.state.uID)
-        // axios.get('http://10.110.171.68:3000/users/' + this.state.uID)
-        .then((response) => {  
-            // console.log('response', response);          
+        // axios.get('http://localhost:3000/users/' + this.state.uID)
+        axios.get(URL + 'users/' + this.state.uID)
+        .then((response) => {            
             let responseArray = []
             let fields = [...this.state.fields];
             for (key in response) {
@@ -137,8 +137,8 @@ class CreateAcc extends Component{
     handleSubmit = () =>{
         console.log("CLICK!")
         this.setState({isLoading:true}, () => {
-        axios.put('http://localhost:3000/users/' + this.state.uID + '/firstlogin', {
-            // axios.put('http://10.110.171.68:3000/users/' + this.state.uID + '/firstlogin', {
+        // axios.put('http://localhost:3000/users/' + this.state.uID + '/firstlogin', {
+            axios.put( URL + 'users/' + this.state.uID + '/firstlogin', {
             firstName: this.state.fields[0].value,
             lastName: this.state.fields[1].value,
             email: this.state.fields[2].value,

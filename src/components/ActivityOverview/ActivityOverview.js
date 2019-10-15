@@ -15,6 +15,7 @@ import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
 import SettingsModal from '../SettingsModal/SettingsModal';
 
+import URL from '../../config';
 import styles from './ActivityOverview.style.js';
 
 class ActivityOverview extends Component {
@@ -59,8 +60,9 @@ class ActivityOverview extends Component {
         const uID = Number(this.props.navigation.getParam('uID', ''))
         const activityID = Number(this.props.navigation.getParam('activityID', null))
         const eventTitle = this.props.navigation.getParam('eventTitle', null)
-
-        axios.get('http://localhost:3000/activities/' + activityID)
+        console.log('eventTitle', eventTitle);
+        // axios.get('http://localhost:3000/activities/' + activityID)
+        axios.get( URL + 'activities/' + activityID)
             .then((response) => {
           
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');

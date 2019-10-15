@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { withNavigation } from 'react-navigation';
 import { NavigationEvents } from 'react-navigation';
+
 import axios from 'axios';
 
 
@@ -38,6 +39,7 @@ class NotificationOverview extends Component {
                 }, {})
                 this.setState({notifications: Object.keys(filteredRes).map(key => filteredRes[key])}); 
             })   
+
     }
 
     navigateTo(routeType, itemID) {
@@ -57,9 +59,10 @@ class NotificationOverview extends Component {
                             {infoCircleIcon}
                         </View>
                     </TouchableOpacity>
-            </View >
+            </View>
             <View style={styles.menuContainer}>
             {this.state.notifications.map(({ title, id, updatedAt, routeType }, index) => {
+
                 return <NotificationLine
                     key={id || index}
                     id={id || index}
