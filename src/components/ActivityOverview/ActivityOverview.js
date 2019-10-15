@@ -42,7 +42,6 @@ class ActivityOverview extends Component {
 
         props.navigation.addListener('willFocus', () => {
             roleID = Number(this.props.navigation.getParam('roleID', ''))
-            console.log('roleID', roleID);
             if (roleID === 1) {
                 this.setState({ showEditButton: true })
             } else {
@@ -58,22 +57,14 @@ class ActivityOverview extends Component {
 
     componentDidMount() {
         const uID = Number(this.props.navigation.getParam('uID', ''))
-        console.log('activityoverview this.state.uID', uID);
         const activityID = Number(this.props.navigation.getParam('activityID', null))
         const eventTitle = this.props.navigation.getParam('eventTitle', null)
 
         axios.get('http://localhost:3000/activities/' + activityID)
             .then((response) => {
 
-                console.log(response);
-
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
                 const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-                // convertion of the date to right format.
-                // const sTime = response.data.startTime.replace('T', ' ');
-                // startTime = sTime.split('.')[0]
-                // const eTime = response.data.endTime.replace('T', ' ');
-                // endTime = eTime.split('.')[0]
 
                 this.setState({
                     activityTitle: response.data.title,
@@ -96,7 +87,6 @@ class ActivityOverview extends Component {
 
 
     showParticipantsHandler = () => {
-        console.log('activityID', this.state.activityID);
 
         this.props.navigation.navigate('ShowParticipantsRoute', {
             activity: true,
@@ -119,7 +109,6 @@ class ActivityOverview extends Component {
     handleEditPress = () => {
         this.onEditSubmit = this.onEditSubmit.bind(this)
         var uID = this.state.uID
-        console.log(this.state.activityID)
         this.props.navigation.navigate('ChangeInfoRoute', {
             onEditSubmit: (input) => this.onEditSubmit(input),
             uID: uID,
@@ -154,14 +143,12 @@ class ActivityOverview extends Component {
                 },
             }
         });
-        console.log('leaving ActivityOverview', this.state.uID)
     }
 
 
     showModalHandler = () => {
         let showModal = this.state.showModal
         this.setState({ showModal: !showModal })
-        console.log(this.state.showModal)
     }
     modalNavigationHandler = () => {
         let showModal = this.state.showModal;

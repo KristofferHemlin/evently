@@ -40,7 +40,6 @@ class Calendar extends Component {
       axios.get('http://localhost:3000/events/1/activities')
         // axios.get('http://10.110.171.68:3000/events/1/activities')
         .then((response) => {
-          console.log("GET ACTICVITEEISISISIS1",response.data)
           responseArray = response.data.map(activity => ({
             start: moment(new Date(activity.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
             end: moment(new Date(activity.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
@@ -68,40 +67,11 @@ class Calendar extends Component {
 
 
   componentDidMount() {
-    // const uID = Number(this.props.navigation.getParam('uID', ''));
-    // const eventTitle = this.props.navigation.getParam('eventTitle', '');
-    // const roleID = Number(this.props.navigation.getParam('roleID', ''));
-    // axios.get('http://localhost:3000/events/1/activities')
-    //   // axios.get('http://10.110.171.68:3000/events/1/activities')
-    //   .then((response) => {
-    //     console.log(response.data)
-    //     responseArray = response.data.map(activity => ({
-    //       start: moment(new Date(activity.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm:ss'),
-    //       end: moment(new Date(activity.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm:ss'),
-    //       title: activity.title,
-    //       summary: activity.location + '. ' + activity.description,
-    //       id: activity.id
-    //     })
-    //     )
-
-    //     this.setState({
-    //       activities: responseArray,
-    //       isUpdated: true,
-    //       uID: uID,
-    //       eventTitle: eventTitle,
-    //       roleID: roleID,
-    //     })
-
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
   }
 
   showModalHandler = () => {
     let showModal = this.state.showModal;
     this.setState({ showModal: !showModal });
-    console.log(this.state.showModal);
   }
 
   modalNavigationHandler = () => {
@@ -116,8 +86,6 @@ class Calendar extends Component {
   }
 
   eventClicked(event) {
-    console.log(event)
-    console.log("this.state.eventTitle",this.state.eventTitle)
     this.props.navigation.navigate('ActivityOverviewRoute', {
       activityID: event.id,
       eventTitle: this.state.eventTitle,
@@ -128,7 +96,6 @@ class Calendar extends Component {
   }
 
   render() {
-    console.log("ACT ARRAY", this.state.activities)
     const todaysDate = moment().format('YYYY-MM-DD')
     return (
       <View style={styles.pageContainer}>

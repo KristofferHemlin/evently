@@ -43,7 +43,6 @@ class EventOverview extends Component {
         props.navigation.addListener('willFocus', () => {
             roleID = Number(this.props.navigation.getParam('roleID', ''))
             token = (this.props.navigation.getParam('token', ''))
-            console.log('roleID', roleID);
             if (roleID === 1) {
                 this.setState({ showEditButton: true })
             } else {
@@ -65,15 +64,9 @@ class EventOverview extends Component {
         axios.get('http://localhost:3000/users/' + uID + '/currentevent')
             // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
             .then((response) => {
-                console.log('response', response);
                 
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
                 const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-                
-                // const sTime = response.data.startTime.replace('T', ' ');
-                // startTime = sTime.split('.')[0]
-                // const eTime = response.data.endTime.replace('T', ' ');
-                // endTime = eTime.split('.')[0]
 
                 this.setState({
                     eventTitle: response.data.title,
