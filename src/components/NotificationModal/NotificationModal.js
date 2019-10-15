@@ -2,6 +2,8 @@ import styles from './NotificationModal.style.js'
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { withNavigation } from 'react-navigation';
+import { NavigationEvents } from 'react-navigation';
+import axios from 'axios';
 
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -13,43 +15,41 @@ class NotificationOverview extends Component {
 
     constructor(props) {
         super(props)
-
         this.state = {
-            notifications: [{
-                itemTitle: '',
-                itemID: '',
-                routeType: ''
-            }]  
+            notifications: []  
         }
-        props.navigation.addListener('willFocus', () => {
-            console.log('willFocus showparticipants');
-            this.fetchNotifications()
+        props.navigation.addListener('didFocus', () => {
+            
         })
+
+        this.fetchNotifications()
     }
+
 
 
     fetchNotifications() {
         var uID = this.props.navigation.getParam('uID', '')
-        console.log('uID') 
-        
         axios.get(SERVER_ENDPOINT + '/users/' + uID + '/notifications')
-            .then((results) => { 
-                console.log('notificatiobn')
-
-                this.setState({...{ notifications: results }, routeType: 'ActivityOverviewRoute'}); 
-            })
-            
+            .then((results) => {
+                console.log(results)
+                var filteredRes = (results.data || []).reduce((map, {activity: {title, id, updatedAt}}) => {
+                    map[id] = {title, id, updatedAt, routeType: 'ActivityOverviewRoute'}
+                    return map
+                }, {})
+                this.setState({notifications: Object.keys(filteredRes).map(key => filteredRes[key])}); 
+            })   
     }
 
     navigateTo(routeType, itemID) {
-        console.log('asdagsdf', routeType, itemID)
-        this.props.navigation.navigate(routeType, { activityID: itemID })
+        this.setState({notifications: []})
         this.props.exitModal()
+        this.props.navigation.navigate(routeType, { activityID: itemID })
     }
 
     render() {
         var {exitModal} = this.props
         return <View style={styles.modalContainer}>
+            <NavigationEvents onWillFocus={payload => this.fetchNotifications(payload)} />
             <View style={styles.iconContainer}>
                     <TouchableOpacity
                         onPress={exitModal}>
@@ -59,12 +59,12 @@ class NotificationOverview extends Component {
                     </TouchableOpacity>
             </View >
             <View style={styles.menuContainer}>
-            {this.state.notifications.map(({ itemTitle, itemID, routeType }) => {
+            {this.state.notifications.map(({ title, id, updatedAt, routeType }, index) => {
                 return <NotificationLine
-                    key={itemID}
-                    id={itemID}
-                    title={itemTitle}
-                    navigationCallback={() => this.navigateTo(routeType, itemID)} />
+                    key={id || index}
+                    id={id || index}
+                    title={title}
+                    navigationCallback={() => this.navigateTo(routeType, id)} />
             })}
             </View>
         </View>
