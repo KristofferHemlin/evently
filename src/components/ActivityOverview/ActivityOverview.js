@@ -6,13 +6,14 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native';
-
+import moment from 'moment';
 import axios from 'axios';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
+import SettingsModal from '../SettingsModal/SettingsModal';
 
 import styles from './ActivityOverview.style.js';
 
@@ -22,16 +23,36 @@ class ActivityOverview extends Component {
         header: null,
     };
 
-    state = {
-        eventTitle: '',
-        activityID: null,
-        activityLocation: '',
-        activityDesc: '',
-        startTime: '',
-        endTime: '',
-        contact: '',
-        uID: null,
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            eventTitle: '',
+            activityID: null,
+            activityLocation: '',
+            activityDesc: '',
+            goodToKnow: '',
+            startTime: '',
+            endTime: '',
+            contact: '',
+            uID: null,
+            showEditButton: false,
+            showModal: false,
+        }
+
+        props.navigation.addListener('willFocus', () => {
+            roleID = Number(this.props.navigation.getParam('roleID', ''))
+            if (roleID === 1) {
+                this.setState({ showEditButton: true })
+            } else {
+                this.setState({ showEditButton: false })
+            }
+            this.setState({ roleID: roleID })
+        })
     }
+
+
+
 
 
     componentDidMount() {
@@ -41,17 +62,16 @@ class ActivityOverview extends Component {
 
         axios.get('http://localhost:3000/activities/' + activityID)
             .then((response) => {
-                // convertion of the date to right format.
-                const sTime = response.data.startTime.replace('T', ' ');
-                startTime = sTime.split('.')[0]
-                const eTime = response.data.endTime.replace('T', ' ');
-                endTime = eTime.split('.')[0]
+          
+                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
 
                 this.setState({
                     activityTitle: response.data.title,
                     activityID: activityID,
                     activityDesc: response.data.description,
                     activityLocation: response.data.location,
+                    goodToKnow: response.data.goodToKnow,
                     startTime: startTime,
                     endTime: endTime,
                     eventTitle: eventTitle,
@@ -67,12 +87,12 @@ class ActivityOverview extends Component {
 
 
     showParticipantsHandler = () => {
-        console.log('activityID', this.state.activityID);
 
         this.props.navigation.navigate('ShowParticipantsRoute', {
             activity: true,
             activityID: this.state.activityID,
             activityTitle: this.state.activityTitle,
+            roleID: this.state.roleID,
         })
     }
 
@@ -82,45 +102,77 @@ class ActivityOverview extends Component {
             activityLocation: input.location,
             startTime: input.startTime,
             endTime: input.endTime,
+            goodToKnow: input.goodToKnow,
         })
     }
 
     handleEditPress = () => {
         this.onEditSubmit = this.onEditSubmit.bind(this)
         var uID = this.state.uID
-        console.log(this.state.activityID)
         this.props.navigation.navigate('ChangeInfoRoute', {
             onEditSubmit: (input) => this.onEditSubmit(input),
             uID: uID,
             title: this.state.activityTitle,
+            roleID: this.state.roleID,
             parentRoute: 'ActivityOverviewRoute',
             http_update_url: 'http://localhost:3000/activities/' + this.state.activityID,
             fields: {
                 description: {
                     label: 'Description',
-                    value: this.state.activityDesc
+                    value: this.state.activityDesc,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences', 
                 },
                 location: {
                     label: 'Location',
-                    value: this.state.activityLocation
+                    value: this.state.activityLocation,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
                 },
                 startTime: {
                     label: 'startTime',
-                    value: this.state.startTime
+                    value: this.state.startTime,
+                    secureTextEntry: false,
+                    autoCapitalize: 'none', 
+                },
+                endTime: {
+                    label: 'endTime',
+                    value: this.state.endTime,
+                    secureTextEntry: false,
+                    autoCapitalize: 'none', 
                 },
                 endTime: {
                     label: 'endTime',
                     value: this.state.endTime
                 },
+                goodToKnow: {
+                    label: 'Good-to-know',
+                    value: this.state.goodToKnow
+                },
             }
         });
-        console.log('leaving ActivityOverview', this.state.uID)
+    }
+
+
+    showModalHandler = () => {
+        let showModal = this.state.showModal
+        this.setState({ showModal: !showModal })
+    }
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal });
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
+        });
     }
 
     render() {
 
         return (
             <View style={styles.pageContainer}>
+
                 <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
                 <ScrollView>
 
@@ -131,7 +183,7 @@ class ActivityOverview extends Component {
                         <HeadlineOverview
                             infoButtonStatus={false}
                             onEditPress={() => this.handleEditPress()}
-                            editButtonStatus={true}>
+                            editButtonStatus={this.state.showEditButton}>
                             {this.state.activityTitle}
                         </HeadlineOverview>
 
@@ -143,6 +195,9 @@ class ActivityOverview extends Component {
                         <Text style={[styles.titles, styles.subTitles]}>What?</Text>
                         <Text style={styles.ordinaryText}>{this.state.activityDesc}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>Who to contact?</Text>
+                        <Text style={styles.ordinaryText}>{this.state.activityDesc}</Text>
+                        <Text style={[styles.titles, styles.subTitles]}>Good-to-know</Text>
+                        <Text style={styles.ordinaryText}>{this.state.goodToKnow}</Text>
 
                         <Text style={styles.subTitles}>Participants</Text>
                         <TouchableOpacity
@@ -153,7 +208,7 @@ class ActivityOverview extends Component {
                     </View>
                 </ScrollView>
 
-                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }

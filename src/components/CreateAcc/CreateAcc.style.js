@@ -7,12 +7,12 @@ export default StyleSheet.create({
     },
     inputForm:{
         width: Dimensions.get('window').width -55,
-        //TODO:inte bästa lösningen, kolla upp variabler i native css
     },
     input:{
       fontSize: 16,
       backgroundColor: '#FFF',
-      color: "grey",
+      color: "rgb(56,56,56)",
+      fontWeight: '500',
       borderWidth: 2,
       borderColor: "black",
       paddingHorizontal: 15,

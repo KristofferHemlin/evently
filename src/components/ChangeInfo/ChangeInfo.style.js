@@ -54,6 +54,8 @@ export default StyleSheet.create({
     },
 
     input:{
+        paddingTop: 15,
+        alignItems: "center",
         fontSize: 16,
         backgroundColor: '#FFF',
         color: "gray",

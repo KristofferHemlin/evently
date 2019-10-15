@@ -13,11 +13,37 @@ class SettingsModal extends Component {
         header: null,
     };
 
+
     changeUserInfoNavigationHandler = () => {
         const uID = this.props.navigation.getParam('uID', '')
         console.log('what', uID)
         this.props.navigation.navigate('UserProfileRoute',{uID: uID})
         this.props.exitModal()
+    }
+
+    changePasswordNavigationHandler = () => {
+        this.props.navigation.navigate('ChangeInfoRoute',{
+            onEditSubmit: () => {},
+            uID: uID,
+            title: 'Change Password',
+            parentRoute: 'UserProfileRoute',
+            http_update_url:  'http://localhost:3000/account/password',
+            fields: {
+                currentPassword: {
+                    label: 'Current Password',
+                    value: '',
+                    autoCapitalize: 'none', 
+                    secureText: true,
+
+                },
+                newPassword: {
+                    label: 'New Password',
+                    value: '',
+                    autoCapitalize: 'none', 
+                    secureText: true,
+                }
+            }
+        })
     }
 
     render() {
@@ -40,7 +66,9 @@ class SettingsModal extends Component {
                         <TouchableOpacity onPress={this.changeUserInfoNavigationHandler}>
                             <Text style={styles.menuTxt}>User Profile Info</Text>
                         </TouchableOpacity>
-                        <Text style={styles.menuTxt}>Change Account Password</Text>
+                        <TouchableOpacity onPress={this.changePasswordNavigationHandler}>
+                            <Text style={styles.menuTxt}>Change Account Password</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

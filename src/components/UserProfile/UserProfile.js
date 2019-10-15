@@ -24,37 +24,67 @@ class UserProfile extends Component {
         header: null,
     };
 
-    state = {
+    constructor(props) {
+        super(props)
+        this.state = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '070 999 999',
+            about: '',
+            allergies: '',
+            uID: null,
+            eventTitle: '',
+            image: Croatia,
+            ownProfilePage: true,
+            isCompanyManager: false,
+            showModal: false,
+            roleID: null,
+        }
+        props.navigation.addListener('willFocus', () => {
+            const uID = Number(this.props.navigation.getParam('uID', ''));
+            const participantID = Number(this.props.navigation.getParam('participantID', null));
+            let ifParticipant = this.props.navigation.getParam('showParticipant', false);
+            const eventTitle = this.props.navigation.getParam('eventTitle', '');
+            const roleID = Number(this.props.navigation.getParam('roleID', ''));
 
-        firstName: '',
-        lastName: '',
-        // company: '',
-        // role: '', 
-        email: '',
-        phone: '070 999 999',
-        about: 'nah bruh',
-        allergies: 'Ogillar papaya',
-        uID: null,
-        eventTitle: '',
-        image: Croatia,
 
-        ownProfilePage: true,
-        showModal: false,
+            if (ifParticipant === true) {
+                this.fetchUserData(participantID, eventTitle);
+            } else {
+                this.fetchUserData(uID, eventTitle);
+            }
+            if (participantID === uID || participantID === 0) {
+                this.setState({ ownProfilePage: true })
+            } else {
+                this.setState({ ownProfilePage: false })
+            }
+            if (roleID === 1) {
+                this.setState({ isCompanyManager: true })
+            }
 
+            this.setState({ 
+                roleID: roleID,
+                uID: uID,
+                eventTitle: eventTitle, })
 
+        })
     }
 
-    fetchUserData = (uID, eventTitle) => {
-        console.log(uID);
-        axios.get('http://localhost:3000/users/' + uID)
-        // axios.get('http://10.110.171.68:3000/users/' + uID)
+
+
+    fetchUserData = (fetchedUser, eventTitle) => {
+        axios.get('http://localhost:3000/users/' + fetchedUser)
+            // axios.get('http://10.110.171.68:3000/users/' + fetchedUser)
             .then((response) => {
+                console.log('USerprof response', response);
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
                     email: response.data.email,
                     phone: response.data.phone,
-                    uID: uID,
+                    about: response.data.aboutMe,
+                    allergies: response.data.allergiesOrPreferences,
                     eventTitle: eventTitle,
                 })
             })
@@ -63,48 +93,23 @@ class UserProfile extends Component {
             });
     }
 
-    componentDidMount() {
-        const uID = Number(this.props.navigation.getParam('uID', ''));
-        const eventTitle = this.props.navigation.getParam('eventTitle', '');
-        this.fetchUserData(uID, eventTitle);
-    }
-
-    componentDidUpdate() {
-        // TODO kolla om dåligt för prestandan att ha componentdidupdate såhär
-        console.log("UPDATEEEEE!")
-        uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
-        axios.get('http://localhost:3000/users/' + uID)
-        // axios.get('http://10.110.171.68:3000/users/' + uID)
-            .then((response) => {
-                // sorry för fulkod, fixar det sen
-                if (this.state.firstName !== response.data.firstName ||
-                    this.state.lastName !== response.data.lastName ||
-                    this.state.email !== response.data.email ||
-                    this.state.phone !== response.data.phone) {
-                    this.setState({
-                        firstName: response.data.firstName,
-                        lastName: response.data.lastName,
-                        email: response.data.email,
-                        phone: response.data.phone,
-                        uID: uID,
-                    })
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
     editButtonHandler = () => {
         this.props.navigation.navigate('ChangeUserProfileRoute', {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
         });
     }
 
     showModalHandler = () => {
         let showModal = this.state.showModal
         this.setState({ showModal: !showModal })
-        console.log(this.state.showModal)
+    }
+    updateUserProfileHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal });
+        this.fetchUserData(this.state.uID, this.state.eventTitle);
+        
     }
 
     render() {
@@ -118,7 +123,7 @@ class UserProfile extends Component {
 
                             <HeadlineOverview
                                 infoButtonStatus={false}
-                                editButtonStatus={true}
+                                editButtonStatus={this.state.ownProfilePage}
                                 onEditPress={this.editButtonHandler}
                             >User Profile</HeadlineOverview>
 
@@ -137,15 +142,20 @@ class UserProfile extends Component {
                                 <Text style={styles.ordinaryText}>{this.state.email}</Text>
                                 <Text style={styles.subTitles}>Phone</Text>
                                 <Text style={styles.ordinaryText}>{this.state.phone}</Text>
-                                <Text style={styles.subTitles}>About</Text>
+                                <Text style={styles.subTitles}>About Me</Text>
                                 <Text style={styles.ordinaryText}>{this.state.about}</Text>
-                                <Text style={styles.subTitles}>Allergies</Text>
-                                <Text style={styles.ordinaryText}>{this.state.allergies}</Text>
+                                {this.state.ownProfilePage || this.state.isCompanyManager ?
+                                    <View>
+                                        <Text style={styles.subTitles}>Allergies</Text>
+                                        <Text style={styles.ordinaryText}>{this.state.allergies}</Text>
+                                    </View> : null}
+
+
                             </View>
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer  uID={this.state.uID} eventTitle={this.state.eventTitle}/>
+                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }

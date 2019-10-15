@@ -7,6 +7,7 @@ import {
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
+import moment from 'moment';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -21,49 +22,81 @@ class EventOverview extends Component {
         header: null,
     };
 
-    state = {
-        eventTitle: '',
-        eventId: null,
-        eventLocation: '',
-        eventDesc: '',
-        startTime: '',
-        endTime: '',
-        niceToKnow: '',
-        uID: null,
-    }
+    constructor(props) {
+        super(props)
 
-    componentDidMount() {
-        uID = Number(this.props.navigation.getParam('uID', ''))
-        axios.get('http://localhost:3000/users/' + uID + '/currentevent')
-        // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
-            .then((response) => {
-                const sTime = response.data.startTime.replace('T', ' ');
-                startTime = sTime.split('.')[0]
-                const eTime = response.data.endTime.replace('T', ' ');
-                endTime = eTime.split('.')[0]
+        this.state = {
+            eventTitle: '',
+            eventId: null,
+            eventLocation: '',
+            eventDesc: '',
+            startTime: '',
+            endTime: '',
+            goodToKnow: '',
+            uID: null,
+            showModal: false,
+            showEditButton: false,
+            roleID: null,
+            token: '',
+        }
 
-                this.setState({
-                    eventTitle: response.data.title,
-                    eventId: response.data.id,
-                    eventDesc: response.data.description,
-                    eventLocation: response.data.location,
-                    startTime: startTime,
-                    endTime: endTime,
-                    uID: uID
-                })
+        props.navigation.addListener('willFocus', () => {
+            roleID = Number(this.props.navigation.getParam('roleID', ''))
+            token = (this.props.navigation.getParam('token', ''))
+            if (roleID === 1) {
+                this.setState({ showEditButton: true })
+            } else {
+                this.setState({ showEditButton: false })
+            }
+            this.setState({
+                roleID: roleID,
+                token: token
             })
-            .catch((error) => {
-                console.log(error);
-            });
-
+        })
     }
+        componentDidMount() {
+            uID = Number(this.props.navigation.getParam('uID', ''))
+
+            axios.get('http://localhost:3000/users/' + uID + '/currentevent')
+                // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
+                .then((response) => {
+
+                    const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                    const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+
+                    this.setState({
+                        eventTitle: response.data.title,
+                        eventId: response.data.id,
+                        eventDesc: response.data.description,
+                        eventLocation: response.data.location,
+                        goodToKnow: response.data.goodToKnow,
+                        startTime: startTime,
+                        endTime: endTime,
+                        uID: uID,
+                        roleID: roleID
+                    })
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+        }
 
 
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal });
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
+        });
+    }
 
     onEditSubmit(input) {
         this.setState({
             eventDesc: input.description,
-            niceToKnow: input.niceToKnow,
+            goodToKnow: input.goodToKnow,
             eventLocation: input.location,
             startTime: input.startTime,
             endTime: input.endTime,
@@ -76,39 +109,48 @@ class EventOverview extends Component {
         this.props.navigation.navigate('ChangeInfoRoute', {
             onEditSubmit: (input) => this.onEditSubmit(input),
             uID: uID,
+            roleID: this.state.roleID,
             title: this.state.eventTitle,
             parentRoute: 'EventOverviewRoute',
-            http_update_url:  'http://localhost:3000/events/' + 1,
+            http_update_url: 'http://localhost:3000/events/' + 1,
             http_get_url: 'http://localhost:3000/users/' + uID + '/currentevent',
             fields: {
                 description: {
                     label: 'Description',
-                    value: this.state.eventDesc
+                    value: this.state.eventDesc,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
                 },
                 location: {
                     label: 'Location',
-                    value: this.state.eventLocation
+                    value: this.state.eventLocation,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
                 },
                 startTime: {
                     label: 'Start Date',
-                    value: this.state.startTime
+                    value: this.state.startTime,
+                    secureTextEntry: false,
+                    autoCapitalize: 'none',
                 },
                 endTime: {
                     label: 'End Date',
-                    value: this.state.endTime
+                    value: this.state.endTime,
+                    secureTextEntry: false,
+                    autoCapitalize: 'none',
                 },
-                niceToKnow: {
-                    label: 'Nice-to-know',
-                    value: this.state.niceToKnow
+                goodToKnow: {
+                    label: 'Good-to-know',
+                    value: this.state.goodToKnow,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
                 },
             }
-        }); 
+        });
     }
 
 
     render() {
-
-
         return (
             <View style={styles.pageContainer}>
                 <Header eventTitle={this.state.eventTitle} uID={this.state.uID} />
@@ -118,8 +160,8 @@ class EventOverview extends Component {
                         <HeadlineOverview
                             onEditPress={() => this.handleEditPress()}
                             infoButtonStatus={false}
-                            editButtonStatus={true}>
-                                Event Overview
+                            editButtonStatus={this.state.showEditButton}>
+                            Event Overview
                         </HeadlineOverview>
                         <View style={styles.line}></View>
                         <Text style={[styles.titles, styles.subTitles]}>Event description</Text>
@@ -128,12 +170,13 @@ class EventOverview extends Component {
                         <Text style={styles.ordinaryText}>{this.state.eventLocation}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>Dates</Text>
                         <Text style={styles.ordinaryText}>{this.state.startTime} - {this.state.endTime}</Text>
-                        <Text style={styles.subTitles}>Nice to know</Text>
-                        <Text style={styles.ordinaryText}>{this.state.niceToKnow}</Text>
+                        <Text style={styles.subTitles}>Good-to-know</Text>
+                        <Text style={styles.ordinaryText}>{this.state.goodToKnow}</Text>
+
                     </View>
                 </ScrollView>
 
-                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle}/>
+                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }
