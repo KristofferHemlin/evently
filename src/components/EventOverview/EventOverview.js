@@ -7,6 +7,7 @@ import {
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
+import moment from 'moment';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -21,35 +22,57 @@ class EventOverview extends Component {
         header: null,
     };
 
-    state = {
-        eventTitle: '',
-        eventId: null,
-        eventLocation: '',
-        eventDesc: '',
-        startTime: '',
-        endTime: '',
-        niceToKnow: '',
-        uID: null,
-    }
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            eventTitle: '',
+            eventId: null,
+            eventLocation: '',
+            eventDesc: '',
+            startTime: '',
+            endTime: '',
+            goodToKnow: '',
+            uID: null,
+            showModal: false,
+            showEditButton: false,
+            roleID: null,
+            token: '',
+        }
+
+        props.navigation.addListener('willFocus', () => {
+            roleID = Number(this.props.navigation.getParam('roleID', ''))
+            token = (this.props.navigation.getParam('token', ''))
+            if (roleID === 1) {
+                this.setState({ showEditButton: true })
+            } else {
+                this.setState({ showEditButton: false })
+            }
+            this.setState({ 
+                roleID: roleID,
+                token: token })
+        })
 
     componentDidMount() {
         uID = Number(this.props.navigation.getParam('uID', ''))
+
         axios.get('http://localhost:3000/users/' + uID + '/currentevent')
-        // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
+            // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
             .then((response) => {
-                const sTime = response.data.startTime.replace('T', ' ');
-                startTime = sTime.split('.')[0]
-                const eTime = response.data.endTime.replace('T', ' ');
-                endTime = eTime.split('.')[0]
+                
+                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
 
                 this.setState({
                     eventTitle: response.data.title,
                     eventId: response.data.id,
                     eventDesc: response.data.description,
                     eventLocation: response.data.location,
+                    goodToKnow:response.data.goodToKnow,
                     startTime: startTime,
                     endTime: endTime,
-                    uID: uID
+                    uID: uID,
+                    roleID: roleID
                 })
             })
             .catch((error) => {
@@ -59,11 +82,20 @@ class EventOverview extends Component {
     }
 
 
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal });
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
+        });
+    }
 
     onEditSubmit(input) {
         this.setState({
             eventDesc: input.description,
-            niceToKnow: input.niceToKnow,
+            goodToKnow: input.goodToKnow,
             eventLocation: input.location,
             startTime: input.startTime,
             endTime: input.endTime,
@@ -76,9 +108,10 @@ class EventOverview extends Component {
         this.props.navigation.navigate('ChangeInfoRoute', {
             onEditSubmit: (input) => this.onEditSubmit(input),
             uID: uID,
+            roleID: this.state.roleID,
             title: this.state.eventTitle,
             parentRoute: 'EventOverviewRoute',
-            http_update_url:  'http://localhost:3000/events/' + 1,
+            http_update_url: 'http://localhost:3000/events/' + 1,
             http_get_url: 'http://localhost:3000/users/' + uID + '/currentevent',
             fields: {
                 description: {
@@ -105,31 +138,35 @@ class EventOverview extends Component {
                     secureTextEntry: false,
                     autoCapitalize: 'none', 
                 },
-                niceToKnow: {
+                goodToKnow: {
                     label: 'Good-to-know',
-                    value: this.state.niceToKnow,
-                    secureTextEntry: false,
+                    value: this.state.goodToKnow
+               secureTextEntry: false,
                     autoCapitalize: 'sentences', 
                 },
             }
-        }); 
+        });
     }
 
 
     render() {
-
-
         return (
             <View style={styles.pageContainer}>
-                <Header eventTitle={this.state.eventTitle || 'test'} uID={this.state.uID || '169'} />
+                {this.state.showModal ?
+                    <SettingsModal
+                        exitModal={this.showModalHandler}
+                        navigationModal={this.modalNavigationHandler}
+
+                    /> : null}
+                <Header showModal={this.showModalHandler} />
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
                     <View style={styles.eventInfo}>
                         <HeadlineOverview
                             onEditPress={() => this.handleEditPress()}
                             infoButtonStatus={false}
-                            editButtonStatus={true}>
-                                Event Overview
+                            editButtonStatus={this.state.showEditButton}>
+                            Event Overview
                         </HeadlineOverview>
                         <View style={styles.line}></View>
                         <Text style={[styles.titles, styles.subTitles]}>Event description</Text>
@@ -139,11 +176,12 @@ class EventOverview extends Component {
                         <Text style={[styles.titles, styles.subTitles]}>Dates</Text>
                         <Text style={styles.ordinaryText}>{this.state.startTime} - {this.state.endTime}</Text>
                         <Text style={styles.subTitles}>Good-to-know</Text>
-                        <Text style={styles.ordinaryText}>{this.state.niceToKnow}</Text>
+                        <Text style={styles.ordinaryText}>{this.state.goodToKnow}</Text>
+
                     </View>
                 </ScrollView>
 
-                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle}/>
+                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }

@@ -15,6 +15,7 @@ import BackButton from '../BackButton/BackButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import styles from './ChangeInfo.style';
+import SettingsModal from '../SettingsModal/SettingsModal';
 
 class ChangeInfo extends Component {
 
@@ -24,13 +25,15 @@ class ChangeInfo extends Component {
     };
 
     state = {
-        title: this.props.navigation.getParam('title', ''),
-        parentRoute: this.props.navigation.getParam('parentRoute', ''),
-        http_update_url: this.props.navigation.getParam('http_update_url', ''),
-        fields: this.props.navigation.getParam('fields', ''),
-        isLoading: false,
-        wantToEdit: false,
-        uID: this.props.navigation.getParam('uID', '')
+            title: this.props.navigation.getParam('title', ''),
+            parentRoute: this.props.navigation.getParam('parentRoute', ''),
+            http_update_url: this.props.navigation.getParam('http_update_url', ''),
+            fields: this.props.navigation.getParam('fields', ''),
+            isLoading: false,
+            wantToEdit: false,
+            uID: this.props.navigation.getParam('uID', ''),
+            showModal: false,
+            roleID: this.props.navigation.getParam('roleID', ''),
     }
 
     handleInputChange = (value, key) => {
@@ -64,11 +67,32 @@ class ChangeInfo extends Component {
         })
     }
 
+    showModalHandler = () => {
+        let showModal = this.state.showModal
+        this.setState({ showModal: !showModal })
+        console.log(this.state.showModal)
+    }
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal }); 
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
+        });          
+    }
+
     render() {
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
-                    <View style={{ height: 40 }} />
+                  {this.state.showModal ?
+                        <SettingsModal
+                            exitModal={this.showModalHandler}
+                            navigationModal={this.modalNavigationHandler}
+
+                        /> : null}
+                    <Header showModal={this.showModalHandler} />
                     <ScrollView>
                         <KeyboardAwareScrollView>
                             <View style={styles.userInfo}>
@@ -88,6 +112,7 @@ class ChangeInfo extends Component {
                             </View>
                         </KeyboardAwareScrollView>
                     </ScrollView>
+                    <Footer roleID={this.state.roleID} uID={this.state.uID} />
                 </View>)
     }
 }

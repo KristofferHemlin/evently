@@ -13,6 +13,7 @@ class SettingsModal extends Component {
         header: null,
     };
 
+
     changeUserInfoNavigationHandler = () => {
         const uID = this.props.navigation.getParam('uID', '')
         console.log('what', uID)
