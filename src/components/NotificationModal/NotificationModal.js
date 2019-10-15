@@ -28,8 +28,8 @@ class NotificationOverview extends Component {
 
 
     fetchNotifications() {
-        var uID = this.props.navigation.getParam('uID', '')
-        axios.get(SERVER_ENDPOINT + '/users/' + uID + '/notifications')
+        console.log('agajagjasdg',this.props.uID)
+        axios.get(SERVER_ENDPOINT + '/users/' + this.props.uID + '/notifications')
             .then((results) => {
                 console.log(results)
                 var filteredRes = (results.data || []).reduce((map, {activity: {title, id, updatedAt}}) => {

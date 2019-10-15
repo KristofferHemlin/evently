@@ -93,7 +93,7 @@ class Calendar extends Component {
             navigationModal={this.modalNavigationHandler}
 
           /> : null}
-        <Header showModal={this.showModalHandler} />
+        <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
         <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Schedule</HeadlineOverview>
         {/* TODO: fixa informationstext */}
         <View style={styles.calendarContainer}>

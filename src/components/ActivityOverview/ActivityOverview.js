@@ -55,7 +55,7 @@ class ActivityOverview extends Component {
                     startTime: startTime,
                     endTime: endTime,
                     eventTitle: eventTitle,
-                    // uID: uID
+                    uID: uID
                 }
                 )
             })
@@ -121,7 +121,7 @@ class ActivityOverview extends Component {
 
         return (
             <View style={styles.pageContainer}>
-                <Header showModal={this.showModalHandler} />
+                <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
                 <ScrollView>
 
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>

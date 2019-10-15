@@ -111,7 +111,7 @@ class EventOverview extends Component {
 
         return (
             <View style={styles.pageContainer}>
-                <Header eventTitle={this.state.eventTitle || 'test'} uID={this.state.uID || '169'} />
+                <Header eventTitle={this.state.eventTitle} uID={this.state.uID} />
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
                     <View style={styles.eventInfo}>
