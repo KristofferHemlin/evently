@@ -17,8 +17,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Croatia from '../EventImageHeader/images/CROT.jpg';  
 
 import URL from '../../config';
-
-import Croatia from '../EventImageHeader/images/CROT.jpg';
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
 class UserProfile extends Component {

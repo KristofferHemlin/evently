@@ -14,7 +14,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
-import SettingsModal from '../SettingsModal/SettingsModal'
+import SettingsModal from '../SettingsModal/SettingsModal';
 
 import URL from '../../config';
 import styles from './EventOverview.style.js';
@@ -44,8 +44,7 @@ class EventOverview extends Component {
             roleID: null,
             token: '',
         }
-    }
-
+        
         props.navigation.addListener('willFocus', () => {
             roleID = Number(this.props.navigation.getParam('roleID', ''))
             token = (this.props.navigation.getParam('token', ''))
@@ -60,6 +59,7 @@ class EventOverview extends Component {
             })
         })
     }
+
         componentDidMount() {
             uID = Number(this.props.navigation.getParam('uID', ''))
             axios.get(URL + 'users/' + uID + '/currentevent')
