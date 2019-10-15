@@ -61,9 +61,10 @@ class EventOverview extends Component {
             } else {
                 this.setState({ showEditButton: false })
             }
-            this.setState({ 
+            this.setState({
                 roleID: roleID,
-                token: token })
+                token: token
+            })
         })
     };
 
@@ -88,13 +89,14 @@ class EventOverview extends Component {
                     actionMessage: null,
                     haveChanged: false,
                     roleID: roleID
+                    })
+          
                 })
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+                .catch((error) => {
+                    console.log(error);
+                });
 
-    }
+        }
 
 
     modalNavigationHandler = () => {
@@ -135,7 +137,7 @@ class EventOverview extends Component {
                     label: 'Description',
                     value: this.state.eventDesc,
                     secureTextEntry: false,
-                    autoCapitalize: 'sentences', 
+                    autoCapitalize: 'sentences',
                 },
                 location: {
                     label: 'Location',
@@ -147,19 +149,19 @@ class EventOverview extends Component {
                     label: 'Start Date',
                     value: this.state.startTime,
                     secureTextEntry: false,
-                    autoCapitalize: 'none', 
+                    autoCapitalize: 'none',
                 },
                 endTime: {
                     label: 'End Date',
                     value: this.state.endTime,
                     secureTextEntry: false,
-                    autoCapitalize: 'none', 
+                    autoCapitalize: 'none',
                 },
                 goodToKnow: {
                     label: 'Good-to-know',
                     value: this.state.goodToKnow,
                     secureTextEntry: false,
-                    autoCapitalize: 'sentences', 
+                    autoCapitalize: 'sentences',
                 },
             }
         });
