@@ -19,7 +19,8 @@ const profilePreview = props => {
     }
 
     return(
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={props.onClick}>
             <View style={styles.profileOverviewView}>
                 <Image source={this.state.profilePicture} style={styles.previewImg}></Image>
                 <View style={styles.profileOverviewViewRight}>

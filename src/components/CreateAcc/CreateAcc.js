@@ -11,14 +11,14 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 import FormDescription from '../FormDescription/FormDescription';
 import FormHeader from '../FormHeader/FormHeader';
-import ImageSelector from '../ImageSelector/ImageSelector';
-
 import URL from '../../config';
+// import ImageSelector from '../ImageSelector/ImageSelector';
 import styles from './CreateAcc.style';
 
 
 
 class CreateAcc extends Component{
+
 
     state = {
         fields: [
@@ -50,23 +50,25 @@ class CreateAcc extends Component{
                 key: 'phone',
                 name: 'Phone',
                 type: 'text',
+                label: 'phone',
                 value: '',
                 secureText: false,
               },
+              {
+                key: 'department',
+                name: 'Company Department',
+                type: 'text',
+                label: 'department',
+                value: '',
+                secureText: false,
+              },
+              
             //   {
             //     key: 'companyName',
             //     name: 'Company Name',
             //     type: 'text',
             //     label: 'Company Name',
             //     placeholder: 'Test Company',
-            //     value: '',
-            //     secureText: false,
-            //   },
-            //   {
-            //     key: 'companyDepartment',
-            //     name: 'Company Department',
-            //     type: 'text',
-            //     label: 'Company Department',
             //     value: '',
             //     secureText: false,
             //   },
@@ -114,6 +116,9 @@ class CreateAcc extends Component{
                 if(field.key === 'phone'){
                     field.value = responseArray[0].phone
                 }  
+                if(field.key === 'department'){
+                    field.value = responseArray[0].companyDepartment
+                }  
               })
 
             this.setState({fields: fields});
@@ -138,12 +143,14 @@ class CreateAcc extends Component{
             lastName: this.state.fields[1].value,
             email: this.state.fields[2].value,
             phone: this.state.fields[3].value,
-            password: this.state.fields[4].value
+            companyDepartment: this.state.fields[4].value,
+            password: this.state.fields[5].value,
         })
         .then((response) => {
             this.setState({isLoading: false});
             this.props.navigation.navigate('EventOverviewRoute', {
-                uID: this.state.uID
+                uID: this.state.uID,
+                roleID: this.state.roleID,
             }) 
         })
         .catch((error) => {
@@ -161,7 +168,7 @@ class CreateAcc extends Component{
                 <View style={styles.creatAccContainer}>
                     <FormHeader>Create your profile</FormHeader>
                     <FormDescription>Welcome! Fill in the form below to set up your company and user account.</FormDescription>
-                    <ImageSelector>Please upload a photo of yourself</ImageSelector>
+                    {/* <ImageSelector>Please upload a photo of yourself</ImageSelector> */}
                         <View style={styles.inputForm}>
                         {this.state.fields.map((input, idx) => {
                             return <TextInput
@@ -172,6 +179,7 @@ class CreateAcc extends Component{
                                 type={input.type}
                                 label={input.label}
                                 placeholder={input.name}
+                                placeholderTextColor={"rgb(128,128,128)"}
                                 secureTextEntry={input.secureText}
                                 onChangeText={(value) => this.handleInputChange(value, idx)}
                             />

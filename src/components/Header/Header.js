@@ -99,7 +99,7 @@ class Header extends Component {
                     eventTitle={eventTitle || ''}
                     exitModal={() => this.setState({ showBellModal: false })}
                 /> : <View />}
-            <ImageBackground source={bgImage} style={styles.headerContainer}>
+            <View style={styles.headerContainer}>
                 <View style={styles.headerLogo}>
                     <Text style={styles.headerTxt}>{COMPANY_NAME}</Text>
                 </View>
@@ -119,7 +119,7 @@ class Header extends Component {
                         {user_cog}
                     </TouchableOpacity>
                 </View>
-            </ImageBackground>
+            </View>
         </View>
     }
 }

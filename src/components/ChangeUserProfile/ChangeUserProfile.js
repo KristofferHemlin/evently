@@ -12,7 +12,7 @@ import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-
+import SettingsModal from '../SettingsModal/SettingsModal';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import BackButton from '../BackButton/BackButton';
@@ -62,10 +62,25 @@ class ChangeUserProfile extends Component {
                 value: '',
                 secureText: false,
             },
+            {
+                key: 'aboutMe',
+                name: 'About Me',
+                type: 'text',
+                value: '',
+                secureText: false,
+            },
+            {
+                key: 'allergies',
+                name: 'Allergies',
+                type: 'text',
+                value: '',
+                secureText: false,
+            },
         ],
         image: Croatia,
         uID: null,
         eventTitle: '',
+        showModal: false,
     }
 
     componentDidMount() {
@@ -74,7 +89,7 @@ class ChangeUserProfile extends Component {
         // axios.get('http://localhost:3000/users/' + uID)
             axios.get( URL + 'users/' + uID)
             .then((response) => {
-                // console.log(response)
+                console.log(response)
                 let responseArray = []
                 let fields = [...this.state.fields];
                 for (key in response) {
@@ -92,6 +107,12 @@ class ChangeUserProfile extends Component {
                     }
                     if (field.key === 'phone') {
                         field.value = responseArray[0].phone
+                    }
+                    if (field.key === 'aboutMe') {
+                        field.value = responseArray[0].aboutMe
+                    }
+                    if (field.key === 'allergies') {
+                        field.value = responseArray[0].allergiesOrPreferences
                     }
                 })
                 this.setState({
@@ -125,6 +146,8 @@ class ChangeUserProfile extends Component {
                 lastName: this.state.fields[1].value,
                 email: this.state.fields[2].value,
                 phone: this.state.fields[3].value,
+                aboutMe: this.state.fields[4].value,
+                allergiesOrPreferences: this.state.fields[5].value,
             })
                 .then((response) => {
                     console.log(response)
@@ -135,6 +158,7 @@ class ChangeUserProfile extends Component {
                     });
                     this.props.navigation.navigate('UserProfileRoute', {
                         uID: this.state.uID,
+                        roleID: this.state.roleID,
                     });
                 })
                 .catch((error) => {
@@ -144,11 +168,32 @@ class ChangeUserProfile extends Component {
         })
 
     }
+
+    showModalHandler = () => {
+        let showModal = this.state.showModal
+        this.setState({ showModal: !showModal })
+        console.log(this.state.showModal)
+    }
+    modalNavigationHandler = () => {
+        let showModal = this.state.showModal;
+        this.setState({ showModal: !showModal }); 
+        this.props.navigation.navigate('UserProfileRoute', {
+            uID: this.state.uID,
+            eventTitle: this.state.eventTitle,
+            roleID: this.state.roleID,
+        });          
+    }
     render() {
 
         return (
             <View style={styles.pageContainer}>
-                <Header />
+                {this.state.showModal ?
+                    <SettingsModal
+                        exitModal={this.showModalHandler}
+                        navigationModal={this.modalNavigationHandler}
+
+                    /> : null}
+                <Header showModal={this.showModalHandler} />
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
@@ -194,7 +239,7 @@ class ChangeUserProfile extends Component {
 
                 </ScrollView>
 
-                <Footer uID={this.state.uID} eventTitle={this.state.eventTitle}/>
+                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }
