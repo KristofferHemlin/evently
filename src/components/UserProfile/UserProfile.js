@@ -13,10 +13,10 @@ import Footer from '../Footer/Footer';
 import styles from './UserProfile.style';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import SettingsModal from '../SettingsModal/SettingsModal';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Croatia from '../EventImageHeader/images/CROT.jpg';  
 
-import Croatia from '../EventImageHeader/images/CROT.jpg';
-
-
+const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
 class UserProfile extends Component {
 
@@ -131,9 +131,11 @@ class UserProfile extends Component {
                                 editButtonStatus={this.state.ownProfilePage}
                                 onEditPress={this.editButtonHandler}
                             >User Profile</HeadlineOverview>
-
                             <View style={styles.profilePictureView}>
-                                <Image source={this.state.image} style={styles.profilePicture} />
+
+
+                                <View>{profileAvatar}</View>
+
                                 <Text style={styles.nameText}>{this.state.firstName} {this.state.lastName}</Text>
                                 {/* <Text style={styles.companyText}>{this.state.company}</Text>         */}
                             </View>
