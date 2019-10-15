@@ -57,7 +57,7 @@ class NotificationOverview extends Component {
                             {infoCircleIcon}
                         </View>
                     </TouchableOpacity>
-            </View >
+            </View>
             <View style={styles.menuContainer}>
             {this.state.notifications.map(({ itemTitle, itemID, routeType }) => {
                 return <NotificationLine

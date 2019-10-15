@@ -25,13 +25,9 @@ class EventOverview extends Component {
         header: null,
     };
 
-    constructor(properties) {
-        super(properties);
+    constructor(props) {
+        super(props);
         OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
-        OneSignal.inFocusDisplaying(2);
-        OneSignal.addEventListener('received', this.onReceived);
-        OneSignal.addEventListener('opened', this.onOpened);
-        OneSignal.addEventListener('ids', this.onIds);
 
         this.state = {
             eventTitle: '',
@@ -43,7 +39,6 @@ class EventOverview extends Component {
             niceToKnow: '',
             uID: null,
             showModal: false,
-            ifNotification: false,
         }
     }
 
@@ -74,34 +69,7 @@ class EventOverview extends Component {
 
     }
 
-    componentWillUnmount() {
-        OneSignal.removeEventListener('received', this.onReceived);
-        OneSignal.removeEventListener('opened', this.onOpened);
-        OneSignal.removeEventListener('ids', this.onIds);
-    }
 
-    onReceived = (notification) => {
-        console.log('onrecevied', this.state.ifNotification);
-        this.setState({ ifNotification: true }, () => {
-            console.log('onrecevied2', this.state.ifNotification);
-        })
-        console.log("Notification received: ", notification);
-    }
-
-    // onOpened(openResult) {
-    //     console.log('Message: ', openResult.notification.payload.body);
-    //     console.log('Data: ', openResult.notification.payload.additionalData);
-    //     console.log('isActive: ', openResult.notification.isAppInFocus);
-    //     console.log('openResult: ', openResult);
-    // }
-
-    // onIds(device) {
-    //     console.log('Device info: ', device);
-    // }
-
-    bellIconClickedHandler = () => {
-        this.setState({ ifNotification: false })
-    }
     showModalHandler = () => {
         let showModal = this.state.showModal;
         this.setState({ showModal: !showModal });
@@ -165,9 +133,6 @@ class EventOverview extends Component {
 
 
     render() {
-        console.log('render', this.state.ifNotification);
-
-
         return (
             <View style={styles.pageContainer}>
                 {this.state.showModal ?
@@ -178,7 +143,6 @@ class EventOverview extends Component {
                     /> : null}
                 <Header
                     showModal={this.showModalHandler}
-                    showNotificationBadge={this.state.ifNotification}
                     bellIconClicked={this.bellIconClickedHandler} />
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
