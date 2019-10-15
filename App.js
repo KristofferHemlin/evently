@@ -1,5 +1,6 @@
-  
+
 import React from 'react';
+import {View} from 'react-native'
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
@@ -15,11 +16,14 @@ import ShowParticipants from './src/components/ShowParticipants/ShowParticipants
 import ActivityOverview from './src/components/ActivityOverview/ActivityOverview'
 import Calendar from './src/components/Calendar/Calendar';
 
+
+
 const Appstack = createStackNavigator(
   {
     EventOverviewRoute: EventOverview,
     CalendarRoute: Calendar,
     ActivityOverviewRoute: ActivityOverview,
+    ResetPasswordRoute: ResetPassword,
     ShowParticipantsRoute: ShowParticipants,
     UserProfileRoute: UserProfile,
     ChangeUserProfileRoute: ChangeUserProfile,
@@ -27,18 +31,17 @@ const Appstack = createStackNavigator(
   }
 )
 
-const AuthStack = createStackNavigator (
+const AuthStack = createStackNavigator(
   {
-
-   LoginRoute: Login, 
-   CreateAccRoute: CreateAcc,
-   ResetPasswordRoute: ResetPassword,
+    LoginRoute: Login,
+    CreateAccRoute: CreateAcc,
+    ResetPasswordRoute: ResetPassword,
   },
 )
 
 export default createAppContainer(createSwitchNavigator(
   {
     AuthStack: AuthStack,
-    AppStackr: Appstack,  
+    AppStackr: Appstack,
   }
 ))

@@ -6,9 +6,12 @@ import {
     Text,
     TouchableOpacity,
     Linking,
+    Image,
 } from 'react-native';
 
 import bgImage from './images/login-bg.jpeg';
+import logotype from './images/Logotype.png';
+
 import LoginForm from '../LoginForm/LoginForm';
 import ForgotPassword from '../MailResetPassword/MailResetPassword';
 
@@ -75,7 +78,8 @@ class Login extends Component {
         return (
             <ImageBackground source={bgImage} style={styles.pageContainer}>
                 <View style={styles.logoContainer}>
-                    <Text style={styles.logoText}>Claremont Event</Text>
+                    <Image style={styles.logotype} source={logotype}/>
+                    <Text style={styles.logoText}>Eventapp</Text>
                 </View>
                 {this.state.forgottenPassword ? <ForgotPassword /> : <LoginForm navigation={this.props.navigation} />}
                 <View style={styles.signUpContainer}>
