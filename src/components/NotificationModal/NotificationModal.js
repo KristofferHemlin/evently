@@ -2,6 +2,7 @@ import styles from './NotificationModal.style.js'
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { withNavigation } from 'react-navigation';
+import axios from 'axios';
 
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
