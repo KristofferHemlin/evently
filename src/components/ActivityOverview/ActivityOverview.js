@@ -174,13 +174,8 @@ class ActivityOverview extends Component {
 
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ?
-                    <SettingsModal
-                        exitModal={this.showModalHandler}
-                        navigationModal={this.modalNavigationHandler}
 
-                    /> : null}
-                <Header showModal={this.showModalHandler} />
+                <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
                 <ScrollView>
 
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>

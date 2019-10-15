@@ -163,14 +163,8 @@ class EventOverview extends Component {
     render() {
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ?
-                    <SettingsModal
-                        exitModal={this.showModalHandler}
-                        navigationModal={this.modalNavigationHandler}
+                <Header eventTitle={this.state.eventTitle} uID={this.state.uID} />
 
-                    /> : null}
-
-                <Header showModal={this.showModalHandler} />
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
                     <View style={styles.eventInfo}>

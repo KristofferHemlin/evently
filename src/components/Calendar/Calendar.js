@@ -85,6 +85,7 @@ class Calendar extends Component {
   eventClicked(event) {
     this.props.navigation.navigate('ActivityOverviewRoute', {
       activityID: event.id,
+      uID: this.state.uID,
       eventTitle: this.state.eventTitle,
       uID: this.state.uID,
       roleID: this.state.roleID,
@@ -102,7 +103,7 @@ class Calendar extends Component {
             navigationModal={this.modalNavigationHandler}
 
           /> : null}
-        <Header showModal={this.showModalHandler} />
+        <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
         <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Schedule</HeadlineOverview>
         {/* TODO: fixa informationstext */}
         <View style={styles.calendarContainer}>

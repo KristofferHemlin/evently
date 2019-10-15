@@ -115,13 +115,8 @@ class UserProfile extends Component {
     render() {
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ?
-                    <SettingsModal
-                        exitModal={this.showModalHandler}
-                        navigationModal={this.updateUserProfileHandler}
-
-                    /> : null}
-                <Header showModal={this.showModalHandler} />
+                {this.state.showModal ? <SettingsModal exitModal={this.showModalHandler} /> : null}
+                <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
