@@ -4,7 +4,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from 'react-navigation';
 
 import styles from './SettingsModal.style'
-import HeadlineOverview from '../HeadlineOverview/HeadlineOverview'
 
 const infoCircleIcon = <FontAwesome5 size={40} name={'times'} solid color="white" />;
 
@@ -15,7 +14,10 @@ class SettingsModal extends Component {
     };
 
     changeUserInfoNavigationHandler = () => {
-        this.props.navigation.navigate('UserProfileRoute')
+        const uID = this.props.navigation.getParam('uID', '')
+        console.log('what', uID)
+        this.props.navigation.navigate('UserProfileRoute',{uID: uID})
+        this.props.exitModal()
     }
 
     render() {
@@ -35,7 +37,7 @@ class SettingsModal extends Component {
                     </View>
                     <View style={styles.line}></View>
                     <View style={styles.menuAlternatives}>
-                        <TouchableOpacity onPress={this.props.navigationModal}>
+                        <TouchableOpacity onPress={this.changeUserInfoNavigationHandler}>
                             <Text style={styles.menuTxt}>User Profile Info</Text>
                         </TouchableOpacity>
                         <Text style={styles.menuTxt}>Change Account Password</Text>

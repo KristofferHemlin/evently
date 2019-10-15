@@ -4,6 +4,7 @@ import {
     Text,
     ScrollView,
     TextInput,
+    ActivityIndicator,
 } from 'react-native';
 
 import axios from 'axios';
@@ -12,13 +13,12 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ProfilePreview from '../ProfilePreview/ProfilePreview';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
-import EventImageHeader from '../EventImageHeader/EventImageHeader';
+// import EventImageHeader from '../EventImageHeader/EventImageHeader';
 import SettingsModal from '../SettingsModal/SettingsModal';
 
 import URL from '../../config';
 import styles from './ShowParticipants.style.js';
 
-//SHOULD BE RENAMED TO 'ShowParticipants'
 class ShowParticipants extends Component {
 
     static navigationOptions = {
@@ -40,22 +40,13 @@ class ShowParticipants extends Component {
             showModal: false,
             activityID: null,
             headlineName: '',
+            isLoading: false,
         }
 
         props.navigation.addListener('willFocus', () => {
-            console.log('willFocus showparticipants');
             this.fetchParticipants()
         })
-
     }
-
-    // componentWillUnmount () {
-    //     removeEventListener('willFocus');
-    // }
-
-
-
-  
 
     fetchParticipants () {
         const uID = Number(this.props.navigation.getParam('uID', ''));
@@ -75,31 +66,32 @@ class ShowParticipants extends Component {
             url = URL + 'activities/' + activityID + '/users?sort=firstName:asc'
             this.setState({headlineName: activityTitle,  eventTitle: eventTitle,})
         }
-        axios.get(url)
-        .then((response) => {
-            profileArray = response.data.map((user) => ({
-                firstName: user.firstName,
-                lastName: user.lastName,
-                fullName: user.firstName + " " + user.lastName,
-                companyDepartment: user.companyDepartment
-            }));
+        {isLoading:true}
+        this.setState({isLoading:true}, () => {
+            axios.get(url)
+            .then((response) => {
+                profileArray = response.data.map((user) => ({
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    fullName: user.firstName + " " + user.lastName,
+                    companyDepartment: user.companyDepartment,
+                }));
 
-            this.setState({
-                profileArray: profileArray,
-                profileArrayFiltered: profileArray,
-                uID: uID,
-                activityID: activityID,
+                this.setState({
+                    profileArray: profileArray,
+                    profileArrayFiltered: profileArray,
+                    uID: uID,
+                    activityID: activityID,
+                    isLoading: false,
+                })
+
             })
-
+            .catch((error) => {
+                console.log(error);
+                this.setState({isLoading: false})
+            });
         })
-        .catch((error) => {
-            console.log(error);
-        });
-
     }
-    // componentDidMount() {
-    //     this.fetchParticipants()
-    // }
 
     showModalHandler = () => {
         let showModal = this.state.showModal;
@@ -145,20 +137,19 @@ class ShowParticipants extends Component {
                     /> : null}
                 <Header showModal={this.showModalHandler} />
                 <ScrollView>
-                    <EventImageHeader eventTitle={this.state.eventTitle} />
+                    {/* <EventImageHeader eventTitle={this.state.eventTitle} /> */}
                     <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.headlineName}</HeadlineOverview>
 
                     <TextInput style={styles.searchBar}
                         placeholder="Search current event participants ..."
                         onChangeText={(filterWord) => this.filterHandler(filterWord)}
-                    // autoCapitalize={'none'}
                     >
                     </TextInput>
 
                     <Text style={styles.subTitles}>Participants</Text>
                     <View style={styles.line}></View>
 
-
+                    {this.state.isLoading ? <ActivityIndicator size={'small'} style={styles.loadingIcon} color={'#rgba(74,144,226,1)'}/> :
                     <View style={styles.profileList}>
                         {this.state.profileArrayFiltered.map((input, index) => {
                             return <ProfilePreview
@@ -168,6 +159,7 @@ class ShowParticipants extends Component {
                             </ProfilePreview>
                         })}
                     </View>
+                    }
 
                 </ScrollView>
                 <Footer uID={this.state.uID} eventTitle={this.state.eventTitle} />

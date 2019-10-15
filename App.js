@@ -1,5 +1,6 @@
-  
+
 import React from 'react';
+import {View} from 'react-native'
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
@@ -10,9 +11,12 @@ import EventOverview from './src/components/EventOverview/EventOverview';
 import ResetPassword from './src/components/ResetPassword/ResetPassword';
 import UserProfile from './src/components/UserProfile/UserProfile';
 import ChangeUserProfile from './src/components/ChangeUserProfile/ChangeUserProfile';
+import ChangeInfo from './src/components/ChangeInfo/ChangeInfo';
 import ShowParticipants from './src/components/ShowParticipants/ShowParticipants'
 import ActivityOverview from './src/components/ActivityOverview/ActivityOverview'
 import Calendar from './src/components/Calendar/Calendar';
+
+
 
 const Appstack = createStackNavigator(
   {
@@ -22,21 +26,21 @@ const Appstack = createStackNavigator(
     ShowParticipantsRoute: ShowParticipants,
     UserProfileRoute: UserProfile,
     ChangeUserProfileRoute: ChangeUserProfile,
-  },
+    ChangeInfoRoute: ChangeInfo
+  }
 )
 
-const AuthStack = createStackNavigator (
+const AuthStack = createStackNavigator(
   {
-
-   LoginRoute: Login, 
-   CreateAccRoute: CreateAcc,
-   ResetPasswordRoute: ResetPassword,
+    LoginRoute: Login,
+    CreateAccRoute: CreateAcc,
+    ResetPasswordRoute: ResetPassword,
   },
 )
 
 export default createAppContainer(createSwitchNavigator(
   {
     AuthStack: AuthStack,
-    AppStackr: Appstack,  
+    AppStackr: Appstack,
   }
 ))

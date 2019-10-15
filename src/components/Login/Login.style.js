@@ -14,8 +14,8 @@ export default StyleSheet.create({
 
     logoText:{
         color: "white",
-        fontSize: 40,
-        fontWeight: '200',
+        fontSize: 20,
+        fontWeight: '700',
     },
 
     signUpContainer:{
@@ -28,7 +28,11 @@ export default StyleSheet.create({
     signText:{
         color: "white",
         fontSize: 20,
-        fontWeight: '200',
+        fontWeight: '400',
         alignSelf:'center',
+    },
+    logotype:{
+       width: 300,
+       height: 100,
     }
 });

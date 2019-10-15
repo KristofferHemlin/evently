@@ -2,9 +2,12 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     headerContainer:{
+        position: 'relative',
+        backgroundColor: '#211F57',
         height: 80,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        zIndex: 1
     }, 
     headerLogo:{
         marginTop: 40,

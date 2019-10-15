@@ -38,4 +38,8 @@ export default StyleSheet.create({
         marginRight: 30,
     },
 
+    loadingIcon:{
+        marginTop: 30,
+    },
+
 });

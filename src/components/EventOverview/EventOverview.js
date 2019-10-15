@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import {
     View,
-    ImageBackground,
     Text,
     ScrollView,
-    TouchableOpacity
 } from 'react-native';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -13,17 +11,12 @@ import OneSignal from 'react-native-onesignal';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import ProfilePreview from '../ProfilePreview/ProfilePreview';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
 import SettingsModal from '../SettingsModal/SettingsModal'
 
 import URL from '../../config';
 import styles from './EventOverview.style.js';
-
-// import Croatia from './images/CROT.jpg';
-
-const infoCircleIcon = <FontAwesome5 size={20} name={'info-circle'} solid color="rgba(74,144,226,1)" />;
 
 class EventOverview extends Component {
 
@@ -60,8 +53,6 @@ class EventOverview extends Component {
         // axios.get('http://localhost:3000/users/' + uID + '/currentevent')
         axios.get(URL + 'users/' + uID + '/currentevent')
             .then((response) => {
-
-                // convertion of the date to right format.
                 const sTime = response.data.startTime.replace('T', ' ');
                 startTime = sTime.split('.')[0]
                 const eTime = response.data.endTime.replace('T', ' ');
@@ -75,8 +66,7 @@ class EventOverview extends Component {
                     startTime: startTime,
                     endTime: endTime,
                     uID: uID
-                }
-                )
+                })
             })
             .catch((error) => {
                 console.log(error);
@@ -128,10 +118,55 @@ class EventOverview extends Component {
     }
 
 
+    onEditSubmit(input) {
+        this.setState({
+            eventDesc: input.description,
+            niceToKnow: input.niceToKnow,
+            eventLocation: input.location,
+            startTime: input.startTime,
+            endTime: input.endTime,
+        })
+    }
+
+    handleEditPress = () => {
+        this.onEditSubmit = this.onEditSubmit.bind(this)
+        var uID = this.state.uID
+        this.props.navigation.navigate('ChangeInfoRoute', {
+            onEditSubmit: (input) => this.onEditSubmit(input),
+            uID: uID,
+            title: this.state.eventTitle,
+            parentRoute: 'EventOverviewRoute',
+            http_update_url:  'http://localhost:3000/events/' + 1,
+            http_get_url: 'http://localhost:3000/users/' + uID + '/currentevent',
+            fields: {
+                description: {
+                    label: 'Description',
+                    value: this.state.eventDesc
+                },
+                location: {
+                    label: 'Location',
+                    value: this.state.eventLocation
+                },
+                startTime: {
+                    label: 'Start Date',
+                    value: this.state.startTime
+                },
+                endTime: {
+                    label: 'End Date',
+                    value: this.state.endTime
+                },
+                niceToKnow: {
+                    label: 'Nice-to-know',
+                    value: this.state.niceToKnow
+                },
+            }
+        }); 
+    }
+
+
     render() {
         console.log('render', this.state.ifNotification);
 
-        const isEditUser = this.state.isEditUser;
 
         return (
             <View style={styles.pageContainer}>
@@ -146,23 +181,14 @@ class EventOverview extends Component {
                     showNotificationBadge={this.state.ifNotification}
                     bellIconClicked={this.bellIconClickedHandler} />
                 <ScrollView>
-
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
-
                     <View style={styles.eventInfo}>
-
-                        <HeadlineOverview infoButtonStatus={true} editButtonStatus={true}>Event Overview</HeadlineOverview>
-                        {/* <View style={styles.mainTitleView}>
-                            <View style={styles.mainTitleViewLeft}> 
-                                <Text style={[styles.titles, styles.mainTitle]}>Event overview</Text>
-                                <TouchableOpacity style={styles.infoButton}>
-                                 {infoCircleIcon}
-                                </TouchableOpacity>
-                            </View>
-                            <TouchableOpacity>
-                            <Text style={styles.editButton}> Edit </Text>
-                            </TouchableOpacity>
-                        </View> */}
+                        <HeadlineOverview
+                            onEditPress={() => this.handleEditPress()}
+                            infoButtonStatus={false}
+                            editButtonStatus={true}>
+                                Event Overview
+                        </HeadlineOverview>
                         <View style={styles.line}></View>
                         <Text style={[styles.titles, styles.subTitles]}>Event description</Text>
                         <Text style={styles.ordinaryText}>{this.state.eventDesc}</Text>
@@ -170,10 +196,6 @@ class EventOverview extends Component {
                         <Text style={styles.ordinaryText}>{this.state.eventLocation}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>Dates</Text>
                         <Text style={styles.ordinaryText}>{this.state.startTime} - {this.state.endTime}</Text>
-                        <Text style={[styles.titles, styles.subTitles]}>Organizers</Text>
-
-                        <ProfilePreview />
-
                         <Text style={styles.subTitles}>Nice to know</Text>
                         <Text style={styles.ordinaryText}>{this.state.niceToKnow}</Text>
                     </View>
