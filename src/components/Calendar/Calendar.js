@@ -39,7 +39,7 @@ class Calendar extends Component {
       const uID = Number(this.props.navigation.getParam('uID', ''));
       const eventTitle = this.props.navigation.getParam('eventTitle', '');
       const roleID = Number(this.props.navigation.getParam('roleID', ''));
-      axios.get('http://localhost:3000/events/1/activities')
+      axios.get(URL + 'events/1/activities')
         // axios.get('http://10.110.171.68:3000/events/1/activities')
         .then((response) => {
           responseArray = response.data.map(activity => ({

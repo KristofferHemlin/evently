@@ -6,13 +6,14 @@ import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
 import axios from 'axios';
 
+import URL from '../../config';
+
+
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const infoCircleIcon = <FontAwesome5 size={40} name={'times'} solid color="white" />;
 
-var SERVER_ENDPOINT = 'http://localhost:3000'
-
-class NotificationOverview extends Component {
+class NotificationModal extends Component {
 
     constructor(props) {
         super(props)
@@ -25,9 +26,8 @@ class NotificationOverview extends Component {
 
 
     fetchNotifications() {
-        console.log('agajagjasdg', this.props.uID)
-        // axios.get(SERVER_ENDPOINT + '/users/' + this.props.uID + '/notifications')
-        axios.get(SERVER_ENDPOINT + '/users/26/notifications')
+        // axios.get(URL + '/users/' + this.props.uID + '/notifications')
+        axios.get(URL + 'users/' + this.props.uID + '/notifications')
             .then((results) => {
                 console.log(results)
                 var filteredRes = (results.data || []).reduce((map, { activity: { title, id, updatedAt } }) => {
@@ -41,6 +41,9 @@ class NotificationOverview extends Component {
                 }, {})
                 this.setState({ notifications: Object.keys(filteredRes).map(key => filteredRes[key]) });
             })
+            .catch((error) => {
+                console.log(error);
+            });
 
     }
 
@@ -76,7 +79,7 @@ class NotificationOverview extends Component {
     }
 }
 
-export default withNavigation(NotificationOverview)
+export default withNavigation(NotificationModal)
 
 const NotificationLine = ({ id, title, navigationCallback, updatedAt }) => {
 

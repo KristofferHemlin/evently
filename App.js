@@ -21,13 +21,13 @@ import Calendar from './src/components/Calendar/Calendar';
 const Appstack = createStackNavigator(
   {
     EventOverviewRoute: EventOverview,
+    ShowParticipantsRoute: ShowParticipants,
     CalendarRoute: Calendar,
     ActivityOverviewRoute: ActivityOverview,
-    ResetPasswordRoute: ResetPassword,
-    ShowParticipantsRoute: ShowParticipants,
+    ChangeInfoRoute: ChangeInfo,
     UserProfileRoute: UserProfile,
     ChangeUserProfileRoute: ChangeUserProfile,
-    ChangeInfoRoute: ChangeInfo
+    
   }
 )
 

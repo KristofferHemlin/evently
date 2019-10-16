@@ -5,9 +5,7 @@ import {
     ScrollView,
 } from 'react-native';
 
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
-import OneSignal from 'react-native-onesignal';
 import moment from 'moment';
 
 import Header from '../Header/Header';
@@ -15,6 +13,7 @@ import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
 import SettingsModal from '../SettingsModal/SettingsModal';
+import OneSignal from 'react-native-onesignal';
 
 import URL from '../../config';
 import styles from './EventOverview.style.js';
@@ -28,7 +27,6 @@ class EventOverview extends Component {
 
     constructor(props) {
         super(props);
-        OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
       
         this.state = {
             eventTitle: '',
@@ -122,8 +120,8 @@ class EventOverview extends Component {
             roleID: this.state.roleID,
             title: this.state.eventTitle,
             parentRoute: 'EventOverviewRoute',
-            http_update_url: 'http://localhost:3000/events/' + 1,
-            http_get_url: 'http://localhost:3000/users/' + uID + '/currentevent',
+            http_update_url: URL + 'events/' + 1,
+            http_get_url: URL + 'users/' + uID + '/currentevent',
             fields: {
                 description: {
                     label: 'Description',
