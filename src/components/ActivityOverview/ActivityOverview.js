@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import Toast, { DURATION } from 'react-native-easy-toast'
 import {
     View,
-    ImageBackground,
     Text,
     ScrollView,
     TouchableOpacity
@@ -17,6 +17,7 @@ import SettingsModal from '../SettingsModal/SettingsModal';
 
 import URL from '../../config';
 import styles from './ActivityOverview.style.js';
+import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
 class ActivityOverview extends Component {
 
@@ -39,10 +40,18 @@ class ActivityOverview extends Component {
             uID: null,
             showEditButton: false,
             showModal: false,
+            infoAllowedChange: true,
         }
 
         props.navigation.addListener('willFocus', () => {
             roleID = Number(this.props.navigation.getParam('roleID', ''))
+
+            let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
+            if (infoChanged && this.state.infoAllowedChange) {
+                this.setState({ infoAllowedChange: false })
+                this.refs.toast.show('Your changes have been submitted!', 1500);
+            }
+
             if (roleID === 1) {
                 this.setState({ showEditButton: true })
             } else {
@@ -62,9 +71,9 @@ class ActivityOverview extends Component {
         const eventTitle = this.props.navigation.getParam('eventTitle', null)
         console.log('eventTitle', eventTitle);
         // axios.get('http://localhost:3000/activities/' + activityID)
-        axios.get( URL + 'activities/' + activityID)
+        axios.get(URL + 'activities/' + activityID)
             .then((response) => {
-          
+
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
                 const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
 
@@ -77,7 +86,7 @@ class ActivityOverview extends Component {
                     startTime: startTime,
                     endTime: endTime,
                     eventTitle: eventTitle,
-                    uID: uID
+                    uID: uID,
                 }
                 )
             })
@@ -105,6 +114,7 @@ class ActivityOverview extends Component {
             startTime: input.startTime,
             endTime: input.endTime,
             goodToKnow: input.goodToKnow,
+            infoAllowedChange: true,
         })
     }
 
@@ -123,7 +133,7 @@ class ActivityOverview extends Component {
                     label: 'Description',
                     value: this.state.activityDesc,
                     secureTextEntry: false,
-                    autoCapitalize: 'sentences', 
+                    autoCapitalize: 'sentences',
                 },
                 location: {
                     label: 'Location',
@@ -135,13 +145,13 @@ class ActivityOverview extends Component {
                     label: 'startTime',
                     value: this.state.startTime,
                     secureTextEntry: false,
-                    autoCapitalize: 'none', 
+                    autoCapitalize: 'none',
                 },
                 endTime: {
                     label: 'endTime',
                     value: this.state.endTime,
                     secureTextEntry: false,
-                    autoCapitalize: 'none', 
+                    autoCapitalize: 'none',
                 },
                 endTime: {
                     label: 'endTime',
@@ -174,6 +184,13 @@ class ActivityOverview extends Component {
 
         return (
             <View style={styles.pageContainer}>
+
+                <View style={toasterStyle.container}>
+                    <Toast ref="toast"
+                        style={toasterStyle.message}
+                        position='top' />
+                </View>
+
                 {this.state.showModal ?
                     <SettingsModal
                         exitModal={this.showModalHandler}
