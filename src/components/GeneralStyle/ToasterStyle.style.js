@@ -14,10 +14,17 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
 
-    message:{
+    successMessage:{
         backgroundColor: '#4a90e2',
-        // backgroundColor: '#e24a4a',
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        width: Dimensions.get('window').width,
+        height: 100,
+    },
 
+    errorMessage:{
+        backgroundColor: '#e24a4a',
         padding: 10,
         alignItems: 'center',
         justifyContent: 'flex-end',
