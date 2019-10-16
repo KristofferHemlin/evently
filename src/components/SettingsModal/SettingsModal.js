@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from 'react-navigation';
 
+
+import URL from '../../config';
 import styles from './SettingsModal.style'
 
 const infoCircleIcon = <FontAwesome5 size={40} name={'times'} solid color="white" />;
@@ -27,7 +29,7 @@ class SettingsModal extends Component {
             uID: uID,
             title: 'Change Password',
             parentRoute: 'UserProfileRoute',
-            http_update_url:  'http://localhost:3000/account/password',
+            http_update_url:  URL + 'account/password',
             fields: {
                 currentPassword: {
                     label: 'Current Password',

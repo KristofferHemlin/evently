@@ -9,6 +9,7 @@ import {
     ActivityIndicator
 } from 'react-native';
 import axios from 'axios';
+import OneSignal from 'react-native-onesignal';
 
 import styles from './LoginForm.style'
 import URL from '../../config';
@@ -44,6 +45,11 @@ class LoginForm extends Component {
                         roleID: response.data.user.role.id,
                     });
 
+                    // Set up onesignal notifications.
+                    OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
+                    // OneSignal.removeExternalUserId();
+                    OneSignal.setExternalUserId(String(response.data.user.id));
+
                     if (response.data.user.signupComplete === true) {
                         this.props.navigation.navigate('EventOverviewRoute', {
                             uID: this.state.userID,
@@ -59,15 +65,15 @@ class LoginForm extends Component {
                     }
                 })
                 .catch((error) => {
-                    console.log("eroor::::: ", error.response.data.message)
                     this.props.showErrorHandler(error.response.data.message);
                     // console.log(error);
+                    console.log(error);
                     this.setState({ isLoading: false })
                 });
         })
 
     }
-    
+
     render() {
         return (
 

@@ -39,7 +39,7 @@ class Calendar extends Component {
       const uID = Number(this.props.navigation.getParam('uID', ''));
       const eventTitle = this.props.navigation.getParam('eventTitle', '');
       const roleID = Number(this.props.navigation.getParam('roleID', ''));
-      axios.get('http://localhost:3000/events/1/activities')
+      axios.get(URL + 'events/1/activities')
         // axios.get('http://10.110.171.68:3000/events/1/activities')
         .then((response) => {
           responseArray = response.data.map(activity => ({
@@ -85,6 +85,7 @@ class Calendar extends Component {
   eventClicked(event) {
     this.props.navigation.navigate('ActivityOverviewRoute', {
       activityID: event.id,
+      uID: this.state.uID,
       eventTitle: this.state.eventTitle,
       uID: this.state.uID,
       roleID: this.state.roleID,
@@ -102,7 +103,7 @@ class Calendar extends Component {
             navigationModal={this.modalNavigationHandler}
 
           /> : null}
-        <Header showModal={this.showModalHandler} />
+        <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
         <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Schedule</HeadlineOverview>
         {/* TODO: fixa informationstext */}
         <View style={styles.calendarContainer}>

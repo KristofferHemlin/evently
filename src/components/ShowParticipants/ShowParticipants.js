@@ -152,7 +152,7 @@ class ShowParticipants extends Component {
                         navigationModal={this.modalNavigationHandler}
 
                     /> : null}
-                <Header showModal={this.showModalHandler} />
+                <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
                 <ScrollView>
                     {/* <EventImageHeader eventTitle={this.state.eventTitle} /> */}
                     <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.headlineName}</HeadlineOverview>

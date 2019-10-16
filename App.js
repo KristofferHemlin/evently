@@ -8,7 +8,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import Login from './src/components/Login/Login';
 import CreateAcc from './src/components/CreateAcc/CreateAcc';
 import EventOverview from './src/components/EventOverview/EventOverview';
-import ResetPassword from './src/components/ResetPassword/ResetPassword';
+// import ResetPassword from './src/components/ResetPassword/ResetPassword';
 import UserProfile from './src/components/UserProfile/UserProfile';
 import ChangeUserProfile from './src/components/ChangeUserProfile/ChangeUserProfile';
 import ChangeInfo from './src/components/ChangeInfo/ChangeInfo';
@@ -21,13 +21,13 @@ import Calendar from './src/components/Calendar/Calendar';
 const Appstack = createStackNavigator(
   {
     EventOverviewRoute: EventOverview,
+    ShowParticipantsRoute: ShowParticipants,
     CalendarRoute: Calendar,
     ActivityOverviewRoute: ActivityOverview,
-    ResetPasswordRoute: ResetPassword,
-    ShowParticipantsRoute: ShowParticipants,
+    ChangeInfoRoute: ChangeInfo,
     UserProfileRoute: UserProfile,
     ChangeUserProfileRoute: ChangeUserProfile,
-    ChangeInfoRoute: ChangeInfo
+    
   }
 )
 
@@ -35,7 +35,7 @@ const AuthStack = createStackNavigator(
   {
     LoginRoute: Login,
     CreateAccRoute: CreateAcc,
-    ResetPasswordRoute: ResetPassword,
+    // ResetPasswordRoute: ResetPassword,
   },
 )
 

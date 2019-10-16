@@ -127,7 +127,7 @@ class ActivityOverview extends Component {
             title: this.state.activityTitle,
             roleID: this.state.roleID,
             parentRoute: 'ActivityOverviewRoute',
-            http_update_url: 'http://localhost:3000/activities/' + this.state.activityID,
+            http_update_url: URL + 'activities/' + this.state.activityID,
             fields: {
                 description: {
                     label: 'Description',
@@ -196,8 +196,7 @@ class ActivityOverview extends Component {
                         exitModal={this.showModalHandler}
                         navigationModal={this.modalNavigationHandler}
 
-                    /> : null}
-                <Header showModal={this.showModalHandler} />
+                <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
                 <ScrollView>
 
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>

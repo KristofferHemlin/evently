@@ -16,7 +16,7 @@ import SettingsModal from '../SettingsModal/SettingsModal';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Croatia from '../EventImageHeader/images/CROT.jpg';  
 
-import URL from '../../config';
+import URL from '../../config';     
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
 class UserProfile extends Component {
@@ -115,13 +115,8 @@ class UserProfile extends Component {
     render() {
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ?
-                    <SettingsModal
-                        exitModal={this.showModalHandler}
-                        navigationModal={this.updateUserProfileHandler}
-
-                    /> : null}
-                <Header showModal={this.showModalHandler} />
+                {this.state.showModal ? <SettingsModal exitModal={this.showModalHandler} /> : null}
+                <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
