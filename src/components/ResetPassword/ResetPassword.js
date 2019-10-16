@@ -3,12 +3,13 @@ import {
     View,
     ImageBackground,
     Text,
-    TouchableOpacity,
+    Image,
     Linking,
 } from 'react-native';
 
 import bgImage from '../Login/images/login-bg.jpeg';
-import MailResetPassword from '../MailResetPassword/MailResetPassword';
+import logotype from '../Login/images/Logotype.png';
+import ResetPasswordForm from '../ResetPasswordForm/ResetPasswordForm';
 
 import LoginForm from '../LoginForm/LoginForm';
 
@@ -21,16 +22,18 @@ class ResetPassword extends Component {
     };
 
     state = {
+        token: this.props.navigation.getParam('token', ''),
     }
 
     
     render() {
         return (
             <ImageBackground source={bgImage} style={styles.pageContainer}>
-                <View style={styles.logoContainer}>
-                    <Text style={styles.logoText}>EVENTLY</Text>
+                 <View style={styles.logoContainer}>
+                    <Image style={styles.logotype} source={logotype}/>
+                    <Text style={styles.logoText}>Eventapp</Text>
                 </View>
-                <MailResetPassword />
+                <ResetPasswordForm fromLoginScreen={false} token={this.state.token}/>
                 <View style={styles.signUpContainer}>
                 </View>
             </ImageBackground>

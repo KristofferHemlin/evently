@@ -4,13 +4,11 @@ export default StyleSheet.create({
     
     inputForm:{
         width: Dimensions.get('window').width -55,
-        //TODO:inte bästa lösningen
     },
     input:{
       fontSize: 16,
       backgroundColor: 'rgba(0, 0, 0, 0.6)',
       color: "#FFF",
-      // TODO:inputfärgen blir werid, beror förmodligen på background color
       borderWidth: 2,
       borderColor: "#5da6d0",
       paddingHorizontal: 15,
