@@ -1,6 +1,6 @@
 
 
-const URL = 'http://10.110.171.120:3000/';
+const URL = 'https://eventapp-master-api.azurewebsites.net/';
 
 
 export default URL;

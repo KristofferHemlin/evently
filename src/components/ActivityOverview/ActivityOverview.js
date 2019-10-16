@@ -59,6 +59,7 @@ class ActivityOverview extends Component {
             }
             this.setState({ roleID: roleID })
         })
+        console.disableYellowBox = true;
     }
 
 

@@ -64,6 +64,7 @@ class Calendar extends Component {
           console.log(error)
         })
     })
+    console.disableYellowBox = true;
   }
 
   showModalHandler = () => {

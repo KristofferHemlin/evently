@@ -97,7 +97,8 @@ class CreateAcc extends Component{
     componentDidMount(){
         // axios.get('http://localhost:3000/users/' + this.state.uID)
         axios.get(URL + 'users/' + this.state.uID)
-        .then((response) => {            
+        .then((response) => {      
+            console.log('response', response);      
             let responseArray = []
             let fields = [...this.state.fields];
             for (key in response) {

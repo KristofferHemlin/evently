@@ -68,6 +68,7 @@ class EventOverview extends Component {
                 token: token
             })
         })
+        console.disableYellowBox = true;
     }
 
     componentDidMount() {

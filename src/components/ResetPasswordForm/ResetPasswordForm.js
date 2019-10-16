@@ -26,7 +26,7 @@ class ResetPasswordForm extends Component {
 
     checkEmail = () => {
         this.setState({ isLoading: true }, () => { // so we can show loading indicator while fetching data
-            axios.post('https://eventapp-master-api.azurewebsites.net/resetpassword', {
+            axios.post(URL + 'resetpassword', {
                 email: this.state.email
             })
                 .then((response) => {
@@ -44,7 +44,7 @@ class ResetPasswordForm extends Component {
 
     resetPassword = () => {
         this.setState({ isLoading: true }, () => { // so we can show loading indicator while fetching data
-            axios.post('https://eventapp-master-api.azurewebsites.net/resetpassword/' + this.state.token, {
+            axios.post(URL + 'resetpassword/' + this.state.token, {
                 password: this.state.password
             })
                 .then((response) => {

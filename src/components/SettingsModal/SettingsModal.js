@@ -68,9 +68,9 @@ class SettingsModal extends Component {
                         <TouchableOpacity onPress={this.changeUserInfoNavigationHandler}>
                             <Text style={styles.menuTxt}>User Profile Info</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={this.changePasswordNavigationHandler}>
+                        {/* <TouchableOpacity onPress={this.changePasswordNavigationHandler}>
                             <Text style={styles.menuTxt}>Change Account Password</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
                 </View>
             </View>

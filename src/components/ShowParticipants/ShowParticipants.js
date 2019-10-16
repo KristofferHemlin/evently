@@ -46,6 +46,7 @@ class ShowParticipants extends Component {
         props.navigation.addListener('willFocus', () => {
             this.fetchParticipants()
         })
+        console.disableYellowBox = true;
     }
 
     fetchParticipants() {

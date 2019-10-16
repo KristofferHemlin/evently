@@ -70,6 +70,7 @@ class UserProfile extends Component {
                 eventTitle: eventTitle, })
 
         })
+        console.disableYellowBox = true;
     }
 
     fetchUserData = (uID, eventTitle) => {
