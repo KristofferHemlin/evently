@@ -32,18 +32,7 @@ class ResetPassword extends Component {
                 </View>
                 <MailResetPassword />
                 <View style={styles.signUpContainer}>
-                    {/* <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('CreateAccRoute')}>
-                        <Text style = {styles.signText}>Don't have an account yet?</Text>
-                        <Text style = {styles.signText}>Click here to sign up!</Text>
-                    </TouchableOpacity> */}
-
-                    {/* <TouchableOpacity
-                        onPress={this.lostPasswordHandler}>
-                        {this.state.forgottenPassword ? <Text style = {styles.signText}>Go back</Text> : <Text style = {styles.signText}>Forgotten your password?</Text>}                        
-                    </TouchableOpacity> */}
                 </View>
-
             </ImageBackground>
         )
     }

@@ -33,6 +33,7 @@ class Login extends Component {
 
     componentDidMount() {
         // deep linking stuff
+        console.log('componentDidMount');
         Linking.addEventListener('url', this.handleOpenURL)
         Linking.getInitialURL().then((url) => {
             if (url) {
@@ -48,6 +49,7 @@ class Login extends Component {
     }
 
     handleOpenURL = (event) => {
+        console.log('handleOpenURL');
         // deep linking stuff
         this.navigate(event.url);
     }
@@ -55,14 +57,18 @@ class Login extends Component {
     // deep linking stuff
     navigate = (url) => {
         console.log('url', url);
+        
         const { navigate } = this.props.navigation;
         const route = url.replace(/.*?:\/\//g, '');
         console.log('route', route);
         const routeName = route.split('/')[0];
+        const token = route.split('/')[1]
         console.log('routeName', routeName);
 
         if (routeName === 'resetpassword') {
-            navigate('ResetPasswordRoute')
+            navigate('ResetPasswordRoute', {
+                token: token
+            })
         }
     }
 
