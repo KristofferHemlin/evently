@@ -65,13 +65,15 @@ class LoginForm extends Component {
                     }
                 })
                 .catch((error) => {
-                    alert(error);
+                    this.props.showErrorHandler(error.response.data.message);
+                    // console.log(error);
                     console.log(error);
                     this.setState({ isLoading: false })
                 });
         })
 
     }
+
     render() {
         return (
 

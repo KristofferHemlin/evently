@@ -56,7 +56,8 @@ class ChangeInfo extends Component {
                 .then(() =>
                     this.setState({ isLoading: false }, () => {
                         this.props.navigation.navigate(this.state.parentRoute, {
-                            uID: this.state.uID
+                            uID: this.state.uID,
+                            infoChanged: true,
                         })
                     })
                 )

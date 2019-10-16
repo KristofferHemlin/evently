@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Toast, { DURATION } from 'react-native-easy-toast'
 import {
     StyleSheet,
     View,
@@ -16,6 +17,7 @@ import LoginForm from '../LoginForm/LoginForm';
 import ForgotPassword from '../MailResetPassword/MailResetPassword';
 
 import styles from './Login.style';
+import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
 class Login extends Component {
     static navigationOptions = {
@@ -93,14 +95,27 @@ class Login extends Component {
         console.log("Click!!")
     }
 
+    showErrorHandler = (errorMessage) => {
+        let errorString = String(errorMessage);
+        this.refs.toast.show(errorString, 1500);
+    }
+
     render() {
+        console.log("render");
         return (
             <ImageBackground source={bgImage} style={styles.pageContainer}>
+
+                <View style={toasterStyle.container}>
+                    <Toast ref="toast"
+                        style={toasterStyle.errorMessage}
+                        position='top' />
+                </View>
+
                 <View style={styles.logoContainer}>
-                    <Image style={styles.logotype} source={logotype}/>
+                    <Image style={styles.logotype} source={logotype} />
                     <Text style={styles.logoText}>Eventapp</Text>
                 </View>
-                {this.state.forgottenPassword ? <ForgotPassword /> : <LoginForm navigation={this.props.navigation} />}
+                {this.state.forgottenPassword ? <ForgotPassword /> : <LoginForm navigation={this.props.navigation} showErrorHandler={this.showErrorHandler}/>}
                 <View style={styles.signUpContainer}>
                     {/* <TouchableOpacity
                         onPress={() => this.props.navigation.navigate('CreateAccRoute')}>

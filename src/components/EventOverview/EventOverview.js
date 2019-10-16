@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import Toast, { DURATION } from 'react-native-easy-toast'
 import {
     View,
     Text,
     ScrollView,
+    TouchableOpacity,
 } from 'react-native';
 
 import axios from 'axios';
@@ -17,6 +19,7 @@ import OneSignal from 'react-native-onesignal';
 
 import URL from '../../config';
 import styles from './EventOverview.style.js';
+import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
 class EventOverview extends Component {
 
@@ -27,7 +30,8 @@ class EventOverview extends Component {
 
     constructor(props) {
         super(props);
-      
+        OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
+
         this.state = {
             eventTitle: '',
             eventId: null,
@@ -41,11 +45,19 @@ class EventOverview extends Component {
             showEditButton: false,
             roleID: null,
             token: '',
+            infoAllowedChange: true,
         }
-        
+
         props.navigation.addListener('willFocus', () => {
             roleID = Number(this.props.navigation.getParam('roleID', ''))
             token = (this.props.navigation.getParam('token', ''))
+
+            let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
+            if (infoChanged && this.state.infoAllowedChange) {
+                this.setState({ infoAllowedChange: false })
+                this.refs.toast.show('Your changes have been submitted!', 1500);
+            }
+
             if (roleID === 1) {
                 this.setState({ showEditButton: true })
             } else {
@@ -58,46 +70,46 @@ class EventOverview extends Component {
         })
     }
 
-        componentDidMount() {
-            uID = Number(this.props.navigation.getParam('uID', ''))
-            axios.get(URL + 'users/' + uID + '/currentevent')
-                // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
-                .then((response) => {
+    componentDidMount() {
+        uID = Number(this.props.navigation.getParam('uID', ''))
+        axios.get(URL + 'users/' + uID + '/currentevent')
+            // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
+            .then((response) => {
 
-                    const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-                    const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
 
-                    this.setState({
-                        eventTitle: response.data.title,
-                        eventId: response.data.id,
-                        eventDesc: response.data.description,
-                        eventLocation: response.data.location,
-                        goodToKnow: response.data.goodToKnow,
-                        startTime: startTime,
-                        endTime: endTime,
-                        uID: uID,
-                        roleID: roleID
-                    })
+                this.setState({
+                    eventTitle: response.data.title,
+                    eventId: response.data.id,
+                    eventDesc: response.data.description,
+                    eventLocation: response.data.location,
+                    goodToKnow: response.data.goodToKnow,
+                    startTime: startTime,
+                    endTime: endTime,
+                    uID: uID,
+                    roleID: roleID,
                 })
-                .catch((error) => {
-                    console.log(error);
-                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
-        }
+    }
 
     showModalHandler = () => {
         let showModal = this.state.showModal;
         this.setState({ showModal: !showModal });
         console.log(this.state.showModal);
     }
-    
+
     modalNavigationHandler = () => {
         let showModal = this.state.showModal;
         this.setState({ showModal: !showModal });
         this.props.navigation.navigate('UserProfileRoute', {
             uID: this.state.uID,
             eventTitle: this.state.eventTitle,
-           roleID: this.state.roleID,
+            roleID: this.state.roleID,
         });
     }
 
@@ -108,6 +120,7 @@ class EventOverview extends Component {
             eventLocation: input.location,
             startTime: input.startTime,
             endTime: input.endTime,
+            infoAllowedChange: true,
         })
     }
 
@@ -161,6 +174,20 @@ class EventOverview extends Component {
     render() {
         return (
             <View style={styles.pageContainer}>
+
+                <View style={toasterStyle.container}>
+                    <Toast ref="toast"
+                        style={toasterStyle.successMessage}
+                        position='top' />
+                </View>
+
+                {this.state.showModal ?
+                    <SettingsModal
+                        exitModal={this.showModalHandler}
+                        navigationModal={this.modalNavigationHandler}
+
+                    /> : null}
+
                 <Header eventTitle={this.state.eventTitle} uID={this.state.uID} />
 
                 <ScrollView>
@@ -172,6 +199,7 @@ class EventOverview extends Component {
                             editButtonStatus={this.state.showEditButton}>
                             Event Overview
                         </HeadlineOverview>
+
                         <View style={styles.line}></View>
                         <Text style={[styles.titles, styles.subTitles]}>Event description</Text>
                         <Text style={styles.ordinaryText}>{this.state.eventDesc}</Text>
