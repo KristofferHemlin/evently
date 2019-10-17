@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Toast, { DURATION } from 'react-native-easy-toast'
+import { Dimensions } from 'react-native';
 import {
     StyleSheet,
     View,
@@ -28,6 +29,7 @@ class Login extends Component {
         super(properties);
 
         this.state = {
+            messageColor: null,
         }
     }
 
@@ -90,19 +92,42 @@ class Login extends Component {
         console.log("Click!!")
     }
 
-    showErrorHandler = (errorMessage) => {
-        let errorString = String(errorMessage);
+    showToasterHandler = (toasterResponse, success) => {
+        if(success === true){
+            this.setState({ messageColor: "#4a90e2" })
+        } else{
+            console.log("failed");
+            this.setState({ messageColor: "#e24a4a" })
+        }
+        let errorString = String(toasterResponse);
         this.refs.toast.show(errorString, 1500);
     }
 
+    messageColor = (color) => {
+        console.log("messageColor: ", color);
+        return {
+            backgroundColor: color,
+            padding: 10,
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            width: Dimensions.get('window').width,
+            height: 100,
+        }
+      }
+
     render() {
-        console.log("render");
+        // let messageColor = this.state.messageColor;
+        // console.log("messageColor: ", this.state.messageColor);
         return (
             <ImageBackground source={bgImage} style={styles.pageContainer}>
 
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
-                        style={toasterStyle.errorMessage}
+                        style={this.messageColor(this.state.messageColor)}
+                        // style={toasterStyle.successMessage}
+                        // style={this.toasterStyle(messageColor)} 
+                        // {true ? style={toasterStyle.successMessage} : style={toasterStyle.errorMessage}}
+                        // style={toasterStyle.errorMessage}
                         position='top' />
                 </View>
 
@@ -110,7 +135,7 @@ class Login extends Component {
                     <Image style={styles.logotype} source={logotype} />
                     <Text style={styles.logoText}>Eventapp</Text>
                 </View>
-                {this.state.forgottenPassword ? <ResetPasswordForm fromLoginScreen={true}/>: <LoginForm navigation={this.props.navigation} showErrorHandler={this.showErrorHandler}/>}
+                {this.state.forgottenPassword ? <ResetPasswordForm fromLoginScreen={true} showToasterHandler={this.showToasterHandler}/>: <LoginForm navigation={this.props.navigation} showToasterHandler={this.showToasterHandler}/>}
                 <View style={styles.signUpContainer}>
                     <TouchableOpacity
                         onPress={this.lostPasswordHandler}>

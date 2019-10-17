@@ -65,7 +65,7 @@ class LoginForm extends Component {
                     }
                 })
                 .catch((error) => {
-                    this.props.showErrorHandler(error.response.data.message);
+                    this.props.showToasterHandler(error.response.data.message, false);
                     // console.log(error);
                     console.log(error);
                     this.setState({ isLoading: false })
