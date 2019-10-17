@@ -7,16 +7,16 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import styles from './UserProfile.style';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
-import SettingsModal from '../SettingsModal/SettingsModal';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Croatia from '../EventImageHeader/images/CROT.jpg';  
 
+import Croatia from '../EventImageHeader/images/CROT.jpg';  
+import styles from './UserProfile.style';
 import URL from '../../config';     
+
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
 class UserProfile extends Component {
@@ -39,7 +39,6 @@ class UserProfile extends Component {
             image: Croatia,
             ownProfilePage: true,
             isCompanyManager: false,
-            showModal: false,
             roleID: null,
         }
         props.navigation.addListener('willFocus', () => {
@@ -102,22 +101,10 @@ class UserProfile extends Component {
         });
     }
 
-    showModalHandler = () => {
-        let showModal = this.state.showModal
-        this.setState({ showModal: !showModal })
-    }
-    updateUserProfileHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        this.fetchUserData(this.state.uID, this.state.eventTitle);
-        
-    }
-
     render() {
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ? <SettingsModal exitModal={this.showModalHandler} /> : null}
-                <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
+                <Header uID= {this.state.uID}/>
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>

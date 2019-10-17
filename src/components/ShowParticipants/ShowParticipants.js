@@ -13,8 +13,6 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ProfilePreview from '../ProfilePreview/ProfilePreview';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
-// import EventImageHeader from '../EventImageHeader/EventImageHeader';
-import SettingsModal from '../SettingsModal/SettingsModal';
 
 import URL from '../../config';
 import styles from './ShowParticipants.style.js';
@@ -37,7 +35,6 @@ class ShowParticipants extends Component {
             filterWord: '',
             profileArray: [],
             profileArrayFiltered: [],
-            showModal: false,
             activityID: null,
             headlineName: '',
             isLoading: false,
@@ -97,21 +94,6 @@ class ShowParticipants extends Component {
         })
     }
 
-    showModalHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        console.log(this.state.showModal);
-    }
-
-    modalNavigationHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        this.props.navigation.navigate('UserProfileRoute', {
-            uID: this.state.uID,
-            eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
-        });
-    }
 
     filterHandler(filterWord) {
 
@@ -147,13 +129,7 @@ class ShowParticipants extends Component {
 
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ?
-                    <SettingsModal
-                        exitModal={this.showModalHandler}
-                        navigationModal={this.modalNavigationHandler}
-
-                    /> : null}
-                <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
+                <Header uID= {this.state.uID}/>
                 <ScrollView>
                     {/* <EventImageHeader eventTitle={this.state.eventTitle} /> */}
                     <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.headlineName}</HeadlineOverview>

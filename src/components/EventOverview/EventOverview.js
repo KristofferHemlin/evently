@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import Toast, { DURATION } from 'react-native-easy-toast'
+import Toast from 'react-native-easy-toast'
 import {
     View,
     Text,
     ScrollView,
-    TouchableOpacity,
 } from 'react-native';
 
 import axios from 'axios';
@@ -14,8 +13,6 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
-import SettingsModal from '../SettingsModal/SettingsModal';
-import OneSignal from 'react-native-onesignal';
 
 import URL from '../../config';
 import styles from './EventOverview.style.js';
@@ -30,7 +27,6 @@ class EventOverview extends Component {
 
     constructor(props) {
         super(props);
-        OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
 
         this.state = {
             eventTitle: '',
@@ -41,7 +37,6 @@ class EventOverview extends Component {
             endTime: '',
             goodToKnow: '',
             uID: null,
-            showModal: false,
             showEditButton: false,
             roleID: null,
             token: '',
@@ -96,22 +91,6 @@ class EventOverview extends Component {
                 console.log(error);
             });
 
-    }
-
-    showModalHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        console.log(this.state.showModal);
-    }
-
-    modalNavigationHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        this.props.navigation.navigate('UserProfileRoute', {
-            uID: this.state.uID,
-            eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
-        });
     }
 
     onEditSubmit(input) {
@@ -175,22 +154,12 @@ class EventOverview extends Component {
     render() {
         return (
             <View style={styles.pageContainer}>
-
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
                         style={toasterStyle.successMessage}
                         position='top' />
                 </View>
-
-                {this.state.showModal ?
-                    <SettingsModal
-                        exitModal={this.showModalHandler}
-                        navigationModal={this.modalNavigationHandler}
-
-                    /> : null}
-
                 <Header eventTitle={this.state.eventTitle} uID={this.state.uID} />
-
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
                     <View style={styles.eventInfo}>

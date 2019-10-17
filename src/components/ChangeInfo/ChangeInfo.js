@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
     View,
     Text,
@@ -9,13 +8,14 @@ import {
     ActivityIndicator
 } from 'react-native';
 import axios from 'axios';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import BackButton from '../BackButton/BackButton';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+
 import styles from './ChangeInfo.style';
-import SettingsModal from '../SettingsModal/SettingsModal';
 
 class ChangeInfo extends Component {
 
@@ -32,7 +32,6 @@ class ChangeInfo extends Component {
             isLoading: false,
             wantToEdit: false,
             uID: this.props.navigation.getParam('uID', ''),
-            showModal: false,
             roleID: this.props.navigation.getParam('roleID', ''),
     }
 
@@ -68,32 +67,11 @@ class ChangeInfo extends Component {
         })
     }
 
-    showModalHandler = () => {
-        let showModal = this.state.showModal
-        this.setState({ showModal: !showModal })
-        console.log(this.state.showModal)
-    }
-    modalNavigationHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal }); 
-        this.props.navigation.navigate('UserProfileRoute', {
-            uID: this.state.uID,
-            eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
-        });          
-    }
-
     render() {
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
-                  {this.state.showModal ?
-                        <SettingsModal
-                            exitModal={this.showModalHandler}
-                            navigationModal={this.modalNavigationHandler}
-
-                        /> : null}
-                    <Header showModal={this.showModalHandler} />
+                    <Header uID={this.state.uID}/>
                     <ScrollView>
                         <KeyboardAwareScrollView>
                             <View style={styles.userInfo}>

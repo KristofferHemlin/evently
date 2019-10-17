@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Toast, { DURATION } from 'react-native-easy-toast'
+import Toast from 'react-native-easy-toast'
 import {
     View,
     Text,
@@ -13,7 +13,6 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
-import SettingsModal from '../SettingsModal/SettingsModal';
 
 import URL from '../../config';
 import styles from './ActivityOverview.style.js';
@@ -39,7 +38,6 @@ class ActivityOverview extends Component {
             contact: '',
             uID: null,
             showEditButton: false,
-            showModal: false,
             infoAllowedChange: true,
         }
 
@@ -166,21 +164,6 @@ class ActivityOverview extends Component {
         });
     }
 
-
-    showModalHandler = () => {
-        let showModal = this.state.showModal
-        this.setState({ showModal: !showModal })
-    }
-    modalNavigationHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        this.props.navigation.navigate('UserProfileRoute', {
-            uID: this.state.uID,
-            eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
-        });
-    }
-
     render() {
 
         return (
@@ -192,14 +175,7 @@ class ActivityOverview extends Component {
                         position='top' />
                 </View>
 
-                {this.state.showModal ?
-                    <SettingsModal
-                        exitModal={this.showModalHandler}
-                        navigationModal={this.modalNavigationHandler} /> :
-                    null
-                }
-
-                <Header showModal={this.showModalHandler} uID={this.state.uID} />
+                <Header uID={this.state.uID} />
                 <ScrollView>
 
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
