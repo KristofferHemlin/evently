@@ -10,6 +10,7 @@ import {
     Image,
     ActivityIndicator,
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import axios from 'axios';
 import OneSignal from 'react-native-onesignal';
@@ -22,6 +23,7 @@ import ResetPasswordForm from '../ResetPasswordForm/ResetPasswordForm';
 import styles from './Login.style';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 import URL from '../../config';
+import * as actionTypes from '../../store/actions';
 
 class Login extends Component {
     static navigationOptions = {
@@ -37,7 +39,6 @@ class Login extends Component {
             userID: null,
             isLoading: false,
             token: null,
-            roleID: null,
         }
     }
 
@@ -65,51 +66,6 @@ class Login extends Component {
 
     }
 
-    authUser = () => {
-        this.setState({ isLoading: true }, () => {
-            // axios.post('http://localhost:3000/authenticate', {
-            axios.post(URL + 'authenticate', {
-                email: this.state.username,
-                password: this.state.password
-            })
-                .then((response) => {
-                    console.log(response)
-                    this.setState({
-                        token: response.data.token,
-                        isLoading: false,
-                        userID: response.data.user.id,
-                        roleID: response.data.user.role.id,
-                    });
-
-                    // Set up onesignal notifications.
-                    OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
-                    // OneSignal.removeExternalUserId();
-                    OneSignal.setExternalUserId(String(response.data.user.id));
-
-                    if (response.data.user.signupComplete === true) {
-                        this.props.navigation.navigate('EventOverviewRoute', {
-                            uID: this.state.userID,
-                            roleID: this.state.roleID,
-                            token: this.state.token
-                        })
-                    } else {
-                        this.props.navigation.navigate('CreateAccRoute', {
-                            uID: this.state.userID,
-                            roleID: this.state.roleID,
-                            token: this.state.token
-                        })
-                    }
-                })
-                .catch((error) => {
-                    this.props.showErrorHandler(error.response.data.message);
-                    // console.log(error);
-                    console.log(error);
-                    this.setState({ isLoading: false })
-                });
-        })
-
-    }
-
 
     // deep linking stuff
     navigate = (url) => {
@@ -125,19 +81,48 @@ class Login extends Component {
         }
     }
 
-    onReceived(notification) {
-        console.log("Notification received: ", notification);
-    }
+    authUser = () => {
+        this.setState({ isLoading: true }, () => {
+            // axios.post('http://localhost:3000/authenticate', {
+            axios.post(URL + 'authenticate', {
+                email: this.state.username,
+                password: this.state.password
+            })
+                .then((response) => {
+                    console.log(response)
 
-    onOpened(openResult) {
-        console.log('Message: ', openResult.notification.payload.body);
-        console.log('Data: ', openResult.notification.payload.additionalData);
-        console.log('isActive: ', openResult.notification.isAppInFocus);
-        console.log('openResult: ', openResult);
-    }
+                    this.props.onSaveIDs(response.data.user.id, response.data.user.role.id);
 
-    onIds(device) {
-        console.log('Device info: ', device);
+                    this.setState({
+                        token: response.data.token,
+                        isLoading: false,
+                        userID: response.data.user.id,
+                        roleID: response.data.user.role.id,
+                    });
+
+                    // Set up onesignal notifications.
+                    OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
+                    // OneSignal.removeExternalUserId();
+                    OneSignal.setExternalUserId(String(response.data.user.id));
+
+                    if (response.data.user.signupComplete === true) {
+                        this.props.navigation.navigate('EventOverviewRoute', {
+                            token: this.state.token
+                        })
+                    } else {
+                        this.props.navigation.navigate('CreateAccRoute', {
+                            token: this.state.token
+                        })
+                    }
+                })
+                .catch((error) => {
+                    // this.props.showErrorHandler(error.response.data.message);
+                    // console.log(error);
+                    console.log(error);
+                    this.setState({ isLoading: false })
+                });
+        })
+
     }
 
     lostPasswordHandler = () => {
@@ -146,13 +131,12 @@ class Login extends Component {
         console.log("Click!!")
     }
 
-    showErrorHandler = (errorMessage) => {
-        let errorString = String(errorMessage);
-        this.refs.toast.show(errorString, 1500);
-    }
+    // showErrorHandler = (errorMessage) => {
+    //     let errorString = String(errorMessage);
+    //     this.refs.toast.show(errorString, 1500);
+    // }
 
     render() {
-        console.log("render");
         return (
             <ImageBackground source={bgImage} style={styles.pageContainer}>
 
@@ -198,7 +182,7 @@ class Login extends Component {
                             {this.state.isLoading ? <ActivityIndicator size={'small'} color={'#FFF'} /> : <Text style={styles.buttonText}>Login </Text>}
                         </TouchableOpacity>
                     </View>
-                    }
+                }
                 <View style={styles.signUpContainer}>
                     <TouchableOpacity
                         onPress={this.lostPasswordHandler}>
@@ -212,5 +196,16 @@ class Login extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        onSaveIDs: (userID, roleID) => dispatch({
+            type: actionTypes.SAVE_IDS,
+            payload:{
+                userID: userID,
+                roleID: roleID
+            }
+        }),
+    };
+};
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

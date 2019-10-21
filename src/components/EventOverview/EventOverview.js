@@ -5,6 +5,7 @@ import {
     Text,
     ScrollView,
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import axios from 'axios';
 import moment from 'moment';
@@ -38,28 +39,24 @@ class EventOverview extends Component {
             goodToKnow: '',
             uID: null,
             showEditButton: false,
-            roleID: null,
             token: '',
             infoAllowedChange: true,
         }
 
         props.navigation.addListener('willFocus', () => {
-            roleID = Number(this.props.navigation.getParam('roleID', ''))
             token = (this.props.navigation.getParam('token', ''))
-
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
             if (infoChanged && this.state.infoAllowedChange) {
                 this.setState({ infoAllowedChange: false })
                 this.refs.toast.show('Your changes have been submitted!', 1500);
             }
 
-            if (roleID === 1) {
+            if (this.props.roleID === 1) {
                 this.setState({ showEditButton: true })
             } else {
                 this.setState({ showEditButton: false })
             }
             this.setState({
-                roleID: roleID,
                 token: token
             })
         })
@@ -67,8 +64,7 @@ class EventOverview extends Component {
     }
 
     componentDidMount() {
-        uID = Number(this.props.navigation.getParam('uID', ''))
-        axios.get(URL + 'users/' + uID + '/currentevent')
+        axios.get(URL + 'users/' + this.props.userID + '/currentevent')
             // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
             .then((response) => {
 
@@ -83,8 +79,6 @@ class EventOverview extends Component {
                     goodToKnow: response.data.goodToKnow,
                     startTime: startTime,
                     endTime: endTime,
-                    uID: uID,
-                    roleID: roleID,
                 })
             })
             .catch((error) => {
@@ -106,15 +100,14 @@ class EventOverview extends Component {
 
     handleEditPress = () => {
         this.onEditSubmit = this.onEditSubmit.bind(this)
-        var uID = this.state.uID
         this.props.navigation.navigate('ChangeInfoRoute', {
             onEditSubmit: (input) => this.onEditSubmit(input),
-            uID: uID,
-            roleID: this.state.roleID,
+            uID: this.props.userID,
+            roleID: this.props.roleID,
             title: this.state.eventTitle,
             parentRoute: 'EventOverviewRoute',
             http_update_url: URL + 'events/' + 1,
-            http_get_url: URL + 'users/' + uID + '/currentevent',
+            http_get_url: URL + 'users/' + this.props.userID + '/currentevent',
             fields: {
                 description: {
                     label: 'Description',
@@ -159,7 +152,7 @@ class EventOverview extends Component {
                         style={toasterStyle.successMessage}
                         position='top' />
                 </View>
-                <Header eventTitle={this.state.eventTitle} uID={this.state.uID} />
+                <Header eventTitle={this.state.eventTitle} uID={this.props.userID} />
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
                     <View style={styles.eventInfo}>
@@ -182,10 +175,17 @@ class EventOverview extends Component {
 
                     </View>
                 </ScrollView>
-                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer roleID={this.props.roleID} uID={this.props.userID} eventTitle={this.state.eventTitle} />
             </View>
         )
     }
 }
 
-export default EventOverview;
+const mapStateToProps = state => {
+    return {
+        userID: state.userID,
+        roleID: state.roleID
+    }
+}
+
+export default connect(mapStateToProps)(EventOverview);
