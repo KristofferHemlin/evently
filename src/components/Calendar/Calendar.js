@@ -32,12 +32,10 @@ class Calendar extends Component {
     this.state = {
       activities: [],
       isUpdated: false,
-      eventTitle: '',
 
     }
 
     props.navigation.addListener('willFocus', () => {
-      const eventTitle = this.props.navigation.getParam('eventTitle', '');
       axios.get(URL + 'users/' + this.props.userID + '/events/1/activities')
         .then((response) => {
           console.log('response', response);
@@ -53,7 +51,6 @@ class Calendar extends Component {
           this.setState({
             activities: responseArray,
             isUpdated: true,
-            eventTitle: eventTitle,
           })
 
         })
@@ -67,8 +64,6 @@ class Calendar extends Component {
   eventClicked(event) {
     this.props.navigation.navigate('ActivityOverviewRoute', {
       activityID: event.id,
-      eventTitle: this.state.eventTitle,
-
     })
   }
 
@@ -99,7 +94,7 @@ class Calendar extends Component {
             //scroll to first event of the day (default true)
             /> : null}
         </View>
-        <Footer eventTitle={this.state.eventTitle} />
+        <Footer/>
       </View>
 
     )

@@ -33,27 +33,22 @@ class ParticipantOverview extends Component {
             email: '',
             about: '',
             allergies: '',
-            eventTitle: '',
             isCompanyManager: false,
         }
         props.navigation.addListener('willFocus', () => {
             const participantID = Number(this.props.navigation.getParam('participantID', null));
-            const eventTitle = this.props.navigation.getParam('eventTitle', '');
 
-            this.fetchUserData(participantID, eventTitle);
+            this.fetchUserData(participantID);
             
             if (this.props.roleID === 1) {
                 this.setState({ isCompanyManager: true })
             }
 
-            this.setState({ 
-                eventTitle: eventTitle, })
-
         })
         console.disableYellowBox = true;
     }
 
-    fetchUserData = (participantID, eventTitle) => {
+    fetchUserData = (participantID) => {
         axios.get(URL + 'users/' + participantID)
             .then((response) => {
                 console.log('USerprof response', response);
@@ -64,7 +59,6 @@ class ParticipantOverview extends Component {
                     phone: response.data.phone,
                     about: response.data.aboutMe,
                     allergies: response.data.allergiesOrPreferences,
-                    eventTitle: eventTitle,
                 })
             })
             .catch((error) => {
@@ -107,7 +101,7 @@ class ParticipantOverview extends Component {
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer eventTitle={this.state.eventTitle} />
+                <Footer/>
             </View>
         )
     }

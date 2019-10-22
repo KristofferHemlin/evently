@@ -30,7 +30,6 @@ class ActivityOverview extends Component {
         super(props)
 
         this.state = {
-            eventTitle: '',
             activityID: null,
             activityLocation: '',
             activityDesc: '',
@@ -64,8 +63,6 @@ class ActivityOverview extends Component {
 
     componentDidMount() {
         const activityID = Number(this.props.navigation.getParam('activityID', null))
-        const eventTitle = this.props.navigation.getParam('eventTitle', null)
-        console.log('eventTitle', eventTitle);
         // axios.get('http://localhost:3000/activities/' + activityID)
         axios.get(URL + 'activities/' + activityID)
             .then((response) => {
@@ -81,7 +78,6 @@ class ActivityOverview extends Component {
                     goodToKnow: response.data.goodToKnow,
                     startTime: startTime,
                     endTime: endTime,
-                    eventTitle: eventTitle,
                 }
                 )
             })
@@ -172,7 +168,7 @@ class ActivityOverview extends Component {
                 <Header/>
                 <ScrollView>
 
-                    <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
+                    <EventImageHeader eventTitle={this.props.eventTitle}></EventImageHeader>
 
                     <View style={styles.eventInfo}>
 
@@ -204,7 +200,7 @@ class ActivityOverview extends Component {
                     </View>
                 </ScrollView>
 
-                <Footer eventTitle={this.state.eventTitle} />
+                <Footer/>
             </View>
         )
     }
@@ -213,7 +209,8 @@ class ActivityOverview extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.userID,
-        roleID: state.roleID
+        roleID: state.roleID,
+        eventTitle: state.eventTitle,
     }
 }
 

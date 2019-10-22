@@ -33,21 +33,16 @@ class UserProfile extends Component {
             email: '',
             about: '',
             allergies: '',
-            eventTitle: '',
         }
         props.navigation.addListener('willFocus', () => {
-            const eventTitle = this.props.navigation.getParam('eventTitle', '');
 
-            this.fetchUserData(this.props.userID, eventTitle);
-            this.setState({
-                eventTitle: eventTitle,
-            })
+            this.fetchUserData(this.props.userID);
 
         })
         console.disableYellowBox = true;
     }
 
-    fetchUserData = (userID, eventTitle) => {
+    fetchUserData = (userID) => {
         axios.get(URL + 'users/' + userID)
             .then((response) => {
                 this.setState({
@@ -57,7 +52,6 @@ class UserProfile extends Component {
                     phone: response.data.phone,
                     about: response.data.aboutMe,
                     allergies: response.data.allergiesOrPreferences,
-                    eventTitle: eventTitle,
                 })
             })
             .catch((error) => {
@@ -66,10 +60,9 @@ class UserProfile extends Component {
     }
 
     editButtonHandler = () => {
-        this.props.navigation.navigate('ChangeUserProfileRoute', {
-            eventTitle: this.state.eventTitle,
-        });
+        this.props.navigation.navigate('ChangeUserProfileRoute')
     }
+    
     render() {
         return (
             <View style={styles.pageContainer}>
@@ -105,7 +98,7 @@ class UserProfile extends Component {
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer eventTitle={this.state.eventTitle} />
+                <Footer/>
             </View>
         )
     }
