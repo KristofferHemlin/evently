@@ -18,7 +18,7 @@ const bell_icon = <FontAwesome5 size={25} name={'bell'} light color="white" />;
 const user_cog = <FontAwesome5 size={25} name={'user-cog'} light color="white" />;
 
 // TODO Borde inte vara hårdkodat
-let COMPANY_NAME = 'Claremont'
+let COMPANY_NAME = 'Zington'
 
 class Header extends Component {
 

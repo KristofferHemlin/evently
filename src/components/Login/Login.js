@@ -154,7 +154,8 @@ class Login extends Component {
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
                         style={this.messageColor(this.state.messageColor)}
-                        position='top' />
+                        position='top' 
+                        positionValue={0}/>
                 </View>
                 <View style={styles.logoContainer}>
                     <Image style={styles.logotype} source={logotype} />
