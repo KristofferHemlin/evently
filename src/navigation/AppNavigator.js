@@ -6,6 +6,7 @@ import CreateAcc from '../components/CreateAcc/CreateAcc';
 import EventOverview from '../components/EventOverview/EventOverview';
 import ResetPassword from '../components/ResetPassword/ResetPassword';
 import UserProfile from '../components/UserProfile/UserProfile';
+import ParticipantOverview from '../components/ParticipantOverview/ParticipantOverview';
 import ChangeUserProfile from '../components/ChangeUserProfile/ChangeUserProfile';
 import ChangeInfo from '../components/ChangeInfo/ChangeInfo';
 import ShowParticipants from '../components/ShowParticipants/ShowParticipants'
@@ -18,6 +19,7 @@ const Appstack = createStackNavigator(
   {
     EventOverviewRoute: EventOverview,
     ShowParticipantsRoute: ShowParticipants,
+    ParticipantOverviewRute: ParticipantOverview,
     CalendarRoute: Calendar,
     ActivityOverviewRoute: ActivityOverview,
     ChangeInfoRoute: ChangeInfo,

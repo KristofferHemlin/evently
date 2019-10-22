@@ -143,8 +143,6 @@ class ChangeUserProfile extends Component {
                 allergiesOrPreferences: this.state.fields[5].value,
             })
                 .then((response) => {
-                    console.log(response)
-                    alert("Information changed");
                     this.setState({
                         isLoading: false,
                         wantToEdit: false,

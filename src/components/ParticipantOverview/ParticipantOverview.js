@@ -14,12 +14,12 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
-import styles from './UserProfile.style';
-import URL from '../../config';
+import styles from './ParticipantOverview.style';
+import URL from '../../config';     
 
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
-class UserProfile extends Component {
+class ParticipantOverview extends Component {
 
     static navigationOptions = {
         header: null,
@@ -34,22 +34,29 @@ class UserProfile extends Component {
             about: '',
             allergies: '',
             eventTitle: '',
+            isCompanyManager: false,
         }
         props.navigation.addListener('willFocus', () => {
+            const participantID = Number(this.props.navigation.getParam('participantID', null));
             const eventTitle = this.props.navigation.getParam('eventTitle', '');
 
-            this.fetchUserData(this.props.userID, eventTitle);
-            this.setState({
-                eventTitle: eventTitle,
-            })
+            this.fetchUserData(participantID, eventTitle);
+            
+            if (this.props.roleID === 1) {
+                this.setState({ isCompanyManager: true })
+            }
+
+            this.setState({ 
+                eventTitle: eventTitle, })
 
         })
         console.disableYellowBox = true;
     }
 
-    fetchUserData = (userID, eventTitle) => {
-        axios.get(URL + 'users/' + userID)
+    fetchUserData = (participantID, eventTitle) => {
+        axios.get(URL + 'users/' + participantID)
             .then((response) => {
+                console.log('USerprof response', response);
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
@@ -65,22 +72,16 @@ class UserProfile extends Component {
             });
     }
 
-    editButtonHandler = () => {
-        this.props.navigation.navigate('ChangeUserProfileRoute', {
-            eventTitle: this.state.eventTitle,
-        });
-    }
     render() {
         return (
             <View style={styles.pageContainer}>
-                <Header />
+                <Header/>
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
                             <HeadlineOverview
                                 infoButtonStatus={false}
-                                editButtonStatus={true}
-                                onEditPress={this.editButtonHandler}
+                                editButtonStatus={false}
                             >User Profile</HeadlineOverview>
                             <View style={styles.profilePictureView}>
                                 <View>{profileAvatar}</View>
@@ -95,10 +96,11 @@ class UserProfile extends Component {
                                 <Text style={styles.ordinaryText}>{this.state.phone}</Text>
                                 <Text style={styles.subTitles}>About Me</Text>
                                 <Text style={styles.ordinaryText}>{this.state.about}</Text>
-                                <View>
-                                    <Text style={styles.subTitles}>Allergies</Text>
-                                    <Text style={styles.ordinaryText}>{this.state.allergies}</Text>
-                                </View>
+                                {this.state.ownProfilePage || this.state.isCompanyManager ?
+                                    <View>
+                                        <Text style={styles.subTitles}>Allergies</Text>
+                                        <Text style={styles.ordinaryText}>{this.state.allergies}</Text>
+                                    </View> : null}
 
 
                             </View>
@@ -119,4 +121,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(UserProfile);
+export default connect(mapStateToProps)(ParticipantOverview);
