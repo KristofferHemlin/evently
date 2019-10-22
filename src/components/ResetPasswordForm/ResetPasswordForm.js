@@ -55,6 +55,7 @@ class ResetPasswordForm extends Component {
                     })
                 })
                 .catch((error) => {
+                    this.props.showToasterHandler(error.response.data.message, false);
                     alert(error);
                     console.log(error);
                     this.setState({ isLoading: false })
