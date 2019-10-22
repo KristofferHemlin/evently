@@ -12,6 +12,7 @@ import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
 import axios from 'axios';
 
+import * as actionTypes from '../../store/actions'
 import URL from '../../config';
 import styles from './NotificationModal.style.js'
 
@@ -39,7 +40,7 @@ class NotificationModal extends Component {
         this.setState({ isLoading: true }, () => {
             axios.get(URL + 'users/' + this.props.userID + '/notifications')
                 .then((results) => {
-                    console.log(results)
+                    this.props.onSaveActivityID(results.data[0].activity.id)
                     var filteredRes = (results.data || []).reduce((map, { activity: { title, id, updatedAt } }) => {
                         map[id] = {
                             title,
@@ -101,7 +102,18 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(withNavigation(NotificationModal));
+const mapDispatchToProps = dispatch => {
+    return {
+      onSaveActivityID: (activityID) => dispatch({
+        type: actionTypes.SAVE_ACTIVITY_ID,
+        payload: {
+          activityID: activityID,
+        }
+      }),
+    };
+  };
+
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(NotificationModal));
 
 const NotificationLine = ({ id, title, navigationCallback, updatedAt }) => {
 

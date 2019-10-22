@@ -20,10 +20,7 @@ const footer = props => {
         <View style={styles.footerContainer}>
             <TouchableOpacity
                 style={styles.footerButton}
-                onPress={() => props.navigation.navigate('EventOverviewRoute', {
-                    eventTitle: props.eventTitle,
-                })}
-            >
+                onPress={() => props.navigation.navigate('EventOverviewRoute')}>
                 {infoIcon}
                 <Text style={styles.footerIconTxt}>
                     Event info
@@ -32,8 +29,7 @@ const footer = props => {
             <TouchableOpacity
                 style={styles.footerButton}
                 onPress={() => props.navigation.navigate('ShowParticipantsRoute', {
-                    eventTitle: props.eventTitle,
-                    event: true,                   
+                    event: true,
                 })}
             >
                 {usersIcon}
@@ -43,10 +39,7 @@ const footer = props => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.footerButton}
-                onPress={() => props.navigation.navigate('CalendarRoute', {
-                    eventTitle: props.eventTitle,
-                })}
-            >
+                onPress={() => props.navigation.navigate('CalendarRoute')}>
                 {calendarIcon}
                 <Text style={styles.footerIconTxt}>
                     Schedule

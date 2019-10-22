@@ -87,17 +87,14 @@ class Header extends Component {
         
     }
     render = () => {
-        var { eventTitle } = this.props
         // functional styling to place Header Modals above all of app
         return <View style={{ zIndex: 1 }}>
             {this.state.showUserModal ?
                 <SettingsModal
-                    eventTitle={eventTitle || ''}
                     exitModal={() => this.setState({ showUserModal: false })}
                 /> : <View />}
             {this.state.showBellModal ?
                 <NotificationModal
-                    eventTitle={eventTitle || ''}
                     exitModal={() => this.setState({ showBellModal: false })}
                 /> : <View />}
             <View style={styles.headerContainer}>

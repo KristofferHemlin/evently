@@ -13,6 +13,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview'
 
+import * as actionTypes from '../../store/actions'
 import URL from '../../config';
 import styles from './Calendar.style';
 
@@ -32,12 +33,10 @@ class Calendar extends Component {
     this.state = {
       activities: [],
       isUpdated: false,
-      eventTitle: '',
 
     }
 
     props.navigation.addListener('willFocus', () => {
-      const eventTitle = this.props.navigation.getParam('eventTitle', '');
       axios.get(URL + 'users/' + this.props.userID + '/events/1/activities')
         .then((response) => {
           console.log('response', response);
@@ -53,7 +52,6 @@ class Calendar extends Component {
           this.setState({
             activities: responseArray,
             isUpdated: true,
-            eventTitle: eventTitle,
           })
 
         })
@@ -65,18 +63,15 @@ class Calendar extends Component {
   }
 
   eventClicked(event) {
-    this.props.navigation.navigate('ActivityOverviewRoute', {
-      activityID: event.id,
-      eventTitle: this.state.eventTitle,
-
-    })
+    this.props.onSaveActivityID(event.id)
+    this.props.navigation.navigate('ActivityOverviewRoute')
   }
 
   render() {
     const todaysDate = moment().format('YYYY-MM-DD')
     return (
       <View style={styles.pageContainer}>
-        <Header/>
+        <Header />
         <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Schedule</HeadlineOverview>
         {/* TODO: fixa informationstext */}
         <View style={styles.calendarContainer}>
@@ -99,7 +94,7 @@ class Calendar extends Component {
             //scroll to first event of the day (default true)
             /> : null}
         </View>
-        <Footer eventTitle={this.state.eventTitle} />
+        <Footer />
       </View>
 
     )
@@ -108,8 +103,19 @@ class Calendar extends Component {
 
 const mapStateToProps = state => {
   return {
-      userID: state.userID,
+    userID: state.userID,
   }
 }
 
-export default connect(mapStateToProps)(Calendar);
+const mapDispatchToProps = dispatch => {
+  return {
+    onSaveActivityID: (activityID) => dispatch({
+      type: actionTypes.SAVE_ACTIVITY_ID,
+      payload: {
+        activityID: activityID,
+      }
+    }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

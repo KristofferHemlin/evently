@@ -16,6 +16,7 @@ import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
 
 import URL from '../../config';
+import * as actionTypes from '../../store/actions'
 import styles from './EventOverview.style.js';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
@@ -68,7 +69,8 @@ class EventOverview extends Component {
 
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
                 const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-
+                this.props.onSaveEventTitle(response.data.title)
+                
                 this.setState({
                     eventTitle: response.data.title,
                     eventId: response.data.id,
@@ -150,7 +152,7 @@ class EventOverview extends Component {
                         style={toasterStyle.successMessage}
                         position='top' />
                 </View>
-                <Header eventTitle={this.state.eventTitle}/>
+                <Header />
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
                     <View style={styles.eventInfo}>
@@ -173,7 +175,7 @@ class EventOverview extends Component {
 
                     </View>
                 </ScrollView>
-                <Footer eventTitle={this.state.eventTitle} />
+                <Footer/>
             </View>
         )
     }
@@ -186,4 +188,15 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(EventOverview);
+const mapDispatchToProps = dispatch => {
+    return {
+        onSaveEventTitle: (eventTitle) => dispatch({
+            type: actionTypes.SAVE_EVENT_TITLE,
+            payload:{
+                eventTitle: eventTitle
+            }
+        }),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventOverview);

@@ -7,7 +7,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 
-
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 import Header from '../Header/Header';
@@ -31,11 +31,9 @@ class ShowParticipants extends Component {
             firstName: '',
             lastName: '',
             companyDepartment: '',
-            eventTitle: '',
             filterWord: '',
             profileArray: [],
             profileArrayFiltered: [],
-            activityID: null,
             headlineName: '',
             isLoading: false,
         }
@@ -49,20 +47,16 @@ class ShowParticipants extends Component {
     fetchParticipants() {
         const isEvent = this.props.navigation.getParam('event', false);
         const isActivity = this.props.navigation.getParam('activity', false);
-        const activityID = this.props.navigation.getParam('activityID', null);
-        const eventTitle = this.props.navigation.getParam('eventTitle', '');
         const activityTitle = this.props.navigation.getParam('activityTitle', '');
         let url;
       
         if(isEvent === true){
-            // url = 'http://localhost:3000/events/1/users?sort=firstName:asc'
             url = URL + 'events/1/users?sort=firstName:asc'
-            this.setState({headlineName: 'Event Participants', eventTitle: eventTitle,})
+            this.setState({headlineName: 'Event Participants'})
         }
         if(isActivity === true){
-            // url = 'http://localhost:3000/activities/' + activityID + '/users?sort=firstName:asc'
-            url = URL + 'activities/' + activityID + '/users?sort=firstName:asc'
-            this.setState({headlineName: activityTitle,  eventTitle: eventTitle,})
+            url = URL + 'activities/' + this.props.activityID + '/users?sort=firstName:asc'
+            this.setState({headlineName: activityTitle})
         }
         this.setState({ isLoading: true }, () => {
             axios.get(url)
@@ -78,7 +72,6 @@ class ShowParticipants extends Component {
                     this.setState({
                         profileArray: profileArray,
                         profileArrayFiltered: profileArray,
-                        activityID: activityID,
                         isLoading: false,
                     })
 
@@ -112,9 +105,8 @@ class ShowParticipants extends Component {
 
     profilePreviewOnClickHandler = (participantID) => {
         console.log('participantID', participantID);
-        this.props.navigation.navigate('UserProfileRoute', {
+        this.props.navigation.navigate('ParticipantOverviewRute', {
             participantID: participantID,
-            eventTitle: this.state.eventTitle,
             showParticipant: true,
         });
     }
@@ -125,7 +117,6 @@ class ShowParticipants extends Component {
             <View style={styles.pageContainer}>
                 <Header/>
                 <ScrollView>
-                    {/* <EventImageHeader eventTitle={this.state.eventTitle} /> */}
                     <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.headlineName}</HeadlineOverview>
 
                     <TextInput style={styles.searchBar}
@@ -151,10 +142,16 @@ class ShowParticipants extends Component {
                     }
 
                 </ScrollView>
-                <Footer eventTitle={this.state.eventTitle} />
+                <Footer/>
             </View>
         )
     }
 }
 
-export default ShowParticipants;
+const mapStateToProps = state => {
+    return {
+        activityID: state.activityID
+    }
+}
+
+export default connect(mapStateToProps)(ShowParticipants);

@@ -78,11 +78,9 @@ class ChangeUserProfile extends Component {
             },
         ],
         image: Croatia,
-        eventTitle: '',
     }
 
     componentDidMount() {
-        const eventTitle = this.props.navigation.getParam('eventTitle', '');
             axios.get( URL + 'users/' + this.props.userID)
             .then((response) => {
                 console.log(response)
@@ -117,7 +115,6 @@ class ChangeUserProfile extends Component {
                     lastName: response.data.lastName,
                     email: response.data.email,
                     phone: response.data.phone,
-                    eventTitle: eventTitle,
                 })
             })
             .catch((error) => {
@@ -143,8 +140,6 @@ class ChangeUserProfile extends Component {
                 allergiesOrPreferences: this.state.fields[5].value,
             })
                 .then((response) => {
-                    console.log(response)
-                    alert("Information changed");
                     this.setState({
                         isLoading: false,
                         wantToEdit: false,
@@ -209,7 +204,7 @@ class ChangeUserProfile extends Component {
 
                 </ScrollView>
 
-                <Footer eventTitle={this.state.eventTitle} />
+                <Footer/>
             </View>
         )
     }
