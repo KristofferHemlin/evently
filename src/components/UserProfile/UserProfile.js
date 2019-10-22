@@ -5,18 +5,20 @@ import {
     ScrollView,
     Image,
 } from 'react-native';
+
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import styles from './UserProfile.style';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
-import SettingsModal from '../SettingsModal/SettingsModal';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Croatia from '../EventImageHeader/images/CROT.jpg';  
 
+import Croatia from '../EventImageHeader/images/CROT.jpg';  
+import styles from './UserProfile.style';
 import URL from '../../config';     
+
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
 class UserProfile extends Component {
@@ -34,49 +36,39 @@ class UserProfile extends Component {
             phone: '070 999 999',
             about: '',
             allergies: '',
-            uID: null,
             eventTitle: '',
             image: Croatia,
             ownProfilePage: true,
             isCompanyManager: false,
-            showModal: false,
-            roleID: null,
         }
         props.navigation.addListener('willFocus', () => {
-            const uID = Number(this.props.navigation.getParam('uID', ''));
             const participantID = Number(this.props.navigation.getParam('participantID', null));
             let ifParticipant = this.props.navigation.getParam('showParticipant', false);
             const eventTitle = this.props.navigation.getParam('eventTitle', '');
-            const roleID = Number(this.props.navigation.getParam('roleID', ''));
-
 
             if (ifParticipant === true) {
                 this.fetchUserData(participantID, eventTitle);
             } else {
-                this.fetchUserData(uID, eventTitle);
+                this.fetchUserData(this.props.userID, eventTitle);
             }
-            if (participantID === uID || participantID === 0) {
+            if (participantID === this.props.userID || participantID === 0) {
                 this.setState({ ownProfilePage: true })
             } else {
                 this.setState({ ownProfilePage: false })
             }
-            if (roleID === 1) {
+            if (this.props.roleID === 1) {
                 this.setState({ isCompanyManager: true })
             }
 
             this.setState({ 
-                roleID: roleID,
-                uID: uID,
                 eventTitle: eventTitle, })
 
         })
         console.disableYellowBox = true;
     }
 
-    fetchUserData = (uID, eventTitle) => {
-        console.log(uID);
-        // axios.get('http://localhost:3000/users/' + uID)
-        axios.get(URL + 'users/' + uID)
+    fetchUserData = (userID, eventTitle) => {
+        axios.get(URL + 'users/' + userID)
             .then((response) => {
                 console.log('USerprof response', response);
                 this.setState({
@@ -96,28 +88,14 @@ class UserProfile extends Component {
     
     editButtonHandler = () => {
         this.props.navigation.navigate('ChangeUserProfileRoute', {
-            uID: this.state.uID,
             eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
         });
-    }
-
-    showModalHandler = () => {
-        let showModal = this.state.showModal
-        this.setState({ showModal: !showModal })
-    }
-    updateUserProfileHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        this.fetchUserData(this.state.uID, this.state.eventTitle);
-        
     }
 
     render() {
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ? <SettingsModal exitModal={this.showModalHandler} /> : null}
-                <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
+                <Header/>
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
@@ -158,10 +136,18 @@ class UserProfile extends Component {
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer eventTitle={this.state.eventTitle} />
             </View>
         )
     }
 }
 
-export default UserProfile;
+const mapStateToProps = state => {
+    return {
+        userID: state.userID,
+        roleID: state.roleID
+    }
+}
+
+
+export default connect(mapStateToProps)(UserProfile);

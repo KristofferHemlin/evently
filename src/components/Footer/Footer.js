@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     Text,
 } from 'react-native';
+
 import { withNavigation } from 'react-navigation';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
@@ -20,9 +21,7 @@ const footer = props => {
             <TouchableOpacity
                 style={styles.footerButton}
                 onPress={() => props.navigation.navigate('EventOverviewRoute', {
-                    uID: props.uID,
                     eventTitle: props.eventTitle,
-                    roleID: props.roleID,
                 })}
             >
                 {infoIcon}
@@ -33,9 +32,7 @@ const footer = props => {
             <TouchableOpacity
                 style={styles.footerButton}
                 onPress={() => props.navigation.navigate('ShowParticipantsRoute', {
-                    uID: props.uID,
                     eventTitle: props.eventTitle,
-                    roleID: props.roleID,
                     event: true,                   
                 })}
             >
@@ -47,9 +44,7 @@ const footer = props => {
             <TouchableOpacity
                 style={styles.footerButton}
                 onPress={() => props.navigation.navigate('CalendarRoute', {
-                    uID: props.uID,
                     eventTitle: props.eventTitle,
-                    roleID: props.roleID
                 })}
             >
                 {calendarIcon}
@@ -66,4 +61,5 @@ const footer = props => {
         </View>
     );
 };
+
 export default withNavigation(footer);

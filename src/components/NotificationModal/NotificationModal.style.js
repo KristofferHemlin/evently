@@ -50,4 +50,7 @@ export default StyleSheet.create({
         marginTop: 5,
         zIndex: 9000,
     },
+    loadingIcon:{
+        marginTop: 100,
+    },
 })

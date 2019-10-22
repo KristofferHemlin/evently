@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import Toast, { DURATION } from 'react-native-easy-toast'
 import {
     View,
     Text,
     ScrollView,
-    TouchableOpacity,
 } from 'react-native';
 
+import { connect } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment';
+import Toast from 'react-native-easy-toast'
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
-import SettingsModal from '../SettingsModal/SettingsModal';
-import OneSignal from 'react-native-onesignal';
 
 import URL from '../../config';
 import styles from './EventOverview.style.js';
@@ -30,7 +28,6 @@ class EventOverview extends Component {
 
     constructor(props) {
         super(props);
-        OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
 
         this.state = {
             eventTitle: '',
@@ -40,31 +37,25 @@ class EventOverview extends Component {
             startTime: '',
             endTime: '',
             goodToKnow: '',
-            uID: null,
-            showModal: false,
             showEditButton: false,
-            roleID: null,
             token: '',
             infoAllowedChange: true,
         }
 
         props.navigation.addListener('willFocus', () => {
-            roleID = Number(this.props.navigation.getParam('roleID', ''))
             token = (this.props.navigation.getParam('token', ''))
-
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
             if (infoChanged && this.state.infoAllowedChange) {
                 this.setState({ infoAllowedChange: false })
                 this.refs.toast.show('Your changes have been submitted!', 1500);
             }
 
-            if (roleID === 1) {
+            if (this.props.roleID === 1) {
                 this.setState({ showEditButton: true })
             } else {
                 this.setState({ showEditButton: false })
             }
             this.setState({
-                roleID: roleID,
                 token: token
             })
         })
@@ -72,9 +63,7 @@ class EventOverview extends Component {
     }
 
     componentDidMount() {
-        uID = Number(this.props.navigation.getParam('uID', ''))
-        axios.get(URL + 'users/' + uID + '/currentevent')
-            // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
+        axios.get(URL + 'users/' + this.props.userID + '/currentevent')
             .then((response) => {
 
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
@@ -88,30 +77,12 @@ class EventOverview extends Component {
                     goodToKnow: response.data.goodToKnow,
                     startTime: startTime,
                     endTime: endTime,
-                    uID: uID,
-                    roleID: roleID,
                 })
             })
             .catch((error) => {
                 console.log(error);
             });
 
-    }
-
-    showModalHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        console.log(this.state.showModal);
-    }
-
-    modalNavigationHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        this.props.navigation.navigate('UserProfileRoute', {
-            uID: this.state.uID,
-            eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
-        });
     }
 
     onEditSubmit(input) {
@@ -127,15 +98,14 @@ class EventOverview extends Component {
 
     handleEditPress = () => {
         this.onEditSubmit = this.onEditSubmit.bind(this)
-        var uID = this.state.uID
         this.props.navigation.navigate('ChangeInfoRoute', {
             onEditSubmit: (input) => this.onEditSubmit(input),
-            uID: uID,
-            roleID: this.state.roleID,
+            uID: this.props.userID,
+            roleID: this.props.roleID,
             title: this.state.eventTitle,
             parentRoute: 'EventOverviewRoute',
             http_update_url: URL + 'events/' + 1,
-            http_get_url: URL + 'users/' + uID + '/currentevent',
+            http_get_url: URL + 'users/' + this.props.userID + '/currentevent',
             fields: {
                 description: {
                     label: 'Description',
@@ -175,22 +145,12 @@ class EventOverview extends Component {
     render() {
         return (
             <View style={styles.pageContainer}>
-
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
                         style={toasterStyle.successMessage}
                         position='top' />
                 </View>
-
-                {this.state.showModal ?
-                    <SettingsModal
-                        exitModal={this.showModalHandler}
-                        navigationModal={this.modalNavigationHandler}
-
-                    /> : null}
-
-                <Header eventTitle={this.state.eventTitle} uID={this.state.uID} />
-
+                <Header eventTitle={this.state.eventTitle}/>
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
                     <View style={styles.eventInfo}>
@@ -213,10 +173,17 @@ class EventOverview extends Component {
 
                     </View>
                 </ScrollView>
-                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer eventTitle={this.state.eventTitle} />
             </View>
         )
     }
 }
 
-export default EventOverview;
+const mapStateToProps = state => {
+    return {
+        userID: state.userID,
+        roleID: state.roleID
+    }
+}
+
+export default connect(mapStateToProps)(EventOverview);

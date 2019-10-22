@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import { Dimensions, View, ScrollView } from 'react-native';
+import {
+  Dimensions,
+  View,
+} from 'react-native';
+import { connect } from 'react-redux';
+
 import axios from 'axios';
-import EventCalendar from 'react-native-events-calendar'
 import moment from 'moment';
 
+import EventCalendar from 'react-native-events-calendar'
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview'
-import SettingsModal from '../SettingsModal/SettingsModal';
 
 import URL from '../../config';
 import styles from './Calendar.style';
@@ -22,26 +26,21 @@ class Calendar extends Component {
     header: null,
   };
 
-  constructor(props){
+  constructor(props) {
     super(props)
 
     this.state = {
       activities: [],
       isUpdated: false,
-      uID: null,
-      showModal: false,
       eventTitle: '',
-      // activityID: null,
-  
+
     }
 
     props.navigation.addListener('willFocus', () => {
-      const uID = Number(this.props.navigation.getParam('uID', ''));
       const eventTitle = this.props.navigation.getParam('eventTitle', '');
-      const roleID = Number(this.props.navigation.getParam('roleID', ''));
-      axios.get(URL + 'events/1/activities')
-        // axios.get('http://10.110.171.68:3000/events/1/activities')
+      axios.get(URL + 'users/' + this.props.userID + '/events/1/activities')
         .then((response) => {
+          console.log('response', response);
           responseArray = response.data.map(activity => ({
             start: moment(new Date(activity.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
             end: moment(new Date(activity.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
@@ -50,15 +49,13 @@ class Calendar extends Component {
             id: activity.id
           })
           )
-  
+
           this.setState({
             activities: responseArray,
             isUpdated: true,
-            uID: uID,
             eventTitle: eventTitle,
-            roleID: roleID,
           })
-  
+
         })
         .catch((error) => {
           console.log(error)
@@ -67,30 +64,11 @@ class Calendar extends Component {
     console.disableYellowBox = true;
   }
 
-  showModalHandler = () => {
-    let showModal = this.state.showModal;
-    this.setState({ showModal: !showModal });
-  }
-
-  modalNavigationHandler = () => {
-    let showModal = this.state.showModal;
-    this.setState({ showModal: !showModal });
-    this.props.navigation.navigate('UserProfileRoute', {
-      uID: this.state.uID,
-      eventTitle: this.state.eventTitle,
-      roleID: this.state.roleID,
-      showParticipant: false,
-    });
-  }
-
   eventClicked(event) {
     this.props.navigation.navigate('ActivityOverviewRoute', {
       activityID: event.id,
-      uID: this.state.uID,
       eventTitle: this.state.eventTitle,
-      uID: this.state.uID,
-      roleID: this.state.roleID,
-      
+
     })
   }
 
@@ -98,13 +76,7 @@ class Calendar extends Component {
     const todaysDate = moment().format('YYYY-MM-DD')
     return (
       <View style={styles.pageContainer}>
-        {this.state.showModal ?
-          <SettingsModal
-            exitModal={this.showModalHandler}
-            navigationModal={this.modalNavigationHandler}
-
-          /> : null}
-        <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
+        <Header/>
         <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Schedule</HeadlineOverview>
         {/* TODO: fixa informationstext */}
         <View style={styles.calendarContainer}>
@@ -127,11 +99,17 @@ class Calendar extends Component {
             //scroll to first event of the day (default true)
             /> : null}
         </View>
-        <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle}/>
+        <Footer eventTitle={this.state.eventTitle} />
       </View>
 
     )
   }
 }
 
-export default Calendar;
+const mapStateToProps = state => {
+  return {
+      userID: state.userID,
+  }
+}
+
+export default connect(mapStateToProps)(Calendar);

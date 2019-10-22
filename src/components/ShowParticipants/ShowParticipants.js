@@ -7,14 +7,13 @@ import {
     ActivityIndicator,
 } from 'react-native';
 
+
 import axios from 'axios';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ProfilePreview from '../ProfilePreview/ProfilePreview';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
-// import EventImageHeader from '../EventImageHeader/EventImageHeader';
-import SettingsModal from '../SettingsModal/SettingsModal';
 
 import URL from '../../config';
 import styles from './ShowParticipants.style.js';
@@ -32,12 +31,10 @@ class ShowParticipants extends Component {
             firstName: '',
             lastName: '',
             companyDepartment: '',
-            uID: null,
             eventTitle: '',
             filterWord: '',
             profileArray: [],
             profileArrayFiltered: [],
-            showModal: false,
             activityID: null,
             headlineName: '',
             isLoading: false,
@@ -50,13 +47,11 @@ class ShowParticipants extends Component {
     }
 
     fetchParticipants() {
-        const uID = Number(this.props.navigation.getParam('uID', ''));
         const isEvent = this.props.navigation.getParam('event', false);
         const isActivity = this.props.navigation.getParam('activity', false);
         const activityID = this.props.navigation.getParam('activityID', null);
         const eventTitle = this.props.navigation.getParam('eventTitle', '');
         const activityTitle = this.props.navigation.getParam('activityTitle', '');
-        roleID = Number(this.props.navigation.getParam('roleID', ''));
         let url;
       
         if(isEvent === true){
@@ -83,10 +78,8 @@ class ShowParticipants extends Component {
                     this.setState({
                         profileArray: profileArray,
                         profileArrayFiltered: profileArray,
-                        uID: uID,
                         activityID: activityID,
                         isLoading: false,
-                        roleID: roleID,
                     })
 
                 })
@@ -97,21 +90,6 @@ class ShowParticipants extends Component {
         })
     }
 
-    showModalHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        console.log(this.state.showModal);
-    }
-
-    modalNavigationHandler = () => {
-        let showModal = this.state.showModal;
-        this.setState({ showModal: !showModal });
-        this.props.navigation.navigate('UserProfileRoute', {
-            uID: this.state.uID,
-            eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
-        });
-    }
 
     filterHandler(filterWord) {
 
@@ -136,9 +114,7 @@ class ShowParticipants extends Component {
         console.log('participantID', participantID);
         this.props.navigation.navigate('UserProfileRoute', {
             participantID: participantID,
-            uID: this.state.uID,
             eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
             showParticipant: true,
         });
     }
@@ -147,13 +123,7 @@ class ShowParticipants extends Component {
 
         return (
             <View style={styles.pageContainer}>
-                {this.state.showModal ?
-                    <SettingsModal
-                        exitModal={this.showModalHandler}
-                        navigationModal={this.modalNavigationHandler}
-
-                    /> : null}
-                <Header showModal={this.showModalHandler} uID= {this.state.uID}/>
+                <Header/>
                 <ScrollView>
                     {/* <EventImageHeader eventTitle={this.state.eventTitle} /> */}
                     <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.headlineName}</HeadlineOverview>
@@ -181,7 +151,7 @@ class ShowParticipants extends Component {
                     }
 
                 </ScrollView>
-                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer eventTitle={this.state.eventTitle} />
             </View>
         )
     }

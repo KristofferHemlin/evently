@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import React, { Component } from 'react';
 import { 
     ScrollView, 
@@ -8,11 +8,16 @@ import {
     View,
     ActivityIndicator
 } from 'react-native';
+import { connect } from 'react-redux';
+
+import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
+
 import FormDescription from '../FormDescription/FormDescription';
 import FormHeader from '../FormHeader/FormHeader';
-import URL from '../../config';
 // import ImageSelector from '../ImageSelector/ImageSelector';
+
+import URL from '../../config';
 import styles from './CreateAcc.style';
 
 
@@ -90,13 +95,11 @@ class CreateAcc extends Component{
               // }
         ],
         isLoading: false,
-        uID: JSON.stringify(this.props.navigation.getParam('uID', '')),
     }
 
 
     componentDidMount(){
-        // axios.get('http://localhost:3000/users/' + this.state.uID)
-        axios.get(URL + 'users/' + this.state.uID)
+        axios.get(URL + 'users/' + this.props.userID)
         .then((response) => {      
             console.log('response', response);      
             let responseArray = []
@@ -136,10 +139,8 @@ class CreateAcc extends Component{
     };
 
     handleSubmit = () =>{
-        console.log("CLICK!")
         this.setState({isLoading:true}, () => {
-        // axios.put('http://localhost:3000/users/' + this.state.uID + '/firstlogin', {
-            axios.put( URL + 'users/' + this.state.uID + '/firstlogin', {
+            axios.put( URL + 'users/' + this.props.userID + '/firstlogin', {
             firstName: this.state.fields[0].value,
             lastName: this.state.fields[1].value,
             email: this.state.fields[2].value,
@@ -149,10 +150,7 @@ class CreateAcc extends Component{
         })
         .then((response) => {
             this.setState({isLoading: false});
-            this.props.navigation.navigate('EventOverviewRoute', {
-                uID: this.state.uID,
-                roleID: this.state.roleID,
-            }) 
+            this.props.navigation.navigate('EventOverviewRoute')
         })
         .catch((error) => {
             console.log(error);
@@ -197,4 +195,10 @@ class CreateAcc extends Component{
         )
     }
 }
-  export default CreateAcc; 
+
+const mapStateToProps = state => {
+    return {
+        userID: state.userID,
+    }
+}
+  export default connect(mapStateToProps)(CreateAcc); 

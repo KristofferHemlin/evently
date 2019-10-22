@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 import Croatia from '../EventImageHeader/images/CROT.jpg';
-import leftPad from 'left-pad';
 import styles from './ProfilePreview.style.js'
 
 // class ProfilePreview extends Component{

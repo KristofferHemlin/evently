@@ -11,7 +11,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import styles from './ImageSelector.style';
 import ImagePicker from 'react-native-image-picker';
-import setPrototypeOf from 'setprototypeof';
 
 
 const uploadImageIcon = <FontAwesome5 size={150} name={'user-circle'} solid color="grey" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
