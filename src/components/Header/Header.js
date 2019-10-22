@@ -26,7 +26,6 @@ class Header extends Component {
         super(props)
 
         OneSignal.inFocusDisplaying(2);
-        console.log('mounted');
         OneSignal.addEventListener('received', this.onReceived);
 
         this.state = {
@@ -42,19 +41,16 @@ class Header extends Component {
     }
 
     componentWillUnmount() {
-        console.log('unmounted');
         OneSignal.removeEventListener('received', this.onReceived);
     }
 
     onReceived = (notification) => {
-        console.log('onReceived');
         this.setState({showNotificationBadge:true}, 
             () =>this._storeData());
         
     }
 
     _retrieveData = async () => {
-        console.log('_retrieveData');
         try {
             const showNotificationBadge = await AsyncStorage.getItem('showNotificationBadge');
             showNotificationBadgeParsed = Boolean(JSON.parse(showNotificationBadge));
@@ -65,7 +61,7 @@ class Header extends Component {
                 })
             }
             } catch (error) {
-                console.log('retrieveDAta header', error);
+                console.log(error);
           // Error retrieving data
         }
       };
@@ -74,12 +70,11 @@ class Header extends Component {
         try {
           await AsyncStorage.setItem('showNotificationBadge', JSON.stringify(this.state.showNotificationBadge));
         } catch (error) {
-          console.log('_storeData header', error);
+          console.log(error);
         }
       };
 
     notificationIconClickHandler = () => {
-        console.log('notificationIconClickHandler');
         this.setState({
             showBellModal: true,
             showNotificationBadge: false,

@@ -83,7 +83,6 @@ class ChangeUserProfile extends Component {
     componentDidMount() {
             axios.get( URL + 'users/' + this.props.userID)
             .then((response) => {
-                console.log(response)
                 let responseArray = []
                 let fields = [...this.state.fields];
                 for (key in response) {
@@ -126,7 +125,6 @@ class ChangeUserProfile extends Component {
         let fields = [...this.state.fields];
         fields[i].value = value;
         this.setState({ fields: fields });
-        console.log(this.state.fields)
     };
 
     handleSubmit = () => {

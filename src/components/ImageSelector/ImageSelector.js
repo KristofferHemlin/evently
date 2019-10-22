@@ -26,7 +26,6 @@ class ImageSelector extends Component{
             noData: true
         };
         ImagePicker.launchImageLibrary(options, response => {
-            console.log("response", response);
             if(response.uri) {
                 this.setState({photo: response});
             }

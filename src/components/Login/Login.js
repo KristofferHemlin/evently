@@ -47,7 +47,7 @@ class Login extends Component {
 
     componentDidMount() {
         // deep linking stuff
-        console.log('componentDidMount');
+
         Linking.addEventListener('url', this.handleOpenURL)
         Linking.getInitialURL().then((url) => {
             if (url) {
@@ -63,7 +63,6 @@ class Login extends Component {
     }
 
     handleOpenURL = (event) => {
-        console.log('handleOpenURL');
         this.navigate(event.url)
 
     }
@@ -89,7 +88,6 @@ class Login extends Component {
                 password: this.state.password
             })
                 .then((response) => {
-                    console.log(response)
 
                     this.props.onSaveIDs(response.data.user.id, response.data.user.role.id);
 

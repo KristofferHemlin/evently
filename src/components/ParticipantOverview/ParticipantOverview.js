@@ -51,7 +51,6 @@ class ParticipantOverview extends Component {
     fetchUserData = (participantID) => {
         axios.get(URL + 'users/' + participantID)
             .then((response) => {
-                console.log('USerprof response', response);
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,

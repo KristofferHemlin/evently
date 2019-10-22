@@ -39,7 +39,6 @@ class Calendar extends Component {
     props.navigation.addListener('willFocus', () => {
       axios.get(URL + 'users/' + this.props.userID + '/events/1/activities')
         .then((response) => {
-          console.log('response', response);
           responseArray = response.data.map(activity => ({
             start: moment(new Date(activity.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
             end: moment(new Date(activity.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),

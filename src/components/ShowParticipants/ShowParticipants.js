@@ -87,7 +87,6 @@ class ShowParticipants extends Component {
     filterHandler(filterWord) {
 
         let tempArray = this.state.profileArray;
-        console.log('tempArray1', tempArray);
         tempArray = tempArray.filter(function (user) {
             return user.firstName.toLowerCase().includes(filterWord.toLowerCase())
                 || user.lastName.toLowerCase().includes(filterWord.toLowerCase())
@@ -96,8 +95,6 @@ class ShowParticipants extends Component {
         }).map(function ({ firstName, lastName, companyDepartment, participantID }) {
             return { firstName, lastName, companyDepartment, participantID };
         });
-
-        console.log('tempArray2', tempArray);
 
         this.setState({ profileArrayFiltered: tempArray });
 
