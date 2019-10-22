@@ -1,2 +1,3 @@
 export const SAVE_IDS = 'SAVE_IDS';
 export const SAVE_EVENT_TITLE = 'SAVE_EVENT_TITLE';
+export const SAVE_ACTIVITY_ID = 'SAVE_ACTIVITY_ID';

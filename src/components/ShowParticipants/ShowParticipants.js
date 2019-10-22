@@ -7,7 +7,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 
-
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 import Header from '../Header/Header';
@@ -34,7 +34,6 @@ class ShowParticipants extends Component {
             filterWord: '',
             profileArray: [],
             profileArrayFiltered: [],
-            activityID: null,
             headlineName: '',
             isLoading: false,
         }
@@ -48,18 +47,15 @@ class ShowParticipants extends Component {
     fetchParticipants() {
         const isEvent = this.props.navigation.getParam('event', false);
         const isActivity = this.props.navigation.getParam('activity', false);
-        const activityID = this.props.navigation.getParam('activityID', null);
         const activityTitle = this.props.navigation.getParam('activityTitle', '');
         let url;
       
         if(isEvent === true){
-            // url = 'http://localhost:3000/events/1/users?sort=firstName:asc'
             url = URL + 'events/1/users?sort=firstName:asc'
             this.setState({headlineName: 'Event Participants'})
         }
         if(isActivity === true){
-            // url = 'http://localhost:3000/activities/' + activityID + '/users?sort=firstName:asc'
-            url = URL + 'activities/' + activityID + '/users?sort=firstName:asc'
+            url = URL + 'activities/' + this.props.activityID + '/users?sort=firstName:asc'
             this.setState({headlineName: activityTitle})
         }
         this.setState({ isLoading: true }, () => {
@@ -76,7 +72,6 @@ class ShowParticipants extends Component {
                     this.setState({
                         profileArray: profileArray,
                         profileArrayFiltered: profileArray,
-                        activityID: activityID,
                         isLoading: false,
                     })
 
@@ -153,4 +148,10 @@ class ShowParticipants extends Component {
     }
 }
 
-export default ShowParticipants;
+const mapStateToProps = state => {
+    return {
+        activityID: state.activityID
+    }
+}
+
+export default connect(mapStateToProps)(ShowParticipants);

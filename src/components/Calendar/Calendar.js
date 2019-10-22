@@ -13,6 +13,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview'
 
+import * as actionTypes from '../../store/actions'
 import URL from '../../config';
 import styles from './Calendar.style';
 
@@ -62,16 +63,15 @@ class Calendar extends Component {
   }
 
   eventClicked(event) {
-    this.props.navigation.navigate('ActivityOverviewRoute', {
-      activityID: event.id,
-    })
+    this.props.onSaveActivityID(event.id)
+    this.props.navigation.navigate('ActivityOverviewRoute')
   }
 
   render() {
     const todaysDate = moment().format('YYYY-MM-DD')
     return (
       <View style={styles.pageContainer}>
-        <Header/>
+        <Header />
         <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>Schedule</HeadlineOverview>
         {/* TODO: fixa informationstext */}
         <View style={styles.calendarContainer}>
@@ -94,7 +94,7 @@ class Calendar extends Component {
             //scroll to first event of the day (default true)
             /> : null}
         </View>
-        <Footer/>
+        <Footer />
       </View>
 
     )
@@ -103,8 +103,19 @@ class Calendar extends Component {
 
 const mapStateToProps = state => {
   return {
-      userID: state.userID,
+    userID: state.userID,
   }
 }
 
-export default connect(mapStateToProps)(Calendar);
+const mapDispatchToProps = dispatch => {
+  return {
+    onSaveActivityID: (activityID) => dispatch({
+      type: actionTypes.SAVE_ACTIVITY_ID,
+      payload: {
+        activityID: activityID,
+      }
+    }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

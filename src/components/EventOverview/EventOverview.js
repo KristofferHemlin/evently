@@ -16,7 +16,7 @@ import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
 
 import URL from '../../config';
-import * as actionTypes from '../../store/actions';
+import * as actionTypes from '../../store/actions'
 import styles from './EventOverview.style.js';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 

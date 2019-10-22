@@ -17,8 +17,13 @@ const dataReducer = (state = initialState, action) => {
             }
         case actionTypes.SAVE_EVENT_TITLE:
             return {
-                ...state, 
+                ...state,
                 eventTitle: action.payload.eventTitle,
+            }
+        case actionTypes.SAVE_ACTIVITY_ID:
+            return {
+                ...state,
+                activityID: action.payload.activityID,
             }
         default:
             return state

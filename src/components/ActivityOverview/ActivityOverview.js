@@ -30,7 +30,6 @@ class ActivityOverview extends Component {
         super(props)
 
         this.state = {
-            activityID: null,
             activityLocation: '',
             activityDesc: '',
             goodToKnow: '',
@@ -62,9 +61,7 @@ class ActivityOverview extends Component {
 
 
     componentDidMount() {
-        const activityID = Number(this.props.navigation.getParam('activityID', null))
-        // axios.get('http://localhost:3000/activities/' + activityID)
-        axios.get(URL + 'activities/' + activityID)
+        axios.get(URL + 'activities/' + this.props.activityID)
             .then((response) => {
 
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
@@ -72,7 +69,6 @@ class ActivityOverview extends Component {
 
                 this.setState({
                     activityTitle: response.data.title,
-                    activityID: activityID,
                     activityDesc: response.data.description,
                     activityLocation: response.data.location,
                     goodToKnow: response.data.goodToKnow,
@@ -92,7 +88,6 @@ class ActivityOverview extends Component {
 
         this.props.navigation.navigate('ShowParticipantsRoute', {
             activity: true,
-            activityID: this.state.activityID,
             activityTitle: this.state.activityTitle,
         })
     }
@@ -116,7 +111,7 @@ class ActivityOverview extends Component {
             title: this.state.activityTitle,
             roleID: this.props.roleID,
             parentRoute: 'ActivityOverviewRoute',
-            http_update_url: URL + 'activities/' + this.state.activityID,
+            http_update_url: URL + 'activities/' + this.props.activityID,
             fields: {
                 description: {
                     label: 'Description',
@@ -211,6 +206,7 @@ const mapStateToProps = state => {
         userID: state.userID,
         roleID: state.roleID,
         eventTitle: state.eventTitle,
+        activityID: state.activityID
     }
 }
 
