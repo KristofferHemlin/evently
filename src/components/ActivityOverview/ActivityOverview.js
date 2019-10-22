@@ -6,8 +6,10 @@ import {
     ScrollView,
     TouchableOpacity
 } from 'react-native';
+import { connect } from 'react-redux';
 import moment from 'moment';
 import axios from 'axios';
+
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -36,26 +38,22 @@ class ActivityOverview extends Component {
             startTime: '',
             endTime: '',
             contact: '',
-            uID: null,
             showEditButton: false,
             infoAllowedChange: true,
         }
 
         props.navigation.addListener('willFocus', () => {
-            roleID = Number(this.props.navigation.getParam('roleID', ''))
-
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
             if (infoChanged && this.state.infoAllowedChange) {
                 this.setState({ infoAllowedChange: false })
                 this.refs.toast.show('Your changes have been submitted!', 1500);
             }
 
-            if (roleID === 1) {
+            if (this.props.roleID === 1) {
                 this.setState({ showEditButton: true })
             } else {
                 this.setState({ showEditButton: false })
             }
-            this.setState({ roleID: roleID })
         })
         console.disableYellowBox = true;
     }
@@ -65,7 +63,6 @@ class ActivityOverview extends Component {
 
 
     componentDidMount() {
-        const uID = Number(this.props.navigation.getParam('uID', ''))
         const activityID = Number(this.props.navigation.getParam('activityID', null))
         const eventTitle = this.props.navigation.getParam('eventTitle', null)
         console.log('eventTitle', eventTitle);
@@ -85,7 +82,6 @@ class ActivityOverview extends Component {
                     startTime: startTime,
                     endTime: endTime,
                     eventTitle: eventTitle,
-                    uID: uID,
                 }
                 )
             })
@@ -102,7 +98,6 @@ class ActivityOverview extends Component {
             activity: true,
             activityID: this.state.activityID,
             activityTitle: this.state.activityTitle,
-            roleID: this.state.roleID,
         })
     }
 
@@ -119,12 +114,11 @@ class ActivityOverview extends Component {
 
     handleEditPress = () => {
         this.onEditSubmit = this.onEditSubmit.bind(this)
-        var uID = this.state.uID
         this.props.navigation.navigate('ChangeInfoRoute', {
             onEditSubmit: (input) => this.onEditSubmit(input),
-            uID: uID,
+            uID: this.props.userID,
             title: this.state.activityTitle,
-            roleID: this.state.roleID,
+            roleID: this.props.roleID,
             parentRoute: 'ActivityOverviewRoute',
             http_update_url: URL + 'activities/' + this.state.activityID,
             fields: {
@@ -175,7 +169,7 @@ class ActivityOverview extends Component {
                         position='top' />
                 </View>
 
-                <Header uID={this.state.uID} />
+                <Header/>
                 <ScrollView>
 
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
@@ -210,10 +204,17 @@ class ActivityOverview extends Component {
                     </View>
                 </ScrollView>
 
-                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer eventTitle={this.state.eventTitle} />
             </View>
         )
     }
 }
 
-export default ActivityOverview;
+const mapStateToProps = state => {
+    return {
+        userID: state.userID,
+        roleID: state.roleID
+    }
+}
+
+export default connect(mapStateToProps)(ActivityOverview);

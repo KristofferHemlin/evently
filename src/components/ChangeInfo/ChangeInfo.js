@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     ActivityIndicator
 } from 'react-native';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -31,8 +32,6 @@ class ChangeInfo extends Component {
             fields: this.props.navigation.getParam('fields', ''),
             isLoading: false,
             wantToEdit: false,
-            uID: this.props.navigation.getParam('uID', ''),
-            roleID: this.props.navigation.getParam('roleID', ''),
     }
 
     handleInputChange = (value, key) => {
@@ -55,7 +54,6 @@ class ChangeInfo extends Component {
                 .then(() =>
                     this.setState({ isLoading: false }, () => {
                         this.props.navigation.navigate(this.state.parentRoute, {
-                            uID: this.state.uID,
                             infoChanged: true,
                         })
                     })
@@ -71,7 +69,7 @@ class ChangeInfo extends Component {
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
-                    <Header uID={this.state.uID}/>
+                    <Header />
                     <ScrollView>
                         <KeyboardAwareScrollView>
                             <View style={styles.userInfo}>
@@ -91,12 +89,18 @@ class ChangeInfo extends Component {
                             </View>
                         </KeyboardAwareScrollView>
                     </ScrollView>
-                    <Footer roleID={this.state.roleID} uID={this.state.uID} />
+                    <Footer/>
                 </View>)
     }
 }
 
-export default ChangeInfo;
+const mapStateToProps = state => {
+    return {
+        userID: state.userID,
+    }
+}
+
+export default connect(mapStateToProps)(ChangeInfo);
 
 
 

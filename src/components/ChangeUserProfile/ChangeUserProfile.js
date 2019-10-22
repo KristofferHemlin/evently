@@ -8,6 +8,8 @@ import {
     TouchableOpacity,
     ActivityIndicator,
 } from 'react-native';
+import { connect } from 'react-redux';
+
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funkade
 
@@ -76,15 +78,12 @@ class ChangeUserProfile extends Component {
             },
         ],
         image: Croatia,
-        uID: null,
         eventTitle: '',
     }
 
     componentDidMount() {
-        const uID = Number(this.props.navigation.getParam('uID', '')) // kan finnas bättre ställe att hämta params?
         const eventTitle = this.props.navigation.getParam('eventTitle', '');
-        // axios.get('http://localhost:3000/users/' + uID)
-            axios.get( URL + 'users/' + uID)
+            axios.get( URL + 'users/' + this.props.userID)
             .then((response) => {
                 console.log(response)
                 let responseArray = []
@@ -118,7 +117,6 @@ class ChangeUserProfile extends Component {
                     lastName: response.data.lastName,
                     email: response.data.email,
                     phone: response.data.phone,
-                    uID: uID,
                     eventTitle: eventTitle,
                 })
             })
@@ -135,10 +133,8 @@ class ChangeUserProfile extends Component {
     };
 
     handleSubmit = () => {
-        console.log("CLICK!", this.state.uID)
         this.setState({ isLoading: true }, () => {
-            // axios.put('http://localhost:3000/users/' + this.state.uID, {
-                axios.put(URL + 'users/' + this.state.uID, {
+                axios.put(URL + 'users/' + this.props.userID, {
                 firstName: this.state.fields[0].value,
                 lastName: this.state.fields[1].value,
                 email: this.state.fields[2].value,
@@ -153,10 +149,7 @@ class ChangeUserProfile extends Component {
                         isLoading: false,
                         wantToEdit: false,
                     });
-                    this.props.navigation.navigate('UserProfileRoute', {
-                        uID: this.state.uID,
-                        roleID: this.state.roleID,
-                    });
+                    this.props.navigation.navigate('UserProfileRoute');
                 })
                 .catch((error) => {
                     console.log(error);
@@ -170,7 +163,7 @@ class ChangeUserProfile extends Component {
 
         return (
             <View style={styles.pageContainer}>
-                <Header uID={this.state.uID} />
+                <Header/>
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
@@ -216,10 +209,16 @@ class ChangeUserProfile extends Component {
 
                 </ScrollView>
 
-                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer eventTitle={this.state.eventTitle} />
             </View>
         )
     }
 }
 
-export default ChangeUserProfile;
+const mapStateToProps = state => {
+    return {
+        userID: state.userID,
+    }
+}
+
+export default connect(mapStateToProps)(ChangeUserProfile);

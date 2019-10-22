@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    ImageBackground,
     TouchableOpacity,
     Text,
     AsyncStorage,
@@ -14,7 +13,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import OneSignal from 'react-native-onesignal';
 
 import styles from './Header.style';
-import bgImage from '../Login/images/login-bg.jpeg'; // TODO: Hitta bättre bild??
 
 const bell_icon = <FontAwesome5 size={25} name={'bell'} light color="white" />;
 const user_cog = <FontAwesome5 size={25} name={'user-cog'} light color="white" />;
@@ -89,18 +87,16 @@ class Header extends Component {
         
     }
     render = () => {
-        var { uID, eventTitle } = this.props
+        var { eventTitle } = this.props
         // functional styling to place Header Modals above all of app
         return <View style={{ zIndex: 1 }}>
             {this.state.showUserModal ?
                 <SettingsModal
-                    uID={uID || null}
                     eventTitle={eventTitle || ''}
                     exitModal={() => this.setState({ showUserModal: false })}
                 /> : <View />}
             {this.state.showBellModal ?
                 <NotificationModal
-                    uID={uID || null}
                     eventTitle={eventTitle || ''}
                     exitModal={() => this.setState({ showBellModal: false })}
                 /> : <View />}
@@ -128,5 +124,4 @@ class Header extends Component {
         </View>
     }
 }
-
 export default Header;

@@ -1,4 +1,3 @@
-import styles from './NotificationModal.style.js'
 import React, { Component } from 'react'
 import {
     View,
@@ -6,12 +5,15 @@ import {
     TouchableOpacity,
     ActivityIndicator,
 } from 'react-native'
+
+import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
 import axios from 'axios';
 
 import URL from '../../config';
+import styles from './NotificationModal.style.js'
 
 
 
@@ -34,9 +36,8 @@ class NotificationModal extends Component {
 
 
     fetchNotifications() {
-        // axios.get(URL + '/users/' + this.props.uID + '/notifications')
         this.setState({ isLoading: true }, () => {
-            axios.get(URL + 'users/' + this.props.uID + '/notifications')
+            axios.get(URL + 'users/' + this.props.userID + '/notifications')
                 .then((results) => {
                     console.log(results)
                     var filteredRes = (results.data || []).reduce((map, { activity: { title, id, updatedAt } }) => {
@@ -94,7 +95,13 @@ class NotificationModal extends Component {
     }
 }
 
-export default withNavigation(NotificationModal)
+const mapStateToProps = state => {
+    return {
+        userID: state.userID,
+    }
+}
+
+export default connect(mapStateToProps)(withNavigation(NotificationModal));
 
 const NotificationLine = ({ id, title, navigationCallback, updatedAt }) => {
 
