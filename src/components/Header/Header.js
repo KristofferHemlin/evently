@@ -5,7 +5,6 @@ import {
     Text,
     AsyncStorage,
 } from 'react-native';
-import { connect } from 'react-redux';
 
 import SettingsModal from '../SettingsModal/SettingsModal'
 import NotificationModal from '../NotificationModal/NotificationModal'
@@ -93,13 +92,11 @@ class Header extends Component {
         return <View style={{ zIndex: 1 }}>
             {this.state.showUserModal ?
                 <SettingsModal
-                    uID={this.props.userID || null}
                     eventTitle={eventTitle || ''}
                     exitModal={() => this.setState({ showUserModal: false })}
                 /> : <View />}
             {this.state.showBellModal ?
                 <NotificationModal
-                    uID={this.props.userID || null}
                     eventTitle={eventTitle || ''}
                     exitModal={() => this.setState({ showBellModal: false })}
                 /> : <View />}
@@ -127,11 +124,4 @@ class Header extends Component {
         </View>
     }
 }
-
-const mapStateToProps = state => {
-    return {
-        userID: state.userID,
-    }
-}
-
-export default connect(mapStateToProps)(Header);
+export default Header;

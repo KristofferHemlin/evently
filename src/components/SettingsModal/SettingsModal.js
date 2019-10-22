@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {
+    View,
+    Text,
+    TouchableOpacity
+} from 'react-native';
+
+import { connect } from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from 'react-navigation';
-
 
 import URL from '../../config';
 import styles from './SettingsModal.style'
@@ -17,31 +22,29 @@ class SettingsModal extends Component {
 
 
     changeUserInfoNavigationHandler = () => {
-        const uID = this.props.navigation.getParam('uID', '')
-        console.log('what', uID)
-        this.props.navigation.navigate('UserProfileRoute',{uID: uID})
-        this.props.exitModal()
+        this.props.navigation.navigate('UserProfileRoute');
+        this.props.exitModal();
     }
 
     changePasswordNavigationHandler = () => {
-        this.props.navigation.navigate('ChangeInfoRoute',{
-            onEditSubmit: () => {},
-            uID: uID,
+        this.props.navigation.navigate('ChangeInfoRoute', {
+            onEditSubmit: () => { },
+            uID: this.props.userID,
             title: 'Change Password',
             parentRoute: 'UserProfileRoute',
-            http_update_url:  URL + 'account/password',
+            http_update_url: URL + 'account/password',
             fields: {
                 currentPassword: {
                     label: 'Current Password',
                     value: '',
-                    autoCapitalize: 'none', 
+                    autoCapitalize: 'none',
                     secureText: true,
 
                 },
                 newPassword: {
                     label: 'New Password',
                     value: '',
-                    autoCapitalize: 'none', 
+                    autoCapitalize: 'none',
                     secureText: true,
                 }
             }
@@ -78,4 +81,11 @@ class SettingsModal extends Component {
     }
 }
 
-export default withNavigation(SettingsModal);
+const mapStateToProps = state => {
+    return {
+        userID: state.userID,
+    }
+}
+
+
+export default connect(mapStateToProps)(withNavigation(SettingsModal));

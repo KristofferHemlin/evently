@@ -96,8 +96,6 @@ class Login extends Component {
                     this.setState({
                         token: response.data.token,
                         isLoading: false,
-                        userID: response.data.user.id,
-                        roleID: response.data.user.role.id,
                     });
 
                     // Set up onesignal notifications.

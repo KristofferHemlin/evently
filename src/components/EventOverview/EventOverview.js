@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import Toast from 'react-native-easy-toast'
 import {
     View,
     Text,
     ScrollView,
 } from 'react-native';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment';
+import Toast from 'react-native-easy-toast'
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -37,7 +37,6 @@ class EventOverview extends Component {
             startTime: '',
             endTime: '',
             goodToKnow: '',
-            uID: null,
             showEditButton: false,
             token: '',
             infoAllowedChange: true,
@@ -65,7 +64,6 @@ class EventOverview extends Component {
 
     componentDidMount() {
         axios.get(URL + 'users/' + this.props.userID + '/currentevent')
-            // axios.get('http://10.110.171.68:3000/users/' + uID + '/currentevent')
             .then((response) => {
 
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
@@ -152,7 +150,7 @@ class EventOverview extends Component {
                         style={toasterStyle.successMessage}
                         position='top' />
                 </View>
-                <Header eventTitle={this.state.eventTitle} uID={this.props.userID} />
+                <Header eventTitle={this.state.eventTitle}/>
                 <ScrollView>
                     <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
                     <View style={styles.eventInfo}>
@@ -175,7 +173,7 @@ class EventOverview extends Component {
 
                     </View>
                 </ScrollView>
-                <Footer roleID={this.props.roleID} uID={this.props.userID} eventTitle={this.state.eventTitle} />
+                <Footer eventTitle={this.state.eventTitle} />
             </View>
         )
     }

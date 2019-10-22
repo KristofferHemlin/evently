@@ -69,7 +69,7 @@ class ChangeInfo extends Component {
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
-                    <Header uID={this.props.userID}/>
+                    <Header />
                     <ScrollView>
                         <KeyboardAwareScrollView>
                             <View style={styles.userInfo}>
@@ -89,7 +89,7 @@ class ChangeInfo extends Component {
                             </View>
                         </KeyboardAwareScrollView>
                     </ScrollView>
-                    <Footer roleID={this.props.roleID} uID={this.props.userID} />
+                    <Footer/>
                 </View>)
     }
 }
@@ -97,7 +97,6 @@ class ChangeInfo extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.userID,
-        roleID: state.roleID
     }
 }
 
