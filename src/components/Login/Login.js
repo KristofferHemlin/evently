@@ -68,7 +68,6 @@ class Login extends Component {
 
     }
 
-
     // deep linking stuff
     navigate = (url) => {
         const { navigate } = this.props.navigation;
@@ -85,7 +84,6 @@ class Login extends Component {
 
     authUser = () => {
         this.setState({ isLoading: true }, () => {
-            // axios.post('http://localhost:3000/authenticate', {
             axios.post(URL + 'authenticate', {
                 email: this.state.username,
                 password: this.state.password
@@ -116,8 +114,7 @@ class Login extends Component {
                     }
                 })
                 .catch((error) => {
-                    // this.props.showErrorHandler(error.response.data.message);
-                    // console.log(error);
+                    this.showToasterHandler(error.response.data.message, false);
                     console.log(error);
                     this.setState({ isLoading: false })
                 });
@@ -128,14 +125,12 @@ class Login extends Component {
     lostPasswordHandler = () => {
         let forgottenPassword = this.state.forgottenPassword
         this.setState({ forgottenPassword: !forgottenPassword })
-        console.log("Click!!")
     }
 
     showToasterHandler = (toasterResponse, success) => {
         if(success === true){
             this.setState({ messageColor: "#4a90e2" })
         } else{
-            console.log("failed");
             this.setState({ messageColor: "#e24a4a" })
         }
         let errorString = String(toasterResponse);
@@ -143,7 +138,6 @@ class Login extends Component {
     }
 
     messageColor = (color) => {
-        console.log("messageColor: ", color);
         return {
             backgroundColor: color,
             padding: 10,
@@ -157,17 +151,11 @@ class Login extends Component {
     render() {
         return (
             <ImageBackground source={bgImage} style={styles.pageContainer}>
-
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
                         style={this.messageColor(this.state.messageColor)}
-                        // style={toasterStyle.successMessage}
-                        // style={this.toasterStyle(messageColor)} 
-                        // {true ? style={toasterStyle.successMessage} : style={toasterStyle.errorMessage}}
-                        // style={toasterStyle.errorMessage}
                         position='top' />
                 </View>
-
                 <View style={styles.logoContainer}>
                     <Image style={styles.logotype} source={logotype} />
                     <Text style={styles.logoText}>Eventapp</Text>

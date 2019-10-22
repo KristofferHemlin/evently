@@ -11,8 +11,6 @@ import bgImage from '../Login/images/login-bg.jpeg';
 import logotype from '../Login/images/Logotype.png';
 import ResetPasswordForm from '../ResetPasswordForm/ResetPasswordForm';
 
-import LoginForm from '../LoginForm/LoginForm';
-
 
 import styles from './ResetPassword.style';
 
