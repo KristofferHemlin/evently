@@ -128,9 +128,9 @@ class Login extends Component {
     }
 
     showToasterHandler = (toasterResponse, success) => {
-        if(success === true){
+        if (success === true) {
             this.setState({ messageColor: "#4a90e2" })
-        } else{
+        } else {
             this.setState({ messageColor: "#e24a4a" })
         }
         let errorString = String(toasterResponse);
@@ -146,7 +146,7 @@ class Login extends Component {
             width: Dimensions.get('window').width,
             height: 100,
         }
-      }
+    }
 
     render() {
         return (
@@ -154,14 +154,17 @@ class Login extends Component {
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
                         style={this.messageColor(this.state.messageColor)}
-                        position='top' />
+                        position='top'
+                        positionValue={0} />
                 </View>
                 <View style={styles.logoContainer}>
                     <Image style={styles.logotype} source={logotype} />
                     <Text style={styles.logoText}>Eventapp</Text>
                 </View>
-                {this.state.forgottenPassword ? <ResetPasswordForm fromLoginScreen={true} /> :
-
+                {this.state.forgottenPassword ?
+                    <ResetPasswordForm
+                        showToasterHandler={this.showToasterHandler}
+                        fromLoginScreen={true} /> :
                     <View style={styles.inputForm}>
                         <View style={styles.inputContainer}>
                             <TextInput
@@ -210,7 +213,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onSaveIDs: (userID, roleID) => dispatch({
             type: actionTypes.SAVE_IDS,
-            payload:{
+            payload: {
                 userID: userID,
                 roleID: roleID
             }

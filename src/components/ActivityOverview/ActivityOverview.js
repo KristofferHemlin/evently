@@ -157,7 +157,8 @@ class ActivityOverview extends Component {
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
                         style={toasterStyle.successMessage}
-                        position='top' />
+                        position='top'
+                        positionValue={0}/>
                 </View>
 
                 <Header/>
