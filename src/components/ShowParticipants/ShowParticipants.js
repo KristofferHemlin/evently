@@ -7,6 +7,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 
+
 import axios from 'axios';
 
 import Header from '../Header/Header';
@@ -30,7 +31,6 @@ class ShowParticipants extends Component {
             firstName: '',
             lastName: '',
             companyDepartment: '',
-            uID: null,
             eventTitle: '',
             filterWord: '',
             profileArray: [],
@@ -47,13 +47,11 @@ class ShowParticipants extends Component {
     }
 
     fetchParticipants() {
-        const uID = Number(this.props.navigation.getParam('uID', ''));
         const isEvent = this.props.navigation.getParam('event', false);
         const isActivity = this.props.navigation.getParam('activity', false);
         const activityID = this.props.navigation.getParam('activityID', null);
         const eventTitle = this.props.navigation.getParam('eventTitle', '');
         const activityTitle = this.props.navigation.getParam('activityTitle', '');
-        roleID = Number(this.props.navigation.getParam('roleID', ''));
         let url;
       
         if(isEvent === true){
@@ -80,10 +78,8 @@ class ShowParticipants extends Component {
                     this.setState({
                         profileArray: profileArray,
                         profileArrayFiltered: profileArray,
-                        uID: uID,
                         activityID: activityID,
                         isLoading: false,
-                        roleID: roleID,
                     })
 
                 })
@@ -118,9 +114,7 @@ class ShowParticipants extends Component {
         console.log('participantID', participantID);
         this.props.navigation.navigate('UserProfileRoute', {
             participantID: participantID,
-            uID: this.state.uID,
             eventTitle: this.state.eventTitle,
-            roleID: this.state.roleID,
             showParticipant: true,
         });
     }
@@ -129,7 +123,7 @@ class ShowParticipants extends Component {
 
         return (
             <View style={styles.pageContainer}>
-                <Header uID= {this.state.uID}/>
+                <Header/>
                 <ScrollView>
                     {/* <EventImageHeader eventTitle={this.state.eventTitle} /> */}
                     <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.headlineName}</HeadlineOverview>
@@ -157,7 +151,7 @@ class ShowParticipants extends Component {
                     }
 
                 </ScrollView>
-                <Footer roleID={this.state.roleID} uID={this.state.uID} eventTitle={this.state.eventTitle} />
+                <Footer eventTitle={this.state.eventTitle} />
             </View>
         )
     }
