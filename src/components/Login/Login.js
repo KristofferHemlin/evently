@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import OneSignal from 'react-native-onesignal';
 
-import bgImage from './images/login-bg.jpeg';
+import bgImage from './images/login-bg.jpg';
 import logotype from './images/Logotype.png';
 
 import ResetPasswordForm from '../ResetPasswordForm/ResetPasswordForm';
