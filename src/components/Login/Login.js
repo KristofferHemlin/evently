@@ -132,7 +132,7 @@ class Login extends Component {
             this.setState({ messageColor: "#e24a4a" })
         }
         let errorString = String(toasterResponse);
-        this.refs.toast.show(errorString, 1500);
+        this.refs.toast.show(errorString, 2000);
     }
 
     messageColor = (color) => {
@@ -170,6 +170,7 @@ class Login extends Component {
                                 autoCapitalize={'none'}
                                 style={styles.input}
                                 placeholder={'Username'}
+                                keyboardType={'email-address'}
                                 placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
                                 onChangeText={(username) => this.setState({ username })}
                                 autoCorrect={false}

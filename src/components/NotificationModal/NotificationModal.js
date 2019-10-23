@@ -19,7 +19,7 @@ import styles from './NotificationModal.style.js'
 
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-const infoCircleIcon = <FontAwesome5 size={40} name={'times'} solid color="white" />;
+const cancelIcon = <FontAwesome5 size={40} name={'times'} solid color="white" />;
 
 class NotificationModal extends Component {
 
@@ -75,7 +75,7 @@ class NotificationModal extends Component {
                 <TouchableOpacity
                     onPress={exitModal}>
                     <View style={styles.cancelIcon}>
-                        {infoCircleIcon}
+                        {cancelIcon}
                     </View>
                 </TouchableOpacity>
             </View>

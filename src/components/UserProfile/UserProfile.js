@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Toast from 'react-native-easy-toast'
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -16,6 +17,7 @@ import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
 import styles from './UserProfile.style';
 import URL from '../../config';
+import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
@@ -31,10 +33,17 @@ class UserProfile extends Component {
             firstName: '',
             lastName: '',
             email: '',
+            phone: '',
             about: '',
             allergies: '',
+            infoAllowedChange: true,
         }
         props.navigation.addListener('willFocus', () => {
+            let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
+            if (infoChanged && this.state.infoAllowedChange) {
+                this.setState({ infoAllowedChange: false })
+                this.refs.toast.show('Your changes have been submitted!', 2000);
+            }
 
             this.fetchUserData(this.props.userID);
 
@@ -59,13 +68,79 @@ class UserProfile extends Component {
             });
     }
 
-    editButtonHandler = () => {
-        this.props.navigation.navigate('ChangeUserProfileRoute')
+    onEditSubmit(input) {
+        this.setState({
+            firstName: input.firstName,
+            lastName: input.lastName,
+            email: input.email,
+            phone: input.phone,
+            about: input.aboutMe,
+            allergies: input.allergies,
+            infoAllowedChange: true,
+        })
     }
-    
+
+    handleEditPress = () => {
+        this.onEditSubmit = this.onEditSubmit.bind(this)
+        this.props.navigation.navigate('ChangeInfoRoute', {
+            onEditSubmit: (input) => this.onEditSubmit(input),
+            uID: this.props.userID,
+            parentRoute: 'UserProfileRoute',
+            http_update_url: URL + 'users/' + this.props.userID,
+            http_get_url: URL + 'users/' + this.props.userID,
+            fields: {
+                firstName: {
+                    label: 'First Name',
+                    value: this.state.firstName,
+                    type: 'text',
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
+                },
+                lastName: {
+                    label: 'Last Name',
+                    value: this.state.lastName,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
+                },
+                email: {
+                    label: 'Email',
+                    value: this.state.email,
+                    keyboardType: 'email-address',
+                    secureTextEntry: false,
+                    autoCapitalize: 'none',
+                },
+                phone: {
+                    label: 'Phone',
+                    keyboardType: 'phone-pad',
+                    value: this.state.phone,
+                    secureTextEntry: false,
+                },
+                aboutMe: {
+                    label: 'About Me',
+                    value: this.state.about,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
+                    multiline: 'true',
+                },
+                allergies: {
+                    label: 'Allergies',
+                    value: this.state.allergies,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
+                },
+            }
+        });
+    }
+
     render() {
         return (
             <View style={styles.pageContainer}>
+                <View style={toasterStyle.container}>
+                    <Toast ref="toast"
+                        style={toasterStyle.successMessage}
+                        position='top'
+                        positionValue={0} />
+                </View>
                 <Header />
                 <ScrollView>
                     <KeyboardAwareScrollView>
@@ -73,7 +148,7 @@ class UserProfile extends Component {
                             <HeadlineOverview
                                 infoButtonStatus={false}
                                 editButtonStatus={true}
-                                onEditPress={this.editButtonHandler}
+                                onEditPress={() => this.handleEditPress()}
                             >User Profile</HeadlineOverview>
                             <View style={styles.profilePictureView}>
                                 <View>{profileAvatar}</View>
@@ -98,7 +173,7 @@ class UserProfile extends Component {
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer/>
+                <Footer />
             </View>
         )
     }
