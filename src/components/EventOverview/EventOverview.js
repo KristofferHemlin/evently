@@ -176,7 +176,7 @@ class EventOverview extends Component {
 
                     </View>
                 </ScrollView>
-                <Footer/>
+                <Footer currentPage={'eventOverview'}/>
             </View>
         )
     }

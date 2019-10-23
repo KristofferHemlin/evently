@@ -139,7 +139,7 @@ class ShowParticipants extends Component {
                     }
 
                 </ScrollView>
-                <Footer/>
+                <Footer currentPage={'showParticipants'}/>
             </View>
         )
     }
