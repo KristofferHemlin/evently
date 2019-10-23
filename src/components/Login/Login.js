@@ -170,6 +170,7 @@ class Login extends Component {
                                 autoCapitalize={'none'}
                                 style={styles.input}
                                 placeholder={'Username'}
+                                keyboardType={'email-address'}
                                 placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
                                 onChangeText={(username) => this.setState({ username })}
                                 autoCorrect={false}
