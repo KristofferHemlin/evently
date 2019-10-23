@@ -93,7 +93,7 @@ class Calendar extends Component {
             //scroll to first event of the day (default true)
             /> : null}
         </View>
-        <Footer />
+        <Footer currentPage={'calendar'}/>
       </View>
 
     )
