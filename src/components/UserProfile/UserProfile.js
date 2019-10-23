@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Toast from 'react-native-easy-toast'
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -16,6 +17,7 @@ import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
 import styles from './UserProfile.style';
 import URL from '../../config';
+import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
@@ -34,8 +36,14 @@ class UserProfile extends Component {
             phone: '',
             about: '',
             allergies: '',
+            infoAllowedChange: true,
         }
         props.navigation.addListener('willFocus', () => {
+            let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
+            if (infoChanged && this.state.infoAllowedChange) {
+                this.setState({ infoAllowedChange: false })
+                this.refs.toast.show('Your changes have been submitted!', 2000);
+            }
 
             this.fetchUserData(this.props.userID);
 
@@ -68,6 +76,7 @@ class UserProfile extends Component {
             phone: input.phone,
             about: input.aboutMe,
             allergies: input.allergies,
+            infoAllowedChange: true,
         })
     }
 
@@ -80,20 +89,20 @@ class UserProfile extends Component {
             http_update_url: URL + 'users/' + this.props.userID,
             http_get_url: URL + 'users/' + this.props.userID,
             fields: {
-                firstName:{
+                firstName: {
                     label: 'First Name',
                     value: this.state.firstName,
                     type: 'text',
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
                 },
-                lastName:{
+                lastName: {
                     label: 'Last Name',
                     value: this.state.lastName,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
                 },
-                email:{
+                email: {
                     label: 'Email',
                     value: this.state.email,
                     keyboardType: 'email-address',
@@ -121,10 +130,16 @@ class UserProfile extends Component {
             }
         });
     }
-    
+
     render() {
         return (
             <View style={styles.pageContainer}>
+                <View style={toasterStyle.container}>
+                    <Toast ref="toast"
+                        style={toasterStyle.successMessage}
+                        position='top'
+                        positionValue={0} />
+                </View>
                 <Header />
                 <ScrollView>
                     <KeyboardAwareScrollView>
@@ -157,7 +172,7 @@ class UserProfile extends Component {
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer/>
+                <Footer />
             </View>
         )
     }

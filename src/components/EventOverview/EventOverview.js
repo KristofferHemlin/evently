@@ -48,7 +48,7 @@ class EventOverview extends Component {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
             if (infoChanged && this.state.infoAllowedChange) {
                 this.setState({ infoAllowedChange: false })
-                this.refs.toast.show('Your changes have been submitted!', 1500);
+                this.refs.toast.show('Your changes have been submitted!', 2000);
             }
 
             if (this.props.roleID === 1) {

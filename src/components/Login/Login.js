@@ -132,7 +132,7 @@ class Login extends Component {
             this.setState({ messageColor: "#e24a4a" })
         }
         let errorString = String(toasterResponse);
-        this.refs.toast.show(errorString, 1500);
+        this.refs.toast.show(errorString, 2000);
     }
 
     messageColor = (color) => {
