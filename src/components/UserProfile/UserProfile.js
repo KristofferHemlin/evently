@@ -31,6 +31,7 @@ class UserProfile extends Component {
             firstName: '',
             lastName: '',
             email: '',
+            phone: '',
             about: '',
             allergies: '',
         }
@@ -59,8 +60,66 @@ class UserProfile extends Component {
             });
     }
 
-    editButtonHandler = () => {
-        this.props.navigation.navigate('ChangeUserProfileRoute')
+    onEditSubmit(input) {
+        this.setState({
+            firstName: input.firstName,
+            lastName: input.lastName,
+            email: input.email,
+            phone: input.phone,
+            about: input.aboutMe,
+            allergies: input.allergies,
+        })
+    }
+
+    handleEditPress = () => {
+        this.onEditSubmit = this.onEditSubmit.bind(this)
+        this.props.navigation.navigate('ChangeInfoRoute', {
+            onEditSubmit: (input) => this.onEditSubmit(input),
+            uID: this.props.userID,
+            parentRoute: 'UserProfileRoute',
+            http_update_url: URL + 'users/' + this.props.userID,
+            http_get_url: URL + 'users/' + this.props.userID,
+            fields: {
+                firstName:{
+                    label: 'First Name',
+                    value: this.state.firstName,
+                    type: 'text',
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
+                },
+                lastName:{
+                    label: 'Last Name',
+                    value: this.state.lastName,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
+                },
+                email:{
+                    label: 'Email',
+                    value: this.state.email,
+                    keyboardType: 'email-address',
+                    secureTextEntry: false,
+                    autoCapitalize: 'none',
+                },
+                phone: {
+                    label: 'Phone',
+                    keyboardType: 'phone-pad',
+                    value: this.state.phone,
+                    secureTextEntry: false,
+                },
+                aboutMe: {
+                    label: 'About Me',
+                    value: this.state.about,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
+                },
+                allergies: {
+                    label: 'Allergies',
+                    value: this.state.allergies,
+                    secureTextEntry: false,
+                    autoCapitalize: 'sentences',
+                },
+            }
+        });
     }
     
     render() {
@@ -73,7 +132,7 @@ class UserProfile extends Component {
                             <HeadlineOverview
                                 infoButtonStatus={false}
                                 editButtonStatus={true}
-                                onEditPress={this.editButtonHandler}
+                                onEditPress={() => this.handleEditPress()}
                             >User Profile</HeadlineOverview>
                             <View style={styles.profilePictureView}>
                                 <View>{profileAvatar}</View>

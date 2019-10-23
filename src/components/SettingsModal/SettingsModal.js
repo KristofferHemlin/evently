@@ -21,7 +21,7 @@ class SettingsModal extends Component {
     };
 
 
-    changeUserInfoNavigationHandler = () => {
+    userInfoNavigationHandler = () => {
         this.props.navigation.navigate('UserProfileRoute');
         this.props.exitModal();
     }
@@ -68,7 +68,7 @@ class SettingsModal extends Component {
                     </View>
                     <View style={styles.line}></View>
                     <View style={styles.menuAlternatives}>
-                        <TouchableOpacity onPress={this.changeUserInfoNavigationHandler}>
+                        <TouchableOpacity onPress={this.userInfoNavigationHandler}>
                             <Text style={styles.menuTxt}>User Profile Info</Text>
                         </TouchableOpacity>
                         {/* <TouchableOpacity onPress={this.changePasswordNavigationHandler}>
