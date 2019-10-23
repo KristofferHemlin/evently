@@ -120,6 +120,7 @@ class UserProfile extends Component {
                     value: this.state.about,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
+                    multiline: 'true',
                 },
                 allergies: {
                     label: 'Allergies',

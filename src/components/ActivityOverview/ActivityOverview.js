@@ -118,6 +118,7 @@ class ActivityOverview extends Component {
                     value: this.state.activityDesc,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
+                    multiline: 'true',
                 },
                 location: {
                     label: 'Location',

@@ -114,6 +114,7 @@ class EventOverview extends Component {
                     value: this.state.eventDesc,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
+                    multiline: 'true'
                 },
                 location: {
                     label: 'Location',
