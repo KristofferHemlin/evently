@@ -20,7 +20,7 @@ class ResetPassword extends Component {
     };
 
     state = {
-        token: this.props.navigation.getParam('token', ''),
+        token: this.props.navigation.getParam('deepLinkToken', ''),
     }
 
     
@@ -31,7 +31,7 @@ class ResetPassword extends Component {
                     <Image style={styles.logotype} source={logotype}/>
                     <Text style={styles.logoText}>Eventapp</Text>
                 </View>
-                <ResetPasswordForm fromLoginScreen={false} token={this.state.token}/>
+                <ResetPasswordForm fromLoginScreen={false} deepLinkToken={this.state.deepLinkToken}/>
                 <View style={styles.signUpContainer}>
                 </View>
             </ImageBackground>

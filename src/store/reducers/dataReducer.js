@@ -5,15 +5,17 @@ const initialState = {
     roleID: null,
     activityID: null,
     eventTitle: '',
+    notificationStatus: null,
 };
 
 const dataReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.SAVE_IDS:
+        case actionTypes.SAVE_USER:
             return {
                 ...state, //kopierar över statet i den här komponenten för att unvdika mutability.
                 userID: action.payload.userID,
                 roleID: action.payload.roleID,
+                token: action.payload.token,
             }
         case actionTypes.SAVE_EVENT_TITLE:
             return {
@@ -24,6 +26,11 @@ const dataReducer = (state = initialState, action) => {
             return {
                 ...state,
                 activityID: action.payload.activityID,
+            }
+        case actionTypes.SAVE_NOTIFICATION_STATUS:
+            return {
+                ...state,
+                notificationStatus: action.payload.notificationStatus,
             }
         default:
             return state
