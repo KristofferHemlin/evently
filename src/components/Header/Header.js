@@ -6,6 +6,7 @@ import {
     AsyncStorage,
 } from 'react-native';
 
+import { connect } from 'react-redux';
 import SettingsModal from '../SettingsModal/SettingsModal'
 import NotificationModal from '../NotificationModal/NotificationModal'
 
@@ -13,12 +14,13 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import OneSignal from 'react-native-onesignal';
 
 import styles from './Header.style';
+import * as actionTypes from '../../store/actions'
 
 const bell_icon = <FontAwesome5 size={25} name={'bell'} light color="white" />;
 const user_cog = <FontAwesome5 size={25} name={'user-cog'} light color="white" />;
 
 // TODO Borde inte vara hårdkodat
-let COMPANY_NAME = 'Zington'
+const COMPANY_NAME = 'Zington'
 
 class Header extends Component {
 
@@ -36,50 +38,59 @@ class Header extends Component {
     }
 
     componentDidMount() {
+        console.log('mounts');
         this._retrieveData();
-      
+
     }
 
     componentWillUnmount() {
-        OneSignal.removeEventListener('received', this.onReceived);
+        console.log('unmounts');
     }
 
     onReceived = (notification) => {
-        this.setState({showNotificationBadge:true}, 
-            () =>this._storeData());
-        
+        this.props.onSaveNotificationStatus(true)
+        this._storeData(true);
+        // console.log('onReceived!!!!');
+        // console.log('showNotificationBadge1', this.state.showNotificationBadge);
+        // this.setState({ showNotificationBadge: true },
+        //     () => this._storeData());
+
     }
 
     _retrieveData = async () => {
         try {
             const showNotificationBadge = await AsyncStorage.getItem('showNotificationBadge');
             showNotificationBadgeParsed = Boolean(JSON.parse(showNotificationBadge));
-            
-            if (showNotificationBadgeParsed !== null){
-                this.setState({
-                    showNotificationBadge: showNotificationBadgeParsed
-                })
-            }
-            } catch (error) {
-                console.log(error);
-          // Error retrieving data
-        }
-      };
 
-    _storeData = async () => {
-        try {
-          await AsyncStorage.setItem('showNotificationBadge', JSON.stringify(this.state.showNotificationBadge));
+            if (showNotificationBadgeParsed !== null) {
+                console.log('showNotificationBadgeParsed',showNotificationBadgeParsed);
+               this.props.onSaveNotificationStatus(showNotificationBadgeParsed)
+            }
         } catch (error) {
-          console.log(error);
+            console.log(error);
+            // Error retrieving data
         }
-      };
+    };
+
+    _storeData = async (notificationStatus) => {
+        try {
+            await AsyncStorage.setItem('showNotificationBadge', JSON.stringify(notificationStatus));
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     notificationIconClickHandler = () => {
+        this.props.onSaveNotificationStatus(false);
+        this._storeData(false);
         this.setState({
-            showBellModal: true,
-            showNotificationBadge: false,
-        }, () => this._storeData());
-        
+                showBellModal: true,
+        })
+        // this.setState({
+        //     showBellModal: true,
+        //     showNotificationBadge: false,
+        // }, () => this._storeData());
+    
     }
     render = () => {
         // functional styling to place Header Modals above all of app
@@ -90,7 +101,9 @@ class Header extends Component {
                 /> : <View />}
             {this.state.showBellModal ?
                 <NotificationModal
-                    exitModal={() => this.setState({ showBellModal: false })}
+                    exitModal={() => this.setState({
+                        showBellModal: false,
+                    })}
                 /> : <View />}
             <View style={styles.headerContainer}>
                 <View style={styles.headerLogo}>
@@ -100,7 +113,7 @@ class Header extends Component {
                     <TouchableOpacity
                         style={styles.notificationIcon}
                         onPress={this.notificationIconClickHandler}>
-                        {this.state.showNotificationBadge ?
+                        {this.props.notificationStatus ?
                             <View style={styles.notificationIconCircle} />
                             : null}
                         {bell_icon}
@@ -116,4 +129,24 @@ class Header extends Component {
         </View>
     }
 }
-export default Header;
+
+const mapStateToProps = state => {
+    console.log('state', state);
+    return {
+        notificationStatus: state.notificationStatus
+        
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    console.log('dispatch', dispatch);
+    return {
+        onSaveNotificationStatus: (notificationStatus) => dispatch({
+            type: actionTypes.SAVE_NOTIFICATION_STATUS,
+            payload:{
+                notificationStatus: notificationStatus
+            }
+        }),
+    };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(Header);

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    StyleSheet,
-    Dimensions,
     TextInput,
     TouchableOpacity,
     Text,
@@ -21,7 +19,7 @@ class ResetPasswordForm extends Component {
         password: '',
         isLoading: false,
         loginScreen: this.props.fromLoginScreen,
-        token: this.props.token
+        deepLinkToken: this.props.deepLinkToken
     }
 
     checkEmail = () => {
@@ -44,7 +42,7 @@ class ResetPasswordForm extends Component {
 
     resetPassword = () => {
         this.setState({ isLoading: true }, () => { // so we can show loading indicator while fetching data
-            axios.post(URL + 'resetpassword/' + this.state.token, {
+            axios.post(URL + 'resetpassword/' + this.state.deepLinkToken, {
                 password: this.state.password
             })
                 .then((response) => {
