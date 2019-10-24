@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     Text,
     AsyncStorage,
+    Modal,
 } from 'react-native';
 
 import SettingsModal from '../SettingsModal/SettingsModal'
@@ -32,12 +33,14 @@ class Header extends Component {
             showBellModal: false,
             showUserModal: false,
             showNotificationBadge: false,
+
+            modalVisible: false,
         }
     }
 
     componentDidMount() {
         this._retrieveData();
-      
+
     }
 
     componentWillUnmount() {
@@ -45,45 +48,80 @@ class Header extends Component {
     }
 
     onReceived = (notification) => {
-        this.setState({showNotificationBadge:true}, 
-            () =>this._storeData());
-        
+        this.setState({ showNotificationBadge: true },
+            () => this._storeData());
+
     }
 
     _retrieveData = async () => {
         try {
             const showNotificationBadge = await AsyncStorage.getItem('showNotificationBadge');
             showNotificationBadgeParsed = Boolean(JSON.parse(showNotificationBadge));
-            
-            if (showNotificationBadgeParsed !== null){
+
+            if (showNotificationBadgeParsed !== null) {
                 this.setState({
                     showNotificationBadge: showNotificationBadgeParsed
                 })
             }
-            } catch (error) {
-                console.log(error);
-          // Error retrieving data
+        } catch (error) {
+            console.log(error);
+            // Error retrieving data
         }
-      };
+    };
 
     _storeData = async () => {
         try {
-          await AsyncStorage.setItem('showNotificationBadge', JSON.stringify(this.state.showNotificationBadge));
+            await AsyncStorage.setItem('showNotificationBadge', JSON.stringify(this.state.showNotificationBadge));
         } catch (error) {
-          console.log(error);
+            console.log(error);
         }
-      };
+    };
 
     notificationIconClickHandler = () => {
         this.setState({
             showBellModal: true,
             showNotificationBadge: false,
         }, () => this._storeData());
-        
+
     }
+
+
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible });
+    }
+
     render = () => {
         // functional styling to place Header Modals above all of app
         return <View style={{ zIndex: 1 }}>
+
+            <Modal
+                animationType="fade"
+                transparent={false}
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                }}>
+                <View>
+                    <Text>Hello World!</Text>
+                    <TouchableOpacity
+                        style={{ top: 400 }}
+                        onPress={() => {
+                            this.setModalVisible(!this.state.modalVisible);
+                        }}>
+                        <Text>Hide Modal</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
+
+            <TouchableOpacity
+                style={{ top: 400 }}
+                onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>Show Modal</Text>
+            </TouchableOpacity>
+
+
             {this.state.showUserModal ?
                 <SettingsModal
                     exitModal={() => this.setState({ showUserModal: false })}
