@@ -118,6 +118,7 @@ class ShowParticipants extends Component {
 
                     <TextInput style={styles.searchBar}
                         placeholder="Search current event participants ..."
+                        placeholderTextColor="gray"
                         onChangeText={(filterWord) => this.filterHandler(filterWord)}
                     >
                     </TextInput>
