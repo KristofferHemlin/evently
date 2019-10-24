@@ -96,45 +96,48 @@ class Header extends Component {
 
             <Modal
                 animationType="fade"
-                transparent={false}
-                visible={this.state.modalVisible}
-                onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
-                }}>
-                <View>
-                    <Text>Hello World!</Text>
-                    <TouchableOpacity
+                transparent={true}
+                visible={this.state.modalVisible}>
+                <View style={styles.modalContainer}>
+
+                    {this.state.modalVisible ?
+                        <SettingsModal
+                            exitModal={() => this.setModalVisible(!this.state.modalVisible)}
+                        /> : <View />}
+                        
+                    {/* <TouchableOpacity
                         style={{ top: 400 }}
                         onPress={() => {
                             this.setModalVisible(!this.state.modalVisible);
                         }}>
                         <Text>Hide Modal</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </Modal>
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 style={{ top: 400 }}
                 onPress={() => {
                     this.setModalVisible(!this.state.modalVisible);
                 }}>
                 <Text>Show Modal</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
 
-            {this.state.showUserModal ?
+            {/* {this.state.showUserModal ?
                 <SettingsModal
                     exitModal={() => this.setState({ showUserModal: false })}
                 /> : <View />}
             {this.state.showBellModal ?
                 <NotificationModal
                     exitModal={() => this.setState({ showBellModal: false })}
-                /> : <View />}
+                /> : <View />} */}
             <View style={styles.headerContainer}>
                 <View style={styles.headerLogo}>
                     <Text style={styles.headerTxt}>{COMPANY_NAME}</Text>
                 </View>
                 <View style={styles.iconContainer}>
+
                     <TouchableOpacity
                         style={styles.notificationIcon}
                         onPress={this.notificationIconClickHandler}>
@@ -142,13 +145,16 @@ class Header extends Component {
                             <View style={styles.notificationIconCircle} />
                             : null}
                         {bell_icon}
-
                     </TouchableOpacity>
+
                     <TouchableOpacity
                         style={styles.profileIcon}
-                        onPress={() => this.setState({ showUserModal: true })}>
+                        // onPress={() => this.setState({ showUserModal: true })}>
+                        // onPress={() => this.setModalVisible(!this.state.modalVisible)}>
+                        onPress={() => this.setState({modalVisible:!this.state.modalVisible, showUserModal:true})}>
                         {user_cog}
                     </TouchableOpacity>
+
                 </View>
             </View>
         </View>
