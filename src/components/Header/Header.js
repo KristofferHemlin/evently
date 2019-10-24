@@ -40,13 +40,8 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        console.log('mounts');
         this._retrieveData();
 
-    }
-
-    componentWillUnmount() {
-        console.log('unmounts');
     }
 
     onReceived = (notification) => {
@@ -95,12 +90,12 @@ class Header extends Component {
                 visible={this.state.modalVisible}>
                 <View style={styles.modalContainer}>
 
-                    {this.state.modalVisible && this.state.showUserModal ?
+                    {this.state.showUserModal ?
                         <SettingsModal
                             exitModal={() => this.setState({ modalVisible: !this.state.modalVisible, showUserModal: !this.state.showUserModal })}
                         /> : <View />}
 
-                    {this.state.modalVisible && this.state.showBellModal ?
+                    {this.state.showBellModal ?
                         <NotificationModal
                         exitModal={() => this.setState({ modalVisible: !this.state.modalVisible, showBellModal: !this.state.showBellModal })}
                         /> : <View />
