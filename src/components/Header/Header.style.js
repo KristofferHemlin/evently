@@ -10,13 +10,12 @@ export default StyleSheet.create({
         zIndex: 1
     }, 
     headerLogo:{
-        marginTop: 40,
-    },
-    headerTxt:{
-        color: 'white',
-        fontSize: 20,
-        fontWeight: '700',
+        marginTop: 35,
         marginLeft: 15,
+    },
+    headerLogoImage:{
+        width: 70,
+        height: 40,
     },
     iconContainer:{
         marginTop: 40,
@@ -38,7 +37,6 @@ export default StyleSheet.create({
     profileIcon:{
         marginRight: 20,
     },
-
     modalContainer:{
         backgroundColor: 'rgba(0,0,0,0.8)',
         flex: 1,

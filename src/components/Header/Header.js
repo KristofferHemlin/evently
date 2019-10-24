@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View,
     TouchableOpacity,
-    Text,
+    Image,
     AsyncStorage,
     Modal,
 } from 'react-native';
@@ -16,12 +16,10 @@ import OneSignal from 'react-native-onesignal';
 
 import styles from './Header.style';
 import * as actionTypes from '../../store/actions'
+import ZingtonLogo from './images/Zington_Logotyp_Neg_RGB.png';
 
 const bell_icon = <FontAwesome5 size={25} name={'bell'} light color="white" />;
 const user_cog = <FontAwesome5 size={25} name={'user-cog'} light color="white" />;
-
-// TODO Borde inte vara hårdkodat
-const COMPANY_NAME = 'Zington'
 
 class Header extends Component {
 
@@ -105,7 +103,7 @@ class Header extends Component {
             </Modal>
             <View style={styles.headerContainer}>
                 <View style={styles.headerLogo}>
-                    <Text style={styles.headerTxt}>{COMPANY_NAME}</Text>
+                    <Image source={ZingtonLogo} style={styles.headerLogoImage}></Image>
                 </View>
                 <View style={styles.iconContainer}>
 
