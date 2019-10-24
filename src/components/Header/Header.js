@@ -33,7 +33,6 @@ class Header extends Component {
             showBellModal: false,
             showUserModal: false,
             showNotificationBadge: false,
-
             modalVisible: false,
         }
     }
@@ -81,13 +80,9 @@ class Header extends Component {
         this.setState({
             showBellModal: true,
             showNotificationBadge: false,
+            modalVisible: !this.state.modalVisible,
         }, () => this._storeData());
 
-    }
-
-
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
     }
 
     render = () => {
@@ -100,38 +95,20 @@ class Header extends Component {
                 visible={this.state.modalVisible}>
                 <View style={styles.modalContainer}>
 
-                    {this.state.modalVisible ?
+                    {this.state.modalVisible && this.state.showUserModal ?
                         <SettingsModal
-                            exitModal={() => this.setModalVisible(!this.state.modalVisible)}
+                            exitModal={() => this.setState({ modalVisible: !this.state.modalVisible, showUserModal: !this.state.showUserModal })}
                         /> : <View />}
-                        
-                    {/* <TouchableOpacity
-                        style={{ top: 400 }}
-                        onPress={() => {
-                            this.setModalVisible(!this.state.modalVisible);
-                        }}>
-                        <Text>Hide Modal</Text>
-                    </TouchableOpacity> */}
+
+                    {this.state.modalVisible && this.state.showBellModal ?
+                        <NotificationModal
+                        exitModal={() => this.setState({ modalVisible: !this.state.modalVisible, showBellModal: !this.state.showBellModal })}
+                        /> : <View />
+                    }
+
                 </View>
             </Modal>
 
-            {/* <TouchableOpacity
-                style={{ top: 400 }}
-                onPress={() => {
-                    this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Show Modal</Text>
-            </TouchableOpacity> */}
-
-
-            {/* {this.state.showUserModal ?
-                <SettingsModal
-                    exitModal={() => this.setState({ showUserModal: false })}
-                /> : <View />}
-            {this.state.showBellModal ?
-                <NotificationModal
-                    exitModal={() => this.setState({ showBellModal: false })}
-                /> : <View />} */}
             <View style={styles.headerContainer}>
                 <View style={styles.headerLogo}>
                     <Text style={styles.headerTxt}>{COMPANY_NAME}</Text>
@@ -149,9 +126,7 @@ class Header extends Component {
 
                     <TouchableOpacity
                         style={styles.profileIcon}
-                        // onPress={() => this.setState({ showUserModal: true })}>
-                        // onPress={() => this.setModalVisible(!this.state.modalVisible)}>
-                        onPress={() => this.setState({modalVisible:!this.state.modalVisible, showUserModal:true})}>
+                        onPress={() => this.setState({ modalVisible: !this.state.modalVisible, showUserModal: true })}>
                         {user_cog}
                     </TouchableOpacity>
 
