@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Platform } from 'react-native';
 import {
     View,
     Text,
@@ -26,12 +27,12 @@ class ChangeInfo extends Component {
     };
 
     state = {
-            title: this.props.navigation.getParam('title', ''),
-            parentRoute: this.props.navigation.getParam('parentRoute', ''),
-            http_update_url: this.props.navigation.getParam('http_update_url', ''),
-            fields: this.props.navigation.getParam('fields', ''),
-            isLoading: false,
-            wantToEdit: false,
+        title: this.props.navigation.getParam('title', ''),
+        parentRoute: this.props.navigation.getParam('parentRoute', ''),
+        http_update_url: this.props.navigation.getParam('http_update_url', ''),
+        fields: this.props.navigation.getParam('fields', ''),
+        isLoading: false,
+        wantToEdit: false,
     }
 
     handleInputChange = (value, key) => {
@@ -89,7 +90,7 @@ class ChangeInfo extends Component {
                             </View>
                         </KeyboardAwareScrollView>
                     </ScrollView>
-                    <Footer/>
+                    <Footer />
                 </View>)
     }
 }
@@ -114,18 +115,31 @@ const EditableForm = ({ fields, handleSubmit, isLoading, handleInputChange, form
             return (
                 <View key={key}>
                     <Text style={styles.inputFormTitle}>{fields[key].label}</Text>
-                    <TextInput
-                        value={fields[key].value}
-                        type={fields[key].type}
-                        label={fields[key].label}
-                        multiline={fields[key].multiline}
-                        keyboardType={fields[key].keyboardType}
-                        placeholder={fields[key].value}
-                        onChangeText={(value) => handleInputChange(value, key)}
-                        secureTextEntry={fields[key].secureText}
-                        autoCapitalize={fields[key].autoCapitalize}
-                        style={formStyle.input}
-                    />
+                    {Platform.OS === 'ios' ?
+                        <TextInput
+                            value={fields[key].value}
+                            type={fields[key].type}
+                            label={fields[key].label}
+                            multiline={fields[key].multiline}
+                            keyboardType={fields[key].keyboardType}
+                            placeholder={fields[key].value}
+                            onChangeText={(value) => handleInputChange(value, key)}
+                            secureTextEntry={fields[key].secureText}
+                            autoCapitalize={fields[key].autoCapitalize}
+                            style={formStyle.input}
+                        /> :
+                        <TextInput
+                            value={fields[key].value}
+                            type={fields[key].type}
+                            label={fields[key].label}
+                            keyboardType={fields[key].keyboardType}
+                            placeholder={fields[key].value}
+                            onChangeText={(value) => handleInputChange(value, key)}
+                            secureTextEntry={fields[key].secureText}
+                            autoCapitalize={fields[key].autoCapitalize}
+                            style={formStyle.input}
+                        />
+                    }
                 </View>
             )
         })}

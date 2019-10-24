@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     Text,
     AsyncStorage,
+    Modal,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -34,6 +35,7 @@ class Header extends Component {
             showBellModal: false,
             showUserModal: false,
             showNotificationBadge: false,
+            modalVisible: false,
         }
     }
 
@@ -50,11 +52,6 @@ class Header extends Component {
     onReceived = (notification) => {
         this.props.onSaveNotificationStatus(true)
         this._storeData(true);
-        // console.log('onReceived!!!!');
-        // console.log('showNotificationBadge1', this.state.showNotificationBadge);
-        // this.setState({ showNotificationBadge: true },
-        //     () => this._storeData());
-
     }
 
     _retrieveData = async () => {
@@ -84,32 +81,39 @@ class Header extends Component {
         this.props.onSaveNotificationStatus(false);
         this._storeData(false);
         this.setState({
-                showBellModal: true,
+            showBellModal: true,
+            modalVisible: !this.state.modalVisible,
         })
-        // this.setState({
-        //     showBellModal: true,
-        //     showNotificationBadge: false,
-        // }, () => this._storeData());
-    
     }
+
     render = () => {
         // functional styling to place Header Modals above all of app
         return <View style={{ zIndex: 1 }}>
-            {this.state.showUserModal ?
-                <SettingsModal
-                    exitModal={() => this.setState({ showUserModal: false })}
-                /> : <View />}
-            {this.state.showBellModal ?
-                <NotificationModal
-                    exitModal={() => this.setState({
-                        showBellModal: false,
-                    })}
-                /> : <View />}
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={this.state.modalVisible}>
+                <View style={styles.modalContainer}>
+
+                    {this.state.modalVisible && this.state.showUserModal ?
+                        <SettingsModal
+                            exitModal={() => this.setState({ modalVisible: !this.state.modalVisible, showUserModal: !this.state.showUserModal })}
+                        /> : <View />}
+
+                    {this.state.modalVisible && this.state.showBellModal ?
+                        <NotificationModal
+                        exitModal={() => this.setState({ modalVisible: !this.state.modalVisible, showBellModal: !this.state.showBellModal })}
+                        /> : <View />
+                    }
+
+                </View>
+            </Modal>
             <View style={styles.headerContainer}>
                 <View style={styles.headerLogo}>
                     <Text style={styles.headerTxt}>{COMPANY_NAME}</Text>
                 </View>
                 <View style={styles.iconContainer}>
+
                     <TouchableOpacity
                         style={styles.notificationIcon}
                         onPress={this.notificationIconClickHandler}>
@@ -117,13 +121,14 @@ class Header extends Component {
                             <View style={styles.notificationIconCircle} />
                             : null}
                         {bell_icon}
-
                     </TouchableOpacity>
+
                     <TouchableOpacity
                         style={styles.profileIcon}
-                        onPress={() => this.setState({ showUserModal: true })}>
+                        onPress={() => this.setState({ modalVisible: !this.state.modalVisible, showUserModal: true })}>
                         {user_cog}
                     </TouchableOpacity>
+
                 </View>
             </View>
         </View>

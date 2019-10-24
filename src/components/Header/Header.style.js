@@ -38,4 +38,9 @@ export default StyleSheet.create({
     profileIcon:{
         marginRight: 20,
     },
+
+    modalContainer:{
+        backgroundColor: 'rgba(0,0,0,0.8)',
+        flex: 1,
+    },
 });
