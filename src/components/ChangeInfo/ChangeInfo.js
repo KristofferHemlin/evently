@@ -46,8 +46,8 @@ class ChangeInfo extends Component {
             map[key] = this.state.fields[key].value
             return map
         }, {})
-        body.title = this.state.title
-        body.token = this.state.token || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyNiwiY29tcGFueV9pZCI6MSwicm9sZSI6eyJpZCI6MSwiY3JlYXRlZEF0IjoiMjAxOS0xMC0wMVQxMToyMzoxNS44MzBaIiwidXBkYXRlZEF0IjoiMjAxOS0xMC0wMVQxMToyMzoxNS44MzBaIiwicm9sZSI6IkNPTVBBTllfTUFOQUdFUiJ9LCJpYXQiOjE1NzEwNjI3OTEsImV4cCI6MTU3MTE0OTE5MX0.O0T6zCJ_GxURvdVL8qInldh7FRQh6gfAEAPIq1rJ-0U"
+        body.title = this.state.title;
+        body.token = this.props.token;
 
         this.setState({ isLoading: true }, () => {
             axios.put(this.state.http_update_url, body)
@@ -98,6 +98,7 @@ class ChangeInfo extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.userID,
+        token: state.token,
     }
 }
 

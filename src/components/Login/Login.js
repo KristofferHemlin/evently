@@ -40,7 +40,6 @@ class Login extends Component {
             password: '',
             userID: null,
             isLoading: false,
-            token: null,
         }
     }
 
@@ -72,11 +71,11 @@ class Login extends Component {
         const { navigate } = this.props.navigation;
         const route = url.replace(/.*?:\/\//g, '');
         const routeName = route.split('/')[0];
-        const token = route.split('/')[1]
+        const deepLinkToken = route.split('/')[1]
 
         if (routeName === 'resetpassword') {
             navigate('ResetPasswordRoute', {
-                token: token
+                deepLinkToken:deepLinkToken
             })
         }
     }
@@ -89,26 +88,22 @@ class Login extends Component {
             })
                 .then((response) => {
 
-                    this.props.onSaveIDs(response.data.user.id, response.data.user.role.id);
-
-                    this.setState({
-                        token: response.data.token,
-                        isLoading: false,
-                    });
-
+                    this.props.onSaveUser(
+                        response.data.user.id, 
+                        response.data.user.role.id, 
+                        response.data.token);
                     // Set up onesignal notifications.
                     OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
                     // OneSignal.removeExternalUserId();
                     OneSignal.setExternalUserId(String(response.data.user.id));
 
+                    this.setState({
+                        isLoading: false,
+                    });
                     if (response.data.user.signupComplete === true) {
-                        this.props.navigation.navigate('EventOverviewRoute', {
-                            token: this.state.token
-                        })
+                        this.props.navigation.navigate('EventOverviewRoute');
                     } else {
-                        this.props.navigation.navigate('CreateAccRoute', {
-                            token: this.state.token
-                        })
+                        this.props.navigation.navigate('CreateAccRoute');
                     }
                 })
                 .catch((error) => {
@@ -210,11 +205,12 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveIDs: (userID, roleID) => dispatch({
-            type: actionTypes.SAVE_IDS,
+        onSaveUser: (userID, roleID, token) => dispatch({
+            type: actionTypes.SAVE_USER,
             payload: {
                 userID: userID,
-                roleID: roleID
+                roleID: roleID,
+                token: token,
             }
         }),
     };

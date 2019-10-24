@@ -39,12 +39,10 @@ class EventOverview extends Component {
             endTime: '',
             goodToKnow: '',
             showEditButton: false,
-            token: '',
             infoAllowedChange: true,
         }
 
         props.navigation.addListener('willFocus', () => {
-            token = (this.props.navigation.getParam('token', ''))
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
             if (infoChanged && this.state.infoAllowedChange) {
                 this.setState({ infoAllowedChange: false })
@@ -56,9 +54,6 @@ class EventOverview extends Component {
             } else {
                 this.setState({ showEditButton: false })
             }
-            this.setState({
-                token: token
-            })
         })
         console.disableYellowBox = true;
     }
