@@ -33,7 +33,6 @@ const formValid = (formErrors, fields) => {
 
     Object.values(fields).forEach(
         field => {
-            console.log('field.bal', field.value);
             field.value === '' && (valid = false)
         }
     )
@@ -189,7 +188,6 @@ class CreateAcc extends Component {
                 break;
         }
         this.setState({ fields: fields, formErrors: formErrors })
-
     };
 
     showToasterHandler = (toasterResponse, success) => {

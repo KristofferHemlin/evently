@@ -5,11 +5,13 @@ import {
     ScrollView,
     TextInput,
     TouchableOpacity,
-    ActivityIndicator
+    ActivityIndicator,
+    Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Toast from 'react-native-easy-toast'
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -17,6 +19,20 @@ import BackButton from '../BackButton/BackButton';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
 import styles from './ChangeInfo.style';
+import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
+
+const formValid = (formErrors, fields) => {
+    let valid = true;
+
+    Object.values(formErrors).forEach(
+        val => {
+            val.length > 0 && (valid = false)
+        });
+
+    return valid;
+}
+
+const dateRegex = RegExp(/^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/);
 
 class ChangeInfo extends Component {
 
@@ -26,49 +42,98 @@ class ChangeInfo extends Component {
     };
 
     state = {
-            title: this.props.navigation.getParam('title', ''),
-            parentRoute: this.props.navigation.getParam('parentRoute', ''),
-            http_update_url: this.props.navigation.getParam('http_update_url', ''),
-            fields: this.props.navigation.getParam('fields', ''),
-            isLoading: false,
-            wantToEdit: false,
+        title: this.props.navigation.getParam('title', ''),
+        parentRoute: this.props.navigation.getParam('parentRoute', ''),
+        http_update_url: this.props.navigation.getParam('http_update_url', ''),
+        fields: this.props.navigation.getParam('fields', ''),
+        formErrors: this.props.navigation.getParam('formErrors', ''),
+        isLoading: false,
+        wantToEdit: false,
     }
 
     handleInputChange = (value, key) => {
-        let fields = this.state.fields
+        const fields = this.state.fields
         fields[key].value = value;
-        this.setState({ fields: fields });
+        const formErrors = this.state.formErrors;
+        const label = fields[key].label;
+        switch (label) {
+            case 'Location':
+                formErrors.location = value.length < 1 ? "A location is required" : "";
+                break;
+            case 'Start Date':
+                dateRegex
+                formErrors.startDate = dateRegex.test(value) ? "" : "Please write date on format YYYY-DD-MM";
+                break;
+            case 'End Date':
+                formErrors.endDate = dateRegex.test(value) ? "" : "Please write date on format YYYY-DD-MM";
+                break;
+            default:
+                break;
+        }
+        this.setState({ fields: fields, formErrors: formErrors }, () => console.log('formError', formErrors));
     };
 
     handleSubmit = () => {
-        var body = Object.keys(this.state.fields).reduce((map, key) => {
-            map[key] = this.state.fields[key].value
-            return map
-        }, {})
-        body.title = this.state.title;
-        body.token = this.props.token;
+        if (formValid(this.state.formErrors, this.state.fields)) {
+            var body = Object.keys(this.state.fields).reduce((map, key) => {
+                map[key] = this.state.fields[key].value
+                return map
+            }, {})
+            body.title = this.state.title;
+            body.token = this.props.token;
 
-        this.setState({ isLoading: true }, () => {
-            axios.put(this.state.http_update_url, body)
-                .then(() => this.props.navigation.state.params.onEditSubmit(body))
-                .then(() =>
-                    this.setState({ isLoading: false }, () => {
-                        this.props.navigation.navigate(this.state.parentRoute, {
-                            infoChanged: true,
+            this.setState({ isLoading: true }, () => {
+                axios.put(this.state.http_update_url, body)
+                    .then(() => this.props.navigation.state.params.onEditSubmit(body))
+                    .then(() =>
+                        this.setState({ isLoading: false }, () => {
+                            this.props.navigation.navigate(this.state.parentRoute, {
+                                infoChanged: true,
+                            })
                         })
+                    )
+                    .catch((error) => {
+                        console.log(error);
+                        this.setState({ isLoading: false })
                     })
-                )
-                .catch((error) => {
-                    console.log(error);
-                    this.setState({ isLoading: false })
-                })
-        })
+            })
+        } else {
+            this.showToasterHandler("ERROR", false);
+        }
+
+    }
+
+    showToasterHandler = (toasterResponse, success) => {
+        if (success === true) {
+            this.setState({ messageColor: "#4a90e2" })
+        } else {
+            this.setState({ messageColor: "#e24a4a" })
+        }
+        let errorString = String(toasterResponse);
+        this.refs.toast.show(errorString, 2000);
+    }
+
+    messageColor = (color) => {
+        return {
+            backgroundColor: color,
+            padding: 10,
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            width: Dimensions.get('window').width,
+            height: 100,
+        }
     }
 
     render() {
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
+                    <View style={toasterStyle.container}>
+                        <Toast ref="toast"
+                            style={this.messageColor(this.state.messageColor)}
+                            position='top'
+                            positionValue={0} />
+                    </View>
                     <Header />
                     <ScrollView>
                         <KeyboardAwareScrollView>
@@ -81,6 +146,7 @@ class ChangeInfo extends Component {
                                 </HeadlineOverview>
                                 <EditableForm
                                     fields={this.state.fields}
+                                    formErrors={this.state.formErrors}
                                     handleSubmit={this.handleSubmit}
                                     isLoading={this.state.isLoading}
                                     handleInputChange={this.handleInputChange}
@@ -89,7 +155,7 @@ class ChangeInfo extends Component {
                             </View>
                         </KeyboardAwareScrollView>
                     </ScrollView>
-                    <Footer/>
+                    <Footer />
                 </View>)
     }
 }
@@ -107,10 +173,11 @@ export default connect(mapStateToProps)(ChangeInfo);
 
 
 
-const EditableForm = ({ fields, handleSubmit, isLoading, handleInputChange, formStyle }) => {
+const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInputChange, formStyle }) => {
 
     return <View style={formStyle.inputForm}>
         {Object.keys(fields).map((key) => {
+            console.log('fields[key]', formErrors);
             return (
                 <View key={key}>
                     <Text style={styles.inputFormTitle}>{fields[key].label}</Text>
@@ -126,6 +193,9 @@ const EditableForm = ({ fields, handleSubmit, isLoading, handleInputChange, form
                         autoCapitalize={fields[key].autoCapitalize}
                         style={formStyle.input}
                     />
+                    <View style={styles.inputErrorMessageContainer}>
+                        {formErrors[fields[key].key] ? <Text style={styles.inputErrorMessageText} >{formErrors[fields[key].key]}</Text> : null}
+                    </View>
                 </View>
             )
         })}

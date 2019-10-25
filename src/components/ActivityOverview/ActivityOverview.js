@@ -138,10 +138,6 @@ class ActivityOverview extends Component {
                     secureTextEntry: false,
                     autoCapitalize: 'none',
                 },
-                endTime: {
-                    label: 'endTime',
-                    value: this.state.endTime
-                },
                 goodToKnow: {
                     label: 'Good-to-know',
                     value: this.state.goodToKnow

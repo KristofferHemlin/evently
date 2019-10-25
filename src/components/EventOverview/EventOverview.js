@@ -1,24 +1,20 @@
-import React, { Component } from 'react';
-import {
-    View,
-    Text,
-    ScrollView,
-} from 'react-native';
-
-import { connect } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment';
-import Toast from 'react-native-easy-toast'
-
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
-import EventImageHeader from '../EventImageHeader/EventImageHeader';
-
+import React, { Component } from 'react';
+import { ScrollView, Text, View } from 'react-native';
+import Toast from 'react-native-easy-toast';
+import { connect } from 'react-redux';
 import URL from '../../config';
-import * as actionTypes from '../../store/actions'
-import styles from './EventOverview.style.js';
+import * as actionTypes from '../../store/actions';
+import EventImageHeader from '../EventImageHeader/EventImageHeader';
+import Footer from '../Footer/Footer';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
+import Header from '../Header/Header';
+import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+import styles from './EventOverview.style.js';
+
+
+
 
 class EventOverview extends Component {
 
@@ -62,10 +58,10 @@ class EventOverview extends Component {
         axios.get(URL + 'users/' + this.props.userID + '/currentevent')
             .then((response) => {
 
-                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
+                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
                 this.props.onSaveEventTitle(response.data.title)
-                
+
                 this.setState({
                     eventTitle: response.data.title,
                     eventId: response.data.id,
@@ -106,6 +102,7 @@ class EventOverview extends Component {
             fields: {
                 description: {
                     label: 'Description',
+                    key: 'description',
                     value: this.state.eventDesc,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
@@ -113,28 +110,39 @@ class EventOverview extends Component {
                 },
                 location: {
                     label: 'Location',
+                    key: 'location',
                     value: this.state.eventLocation,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
                 },
                 startTime: {
                     label: 'Start Date',
+                    key: 'startDate',
                     value: this.state.startTime,
                     secureTextEntry: false,
                     autoCapitalize: 'none',
                 },
                 endTime: {
                     label: 'End Date',
+                    key: 'endDate',
                     value: this.state.endTime,
                     secureTextEntry: false,
                     autoCapitalize: 'none',
                 },
                 goodToKnow: {
                     label: 'Good-to-know',
+                    key: 'goodToKnow',
                     value: this.state.goodToKnow,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
                 },
+            },
+            formErrors: {
+                description: '',
+                location: '',
+                startDate: '',
+                endDate: '',
+                goodToKnow: '',
             }
         });
     }
@@ -147,7 +155,7 @@ class EventOverview extends Component {
                     <Toast ref="toast"
                         style={toasterStyle.successMessage}
                         position='top'
-                        positionValue={0}/>
+                        positionValue={0} />
                 </View>
                 <Header />
                 <ScrollView>
@@ -172,7 +180,7 @@ class EventOverview extends Component {
 
                     </View>
                 </ScrollView>
-                <Footer currentPage={'eventOverview'}/>
+                <Footer currentPage={'eventOverview'} />
             </View>
         )
     }
@@ -189,7 +197,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onSaveEventTitle: (eventTitle) => dispatch({
             type: actionTypes.SAVE_EVENT_TITLE,
-            payload:{
+            payload: {
                 eventTitle: eventTitle
             }
         }),
