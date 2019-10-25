@@ -142,7 +142,7 @@ class EventOverview extends Component {
                 location: '',
                 startDate: '',
                 endDate: '',
-                goodToKnow: '',
+                goodToKnow: ''
             }
         });
     }

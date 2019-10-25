@@ -115,6 +115,7 @@ class ActivityOverview extends Component {
             fields: {
                 description: {
                     label: 'Description',
+                    key: 'description',
                     value: this.state.activityDesc,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
@@ -122,26 +123,37 @@ class ActivityOverview extends Component {
                 },
                 location: {
                     label: 'Location',
+                    key: 'location',
                     value: this.state.activityLocation,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
                 },
                 startTime: {
                     label: 'startTime',
+                    key: 'startTime',
                     value: this.state.startTime,
                     secureTextEntry: false,
                     autoCapitalize: 'none',
                 },
                 endTime: {
                     label: 'endTime',
+                    key: 'endTime',
                     value: this.state.endTime,
                     secureTextEntry: false,
                     autoCapitalize: 'none',
                 },
                 goodToKnow: {
                     label: 'Good-to-know',
+                    key: 'goodToKnow',
                     value: this.state.goodToKnow
                 },
+            },
+            formErrors: {
+                description: '',
+                location: '',
+                startDate: '',
+                endDate: '',
+                goodToKnow: ''
             }
         });
     }
