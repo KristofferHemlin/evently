@@ -8,6 +8,14 @@ export default StyleSheet.create({
     inputForm:{
         width: Dimensions.get('window').width -55,
     },
+    inputErrorMessageContainer: {
+      height: 20,
+      marginTop: 5,
+    },
+    inputErrorMessageText:{
+      color: 'red',
+      fontWeight: '700',
+    },
     input:{
       fontSize: 16,
       backgroundColor: '#FFF',
@@ -17,7 +25,6 @@ export default StyleSheet.create({
       borderColor: "black",
       paddingHorizontal: 15,
       paddingVertical: 20,
-      marginBottom: 20,
     },
     inputContainer:{
       marginBottom: 10,
@@ -28,6 +35,7 @@ export default StyleSheet.create({
         opacity: 0.8,
         justifyContent: 'center',
         borderRadius: 5,
+        marginTop: 20,
         marginBottom: 40,
     },
     buttonText:{
