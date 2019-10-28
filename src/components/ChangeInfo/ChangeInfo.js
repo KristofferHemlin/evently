@@ -33,6 +33,7 @@ const formValid = (formErrors, fields) => {
 }
 
 const dateRegex = RegExp(/^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/);
+const dateTimeRegex = RegExp(/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]$/)
 
 class ChangeInfo extends Component {
 
@@ -61,11 +62,16 @@ class ChangeInfo extends Component {
                 formErrors.location = value.length < 1 ? "A location is required" : "";
                 break;
             case 'Start Date':
-                dateRegex
                 formErrors.startDate = dateRegex.test(value) ? "" : "Please write date on format YYYY-DD-MM";
                 break;
             case 'End Date':
                 formErrors.endDate = dateRegex.test(value) ? "" : "Please write date on format YYYY-DD-MM";
+                break;
+            case 'Start Time':
+                formErrors.startTime = dateTimeRegex.test(value) ? "" : "Correct format YYYY-DD-MM HH:MM";
+                break;
+            case 'End Time':
+                formErrors.endTime = dateTimeRegex.test(value) ? "" : "Correct format YYYY-DD-MM HH:MM";
                 break;
             default:
                 break;

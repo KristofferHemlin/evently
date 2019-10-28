@@ -20,6 +20,8 @@ import URL from '../../config';
 import styles from './ActivityOverview.style.js';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
+
+
 class ActivityOverview extends Component {
 
     static navigationOptions = {
@@ -129,14 +131,14 @@ class ActivityOverview extends Component {
                     autoCapitalize: 'sentences',
                 },
                 startTime: {
-                    label: 'startTime',
+                    label: 'Start Time',
                     key: 'startTime',
                     value: this.state.startTime,
                     secureTextEntry: false,
                     autoCapitalize: 'none',
                 },
                 endTime: {
-                    label: 'endTime',
+                    label: 'End Time',
                     key: 'endTime',
                     value: this.state.endTime,
                     secureTextEntry: false,
@@ -151,9 +153,9 @@ class ActivityOverview extends Component {
             formErrors: {
                 description: '',
                 location: '',
-                startDate: '',
-                endDate: '',
-                goodToKnow: ''
+                startTime: '',
+                endTime: '',
+                goodToKnow: '',
             }
         });
     }
