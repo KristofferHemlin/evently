@@ -3,6 +3,7 @@ import * as actionTypes from '../actions';
 const initialState = {
     userID: null,
     roleID: null,
+    token: null,
     activityID: null,
     eventTitle: '',
     notificationStatus: null,
@@ -31,6 +32,11 @@ const dataReducer = (state = initialState, action) => {
             return {
                 ...state,
                 notificationStatus: action.payload.notificationStatus,
+            }
+        case actionTypes.ON_DELETE_TOKEN:
+            return {
+                ...state,
+                token: null
             }
         default:
             return state
