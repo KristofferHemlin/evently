@@ -21,7 +21,7 @@ import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import styles from './ChangeInfo.style';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
-const formValid = (formErrors, fields) => {
+const formValid = (formErrors) => {
     let valid = true;
 
     Object.values(formErrors).forEach(
@@ -34,6 +34,8 @@ const formValid = (formErrors, fields) => {
 
 const dateRegex = RegExp(/^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/);
 const dateTimeRegex = RegExp(/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]$/)
+const emailRegex = RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+const phoneRegex = RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/);
 
 class ChangeInfo extends Component {
 
@@ -73,10 +75,25 @@ class ChangeInfo extends Component {
             case 'End Time':
                 formErrors.endTime = dateTimeRegex.test(value) ? "" : "Correct format YYYY-DD-MM HH:MM";
                 break;
+            case 'First Name':
+                formErrors.firstName = value.length < 1 ? "Minimum 2 characters required" : "";
+                break;
+            case 'Last Name':
+                formErrors.lastName = value.length < 1 ? "Minimum 2 characters required" : "";
+                break;
+            case 'Email':
+                formErrors.email = emailRegex.test(value) ? "" : "Invalid email adress";
+                break;
+            case 'Phone':
+                formErrors.phone = phoneRegex.test(value) ? "" : "Invalid phone number";
+                break;
+            case 'Department':
+                formErrors.department = value.length < 1 || value.length > 3 ? "Invalid department" : "";
+                break;
             default:
                 break;
         }
-        this.setState({ fields: fields, formErrors: formErrors }, () => console.log('formError', formErrors));
+        this.setState({ fields: fields, formErrors: formErrors }, () => console.log('formError', this.state.formErrors));
     };
 
     handleSubmit = () => {
@@ -140,7 +157,6 @@ class ChangeInfo extends Component {
                             position='top'
                             positionValue={0} />
                     </View>
-                    <Header />
                     <ScrollView>
                         <KeyboardAwareScrollView>
                             <View style={styles.userInfo}>
@@ -161,7 +177,6 @@ class ChangeInfo extends Component {
                             </View>
                         </KeyboardAwareScrollView>
                     </ScrollView>
-                    <Footer />
                 </View>)
     }
 }

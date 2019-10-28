@@ -91,6 +91,7 @@ class UserProfile extends Component {
             fields: {
                 firstName: {
                     label: 'First Name',
+                    key: 'firstName',
                     value: this.state.firstName,
                     type: 'text',
                     secureTextEntry: false,
@@ -98,12 +99,14 @@ class UserProfile extends Component {
                 },
                 lastName: {
                     label: 'Last Name',
+                    key: 'lastName',
                     value: this.state.lastName,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
                 },
                 email: {
                     label: 'Email',
+                    key: 'email',
                     value: this.state.email,
                     keyboardType: 'email-address',
                     secureTextEntry: false,
@@ -111,12 +114,14 @@ class UserProfile extends Component {
                 },
                 phone: {
                     label: 'Phone',
+                    key: 'phone',
                     keyboardType: 'phone-pad',
                     value: this.state.phone,
                     secureTextEntry: false,
                 },
                 aboutMe: {
                     label: 'About Me',
+                    key: 'aboutMe',
                     value: this.state.about,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
@@ -124,10 +129,18 @@ class UserProfile extends Component {
                 },
                 allergiesOrPreferences: {
                     label: 'Allergies',
+                    key: 'allergies',
                     value: this.state.allergies,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
                 },
+            },
+            formErrors: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                department: '',
             }
         });
     }
