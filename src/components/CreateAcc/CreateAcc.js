@@ -22,26 +22,12 @@ import FormHeader from '../FormHeader/FormHeader';
 import URL from '../../config';
 import styles from './CreateAcc.style';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
+import { 
+    formValid, 
+    emailRegex,
+    phoneRegex
+ } from '../../helpers/formValidation'
 
-const formValid = (formErrors, fields) => {
-    let valid = true;
-
-    Object.values(formErrors).forEach(
-        val => {
-            val.length > 0 && (valid = false)
-        });
-
-    Object.values(fields).forEach(
-        field => {
-            field.value === '' && (valid = false)
-        }
-    )
-
-    return valid;
-}
-
-const emailRegex = RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-const phoneRegex = RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/);
 
 class CreateAcc extends Component {
 
@@ -234,7 +220,7 @@ class CreateAcc extends Component {
                     })
             })
         } else {
-            this.showToasterHandler("ERROR", false);
+            this.showToasterHandler("One or more invalid fields!", false);
         }
 
     }
@@ -242,15 +228,16 @@ class CreateAcc extends Component {
 
     render() {
         return (
-            <ScrollView>
+            <View style={styles.creatAccContainer}>
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
                         style={this.messageColor(this.state.messageColor)}
                         position='top'
                         positionValue={0} />
                 </View>
-                <KeyboardAwareScrollView>
-                    <View style={styles.creatAccContainer}>
+                <ScrollView>
+                    <KeyboardAwareScrollView>
+
                         <FormHeader>Create your profile</FormHeader>
                         <FormDescription>Welcome! Fill in the form below to set up your company and user account.</FormDescription>
                         {/* <ImageSelector>Please upload a photo of yourself</ImageSelector> */}
@@ -282,9 +269,9 @@ class CreateAcc extends Component {
                                 {this.state.isLoading ? <ActivityIndicator size='small' color='white' /> : <Text style={styles.buttonText}>Submit </Text>}
                             </TouchableOpacity>
                         </View>
-                    </View>
-                </KeyboardAwareScrollView>
-            </ScrollView>
+                    </KeyboardAwareScrollView>
+                </ScrollView>
+            </View>
         )
     }
 }

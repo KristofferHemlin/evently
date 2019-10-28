@@ -13,29 +13,18 @@ import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-easy-toast'
 
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import BackButton from '../BackButton/BackButton';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
 import styles from './ChangeInfo.style';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
-
-const formValid = (formErrors) => {
-    let valid = true;
-
-    Object.values(formErrors).forEach(
-        val => {
-            val.length > 0 && (valid = false)
-        });
-
-    return valid;
-}
-
-const dateRegex = RegExp(/^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/);
-const dateTimeRegex = RegExp(/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]$/)
-const emailRegex = RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-const phoneRegex = RegExp(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/);
+import { 
+    formValid,
+    dateRegex,
+    dateTimeRegex,
+    emailRegex,
+    phoneRegex
+ } from '../../helpers/formValidation';
 
 class ChangeInfo extends Component {
 
@@ -97,7 +86,7 @@ class ChangeInfo extends Component {
     };
 
     handleSubmit = () => {
-        if (formValid(this.state.formErrors, this.state.fields)) {
+        if (formValid(this.state.formErrors)) {
             var body = Object.keys(this.state.fields).reduce((map, key) => {
                 map[key] = this.state.fields[key].value
                 return map
@@ -121,7 +110,7 @@ class ChangeInfo extends Component {
                     })
             })
         } else {
-            this.showToasterHandler("ERROR", false);
+            this.showToasterHandler("One or more invalid fields!", false);
         }
 
     }
