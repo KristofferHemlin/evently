@@ -31,6 +31,8 @@ class ParticipantOverview extends Component {
             firstName: '',
             lastName: '',
             email: '',
+            phone: '',
+            department: '',
             about: '',
             allergies: '',
             isCompanyManager: false,
@@ -56,6 +58,7 @@ class ParticipantOverview extends Component {
                     lastName: response.data.lastName,
                     email: response.data.email,
                     phone: response.data.phone,
+                    department: response.data.companyDepartment,
                     about: response.data.aboutMe,
                     allergies: response.data.allergiesOrPreferences,
                 })
@@ -87,6 +90,8 @@ class ParticipantOverview extends Component {
                                 <Text style={styles.ordinaryText}>{this.state.email}</Text>
                                 <Text style={styles.subTitles}>Phone</Text>
                                 <Text style={styles.ordinaryText}>{this.state.phone}</Text>
+                                <Text style={styles.subTitles}>Company Department</Text>
+                                <Text style={styles.ordinaryText}>{this.state.department}</Text>
                                 <Text style={styles.subTitles}>About Me</Text>
                                 <Text style={styles.ordinaryText}>{this.state.about}</Text>
                                 {this.state.ownProfilePage || this.state.isCompanyManager ?

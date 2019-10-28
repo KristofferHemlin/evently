@@ -34,6 +34,7 @@ class UserProfile extends Component {
             lastName: '',
             email: '',
             phone: '',
+            department: '',
             about: '',
             allergies: '',
             infoAllowedChange: true,
@@ -54,11 +55,13 @@ class UserProfile extends Component {
     fetchUserData = (userID) => {
         axios.get(URL + 'users/' + userID)
             .then((response) => {
+                console.log('response', response);
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
                     email: response.data.email,
                     phone: response.data.phone,
+                    department: response.data.companyDepartment,
                     about: response.data.aboutMe,
                     allergies: response.data.allergiesOrPreferences,
                 })
@@ -119,6 +122,14 @@ class UserProfile extends Component {
                     value: this.state.phone,
                     secureTextEntry: false,
                 },
+                department: {
+                    key: 'department',
+                    name: 'Company Department',
+                    type: 'text',
+                    label: 'Department',
+                    value: '',
+                    secureText: false,
+                },
                 aboutMe: {
                     label: 'About Me',
                     key: 'aboutMe',
@@ -174,14 +185,12 @@ class UserProfile extends Component {
                                 <Text style={styles.ordinaryText}>{this.state.email}</Text>
                                 <Text style={styles.subTitles}>Phone</Text>
                                 <Text style={styles.ordinaryText}>{this.state.phone}</Text>
+                                <Text style={styles.subTitles}>Company Department</Text>
+                                <Text style={styles.ordinaryText}>{this.state.department}</Text>
                                 <Text style={styles.subTitles}>About Me</Text>
                                 <Text style={styles.ordinaryText}>{this.state.about}</Text>
-                                <View>
-                                    <Text style={styles.subTitles}>Allergies</Text>
-                                    <Text style={styles.ordinaryText}>{this.state.allergies}</Text>
-                                </View>
-
-
+                                <Text style={styles.subTitles}>Allergies</Text>
+                                <Text style={styles.ordinaryText}>{this.state.allergies}</Text>
                             </View>
                         </View>
                     </KeyboardAwareScrollView>
