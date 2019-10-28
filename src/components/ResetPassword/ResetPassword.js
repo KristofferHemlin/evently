@@ -7,7 +7,7 @@ import {
     Linking,
 } from 'react-native';
 
-import bgImage from '../Login/images/login-bg.jpeg';
+import bgImage from '../Login/images/login-bg.jpg';
 import logotype from '../Login/images/Logotype.png';
 import ResetPasswordForm from '../ResetPasswordForm/ResetPasswordForm';
 
