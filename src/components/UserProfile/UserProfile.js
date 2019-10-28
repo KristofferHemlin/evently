@@ -34,7 +34,7 @@ class UserProfile extends Component {
             lastName: '',
             email: '',
             phone: '',
-            department: '',
+            companyDepartment: '',
             about: '',
             allergies: '',
             infoAllowedChange: true,
@@ -61,7 +61,7 @@ class UserProfile extends Component {
                     lastName: response.data.lastName,
                     email: response.data.email,
                     phone: response.data.phone,
-                    department: response.data.companyDepartment,
+                    companyDepartment: response.data.companyDepartment,
                     about: response.data.aboutMe,
                     allergies: response.data.allergiesOrPreferences,
                 })
@@ -77,6 +77,7 @@ class UserProfile extends Component {
             lastName: input.lastName,
             email: input.email,
             phone: input.phone,
+            companyDepartment: input.companyDepartment,
             about: input.aboutMe,
             allergies: input.allergies,
             infoAllowedChange: true,
@@ -122,12 +123,11 @@ class UserProfile extends Component {
                     value: this.state.phone,
                     secureTextEntry: false,
                 },
-                department: {
-                    key: 'department',
-                    name: 'Company Department',
+                companyDepartment: {
+                    label: 'Company Department',
+                    key: 'companyDepartment',
                     type: 'text',
-                    label: 'Department',
-                    value: '',
+                    value: this.state.companyDepartment,
                     secureText: false,
                 },
                 aboutMe: {
@@ -151,7 +151,7 @@ class UserProfile extends Component {
                 lastName: '',
                 email: '',
                 phone: '',
-                department: '',
+                companyDepartment: '',
             }
         });
     }
@@ -186,7 +186,7 @@ class UserProfile extends Component {
                                 <Text style={styles.subTitles}>Phone</Text>
                                 <Text style={styles.ordinaryText}>{this.state.phone}</Text>
                                 <Text style={styles.subTitles}>Company Department</Text>
-                                <Text style={styles.ordinaryText}>{this.state.department}</Text>
+                                <Text style={styles.ordinaryText}>{this.state.companyDepartment}</Text>
                                 <Text style={styles.subTitles}>About Me</Text>
                                 <Text style={styles.ordinaryText}>{this.state.about}</Text>
                                 <Text style={styles.subTitles}>Allergies</Text>

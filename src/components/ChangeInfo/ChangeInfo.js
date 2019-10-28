@@ -48,6 +48,7 @@ class ChangeInfo extends Component {
         fields[key].value = value;
         const formErrors = this.state.formErrors;
         const label = fields[key].label;
+        console.log('label', label);
         switch (label) {
             case 'Location':
                 formErrors.location = value.length < 1 ? "A location is required" : "";
@@ -76,8 +77,8 @@ class ChangeInfo extends Component {
             case 'Phone':
                 formErrors.phone = phoneRegex.test(value) ? "" : "Invalid phone number";
                 break;
-            case 'Department':
-                formErrors.department = value.length < 1 || value.length > 3 ? "Invalid department" : "";
+            case 'Company Department':
+                formErrors.companyDepartment = value.length < 1 || value.length > 3 ? "Invalid department" : "";
                 break;
             default:
                 break;
@@ -93,6 +94,7 @@ class ChangeInfo extends Component {
             }, {})
             body.title = this.state.title;
             body.token = this.props.token;
+            console.log('body', body);
 
             this.setState({ isLoading: true }, () => {
                 axios.put(this.state.http_update_url, body)
@@ -187,7 +189,7 @@ const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInput
 
     return <View style={formStyle.inputForm}>
         {Object.keys(fields).map((key) => {
-            console.log('fields[key]', formErrors);
+            console.log('key', key);
             return (
                 <View key={key}>
                     <Text style={styles.inputFormTitle}>{fields[key].label}</Text>
