@@ -18,6 +18,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import FormDescription from '../FormDescription/FormDescription';
 import FormHeader from '../FormHeader/FormHeader';
 import BackButton from '../BackButton/BackButton';
+import Header from '../Header/Header';
 // import ImageSelector from '../ImageSelector/ImageSelector';
 
 import URL from '../../config';
@@ -70,11 +71,11 @@ class CreateAcc extends Component {
                 value: '',
                 secureText: false,
             },
-            department: {
-                key: 'department',
+            companyDepartment: {
+                key: 'companyDepartment',
                 name: 'Company Department',
                 type: 'text',
-                label: 'Department',
+                label: 'Company Department',
                 value: '',
                 secureText: false,
             },
@@ -124,28 +125,28 @@ class CreateAcc extends Component {
         axios.get(URL + 'users/' + this.props.userID)
             .then((response) => {
                 let responseArray = []
-                let fields = [...this.state.fields];
+                let fields = {...this.state.fields};
                 for (key in response) {
                     responseArray.push(response[key]);
                 }
-                fields.forEach(field => {
-                    if (field.key === 'firstName') {
-                        field.value = responseArray[0].firstName
-                    }
-                    if (field.key === 'lastName') {
-                        field.value = responseArray[0].lastName
-                    }
-                    if (field.key === 'email') {
-                        field.value = responseArray[0].email
-                    }
-                    if (field.key === 'phone') {
-                        field.value = responseArray[0].phone
-                    }
-                    if (field.key === 'department') {
-                        field.value = responseArray[0].companyDepartment
-                    }
-                })
+                for(field in fields){
 
+                    if (field === 'firstName') {
+                        fields[field].value = responseArray[0].firstName
+                    }
+                    if (field=== 'lastName') {
+                        fields[field].value = responseArray[0].lastName
+                    }
+                    if (field=== 'email') {
+                        fields[field].value = responseArray[0].email
+                    }
+                    if (field === 'phone') {
+                        fields[field].value = responseArray[0].phone
+                    }
+                    if (field === 'companyDepartment') {
+                        fields[field].value = responseArray[0].companyDepartment
+                    }
+                }
                 this.setState({ fields: fields });
             })
             .catch((error) => {
@@ -171,7 +172,7 @@ class CreateAcc extends Component {
             case 'Phone':
                 formErrors.phone = phoneRegex.test(value) ? "" : "Invalid phone number";
                 break;
-            case 'Department':
+            case 'Company Department':
                 formErrors.department = value.length < 1 || value.length > 3 ? "Invalid department" : "";
                 break;
             case 'Password':
@@ -212,12 +213,12 @@ class CreateAcc extends Component {
         if (formValid(this.state.formErrors, this.state.fields)) {
             this.setState({ isLoading: true }, () => {
                 axios.put(URL + 'users/' + this.props.userID + '/firstlogin', {
-                    firstName: this.state.fields[0].value,
-                    lastName: this.state.fields[1].value,
-                    email: this.state.fields[2].value,
-                    phone: this.state.fields[3].value,
-                    companyDepartment: this.state.fields[4].value,
-                    password: this.state.fields[5].value,
+                    firstName: this.state.fields['firstName'].value,
+                    lastName: this.state.fields['lastName'].value,
+                    email: this.state.fields['email'].value,
+                    phone: this.state.fields['phone'].value,
+                    companyDepartment: this.state.fields['companyDepartment'].value,
+                    password: this.state.fields['password'].value,
                 })
                     .then((response) => {
                         this.setState({ isLoading: false });
