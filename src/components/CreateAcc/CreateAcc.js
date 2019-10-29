@@ -125,19 +125,19 @@ class CreateAcc extends Component {
         axios.get(URL + 'users/' + this.props.userID)
             .then((response) => {
                 let responseArray = []
-                let fields = {...this.state.fields};
+                let fields = { ...this.state.fields };
                 for (key in response) {
                     responseArray.push(response[key]);
                 }
-                for(field in fields){
+                for (field in fields) {
 
                     if (field === 'firstName') {
                         fields[field].value = responseArray[0].firstName
                     }
-                    if (field=== 'lastName') {
+                    if (field === 'lastName') {
                         fields[field].value = responseArray[0].lastName
                     }
-                    if (field=== 'email') {
+                    if (field === 'email') {
                         fields[field].value = responseArray[0].email
                     }
                     if (field === 'phone') {
@@ -155,7 +155,7 @@ class CreateAcc extends Component {
     }
 
     handleInputChange = (value, i) => {
-        let fields = {...this.state.fields}
+        let fields = { ...this.state.fields }
         let formErrors = this.state.formErrors;
         const label = fields[i].label;
         fields[i].value = value;
@@ -237,7 +237,7 @@ class CreateAcc extends Component {
 
     render() {
         return (
-            <View style={styles.creatAccContainer}>
+            <View style={styles.pageContainer}>
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
                         style={this.messageColor(this.state.messageColor)}
@@ -246,7 +246,8 @@ class CreateAcc extends Component {
                 </View>
                 <ScrollView>
                     <KeyboardAwareScrollView>
-                        <BackButton style={{ top: 50 }} />
+                        <BackButton />
+                        <View style={styles.creatAccContainer}>
                         <FormHeader>Create your profile</FormHeader>
                         <FormDescription>Welcome! Fill in the form below to set up your company and user account.</FormDescription>
                         {/* <ImageSelector>Please upload a photo of yourself</ImageSelector> */}
@@ -257,6 +258,7 @@ class CreateAcc extends Component {
                             isLoading={this.state.isLoading}
                             handleInputChange={this.handleInputChange}
                             formStyle={styles} />
+                        </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
             </View>

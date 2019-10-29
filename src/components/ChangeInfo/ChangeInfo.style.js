@@ -1,42 +1,19 @@
-import {
-    StyleSheet,
-} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
-
     pageContainer: {
         flex: 1,
     },
 
-    userInfo: {
-        marginBottom: 30,
+    editFormContainer: {
+        alignItems: 'center',
     },
 
     inputForm: {
-        marginLeft: 30,
-        marginRight: 30,
+        marginTop: 25,
+        width: Dimensions.get('window').width * 0.85,
     },
 
-    inputFormTitle: {
-        paddingTop: 10,
-        paddingBottom: 10,
-        fontSize: 16,
-        fontWeight: '600',
-    },
-
-    input: {
-        paddingTop: 15,
-        alignItems: "center",
-        fontSize: 16,
-        backgroundColor: '#FFF',
-        color: "gray",
-        borderWidth: 1,
-        borderColor: "gray",
-        paddingHorizontal: 15,
-        paddingVertical: 20,
-        // marginBottom: 20,
-        borderRadius: 3,
-    },
     inputErrorMessageContainer: {
         height: 20,
         marginTop: 5,
@@ -45,6 +22,25 @@ export default StyleSheet.create({
         color: 'red',
         fontWeight: '700',
     },
+
+    inputFormTitle: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        fontSize: 16,
+        fontWeight: '600',
+    },
+
+    input: {
+        fontSize: 16,
+        backgroundColor: '#FFF',
+        color: "rgb(80,80,80)",
+        fontWeight: '500',
+        borderWidth: 2,
+        borderColor: "black",
+        paddingHorizontal: 15,
+        paddingVertical: 20,
+      },
+
     buttonContainer: {
         backgroundColor: '#5A90DC',
         height: 50,
@@ -60,5 +56,4 @@ export default StyleSheet.create({
         fontSize: 16,
         fontWeight: '700',
     },
-
 });

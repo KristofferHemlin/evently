@@ -15,7 +15,7 @@ const backButton = props => {
     return (
     <TouchableOpacity style={styles.backButton}
         onPress={() => props.navigation.goBack()}>
-        <View style={styles.backButtonIconContainer}>{backArrowIcon}</View>
+        <View>{backArrowIcon}</View>
         <Text style={styles.backButtonTxt}>Back</Text>
     </TouchableOpacity>  
     );

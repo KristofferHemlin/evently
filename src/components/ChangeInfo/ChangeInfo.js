@@ -149,13 +149,13 @@ class ChangeInfo extends Component {
                     </View>
                     <ScrollView>
                         <KeyboardAwareScrollView>
-                            <View style={styles.userInfo}>
-                                <BackButton />
-                                <HeadlineOverview
-                                    infoButtonStatus={false}
-                                    editButtonStatus={this.state.wantToEdit}
-                                >{'Edit ' + this.state.title}
-                                </HeadlineOverview>
+                            <BackButton />
+                            <HeadlineOverview
+                                infoButtonStatus={false}
+                                editButtonStatus={this.state.wantToEdit}
+                            >{'Edit ' + this.state.title}
+                            </HeadlineOverview>
+                            <View style={styles.editFormContainer}>
                                 <EditableForm
                                     fields={this.state.fields}
                                     formErrors={this.state.formErrors}
