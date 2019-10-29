@@ -17,23 +17,28 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import FormDescription from '../FormDescription/FormDescription';
 import FormHeader from '../FormHeader/FormHeader';
+import BackButton from '../BackButton/BackButton';
 // import ImageSelector from '../ImageSelector/ImageSelector';
 
 import URL from '../../config';
 import styles from './CreateAcc.style';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
-import { 
-    formValid, 
+import {
+    formValid,
     emailRegex,
     phoneRegex
- } from '../../helpers/formValidation'
+} from '../../helpers/formValidation'
 
 
 class CreateAcc extends Component {
 
+    static navigationOptions = {
+        header: null,
+    };
+
     state = {
-        fields: [
-            {
+        fields: {
+            firstName: {
                 key: 'firstName',
                 name: 'First Name',
                 type: 'text',
@@ -41,7 +46,7 @@ class CreateAcc extends Component {
                 value: '',
                 secureText: false,
             },
-            {
+            lastName: {
                 key: 'lastName',
                 name: 'Last Name',
                 type: 'text',
@@ -49,7 +54,7 @@ class CreateAcc extends Component {
                 value: '',
                 secureText: false,
             },
-            {
+            email: {
                 key: 'email',
                 name: 'Email',
                 type: 'email',
@@ -57,7 +62,7 @@ class CreateAcc extends Component {
                 value: '',
                 secureText: false,
             },
-            {
+            phone: {
                 key: 'phone',
                 name: 'Phone',
                 type: 'text',
@@ -65,7 +70,7 @@ class CreateAcc extends Component {
                 value: '',
                 secureText: false,
             },
-            {
+            department: {
                 key: 'department',
                 name: 'Company Department',
                 type: 'text',
@@ -83,7 +88,7 @@ class CreateAcc extends Component {
             //     value: '',
             //     secureText: false,
             //   },
-            {
+            password: {
                 key: 'password',
                 name: 'Password',
                 type: 'password',
@@ -91,22 +96,24 @@ class CreateAcc extends Component {
                 value: '',
                 secureText: true,
             },
-            // {
-            //   key: 'rePassword',
-            //   name: 'rePassword',
-            //   type: 'password',
-            //   label: 'Re-type Password',
-            //   value: '',
-            //   secureText: true,
-            // }
-        ],
+            confirmPassword: {
+                key: 'confirmPassword',
+                name: 'confirmPassword',
+                type: 'password',
+                label: 'Confirm Password',
+                value: '',
+                secureText: true,
+            }
+
+        },
         formErrors: {
             firstName: '',
             lastName: '',
             email: '',
             phone: '',
             department: '',
-            password: '',
+            password: 'Minimum 6 characters required',
+            confirmPassword: '',
         },
         isLoading: false,
         messageColor: null,
@@ -147,10 +154,12 @@ class CreateAcc extends Component {
     }
 
     handleInputChange = (value, i) => {
-        let fields = [...this.state.fields];
+        let fields = {...this.state.fields}
         let formErrors = this.state.formErrors;
         const label = fields[i].label;
         fields[i].value = value;
+        console.log('fields[Password]', fields['password'].value);
+        console.log('value', value);
         switch (label) {
             case 'First Name':
                 formErrors.firstName = value.length < 1 ? "Minimum 2 characters required" : "";
@@ -169,6 +178,10 @@ class CreateAcc extends Component {
                 break;
             case 'Password':
                 formErrors.password = value.length < 6 ? "Minimum 6 characters required" : "";
+                formErrors.confirmPassword = value === fields['confirmPassword'].value ? "" : "Passwords must match";
+                break;
+            case 'Confirm Password':
+                formErrors.confirmPassword = value === fields['password'].value ? "" : "Passwords must match";
                 break;
             default:
                 break;
@@ -197,8 +210,6 @@ class CreateAcc extends Component {
         }
     }
 
-
-
     handleSubmit = () => {
         if (formValid(this.state.formErrors, this.state.fields)) {
             this.setState({ isLoading: true }, () => {
@@ -225,7 +236,6 @@ class CreateAcc extends Component {
 
     }
 
-
     render() {
         return (
             <View style={styles.creatAccContainer}>
@@ -237,38 +247,17 @@ class CreateAcc extends Component {
                 </View>
                 <ScrollView>
                     <KeyboardAwareScrollView>
-
+                        <BackButton style={{ top: 50 }} />
                         <FormHeader>Create your profile</FormHeader>
                         <FormDescription>Welcome! Fill in the form below to set up your company and user account.</FormDescription>
                         {/* <ImageSelector>Please upload a photo of yourself</ImageSelector> */}
-                        <View style={styles.inputForm}>
-                            {this.state.fields.map((input, idx) => {
-                                return (
-                                    <React.Fragment key={input.key}>
-                                        <View style={styles.inputErrorMessageContainer}>
-                                            {this.state.formErrors[input.key] ? <Text style={styles.inputErrorMessageText} >{this.state.formErrors[input.key]}</Text> : null}
-                                        </View>
-                                        <TextInput
-                                            value={input.value}
-                                            style={styles.input}
-                                            name={input.name}
-                                            key={input.key}
-                                            type={input.type}
-                                            label={input.label}
-                                            placeholder={input.name}
-                                            placeholderTextColor={"rgb(128,128,128)"}
-                                            secureTextEntry={input.secureText}
-                                            onChangeText={(value) => this.handleInputChange(value, idx)}
-                                        />
-                                    </React.Fragment>
-                                )
-                            })}
-                            <TouchableOpacity
-                                style={styles.buttonContainer}
-                                onPress={this.handleSubmit}>
-                                {this.state.isLoading ? <ActivityIndicator size='small' color='white' /> : <Text style={styles.buttonText}>Submit </Text>}
-                            </TouchableOpacity>
-                        </View>
+                        <EditableForm
+                            fields={this.state.fields}
+                            formErrors={this.state.formErrors}
+                            handleSubmit={this.handleSubmit}
+                            isLoading={this.state.isLoading}
+                            handleInputChange={this.handleInputChange}
+                            formStyle={styles} />
                     </KeyboardAwareScrollView>
                 </ScrollView>
             </View>
@@ -281,4 +270,38 @@ const mapStateToProps = state => {
         userID: state.userID,
     }
 }
-export default connect(mapStateToProps)(CreateAcc); 
+export default connect(mapStateToProps)(CreateAcc);
+
+const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInputChange, formStyle }) => {
+
+    return <View style={formStyle.inputForm}>
+        {Object.keys(fields).map((key) => {
+            console.log('key', key);
+            return (
+                <View key={key}>
+                    <Text style={styles.inputFormTitle}>{fields[key].label}</Text>
+                    <TextInput
+                        value={fields[key].value}
+                        type={fields[key].type}
+                        label={fields[key].label}
+                        multiline={fields[key].multiline}
+                        keyboardType={fields[key].keyboardType}
+                        placeholder={fields[key].value}
+                        onChangeText={(value) => handleInputChange(value, key)}
+                        secureTextEntry={fields[key].secureText}
+                        autoCapitalize={fields[key].autoCapitalize}
+                        style={formStyle.input}
+                    />
+                    <View style={styles.inputErrorMessageContainer}>
+                        {formErrors[fields[key].key] ? <Text style={styles.inputErrorMessageText} >{formErrors[fields[key].key]}</Text> : null}
+                    </View>
+                </View>
+            )
+        })}
+        <TouchableOpacity
+            style={formStyle.buttonContainer}
+            onPress={handleSubmit}>
+            {isLoading ? <ActivityIndicator size='small' color='white' /> : <Text style={formStyle.buttonText}>Submit</Text>}
+        </TouchableOpacity>
+    </View>
+}
