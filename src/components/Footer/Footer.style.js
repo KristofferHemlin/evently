@@ -8,7 +8,8 @@ export default StyleSheet.create({
         borderTopColor: 'rgb(230,230,230)',
         justifyContent: "center",
         flexDirection: 'row',
-        alignItems: 'center',        
+        alignItems: 'center',
+        marginTop: 10,    
     }, 
     footerButton: {
         flex: 1,

@@ -18,13 +18,13 @@ import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
 import styles from './ChangeInfo.style';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
-import { 
+import {
     formValid,
     dateRegex,
     dateTimeRegex,
     emailRegex,
     phoneRegex
- } from '../../helpers/formValidation';
+} from '../../helpers/formValidation';
 
 class ChangeInfo extends Component {
 
@@ -192,21 +192,43 @@ const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInput
             return (
                 <View key={key}>
                     <Text style={styles.inputFormTitle}>{fields[key].label}</Text>
-                    <TextInput
-                        value={fields[key].value}
-                        type={fields[key].type}
-                        label={fields[key].label}
-                        multiline={fields[key].multiline}
-                        keyboardType={fields[key].keyboardType}
-                        placeholder={fields[key].value}
-                        onChangeText={(value) => handleInputChange(value, key)}
-                        secureTextEntry={fields[key].secureText}
-                        autoCapitalize={fields[key].autoCapitalize}
-                        style={formStyle.input}
-                    />
-                    <View style={styles.inputErrorMessageContainer}>
-                        {formErrors[fields[key].key] ? <Text style={styles.inputErrorMessageText} >{formErrors[fields[key].key]}</Text> : null}
-                    </View>
+                    {Platform.OS === 'ios' ?
+                        <React.Fragment>
+                            <TextInput
+                                value={fields[key].value}
+                                type={fields[key].type}
+                                label={fields[key].label}
+                                multiline={fields[key].multiline}
+                                keyboardType={fields[key].keyboardType}
+                                placeholder={fields[key].value}
+                                onChangeText={(value) => handleInputChange(value, key)}
+                                secureTextEntry={fields[key].secureText}
+                                autoCapitalize={fields[key].autoCapitalize}
+                                style={formStyle.input}
+                            />
+                            <View style={styles.inputErrorMessageContainer}>
+                                {formErrors[fields[key].key] ? <Text style={styles.inputErrorMessageText} >{formErrors[fields[key].key]}</Text> : null}
+                            </View>
+                        </React.Fragment>
+                        :
+                        <React.Fragment>
+                            <TextInput
+                                value={fields[key].value}
+                                type={fields[key].type}
+                                label={fields[key].label}
+                                keyboardType={fields[key].keyboardType}
+                                placeholder={fields[key].value}
+                                onChangeText={(value) => handleInputChange(value, key)}
+                                secureTextEntry={fields[key].secureText}
+                                autoCapitalize={fields[key].autoCapitalize}
+                                style={formStyle.input}
+                            />
+                            <View style={styles.inputErrorMessageContainer}>
+                                {formErrors[fields[key].key] ? <Text style={styles.inputErrorMessageText} >{formErrors[fields[key].key]}</Text> : null}
+                            </View>
+                        </React.Fragment>
+
+                    }
                 </View>
             )
         })}

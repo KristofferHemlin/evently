@@ -104,14 +104,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-      onSaveActivityID: (activityID) => dispatch({
-        type: actionTypes.SAVE_ACTIVITY_ID,
-        payload: {
-          activityID: activityID,
-        }
-      }),
+        onSaveActivityID: (activityID) => dispatch({
+            type: actionTypes.SAVE_ACTIVITY_ID,
+            payload: {
+                activityID: activityID,
+            }
+        }),
     };
-  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(NotificationModal));
 

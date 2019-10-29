@@ -19,7 +19,8 @@ export default StyleSheet.create({
         marginRight: 30,
         // textAlign:'center',
         paddingLeft: 15,
-        color: "lightgray",
+        // color: "lightgray",
+        color: "black",
     },
 
     subTitles:{
