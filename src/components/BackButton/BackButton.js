@@ -9,13 +9,14 @@ import { withNavigation } from 'react-navigation';
 
 import styles from './BackButton.style'
 
-const backArrowIcon = <FontAwesome5 size={20} name={'arrow-circle-left'} solid color="rgba(0,0,0,1)" />;
+const backArrowIcon = <FontAwesome5 size={20} name={'chevron-left'} solid color="rgba(90,144,220,1)" />;
 
 const backButton = props => {
     return (
     <TouchableOpacity style={styles.backButton}
         onPress={() => props.navigation.goBack()}>
-        <View style={styles.backButtonIconContainer}>{backArrowIcon}</View><Text style={styles.backButtonTxt}>Back</Text>
+        <View style={styles.backButtonIconContainer}>{backArrowIcon}</View>
+        <Text style={styles.backButtonTxt}>Back</Text>
     </TouchableOpacity>  
     );
 };
