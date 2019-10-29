@@ -26,9 +26,6 @@ export default StyleSheet.create({
       paddingHorizontal: 15,
       paddingVertical: 20,
     },
-    inputContainer:{
-      marginBottom: 10,
-    },
     buttonContainer:{
         backgroundColor: '#5A90DC',
         height: 50,
