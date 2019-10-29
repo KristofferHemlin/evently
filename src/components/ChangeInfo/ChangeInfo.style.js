@@ -8,35 +8,6 @@ export default StyleSheet.create({
         flex: 1,
     },
 
-    profilePicture: {
-        width: 150,
-        height: 150,
-        borderRadius: 75,
-    },
-
-    profilePictureView: {
-        alignItems: "center",
-        marginTop: 40,
-    },
-
-    nameText: {
-        fontSize: 30,
-        fontWeight: "200",
-        marginTop: 20,
-    },
-
-    companyText: {
-        color: "gray",
-    },
-
-    line: {
-        borderBottomColor: 'lightgray',
-        borderBottomWidth: 1,
-        marginTop: 30,
-        marginLeft: 30,
-        marginRight: 30,
-    },
-
     userInfo: {
         marginBottom: 30,
     },
@@ -89,23 +60,5 @@ export default StyleSheet.create({
         fontSize: 16,
         fontWeight: '700',
     },
-    backButton: {
-        borderWidth: 2,
-        borderColor: 'rgb(176,176,176)',
-        borderRadius: 5,
-        flexDirection: 'row',
-        width: '30%',
-        marginTop: 20,
-        marginLeft: 20,
-    },
-    backButtonTxt: {
-        fontSize: 18,
-        marginLeft: 5,
-        padding: 3,
-    },
-    backButtonIconContainer: {
-        marginLeft: 5,
-        padding: 3,
-    }
 
 });
