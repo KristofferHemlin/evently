@@ -20,6 +20,8 @@ import URL from '../../config';
 import styles from './ActivityOverview.style.js';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 
+
+
 class ActivityOverview extends Component {
 
     static navigationOptions = {
@@ -115,6 +117,7 @@ class ActivityOverview extends Component {
             fields: {
                 description: {
                     label: 'Description',
+                    key: 'description',
                     value: this.state.activityDesc,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
@@ -122,30 +125,37 @@ class ActivityOverview extends Component {
                 },
                 location: {
                     label: 'Location',
+                    key: 'location',
                     value: this.state.activityLocation,
                     secureTextEntry: false,
                     autoCapitalize: 'sentences',
                 },
                 startTime: {
-                    label: 'startTime',
+                    label: 'Start Time',
+                    key: 'startTime',
                     value: this.state.startTime,
                     secureTextEntry: false,
                     autoCapitalize: 'none',
                 },
                 endTime: {
-                    label: 'endTime',
+                    label: 'End Time',
+                    key: 'endTime',
                     value: this.state.endTime,
                     secureTextEntry: false,
                     autoCapitalize: 'none',
                 },
-                endTime: {
-                    label: 'endTime',
-                    value: this.state.endTime
-                },
                 goodToKnow: {
                     label: 'Good-to-know',
+                    key: 'goodToKnow',
                     value: this.state.goodToKnow
                 },
+            },
+            formErrors: {
+                description: '',
+                location: '',
+                startTime: '',
+                endTime: '',
+                goodToKnow: '',
             }
         });
     }
