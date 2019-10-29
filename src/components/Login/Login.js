@@ -137,7 +137,7 @@ class Login extends Component {
             alignItems: 'center',
             justifyContent: 'flex-end',
             width: Dimensions.get('window').width,
-            height: 100,
+            height: Dimensions.get('window').height * 0.12,
         }
     }
 

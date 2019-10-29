@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 export default StyleSheet.create({
 
     descContainer:{
-        width: Dimensions.get('window').width -55,
+        width: Dimensions.get('window').width * 0.85,
         fontSize: 25,
         borderBottomWidth: 1,
         borderColor: 'grey',

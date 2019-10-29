@@ -6,7 +6,7 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     inputForm:{
-        width: Dimensions.get('window').width -55,
+      width: Dimensions.get('window').width * 0.85,
     },
     input:{
       fontSize: 16,

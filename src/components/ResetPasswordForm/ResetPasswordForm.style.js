@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions} from 'react-native';
 export default StyleSheet.create({
     
     inputForm:{
-        width: Dimensions.get('window').width -55,
+      width: Dimensions.get('window').width * 0.85,
     },
     input:{
       fontSize: 16,

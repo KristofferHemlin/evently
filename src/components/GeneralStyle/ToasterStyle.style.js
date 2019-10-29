@@ -20,7 +20,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         width: Dimensions.get('window').width,
-        height: 100,
+        height: Dimensions.get('window').height * 0.12,
     },
 
     errorMessage:{
@@ -29,6 +29,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         width: Dimensions.get('window').width,
-        height: 100,
+        height: Dimensions.get('window').height * 0.12,
     }
 });
