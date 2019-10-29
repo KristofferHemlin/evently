@@ -94,7 +94,6 @@ class ChangeInfo extends Component {
             }, {})
             body.title = this.state.title;
             body.token = this.props.token;
-            console.log('body', body);
 
             this.setState({ isLoading: true }, () => {
                 axios.put(this.state.http_update_url, body)
@@ -189,7 +188,7 @@ const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInput
 
     return <View style={formStyle.inputForm}>
         {Object.keys(fields).map((key) => {
-            console.log('key', key);
+
             return (
                 <View key={key}>
                     <Text style={styles.inputFormTitle}>{fields[key].label}</Text>

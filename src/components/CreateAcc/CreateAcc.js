@@ -158,8 +158,6 @@ class CreateAcc extends Component {
         let formErrors = this.state.formErrors;
         const label = fields[i].label;
         fields[i].value = value;
-        console.log('fields[Password]', fields['password'].value);
-        console.log('value', value);
         switch (label) {
             case 'First Name':
                 formErrors.firstName = value.length < 1 ? "Minimum 2 characters required" : "";
@@ -276,7 +274,6 @@ const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInput
 
     return <View style={formStyle.inputForm}>
         {Object.keys(fields).map((key) => {
-            console.log('key', key);
             return (
                 <View key={key}>
                     <Text style={styles.inputFormTitle}>{fields[key].label}</Text>
