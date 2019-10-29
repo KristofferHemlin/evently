@@ -1,7 +1,7 @@
 
 
-// const URL = 'https://eventapp-master-api.azurewebsites.net/';
-const URL = 'http://localhost:3000/';
+const URL = 'https://eventapp-master-api.azurewebsites.net/';
+// const URL = 'http://localhost:3000/';
 // const URL = 'http://10.110.171.158:3000/';
 
 
