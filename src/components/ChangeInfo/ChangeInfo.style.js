@@ -4,32 +4,32 @@ import {
 
 export default StyleSheet.create({
 
-    pageContainer:{
-        flex:1,
+    pageContainer: {
+        flex: 1,
     },
 
-    profilePicture:{
-        width: 150, 
+    profilePicture: {
+        width: 150,
         height: 150,
         borderRadius: 75,
     },
 
-    profilePictureView:{
+    profilePictureView: {
         alignItems: "center",
         marginTop: 40,
     },
 
-    nameText:{
+    nameText: {
         fontSize: 30,
         fontWeight: "200",
         marginTop: 20,
     },
 
-    companyText:{
+    companyText: {
         color: "gray",
     },
 
-    line:{
+    line: {
         borderBottomColor: 'lightgray',
         borderBottomWidth: 1,
         marginTop: 30,
@@ -37,23 +37,23 @@ export default StyleSheet.create({
         marginRight: 30,
     },
 
-    userInfo:{
+    userInfo: {
         marginBottom: 30,
     },
 
-    inputForm:{
+    inputForm: {
         marginLeft: 30,
         marginRight: 30,
     },
 
-    inputFormTitle:{
+    inputFormTitle: {
         paddingTop: 10,
         paddingBottom: 10,
-        marginTop: 20,
-        
+        fontSize: 16,
+        fontWeight: '600',
     },
 
-    input:{
+    input: {
         paddingTop: 15,
         alignItems: "center",
         fontSize: 16,
@@ -65,22 +65,25 @@ export default StyleSheet.create({
         paddingVertical: 20,
         // marginBottom: 20,
         borderRadius: 3,
+    },
+    inputErrorMessageContainer: {
+        height: 20,
+        marginTop: 5,
       },
-    
-    inputContainer:{
-      },
-    
-      buttonContainer:{
-          backgroundColor: '#5A90DC',
-          height: 50,
-          opacity: 0.8,
-          justifyContent: 'center',
-          borderRadius: 5,
-          marginBottom: 40,
-          marginTop: 30,
-      },
+    inputErrorMessageText: {
+        color: 'red',
+        fontWeight: '700',
+    },
+    buttonContainer: {
+        backgroundColor: '#5A90DC',
+        height: 50,
+        opacity: 0.8,
+        justifyContent: 'center',
+        borderRadius: 5,
+        marginBottom: 40,
+    },
 
-    buttonText:{
+    buttonText: {
         textAlign: 'center',
         color: '#FFF',
         fontSize: 16,
@@ -100,7 +103,7 @@ export default StyleSheet.create({
         marginLeft: 5,
         padding: 3,
     },
-    backButtonIconContainer: {
+    backButtonIconContainer: {
         marginLeft: 5,
         padding: 3,
     }
