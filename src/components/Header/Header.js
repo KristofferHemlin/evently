@@ -53,7 +53,6 @@ class Header extends Component {
             showNotificationBadgeParsed = Boolean(JSON.parse(showNotificationBadge));
 
             if (showNotificationBadgeParsed !== null) {
-                console.log('showNotificationBadgeParsed',showNotificationBadgeParsed);
                this.props.onSaveNotificationStatus(showNotificationBadgeParsed)
             }
         } catch (error) {
@@ -129,7 +128,6 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('state', state);
     return {
         notificationStatus: state.notificationStatus
         
@@ -137,7 +135,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    console.log('dispatch', dispatch);
     return {
         onSaveNotificationStatus: (notificationStatus) => dispatch({
             type: actionTypes.SAVE_NOTIFICATION_STATUS,

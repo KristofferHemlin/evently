@@ -101,7 +101,6 @@ class ShowParticipants extends Component {
     }
 
     profilePreviewOnClickHandler = (participantID) => {
-        console.log('participantID', participantID);
         this.props.navigation.navigate('ParticipantOverviewRute', {
             participantID: participantID,
             showParticipant: true,
