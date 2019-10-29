@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from 'react-navigation';
 
+import * as actionTypes from '../../store/actions';
+
 import URL from '../../config';
 import styles from './SettingsModal.style'
 
@@ -22,8 +24,14 @@ class SettingsModal extends Component {
 
 
     userInfoNavigationHandler = () => {
-        this.props.navigation.navigate('UserProfileRoute');
         this.props.exitModal();
+        this.props.navigation.navigate('UserProfileRoute');
+    }
+
+    logoutHandler = () => {
+        this.props.onDeleteToken();
+        this.props.exitModal();
+        this.props.navigation.navigate('LoginRoute');
     }
 
     changePasswordNavigationHandler = () => {
@@ -74,6 +82,9 @@ class SettingsModal extends Component {
                         {/* <TouchableOpacity onPress={this.changePasswordNavigationHandler}>
                             <Text style={styles.menuTxt}>Change Account Password</Text>
                         </TouchableOpacity> */}
+                        <TouchableOpacity onPress={this.logoutHandler}>
+                            <Text style={styles.menuTxt}>Logout</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -87,5 +98,13 @@ const mapStateToProps = state => {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        onDeleteToken: () => dispatch({
+            type: actionTypes.ON_DELETE_TOKEN,
+        }),
+    };
+};
 
-export default connect(mapStateToProps)(withNavigation(SettingsModal));
+
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(SettingsModal));
