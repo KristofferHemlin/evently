@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     View,
     ActivityIndicator,
-    Dimensions
+    Dimensions,
+    Platform
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -19,7 +20,7 @@ import FormDescription from '../FormDescription/FormDescription';
 import FormHeader from '../FormHeader/FormHeader';
 import BackButton from '../BackButton/BackButton';
 import Header from '../Header/Header';
-// import ImageSelector from '../ImageSelector/ImageSelector';
+import ImageSelector from '../ImageSelector/ImageSelector';
 
 import URL from '../../config';
 import styles from './CreateAcc.style';
@@ -118,6 +119,8 @@ class CreateAcc extends Component {
         },
         isLoading: false,
         messageColor: null,
+
+        imageData: null,
     }
 
 
@@ -210,21 +213,34 @@ class CreateAcc extends Component {
     }
 
     handleSubmit = () => {
+        const userData = new FormData();
+        userData.append("firstName", this.state.fields['firstName'].value)
+        userData.append("lastName", this.state.fields['lastName'].value,)
+        userData.append("email", this.state.fields['email'].value)
+        userData.append("phone", this.state.fields['phone'].value)
+        userData.append("companyDepartment", this.state.fields['companyDepartment'].value)
+        userData.append("password", this.state.fields['password'].value)
+        userData.append("image", {
+            name: this.state.imageData.fileName,
+            type: this.state.imageData.type,
+            uri:
+                Platform.OS === "android" ? this.state.imageData.uri : this.state.imageData.uri.replace("file://", "")
+        })
+
         if (formValid(this.state.formErrors, this.state.fields)) {
             this.setState({ isLoading: true }, () => {
-                axios.put(URL + 'users/' + this.props.userID + '/firstlogin', {
-                    firstName: this.state.fields['firstName'].value,
-                    lastName: this.state.fields['lastName'].value,
-                    email: this.state.fields['email'].value,
-                    phone: this.state.fields['phone'].value,
-                    companyDepartment: this.state.fields['companyDepartment'].value,
-                    password: this.state.fields['password'].value,
+                // axios.put(URL + 'users/' + this.props.userID + '/imageUpload', userData, {
+                axios.put(URL + 'users/' + this.props.userID + '/firstlogin', userData, {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
                 })
                     .then((response) => {
                         this.setState({ isLoading: false });
                         this.props.navigation.navigate('EventOverviewRoute')
                     })
                     .catch((error) => {
+                        console.log("piffpuff: ", error.response);
                         console.log(error);
                         this.setState({ isLoading: false })
                     })
@@ -233,6 +249,12 @@ class CreateAcc extends Component {
             this.showToasterHandler("One or more invalid fields!", false);
         }
 
+    }
+
+
+    saveImageHandler = (image) => {
+        console.log("saveImageHandler", image);
+        this.setState({ imageData: image });
     }
 
     render() {
@@ -248,16 +270,16 @@ class CreateAcc extends Component {
                     <KeyboardAwareScrollView>
                         <BackButton />
                         <View style={styles.creatAccContainer}>
-                        <FormHeader>Create your profile</FormHeader>
-                        <FormDescription>Welcome! Fill in the form below to set up your company and user account.</FormDescription>
-                        {/* <ImageSelector>Please upload a photo of yourself</ImageSelector> */}
-                        <EditableForm
-                            fields={this.state.fields}
-                            formErrors={this.state.formErrors}
-                            handleSubmit={this.handleSubmit}
-                            isLoading={this.state.isLoading}
-                            handleInputChange={this.handleInputChange}
-                            formStyle={styles} />
+                            <FormHeader>Create your profile</FormHeader>
+                            <FormDescription>Welcome! Fill in the form below to set up your company and user account.</FormDescription>
+                            <ImageSelector saveImageHandler={this.saveImageHandler}>Please upload a photo of yourself</ImageSelector>
+                            <EditableForm
+                                fields={this.state.fields}
+                                formErrors={this.state.formErrors}
+                                handleSubmit={this.handleSubmit}
+                                isLoading={this.state.isLoading}
+                                handleInputChange={this.handleInputChange}
+                                formStyle={styles} />
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>

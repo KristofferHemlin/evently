@@ -21,16 +21,22 @@ class ImageSelector extends Component{
     state = {
         photo: null,
     }
-    handleChossePhoto = () => {
+    choosePhotoHandler = () => {
         const options = {
             noData: true
         };
         ImagePicker.launchImageLibrary(options, response => {
+            console.log("options: ", options);
+            console.log("response: ", response);
+            console.log("responseURI: ", response.uri);
             if(response.uri) {
                 this.setState({photo: response});
+                this.props.saveImageHandler(response);
             }
         })
     }
+
+
     render(){
         const { photo } = this.state; 
         if(photo) {
@@ -46,7 +52,7 @@ class ImageSelector extends Component{
                 <Text style={styles.ImageSelectorTxt}>{this.props.children}</Text>
                 <TouchableOpacity 
                 style={styles.ImageSelectorBtn}
-                onPress={this.handleChossePhoto}>
+                onPress={this.choosePhotoHandler}>
                     {imgButton}
                 </TouchableOpacity>
             </View>
