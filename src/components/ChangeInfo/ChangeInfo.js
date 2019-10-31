@@ -15,6 +15,7 @@ import Toast from 'react-native-easy-toast'
 
 import BackButton from '../BackButton/BackButton';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+import ImageSelector from '../ImageSelector/ImageSelector';
 
 import styles from './ChangeInfo.style';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
@@ -41,6 +42,7 @@ class ChangeInfo extends Component {
         formErrors: this.props.navigation.getParam('formErrors', ''),
         isLoading: false,
         wantToEdit: false,
+        imageData: null,
     }
 
     handleInputChange = (value, key) => {
@@ -87,16 +89,32 @@ class ChangeInfo extends Component {
     };
 
     handleSubmit = () => {
+
         if (formValid(this.state.formErrors)) {
             var body = Object.keys(this.state.fields).reduce((map, key) => {
-                map[key] = this.state.fields[key].value
+                map.append(key, this.state.fields[key].value)
                 return map
-            }, {})
+            }, new FormData())
             body.title = this.state.title;
-            body.token = this.props.token;
+            // body.token = this.props.token;
+
+            let image = null;
+            if (this.state.imageData) {
+                image = {
+                    name: this.state.imageData.fileName,
+                    type: this.state.imageData.type,
+                    uri:
+                        Platform.OS === "android" ? this.state.imageData.uri : this.state.imageData.uri.replace("file://", "")
+                }
+            }
+            body.append("image", image)
 
             this.setState({ isLoading: true }, () => {
-                axios.put(this.state.http_update_url, body)
+                axios.put(this.state.http_update_url, body, {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                })
                     .then(() => this.props.navigation.state.params.onEditSubmit(body))
                     .then(() =>
                         this.setState({ isLoading: false }, () => {
@@ -106,14 +124,18 @@ class ChangeInfo extends Component {
                         })
                     )
                     .catch((error) => {
-                        console.log(error);
+                        console.log(error.response);
                         this.setState({ isLoading: false })
                     })
             })
         } else {
             this.showToasterHandler("One or more invalid fields!", false);
         }
+    }
 
+    saveImageHandler = (image) => {
+        console.log("saveImageHandler", image);
+        this.setState({ imageData: image });
     }
 
     showToasterHandler = (toasterResponse, success) => {
@@ -155,6 +177,9 @@ class ChangeInfo extends Component {
                                 editButtonStatus={this.state.wantToEdit}
                             >{'Edit ' + this.state.title}
                             </HeadlineOverview>
+
+                            <ImageSelector saveImageHandler={this.saveImageHandler} />
+
                             <View style={styles.editFormContainer}>
                                 <EditableForm
                                     fields={this.state.fields}
