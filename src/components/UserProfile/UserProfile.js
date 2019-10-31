@@ -55,7 +55,7 @@ class UserProfile extends Component {
     fetchUserData = (userID) => {
         axios.get(URL + 'users/' + userID)
             .then((response) => {
-                console.log('response', response);
+                console.log('userprofileresponse', response);
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
@@ -67,7 +67,7 @@ class UserProfile extends Component {
                 })
             })
             .catch((error) => {
-                console.log(error);
+                console.log("userprofileError", error);
             });
     }
 
@@ -204,7 +204,9 @@ class UserProfile extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.userID,
-        roleID: state.roleID
+        roleID: state.roleID,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
     }
 }
 

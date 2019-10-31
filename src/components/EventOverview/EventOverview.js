@@ -12,7 +12,46 @@ import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 import Header from '../Header/Header';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import styles from './EventOverview.style.js';
+import store from '../../store/store';
 
+import NavigationService from '../../navigation/NavigationService';
+
+axios.interceptors.request.use(request => {
+    const state = store.getState();
+    console.log('request', request);
+    request.headers.Authorization = "Bearer " + state.accessToken;
+    return request;
+})
+axios.interceptors.response.use(response => {
+    return response;
+}, error => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest.headers.retry) {
+        const state = store.getState();
+        originalRequest.headers.retry = true;
+
+        return axios.post(URL + 'tokens/refresh', {
+            refreshToken: state.refreshToken,
+            userId: state.userID,
+        })
+            .then((response) => {
+                store.dispatch({
+                    type: actionTypes.SAVE_TOKENS, payload: {
+                        accessToken: response.data.accessToken,
+                        refreshToken: response.data.refreshToken
+                    }
+                })
+                return axios(originalRequest);
+            })
+            .catch((error) => {
+                NavigationService.navigate('LoginRoute', {
+                    showErrorMessage: true
+                });
+                return Promise.reject(error);
+            })
+    }
+    return Promise.reject(error);
+})
 
 
 
@@ -189,7 +228,9 @@ class EventOverview extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.userID,
-        roleID: state.roleID
+        roleID: state.roleID,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
     }
 }
 
@@ -199,8 +240,14 @@ const mapDispatchToProps = dispatch => {
             type: actionTypes.SAVE_EVENT_TITLE,
             payload: {
                 eventTitle: eventTitle
-            }
+            },
         }),
+        onSaveAuthToken: (accessToken) => dispatch({
+            type: actionTypes.SAVE_AUTH_TOKEN,
+            payload: {
+                accessToken: accessToken
+            },
+        })
     };
 };
 
