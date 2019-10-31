@@ -215,17 +215,20 @@ class CreateAcc extends Component {
     handleSubmit = () => {
         const userData = new FormData();
         userData.append("firstName", this.state.fields['firstName'].value)
-        userData.append("lastName", this.state.fields['lastName'].value,)
+        userData.append("lastName", this.state.fields['lastName'].value)
         userData.append("email", this.state.fields['email'].value)
         userData.append("phone", this.state.fields['phone'].value)
         userData.append("companyDepartment", this.state.fields['companyDepartment'].value)
         userData.append("password", this.state.fields['password'].value)
-        userData.append("image", {
+
+        let image = this.state.imageData ? {
             name: this.state.imageData.fileName,
             type: this.state.imageData.type,
             uri:
                 Platform.OS === "android" ? this.state.imageData.uri : this.state.imageData.uri.replace("file://", "")
-        })
+        } :
+            null;
+        userData.append("image", image)
 
         if (formValid(this.state.formErrors, this.state.fields)) {
             this.setState({ isLoading: true }, () => {
