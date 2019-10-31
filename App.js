@@ -3,10 +3,13 @@ import React, { Component } from 'react';
 
 import NavigationService from './src/navigation/NavigationService';
 import { Provider } from 'react-redux';
+
 import store from './src/store/store';
+import './src/interceptors/interceptors';
 
 import AppNavigator from './src/navigation/AppNavigator';
 import SplashScreen from 'react-native-splash-screen';
+
 
 class App extends Component {
 
