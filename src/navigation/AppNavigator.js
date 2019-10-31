@@ -29,7 +29,6 @@ const Appstack = createStackNavigator(
 
 const AuthStack = createStackNavigator(
   {
-    // CreateAccRoute: CreateAcc,
     LoginRoute: Login,
     CreateAccRoute: CreateAcc,
     ResetPasswordRoute: ResetPassword,

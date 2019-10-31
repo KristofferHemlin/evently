@@ -3,6 +3,7 @@ import {
     View,
     Text,
     ScrollView,
+    Image,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -15,7 +16,7 @@ import Footer from '../Footer/Footer';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 
 import styles from './ParticipantOverview.style';
-import URL from '../../config';     
+import URL from '../../config';
 
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
@@ -36,12 +37,13 @@ class ParticipantOverview extends Component {
             about: '',
             allergies: '',
             isCompanyManager: false,
+            profileImage: '',
         }
         props.navigation.addListener('willFocus', () => {
             const participantID = Number(this.props.navigation.getParam('participantID', null));
 
             this.fetchUserData(participantID);
-            
+
             if (this.props.roleID === 1) {
                 this.setState({ isCompanyManager: true })
             }
@@ -61,6 +63,7 @@ class ParticipantOverview extends Component {
                     department: response.data.companyDepartment,
                     about: response.data.aboutMe,
                     allergies: response.data.allergiesOrPreferences,
+                    profileImage: response.data.profileImageUrl,
                 })
             })
             .catch((error) => {
@@ -71,7 +74,7 @@ class ParticipantOverview extends Component {
     render() {
         return (
             <View style={styles.pageContainer}>
-                <Header/>
+                <Header />
                 <ScrollView>
                     <KeyboardAwareScrollView>
                         <View style={styles.userInfo}>
@@ -80,7 +83,14 @@ class ParticipantOverview extends Component {
                                 editButtonStatus={false}
                             >User Profile</HeadlineOverview>
                             <View style={styles.profilePictureView}>
-                                <View>{profileAvatar}</View>
+                                {this.state.profileImage ?
+                                    <View>
+                                        <Image style={styles.profilePicture}
+                                            source={{ uri: this.state.profileImage }} />
+                                    </View>
+                                    :
+                                    <View>{profileAvatar}</View>
+                                }
                                 <Text style={styles.nameText}>{this.state.firstName} {this.state.lastName}</Text>
                             </View>
                             <View style={styles.line}></View>
@@ -105,7 +115,7 @@ class ParticipantOverview extends Component {
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer/>
+                <Footer />
             </View>
         )
     }
