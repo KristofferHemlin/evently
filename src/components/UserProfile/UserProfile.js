@@ -3,6 +3,7 @@ import {
     View,
     Text,
     ScrollView,
+    Image,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -38,6 +39,7 @@ class UserProfile extends Component {
             about: '',
             allergies: '',
             infoAllowedChange: true,
+            profileImage: '',
         }
         props.navigation.addListener('willFocus', () => {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
@@ -64,6 +66,7 @@ class UserProfile extends Component {
                     companyDepartment: response.data.companyDepartment,
                     about: response.data.aboutMe,
                     allergies: response.data.allergiesOrPreferences,
+                    profileImage: response.data.profileImageUrl,
                 })
             })
             .catch((error) => {
@@ -175,7 +178,16 @@ class UserProfile extends Component {
                                 onEditPress={() => this.handleEditPress()}
                             >User Profile</HeadlineOverview>
                             <View style={styles.profilePictureView}>
-                                <View>{profileAvatar}</View>
+
+                                {this.state.profileImage ?
+                                    <View>
+                                        <Image style={styles.profilePicture}
+                                        source={{ uri: this.state.profileImage }} />
+                                    </View>
+                                    :
+                                    <View>{profileAvatar}</View>
+                                }
+
                                 <Text style={styles.nameText}>{this.state.firstName} {this.state.lastName}</Text>
                             </View>
                             <View style={styles.line}></View>

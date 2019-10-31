@@ -240,7 +240,6 @@ class CreateAcc extends Component {
                         this.props.navigation.navigate('EventOverviewRoute')
                     })
                     .catch((error) => {
-                        console.log("piffpuff: ", error.response);
                         console.log(error);
                         this.setState({ isLoading: false })
                     })

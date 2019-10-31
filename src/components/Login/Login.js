@@ -37,7 +37,7 @@ class Login extends Component {
         this.state = {
             messageColor: null,
             username: 'pontus.ellboj@claremont.se',
-            password: 'kroatien19',
+            password: '123456',
             userID: null,
             isLoading: false,
         }
