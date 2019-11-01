@@ -21,7 +21,6 @@ const dataReducer = (state = initialState, action) => {
                 refreshToken: action.payload.refreshToken,
             }
         case actionTypes.SAVE_TOKENS:
-            console.log('action.payload.refreshToken', action.payload.refreshToken);
             return {
                 ...state,
                 accessToken: action.payload.accessToken,
