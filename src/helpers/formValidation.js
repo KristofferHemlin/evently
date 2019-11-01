@@ -20,6 +20,5 @@ export const formValid = (formErrors, fields) => {
     }
 
 
-    // return valid;
-    return true;
+    return valid;
 }

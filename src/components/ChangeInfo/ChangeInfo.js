@@ -43,6 +43,7 @@ class ChangeInfo extends Component {
         isLoading: false,
         wantToEdit: false,
         imageData: null,
+        imageUrl: this.props.navigation.getParam('imageUrl', null),
     }
 
     handleInputChange = (value, key) => {
@@ -96,7 +97,6 @@ class ChangeInfo extends Component {
                 return map
             }, new FormData())
             body.title = this.state.title;
-            // body.token = this.props.token;
 
             let image = null;
             if (this.state.imageData) {
@@ -115,7 +115,6 @@ class ChangeInfo extends Component {
                         'content-type': 'multipart/form-data'
                     }
                 })
-                    .then(() => this.props.navigation.state.params.onEditSubmit(body))
                     .then(() =>
                         this.setState({ isLoading: false }, () => {
                             this.props.navigation.navigate(this.state.parentRoute, {
@@ -178,7 +177,7 @@ class ChangeInfo extends Component {
                             >{'Edit ' + this.state.title}
                             </HeadlineOverview>
 
-                            <ImageSelector saveImageHandler={this.saveImageHandler} />
+                            <ImageSelector saveImageHandler={this.saveImageHandler} source={{ uri: this.state.imageUrl }}>Press to change photo</ImageSelector>
 
                             <View style={styles.editFormContainer}>
                                 <EditableForm

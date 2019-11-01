@@ -39,7 +39,7 @@ class UserProfile extends Component {
             about: '',
             allergies: '',
             infoAllowedChange: true,
-            profileImage: '',
+            profileImage: null,
         }
         props.navigation.addListener('willFocus', () => {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
@@ -74,27 +74,13 @@ class UserProfile extends Component {
             });
     }
 
-    onEditSubmit(input) {
-        this.setState({
-            firstName: input.firstName,
-            lastName: input.lastName,
-            email: input.email,
-            phone: input.phone,
-            companyDepartment: input.companyDepartment,
-            about: input.aboutMe,
-            allergies: input.allergies,
-            infoAllowedChange: true,
-        })
-    }
-
     handleEditPress = () => {
-        this.onEditSubmit = this.onEditSubmit.bind(this)
         this.props.navigation.navigate('ChangeInfoRoute', {
-            onEditSubmit: (input) => this.onEditSubmit(input),
             uID: this.props.userID,
             parentRoute: 'UserProfileRoute',
             http_update_url: URL + 'users/' + this.props.userID,
             http_get_url: URL + 'users/' + this.props.userID,
+            imageUrl: this.state.profileImage,
             fields: {
                 firstName: {
                     label: 'First Name',
