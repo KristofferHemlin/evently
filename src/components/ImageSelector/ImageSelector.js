@@ -13,7 +13,7 @@ import styles from './ImageSelector.style';
 import ImagePicker from 'react-native-image-picker';
 
 
-const uploadImageIcon = <FontAwesome5 size={150} name={'user-circle'} solid color="grey" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
+const uploadImageIcon = <FontAwesome5 size={150} name={'user-circle'} solid color="lightgrey" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
 
 
 class ImageSelector extends Component{
@@ -21,16 +21,19 @@ class ImageSelector extends Component{
     state = {
         photo: null,
     }
-    handleChossePhoto = () => {
+    choosePhotoHandler = () => {
         const options = {
             noData: true
         };
         ImagePicker.launchImageLibrary(options, response => {
             if(response.uri) {
                 this.setState({photo: response});
+                this.props.saveImageHandler(response);
             }
         })
     }
+
+
     render(){
         const { photo } = this.state; 
         if(photo) {
@@ -38,7 +41,13 @@ class ImageSelector extends Component{
             source={{uri: photo.uri}}
             style={styles.profileImage}   
             />
-        } else {
+        } else if (this.props.source.uri){
+            imgButton =  <Image
+            source={{uri: this.props.source.uri}}
+            style={styles.profileImage}   
+            />
+        } 
+        else {
             imgButton = uploadImageIcon
         }
         return(
@@ -46,7 +55,7 @@ class ImageSelector extends Component{
                 <Text style={styles.ImageSelectorTxt}>{this.props.children}</Text>
                 <TouchableOpacity 
                 style={styles.ImageSelectorBtn}
-                onPress={this.handleChossePhoto}>
+                onPress={this.choosePhotoHandler}>
                     {imgButton}
                 </TouchableOpacity>
             </View>

@@ -3,6 +3,7 @@ import {
     View,
     Text,
     ScrollView,
+    Image,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -38,6 +39,7 @@ class UserProfile extends Component {
             about: '',
             allergies: '',
             infoAllowedChange: true,
+            profileImage: null,
         }
         props.navigation.addListener('willFocus', () => {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
@@ -64,6 +66,7 @@ class UserProfile extends Component {
                     companyDepartment: response.data.companyDepartment,
                     about: response.data.aboutMe,
                     allergies: response.data.allergiesOrPreferences,
+                    profileImage: response.data.profileImageUrl,
                 })
             })
             .catch((error) => {
@@ -71,27 +74,13 @@ class UserProfile extends Component {
             });
     }
 
-    onEditSubmit(input) {
-        this.setState({
-            firstName: input.firstName,
-            lastName: input.lastName,
-            email: input.email,
-            phone: input.phone,
-            companyDepartment: input.companyDepartment,
-            about: input.aboutMe,
-            allergies: input.allergies,
-            infoAllowedChange: true,
-        })
-    }
-
     handleEditPress = () => {
-        this.onEditSubmit = this.onEditSubmit.bind(this)
         this.props.navigation.navigate('ChangeInfoRoute', {
-            onEditSubmit: (input) => this.onEditSubmit(input),
             uID: this.props.userID,
             parentRoute: 'UserProfileRoute',
             http_update_url: URL + 'users/' + this.props.userID,
             http_get_url: URL + 'users/' + this.props.userID,
+            imageUrl: this.state.profileImage,
             fields: {
                 firstName: {
                     label: 'First Name',
@@ -175,7 +164,16 @@ class UserProfile extends Component {
                                 onEditPress={() => this.handleEditPress()}
                             >User Profile</HeadlineOverview>
                             <View style={styles.profilePictureView}>
-                                <View>{profileAvatar}</View>
+
+                                {this.state.profileImage ?
+                                    <View>
+                                        <Image style={styles.profilePicture}
+                                        source={{ uri: this.state.profileImage }} />
+                                    </View>
+                                    :
+                                    <View>{profileAvatar}</View>
+                                }
+
                                 <Text style={styles.nameText}>{this.state.firstName} {this.state.lastName}</Text>
                             </View>
                             <View style={styles.line}></View>
