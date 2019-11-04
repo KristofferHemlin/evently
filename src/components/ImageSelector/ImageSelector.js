@@ -32,6 +32,11 @@ class ImageSelector extends Component {
         })
     }
 
+    removeImageHandler = () => {
+        console.log("you want to delete your beautiful image? :(");
+        
+    }
+
 
     render() {
         const { photo } = this.state;
@@ -49,26 +54,27 @@ class ImageSelector extends Component {
         else {
             imgButton = uploadImageIcon
         }
+
         return (
-            <View style={styles.imageSelectorContainer}>
+            <View style={styles.container}>
+                <View style={styles.imageSelectorContainer}>
+                    <TouchableOpacity
+                        style={styles.removeIconButton}
+                        onPress={this.removeImageHandler}>
+                        {photo || this.props.source.uri ?
+                            <View style={styles.notificationIconCircle}>{remove_image}</View>
+                            : null}
+                    </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.notificationIcon}
-                    onPress={this.removeImageHandler}>
-                    {this.props.source.uri ?
-                        <View style={styles.notificationIconCircle} />
-                        : null}
-                    {remove_image}
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.ImageSelectorBtn}
-                    onPress={this.choosePhotoHandler}>
-                    <View style={{ alignItems: 'center' }}>
-                        {imgButton}
-                        <Text style={styles.ImageSelectorTxt}>{this.props.children}</Text>
-                    </View>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.ImageSelectorButton}
+                        onPress={this.choosePhotoHandler}>
+                        <View style={{ alignItems: 'center' }}>
+                            {imgButton}
+                            <Text style={styles.ImageSelectorTxt}>{this.props.children}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
