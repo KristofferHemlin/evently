@@ -16,6 +16,7 @@ import Toast from 'react-native-easy-toast'
 import BackButton from '../BackButton/BackButton';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
 import ImageSelector from '../ImageSelector/ImageSelector';
+import URL from '../../config';
 
 import styles from './ChangeInfo.style';
 import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
@@ -109,6 +110,13 @@ class ChangeInfo extends Component {
             }
             body.append("image", image)
 
+            if (this.state.imageUrl == null) {
+                axios.delete(URL + 'users/' + this.props.userID + '/profileimage')
+                    .catch((error) => {
+                        console.log(error.response);
+                    })
+            }
+
             this.setState({ isLoading: true }, () => {
                 axios.put(this.state.http_update_url, body, {
                     headers: {
@@ -133,8 +141,11 @@ class ChangeInfo extends Component {
     }
 
     saveImageHandler = (image) => {
-        console.log("saveImageHandler", image);
         this.setState({ imageData: image });
+    }
+
+    deleteImageHandler = () => {
+        this.setState({ imageUrl: null });
     }
 
     showToasterHandler = (toasterResponse, success) => {
@@ -177,7 +188,7 @@ class ChangeInfo extends Component {
                             >{'Edit ' + this.state.title}
                             </HeadlineOverview>
 
-                            <ImageSelector saveImageHandler={this.saveImageHandler} source={{ uri: this.state.imageUrl }}>Press to change photo</ImageSelector>
+                            <ImageSelector saveImageHandler={this.saveImageHandler} deleteImageHandler={this.deleteImageHandler} source={{ uri: this.state.imageUrl }}>Press to change photo</ImageSelector>
 
                             <View style={styles.editFormContainer}>
                                 <EditableForm

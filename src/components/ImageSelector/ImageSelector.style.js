@@ -4,6 +4,7 @@ export default StyleSheet.create({
     container:{
         flexDirection: 'row',
         justifyContent: 'center',
+        marginTop: 25,
     },
 
     imageSelectorContainer:{

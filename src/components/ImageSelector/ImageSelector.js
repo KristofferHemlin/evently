@@ -33,8 +33,8 @@ class ImageSelector extends Component {
     }
 
     removeImageHandler = () => {
-        console.log("you want to delete your beautiful image? :(");
-        
+        this.setState({ photo: null });
+        this.props.deleteImageHandler();
     }
 
 
