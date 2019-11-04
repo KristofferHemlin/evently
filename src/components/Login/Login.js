@@ -26,6 +26,8 @@ import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 import URL from '../../config';
 import * as actionTypes from '../../store/actions';
 
+
+
 class Login extends Component {
     static navigationOptions = {
         header: null,
@@ -36,17 +38,23 @@ class Login extends Component {
 
         this.state = {
             messageColor: null,
-            username: '',
-            password: '',
+            username: 'tom.althin@gmail.com',
+            password: 'a',
             userID: null,
             isLoading: false,
         }
+        this.props.navigation.addListener('willFocus', () => {
+            const showErrorMessage = Boolean(this.props.navigation.getParam('showErrorMessage', false));
+            console.log('showErrorMessage', showErrorMessage);
+            if(showErrorMessage){
+                setTimeout(() => {this.showToasterHandler("Your session expired, log in again!", false)}, 500)
+            }
+        })
     }
 
 
     componentDidMount() {
         // deep linking stuff
-
         Linking.addEventListener('url', this.handleOpenURL)
         Linking.getInitialURL().then((url) => {
             if (url) {
@@ -75,10 +83,12 @@ class Login extends Component {
 
         if (routeName === 'resetpassword') {
             navigate('ResetPasswordRoute', {
-                deepLinkToken:deepLinkToken
+                deepLinkToken: deepLinkToken
             })
         }
     }
+
+
 
     authUser = () => {
         this.setState({ isLoading: true }, () => {
@@ -87,11 +97,12 @@ class Login extends Component {
                 password: this.state.password
             })
                 .then((response) => {
-
+                    console.log('response', response);
                     this.props.onSaveUser(
-                        response.data.user.id, 
-                        response.data.user.role.id, 
-                        response.data.token);
+                        response.data.user.id,
+                        response.data.user.role.id,
+                        response.data.accessToken,
+                        response.data.refreshToken);
                     // Set up onesignal notifications.
                     OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
                     // OneSignal.removeExternalUserId();
@@ -205,12 +216,13 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveUser: (userID, roleID, token) => dispatch({
+        onSaveUser: (userID, roleID, accessToken, refreshToken) => dispatch({
             type: actionTypes.SAVE_USER,
             payload: {
                 userID: userID,
                 roleID: roleID,
-                token: token,
+                accessToken: accessToken,
+                refreshToken: refreshToken,
             }
         }),
     };

@@ -1,23 +1,30 @@
 
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import dataReducer from './src/store/reducers/dataReducer';
-import AppNavigator from './src/navigation/AppNavigator';
-import SplashScreen from 'react-native-splash-screen'
 
-const store = createStore(dataReducer);
+import NavigationService from './src/navigation/NavigationService';
+import { Provider } from 'react-redux';
+
+import store from './src/store/store';
+import './src/interceptors/interceptors';
+
+import AppNavigator from './src/navigation/AppNavigator';
+import SplashScreen from 'react-native-splash-screen';
+
 
 class App extends Component {
 
   componentDidMount() {
-      SplashScreen.hide();
+    SplashScreen.hide();
   }
-  
+
   render() {
     return (
       <Provider store={store}>
-        <AppNavigator />
+        <AppNavigator
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+        />
       </Provider>
     )
   }

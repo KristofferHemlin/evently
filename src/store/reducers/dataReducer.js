@@ -3,7 +3,8 @@ import * as actionTypes from '../actions';
 const initialState = {
     userID: null,
     roleID: null,
-    token: null,
+    accessToken: null,
+    refreshToken: null,
     activityID: null,
     eventTitle: '',
     notificationStatus: null,
@@ -16,7 +17,14 @@ const dataReducer = (state = initialState, action) => {
                 ...state, //kopierar över statet i den här komponenten för att unvdika mutability.
                 userID: action.payload.userID,
                 roleID: action.payload.roleID,
-                token: action.payload.token,
+                accessToken: action.payload.accessToken,
+                refreshToken: action.payload.refreshToken,
+            }
+        case actionTypes.SAVE_TOKENS:
+            return {
+                ...state,
+                accessToken: action.payload.accessToken,
+                refreshToken: action.payload.refreshToken,
             }
         case actionTypes.SAVE_EVENT_TITLE:
             return {
@@ -36,7 +44,9 @@ const dataReducer = (state = initialState, action) => {
         case actionTypes.ON_DELETE_TOKEN:
             return {
                 ...state,
-                token: null
+                accessToken: null,
+                refreshToken: null,
+
             }
         default:
             return state

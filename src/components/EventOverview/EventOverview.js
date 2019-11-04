@@ -1,20 +1,20 @@
-import axios from 'axios';
-import moment from 'moment';
 import React, { Component } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+
+import axios from 'axios';
+import moment from 'moment';
 import Toast from 'react-native-easy-toast';
 import { connect } from 'react-redux';
-import URL from '../../config';
-import * as actionTypes from '../../store/actions';
+
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
 import Footer from '../Footer/Footer';
-import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 import Header from '../Header/Header';
 import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+
+import URL from '../../config';
+import * as actionTypes from '../../store/actions';
+import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
 import styles from './EventOverview.style.js';
-
-
-
 
 class EventOverview extends Component {
 
@@ -189,7 +189,9 @@ class EventOverview extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.userID,
-        roleID: state.roleID
+        roleID: state.roleID,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
     }
 }
 
@@ -199,8 +201,14 @@ const mapDispatchToProps = dispatch => {
             type: actionTypes.SAVE_EVENT_TITLE,
             payload: {
                 eventTitle: eventTitle
-            }
+            },
         }),
+        onSaveAuthToken: (accessToken) => dispatch({
+            type: actionTypes.SAVE_AUTH_TOKEN,
+            payload: {
+                accessToken: accessToken
+            },
+        })
     };
 };
 

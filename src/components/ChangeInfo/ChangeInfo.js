@@ -205,9 +205,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(ChangeInfo);
 
 
-
-
-
 const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInputChange, formStyle }) => {
 
     return <View style={formStyle.inputForm}>
