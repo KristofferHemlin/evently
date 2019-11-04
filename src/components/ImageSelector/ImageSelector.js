@@ -51,6 +51,16 @@ class ImageSelector extends Component {
         }
         return (
             <View style={styles.imageSelectorContainer}>
+
+                <TouchableOpacity
+                    style={styles.notificationIcon}
+                    onPress={this.removeImageHandler}>
+                    {this.props.source.uri ?
+                        <View style={styles.notificationIconCircle} />
+                        : null}
+                    {remove_image}
+                </TouchableOpacity>
+
                 <TouchableOpacity
                     style={styles.ImageSelectorBtn}
                     onPress={this.choosePhotoHandler}>
