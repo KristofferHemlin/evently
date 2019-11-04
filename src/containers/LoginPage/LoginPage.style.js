@@ -4,6 +4,7 @@ export default StyleSheet.create({
     pageContainer: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: '#211F57',
     },
 
     logoContainer: {

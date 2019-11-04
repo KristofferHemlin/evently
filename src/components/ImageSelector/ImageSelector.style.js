@@ -1,12 +1,21 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    imageSelectorContainer:{
-
+    container:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 25,
     },
+
+    imageSelectorContainer:{
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    
     ImageSelectorBtn:{
         // marginVertical: 20,
     },
+
     profileImage:{
         width: 150, 
         height: 150,
@@ -18,5 +27,21 @@ export default StyleSheet.create({
         fontWeight: '500',
         paddingVertical:10,
     },
+
+    removeIconButton: {
+        position: 'absolute',
+        zIndex: 1,
+        margin: 10,
+    },
+    
+    notificationIconCircle: {
+        backgroundColor: 'white',
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+    },
+
+    ImageSelectorButton: {
+    }
 
 });

@@ -16,6 +16,7 @@ import Toast from 'react-native-easy-toast'
 import BackButton from '../../components/BackButton/BackButton';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 import ImageSelector from '../../components/ImageSelector/ImageSelector';
+import URL from '../../config';
 
 import styles from './ChangeInfoPage.style';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
@@ -108,7 +109,14 @@ class ChangeInfoPage extends Component {
                 }
             }
             body.append("image", image)
-            console.log('body', body);
+
+            if (this.state.imageUrl == null) {
+                axios.delete(URL + 'users/' + this.props.userID + '/profileimage')
+                    .catch((error) => {
+                        console.log(error.response);
+                    })
+            }
+
             this.setState({ isLoading: true }, () => {
                 axios.put(this.state.http_update_url, body, {
                     headers: {
@@ -133,8 +141,11 @@ class ChangeInfoPage extends Component {
     }
 
     saveImageHandler = (image) => {
-        console.log("saveImageHandler", image);
         this.setState({ imageData: image });
+    }
+
+    deleteImageHandler = () => {
+        this.setState({ imageUrl: null });
     }
 
     showToasterHandler = (toasterResponse, success) => {
@@ -177,7 +188,7 @@ class ChangeInfoPage extends Component {
                             >{'Edit ' + this.state.title}
                             </HeadlineOverview>
 
-                            <ImageSelector saveImageHandler={this.saveImageHandler} source={{ uri: this.state.imageUrl }}>Press to change photo</ImageSelector>
+                            <ImageSelector saveImageHandler={this.saveImageHandler} deleteImageHandler={this.deleteImageHandler} source={{ uri: this.state.imageUrl }}>Press to change photo</ImageSelector>
 
                             <View style={styles.editFormContainer}>
                                 <EditableForm
