@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from '../store/store';
 import * as actionTypes from '../store/actions';
-import URL from '../config';
+import URL from '../../config';
 
 import NavigationService from '../navigation/NavigationService';
 

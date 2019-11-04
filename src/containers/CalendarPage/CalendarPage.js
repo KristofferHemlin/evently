@@ -9,19 +9,19 @@ import axios from 'axios';
 import moment from 'moment';
 
 import EventCalendar from 'react-native-events-calendar'
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import HeadlineOverview from '../HeadlineOverview/HeadlineOverview'
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview'
 
-import * as actionTypes from '../../store/actions'
+import * as actionTypes from '../../utilities/store/actions'
 import URL from '../../config';
-import styles from './Calendar.style';
+import styles from './CalendarPage.style';
 
 
 
 let { width } = Dimensions.get('window');
 
-class Calendar extends Component {
+class CalendarPage extends Component {
 
   static navigationOptions = {
     header: null,
@@ -117,4 +117,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
+export default connect(mapStateToProps, mapDispatchToProps)(CalendarPage);

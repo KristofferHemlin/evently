@@ -11,18 +11,18 @@ import moment from 'moment';
 import axios from 'axios';
 
 
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
-import EventImageHeader from '../EventImageHeader/EventImageHeader';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
+import EventImageHeader from '../../components/EventImageHeader/EventImageHeader';
 
 import URL from '../../config';
-import styles from './ActivityOverview.style.js';
-import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
+import styles from './ActivityPage.style';
+import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 
 
 
-class ActivityOverview extends Component {
+class ActivityPage extends Component {
 
     static navigationOptions = {
         header: null,
@@ -222,4 +222,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ActivityOverview);
+export default connect(mapStateToProps)(ActivityPage);

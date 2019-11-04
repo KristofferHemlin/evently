@@ -1,14 +1,15 @@
 
 import React, { Component } from 'react';
 
-import NavigationService from './src/navigation/NavigationService';
 import { Provider } from 'react-redux';
-
-import store from './src/store/store';
-import './src/interceptors/interceptors';
-
-import AppNavigator from './src/navigation/AppNavigator';
 import SplashScreen from 'react-native-splash-screen';
+
+import store from './src/utilities/store/store';
+import './src/utilities/interceptors/interceptors';
+import AppNavigator from './src/utilities/navigation/AppNavigator';
+import NavigationService from './src/utilities/navigation/NavigationService';
+
+
 
 
 class App extends Component {

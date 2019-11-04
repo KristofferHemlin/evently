@@ -13,12 +13,12 @@ import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-easy-toast'
 
-import BackButton from '../BackButton/BackButton';
-import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
-import ImageSelector from '../ImageSelector/ImageSelector';
+import BackButton from '../../components/BackButton/BackButton';
+import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
+import ImageSelector from '../../components/ImageSelector/ImageSelector';
 
-import styles from './ChangeInfo.style';
-import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
+import styles from './ChangeInfoPage.style';
+import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import {
     formValid,
     dateRegex,
@@ -27,7 +27,7 @@ import {
     phoneRegex
 } from '../../helpers/formValidation';
 
-class ChangeInfo extends Component {
+class ChangeInfoPage extends Component {
 
 
     static navigationOptions = {
@@ -108,7 +108,7 @@ class ChangeInfo extends Component {
                 }
             }
             body.append("image", image)
-
+            console.log('body', body);
             this.setState({ isLoading: true }, () => {
                 axios.put(this.state.http_update_url, body, {
                     headers: {
@@ -202,7 +202,7 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ChangeInfo);
+export default connect(mapStateToProps)(ChangeInfoPage);
 
 
 const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInputChange, formStyle }) => {

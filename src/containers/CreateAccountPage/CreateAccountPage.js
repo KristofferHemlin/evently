@@ -16,15 +16,15 @@ import Toast from 'react-native-easy-toast'
 import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 
-import FormDescription from '../FormDescription/FormDescription';
-import FormHeader from '../FormHeader/FormHeader';
-import BackButton from '../BackButton/BackButton';
-import Header from '../Header/Header';
-import ImageSelector from '../ImageSelector/ImageSelector';
+import FormDescription from '../../components/FormDescription/FormDescription';
+import FormHeader from '../../components/FormHeader/FormHeader';
+import BackButton from '../../components/BackButton/BackButton';
+import Header from '../../components/Header/Header';
+import ImageSelector from '../../components/ImageSelector/ImageSelector';
 
 import URL from '../../config';
-import styles from './CreateAcc.style';
-import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
+import styles from './CreateAccountPage.style';
+import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import {
     formValid,
     emailRegex,
@@ -32,7 +32,7 @@ import {
 } from '../../helpers/formValidation'
 
 
-class CreateAcc extends Component {
+class CreateAccountPage extends Component {
 
     static navigationOptions = {
         header: null,
@@ -240,7 +240,7 @@ class CreateAcc extends Component {
                 })
                     .then((response) => {
                         this.setState({ isLoading: false });
-                        this.props.navigation.navigate('EventOverviewRoute')
+                        this.props.navigation.navigate('EventPageRoute')
                     })
                     .catch((error) => {
                         console.log(error);
@@ -294,7 +294,7 @@ const mapStateToProps = state => {
         userID: state.userID,
     }
 }
-export default connect(mapStateToProps)(CreateAcc);
+export default connect(mapStateToProps)(CreateAccountPage);
 
 const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInputChange, formStyle }) => {
 

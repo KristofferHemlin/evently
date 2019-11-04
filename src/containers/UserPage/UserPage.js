@@ -11,16 +11,16 @@ import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 
-import styles from './ParticipantOverview.style';
+import styles from './UserPage.style';
 import URL from '../../config';
 
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
-class ParticipantOverview extends Component {
+class UserPage extends Component {
 
     static navigationOptions = {
         header: null,
@@ -129,4 +129,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(ParticipantOverview);
+export default connect(mapStateToProps)(UserPage);

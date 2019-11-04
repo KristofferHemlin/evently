@@ -6,17 +6,17 @@ import moment from 'moment';
 import Toast from 'react-native-easy-toast';
 import { connect } from 'react-redux';
 
-import EventImageHeader from '../EventImageHeader/EventImageHeader';
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
-import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+import EventImageHeader from '../../components/EventImageHeader/EventImageHeader';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/Header/Header';
+import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 
 import URL from '../../config';
-import * as actionTypes from '../../store/actions';
-import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
-import styles from './EventOverview.style.js';
+import * as actionTypes from '../../utilities/store/actions';
+import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
+import styles from './EventPage.style';
 
-class EventOverview extends Component {
+class EventPage extends Component {
 
 
     static navigationOptions = {
@@ -96,7 +96,7 @@ class EventOverview extends Component {
             uID: this.props.userID,
             roleID: this.props.roleID,
             title: this.state.eventTitle,
-            parentRoute: 'EventOverviewRoute',
+            parentRoute: 'EventPageRoute',
             http_update_url: URL + 'events/' + 1,
             http_get_url: URL + 'users/' + this.props.userID + '/currentevent',
             fields: {
@@ -180,7 +180,7 @@ class EventOverview extends Component {
 
                     </View>
                 </ScrollView>
-                <Footer currentPage={'eventOverview'} />
+                <Footer currentPage={'eventPage'} />
             </View>
         )
     }
@@ -212,4 +212,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventOverview);
+export default connect(mapStateToProps, mapDispatchToProps)(EventPage);

@@ -7,14 +7,14 @@ import {
     Linking,
 } from 'react-native';
 
-import bgImage from '../Login/images/login-bg.jpg';
-import logotype from '../Login/images/Logotype.png';
-import ResetPasswordForm from '../ResetPasswordForm/ResetPasswordForm';
+import bgImage from '../../images/login-bg.jpg';
+import logotype from '../../images/Logotype.png';
+import ResetPasswordForm from '../../components/ResetPasswordForm/ResetPasswordForm';
 
 
-import styles from './ResetPassword.style';
+import styles from './ResetPasswordPage.style';
 
-class ResetPassword extends Component {
+class ResetPasswordPage extends Component {
     static navigationOptions = {
         header: null,
     };
@@ -40,4 +40,4 @@ class ResetPassword extends Component {
 }
 
 
-export default ResetPassword;
+export default ResetPasswordPage;

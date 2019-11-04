@@ -12,17 +12,17 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Toast from 'react-native-easy-toast'
 
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 
-import styles from './UserProfile.style';
+import styles from './ProfilePage.style';
 import URL from '../../config';
-import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
+import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
-class UserProfile extends Component {
+class ProfilePage extends Component {
 
     static navigationOptions = {
         header: null,
@@ -57,7 +57,7 @@ class UserProfile extends Component {
     fetchUserData = (userID) => {
         axios.get(URL + 'users/' + userID)
             .then((response) => {
-                console.log('userprofileresponse', response);
+                console.log('ProfilePageRoute', response);
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
@@ -77,7 +77,7 @@ class UserProfile extends Component {
     handleEditPress = () => {
         this.props.navigation.navigate('ChangeInfoRoute', {
             uID: this.props.userID,
-            parentRoute: 'UserProfileRoute',
+            parentRoute: 'ProfilePageRoute',
             http_update_url: URL + 'users/' + this.props.userID,
             http_get_url: URL + 'users/' + this.props.userID,
             imageUrl: this.state.profileImage,
@@ -209,4 +209,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(UserProfile);
+export default connect(mapStateToProps)(ProfilePage);

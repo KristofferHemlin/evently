@@ -10,15 +10,15 @@ import {
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import ProfilePreview from '../ProfilePreview/ProfilePreview';
-import HeadlineOverview from '../HeadlineOverview/HeadlineOverview';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import ProfilePreview from '../../components/ProfilePreview/ProfilePreview';
+import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 
 import URL from '../../config';
-import styles from './ShowParticipants.style.js';
+import styles from './ShowParticipantsPage.style';
 
-class ShowParticipants extends Component {
+class ShowParticipantsPage extends Component {
 
     static navigationOptions = {
         header: null,
@@ -101,7 +101,7 @@ class ShowParticipants extends Component {
     }
 
     profilePreviewOnClickHandler = (participantID) => {
-        this.props.navigation.navigate('ParticipantOverviewRute', {
+        this.props.navigation.navigate('UserPageRoute', {
             participantID: participantID,
             showParticipant: true,
         });
@@ -151,4 +151,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ShowParticipants);
+export default connect(mapStateToProps)(ShowParticipantsPage);

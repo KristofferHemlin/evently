@@ -16,19 +16,19 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import OneSignal from 'react-native-onesignal';
 
-import bgImage from './images/login-bg.jpg';
-import logotype from './images/Logotype.png';
+import bgImage from '../../images/login-bg.jpg';
+import logotype from '../../images/Logotype.png';
 
-import ResetPasswordForm from '../ResetPasswordForm/ResetPasswordForm';
+import ResetPasswordForm from '../../components/ResetPasswordForm/ResetPasswordForm';
 
-import styles from './Login.style';
-import toasterStyle from '../GeneralStyle/ToasterStyle.style.js';
+import styles from './LoginPage.style';
+import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import URL from '../../config';
-import * as actionTypes from '../../store/actions';
+import * as actionTypes from '../../utilities/store/actions';
 
 
 
-class Login extends Component {
+class LoginPage extends Component {
     static navigationOptions = {
         header: null,
     };
@@ -112,9 +112,9 @@ class Login extends Component {
                         isLoading: false,
                     });
                     if (response.data.user.signupComplete === true) {
-                        this.props.navigation.navigate('EventOverviewRoute');
+                        this.props.navigation.navigate('EventPageRoute');
                     } else {
-                        this.props.navigation.navigate('CreateAccRoute');
+                        this.props.navigation.navigate('CreateAccountPageRoute');
                     }
                 })
                 .catch((error) => {
@@ -228,4 +228,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(LoginPage);
