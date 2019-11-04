@@ -13,7 +13,7 @@ import ImagePicker from 'react-native-image-picker';
 
 
 const uploadImageIcon = <FontAwesome5 size={150} name={'user-circle'} solid color="lightgrey" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
-
+const remove_image = <FontAwesome5 size={40} name={'times-circle'} light color="red" />;
 
 class ImageSelector extends Component {
 
@@ -30,6 +30,11 @@ class ImageSelector extends Component {
                 this.props.saveImageHandler(response);
             }
         })
+    }
+
+    removeImageHandler = () => {
+        this.setState({ photo: null });
+        this.props.deleteImageHandler();
     }
 
 
@@ -49,16 +54,27 @@ class ImageSelector extends Component {
         else {
             imgButton = uploadImageIcon
         }
+
         return (
-            <View style={styles.imageSelectorContainer}>
-                <TouchableOpacity
-                    style={styles.ImageSelectorBtn}
-                    onPress={this.choosePhotoHandler}>
-                    <View style={{ alignItems: 'center' }}>
-                        {imgButton}
-                        <Text style={styles.ImageSelectorTxt}>{this.props.children}</Text>
-                    </View>
-                </TouchableOpacity>
+            <View style={styles.container}>
+                <View style={styles.imageSelectorContainer}>
+                    <TouchableOpacity
+                        style={styles.removeIconButton}
+                        onPress={this.removeImageHandler}>
+                        {photo || this.props.source.uri ?
+                            <View style={styles.notificationIconCircle}>{remove_image}</View>
+                            : null}
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.ImageSelectorButton}
+                        onPress={this.choosePhotoHandler}>
+                        <View style={{ alignItems: 'center' }}>
+                            {imgButton}
+                            <Text style={styles.ImageSelectorTxt}>{this.props.children}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
