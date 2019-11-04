@@ -13,7 +13,7 @@ import ImagePicker from 'react-native-image-picker';
 
 
 const uploadImageIcon = <FontAwesome5 size={150} name={'user-circle'} solid color="lightgrey" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
-
+const remove_image = <FontAwesome5 size={40} name={'times-circle'} light color="red" />;
 
 class ImageSelector extends Component {
 
