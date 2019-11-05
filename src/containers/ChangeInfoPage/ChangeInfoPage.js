@@ -188,7 +188,13 @@ class ChangeInfoPage extends Component {
                             >{'Edit ' + this.state.title}
                             </HeadlineOverview>
 
-                            <ImageSelector saveImageHandler={this.saveImageHandler} deleteImageHandler={this.deleteImageHandler} source={{ uri: this.state.imageUrl }}>Press to change photo</ImageSelector>
+                            <ImageSelector
+                                saveImageHandler={this.saveImageHandler}
+                                deleteImageHandler={this.deleteImageHandler}
+                                parentRoute={this.state.parentRoute}
+                                source={{ uri: this.state.imageUrl }}>
+                                Press to change photo
+                            </ImageSelector>
 
                             <View style={styles.editFormContainer}>
                                 <EditableForm

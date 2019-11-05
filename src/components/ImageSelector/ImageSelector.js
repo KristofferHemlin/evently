@@ -12,7 +12,8 @@ import styles from './ImageSelector.style';
 import ImagePicker from 'react-native-image-picker';
 
 
-const uploadImageIcon = <FontAwesome5 size={150} name={'user-circle'} solid color="lightgrey" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
+const profile_image_icon = <FontAwesome5 size={150} name={'user-circle'} solid color="lightgrey" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
+const cover_photo_icon = <FontAwesome5 size={150} name={'image'} light color="lightgrey" />;
 const remove_image = <FontAwesome5 size={40} name={'times-circle'} light color="red" />;
 
 class ImageSelector extends Component {
@@ -20,6 +21,7 @@ class ImageSelector extends Component {
     state = {
         photo: null,
     }
+
     choosePhotoHandler = () => {
         const options = {
             noData: true
@@ -37,9 +39,9 @@ class ImageSelector extends Component {
         this.props.deleteImageHandler();
     }
 
-
-    render() {
+    setUploadImage = () => {
         const { photo } = this.state;
+
         if (photo) {
             imgButton = <Image
                 source={{ uri: photo.uri }}
@@ -52,16 +54,28 @@ class ImageSelector extends Component {
             />
         }
         else {
-            imgButton = uploadImageIcon
+            if (this.props.parentRoute === "ProfilePageRoute" || this.props.parentRoute === "CreateAccountPageRoute") {
+                imgButton = profile_image_icon
+            }
+            else {
+                imgButton = cover_photo_icon
+            }
         }
+    }
+
+
+    render() {
+
+        this.setUploadImage();
 
         return (
+
             <View style={styles.container}>
                 <View style={styles.imageSelectorContainer}>
                     <TouchableOpacity
                         style={styles.removeIconButton}
                         onPress={this.removeImageHandler}>
-                        {photo || this.props.source.uri ?
+                        {this.state.photo || this.props.source.uri ?
                             <View style={styles.notificationIconCircle}>{remove_image}</View>
                             : null}
                     </TouchableOpacity>
