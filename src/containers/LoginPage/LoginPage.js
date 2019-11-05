@@ -105,11 +105,7 @@ class LoginPage extends Component {
                         response.data.refreshToken);
                     // Set up onesignal notifications.
                     OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
-                    OneSignal.setSubscription(true); // Need to test so this does not override notification refused
-
-                    // OneSignal.getPermissionSubscriptionState(status => {
-                    //     console.log("status: ",status);
-                    // })
+                    OneSignal.setSubscription(true);
 
                     this.setState({
                         isLoading: false,
