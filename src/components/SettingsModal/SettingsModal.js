@@ -8,6 +8,7 @@ import {
 import { connect } from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from 'react-navigation';
+import OneSignal from 'react-native-onesignal';
 
 import * as actionTypes from '../../utilities/store/actions';
 
@@ -29,6 +30,7 @@ class SettingsModal extends Component {
     }
 
     logoutHandler = () => {
+        OneSignal.setSubscription(false); // Mark device as unsubscribed
         this.props.onDeleteToken();
         this.props.exitModal();
         this.props.navigation.navigate('LoginRoute');

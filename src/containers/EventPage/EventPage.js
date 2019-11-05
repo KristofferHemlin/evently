@@ -5,6 +5,7 @@ import axios from 'axios';
 import moment from 'moment';
 import Toast from 'react-native-easy-toast';
 import { connect } from 'react-redux';
+import OneSignal from 'react-native-onesignal';
 
 import EventImageHeader from '../../components/EventImageHeader/EventImageHeader';
 import Footer from '../../components/Footer/Footer';
@@ -37,6 +38,9 @@ class EventPage extends Component {
             showEditButton: false,
             infoAllowedChange: true,
         }
+
+        // Add eventListener for when oneSignal id is available
+        OneSignal.addEventListener('ids', this.onIds);
 
         props.navigation.addListener('willFocus', () => {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
@@ -76,6 +80,17 @@ class EventPage extends Component {
                 console.log(error);
             });
 
+    }
+
+    componentWillUnmount() {
+        OneSignal.removeEventListener('ids', this.onIds);
+    }
+
+    onIds = (device) => {
+        // Send player_id to BE   
+        axios.post(URL + 'users/'+this.props.userID+"/playerids", {
+            playerId: device.userId,
+        })
     }
 
     onEditSubmit(input) {
