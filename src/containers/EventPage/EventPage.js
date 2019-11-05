@@ -49,7 +49,7 @@ class EventPage extends Component {
                 this.refs.toast.show('Your changes have been submitted!', 2000);
             }
 
-            if (this.props.roleID === 1) {
+            if (this.props.roleID == 1) {
                 this.setState({ showEditButton: true })
             } else {
                 this.setState({ showEditButton: false })
@@ -58,7 +58,7 @@ class EventPage extends Component {
         console.disableYellowBox = true;
     }
 
-    componentDidMount() {
+    componentDidMount() {        
         axios.get(URL + 'users/' + this.props.userID + '/currentevent')
             .then((response) => {
 

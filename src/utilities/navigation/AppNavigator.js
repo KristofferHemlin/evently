@@ -1,6 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
+import SplashScreen from '../../containers/SplashScreen/SplashScreen';
 import Login from '../../containers/LoginPage/LoginPage';
 import CreateAccountPage from '../../containers/CreateAccountPage/CreateAccountPage';
 import EventPage from '../../containers/EventPage/EventPage';
@@ -11,6 +12,7 @@ import ChangeInfoPage from '../../containers/ChangeInfoPage/ChangeInfoPage';
 import ShowParticipantsPage from '../../containers/ShowParticipantsPage/ShowParticipantsPage'
 import ActivityPage from '../../containers/ActivityPage/ActivityPage'
 import CalendarPage from '../../containers/CalendarPage/CalendarPage';
+
 
 
 
@@ -37,7 +39,8 @@ const AuthStack = createStackNavigator(
 
 export default createAppContainer(createSwitchNavigator(
   {
+    SplashScreen: SplashScreen,
     AuthStack: AuthStack,
-    AppStackr: Appstack,
+    AppStack: Appstack,
   }
 ))

@@ -9,6 +9,7 @@ import {
     TouchableOpacity,
     Linking,
     Image,
+    AsyncStorage,
     ActivityIndicator,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -46,8 +47,8 @@ class LoginPage extends Component {
         this.props.navigation.addListener('willFocus', () => {
             const showErrorMessage = Boolean(this.props.navigation.getParam('showErrorMessage', false));
             console.log('showErrorMessage', showErrorMessage);
-            if(showErrorMessage){
-                setTimeout(() => {this.showToasterHandler("Your session expired, log in again!", false)}, 500)
+            if (showErrorMessage) {
+                setTimeout(() => { this.showToasterHandler("Your session expired, log in again!", false) }, 500)
             }
         })
     }
@@ -102,7 +103,15 @@ class LoginPage extends Component {
                         response.data.user.id,
                         response.data.user.role.id,
                         response.data.accessToken,
-                        response.data.refreshToken);
+                        response.data.refreshToken
+                    );
+                    this.storeUserAccessInfo(
+                        response.data.accessToken,
+                        response.data.refreshToken,
+                        response.data.user.id,
+                        response.data.user.role.id,
+                    )
+
                     // Set up onesignal notifications.
                     OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
                     OneSignal.setSubscription(true);
@@ -124,6 +133,19 @@ class LoginPage extends Component {
         })
 
     }
+
+    storeUserAccessInfo = async (accessToken, refreshToken, userID, roleID) => {
+        console.log('accessToken som sparas', accessToken);
+        console.log('refreshToken som sparas', refreshToken);
+        try {
+            await AsyncStorage.setItem('REFRESH_TOKEN', refreshToken);
+            await AsyncStorage.setItem('ACCESS_TOKEN', accessToken);
+            await AsyncStorage.setItem('USER_ID', userID);
+            await AsyncStorage.setItem('ROLE_ID', roleID);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     lostPasswordHandler = () => {
         let forgottenPassword = this.state.forgottenPassword
