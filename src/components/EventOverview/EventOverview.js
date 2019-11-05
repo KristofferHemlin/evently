@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import { connect } from 'react-redux';
+import OneSignal from 'react-native-onesignal';
+
 import URL from '../../config';
 import * as actionTypes from '../../store/actions';
 import EventImageHeader from '../EventImageHeader/EventImageHeader';
@@ -37,6 +39,9 @@ class EventOverview extends Component {
             showEditButton: false,
             infoAllowedChange: true,
         }
+
+        // Add eventListener for when oneSignal id is available
+        OneSignal.addEventListener('ids', this.onIds);
 
         props.navigation.addListener('willFocus', () => {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
@@ -76,6 +81,17 @@ class EventOverview extends Component {
                 console.log(error);
             });
 
+    }
+
+    componentWillUnmount() {
+        OneSignal.removeEventListener('ids', this.onIds);
+    }
+
+    onIds = (device) => {
+        // Send player_id to BE   
+        axios.post(URL + 'users/'+this.props.userID+"/playerids", {
+            playerId: device.userId,
+        })
     }
 
     onEditSubmit(input) {

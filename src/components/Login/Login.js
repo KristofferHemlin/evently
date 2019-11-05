@@ -92,10 +92,14 @@ class Login extends Component {
                         response.data.user.id, 
                         response.data.user.role.id, 
                         response.data.token);
+
                     // Set up onesignal notifications.
                     OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
-                    // OneSignal.removeExternalUserId();
-                    OneSignal.setExternalUserId(String(response.data.user.id));
+                    OneSignal.setSubscription(true); // Need to test so this does not override notification refused
+
+                    // OneSignal.getPermissionSubscriptionState(status => {
+                    //     console.log("status: ",status);
+                    // })
 
                     this.setState({
                         isLoading: false,
