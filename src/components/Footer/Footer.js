@@ -24,9 +24,9 @@ const footer = props => {
 
             <TouchableOpacity
                 style={styles.footerButton}
-                disabled={(props.currentPage === 'eventOverview')}
-                onPress={() => props.navigation.navigate('EventOverviewRoute')}>
-                {!(props.currentPage === 'eventOverview')?
+                disabled={(props.currentPage === 'eventPage')}
+                onPress={() => props.navigation.navigate('EventPageRoute')}>
+                {!(props.currentPage === 'eventPage')?
                     <View>{infoIcon}</View> :
                     <View>{infoIconDisabled}</View>
                 }

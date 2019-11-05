@@ -6,7 +6,7 @@ import {
     Image,
 } from 'react-native';
 
-import Croatia from '../EventImageHeader/images/CROT.jpg';
+import Croatia from '../../images/CROT.jpg';
 import styles from './ProfilePreview.style.js'
 
 // class ProfilePreview extends Component{

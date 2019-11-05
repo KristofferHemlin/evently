@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 import styles from './EventImageHeader.style.js';
-import Croatia from './images/CROT.jpg';
+import Croatia from '../../images/CROT.jpg';
 
 const EventImageHeader = props => {
 

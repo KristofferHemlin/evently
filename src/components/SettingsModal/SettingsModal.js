@@ -8,10 +8,9 @@ import {
 import { connect } from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from 'react-navigation';
-
 import OneSignal from 'react-native-onesignal';
 
-import * as actionTypes from '../../store/actions';
+import * as actionTypes from '../../utilities/store/actions';
 
 import URL from '../../config';
 import styles from './SettingsModal.style'
@@ -27,7 +26,7 @@ class SettingsModal extends Component {
 
     userInfoNavigationHandler = () => {
         this.props.exitModal();
-        this.props.navigation.navigate('UserProfileRoute');
+        this.props.navigation.navigate('ProfilePageRoute');
     }
 
     logoutHandler = () => {
@@ -42,7 +41,7 @@ class SettingsModal extends Component {
             onEditSubmit: () => { },
             uID: this.props.userID,
             title: 'Change Password',
-            parentRoute: 'UserProfileRoute',
+            parentRoute: 'ProfilePageRoute',
             http_update_url: URL + 'account/password',
             fields: {
                 currentPassword: {

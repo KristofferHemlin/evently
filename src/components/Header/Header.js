@@ -15,8 +15,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import OneSignal from 'react-native-onesignal';
 
 import styles from './Header.style';
-import * as actionTypes from '../../store/actions'
-import ZingtonLogo from './images/Zington_Logotyp_Neg_RGB.png';
+import * as actionTypes from '../../utilities/store/actions'
+import ZingtonLogo from '../../images/Zington_Logotyp_Neg_RGB.png';
 
 const bell_icon = <FontAwesome5 size={25} name={'bell'} light color="white" />;
 const user_cog = <FontAwesome5 size={25} name={'user-cog'} light color="white" />;
