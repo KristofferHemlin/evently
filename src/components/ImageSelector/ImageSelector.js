@@ -12,14 +12,16 @@ import styles from './ImageSelector.style';
 import ImagePicker from 'react-native-image-picker';
 
 
-const uploadImageIcon = <FontAwesome5 size={150} name={'user-circle'} solid color="lightgrey" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
-const remove_image = <FontAwesome5 size={40} name={'times-circle'} light color="red" />;
+const profile_image_icon = <FontAwesome5 size={150} name={'user-circle'} solid color="lightgrey" />; // best pratice att lägga en const utanför huvudfunktionen i react?? 
+const cover_photo_icon = <FontAwesome5 size={150} name={'image'} light color="lightgrey" />;
+const remove_image_icon = <FontAwesome5 size={40} name={'times-circle'} light color="red" />;
 
 class ImageSelector extends Component {
 
     state = {
         photo: null,
     }
+
     choosePhotoHandler = () => {
         const options = {
             noData: true
@@ -37,32 +39,44 @@ class ImageSelector extends Component {
         this.props.deleteImageHandler();
     }
 
-
-    render() {
+    setUploadImage = () => {
         const { photo } = this.state;
+
+        let uploadIcon = null;
+        let imageSource = null;
         if (photo) {
-            imgButton = <Image
-                source={{ uri: photo.uri }}
-                style={styles.profileImage}
-            />
+            imageSource = photo.uri;
         } else if (this.props.source.uri) {
-            imgButton = <Image
-                source={{ uri: this.props.source.uri }}
-                style={styles.profileImage}
-            />
+            imageSource = this.props.source.uri;
         }
         else {
-            imgButton = uploadImageIcon
+            if (this.props.parentRoute === "ProfilePageRoute" || this.props.parentRoute === "CreateAccountPageRoute") {
+                uploadIcon = profile_image_icon
+            }
+            else {
+                uploadIcon = cover_photo_icon
+            }
         }
 
+        return [uploadIcon, imageSource];
+    }
+
+
+    render() {
+
+        const values = this.setUploadImage();
+        const uploadIcon = values[0];
+        const imageSource = values[1];
+
         return (
+
             <View style={styles.container}>
                 <View style={styles.imageSelectorContainer}>
                     <TouchableOpacity
                         style={styles.removeIconButton}
                         onPress={this.removeImageHandler}>
-                        {photo || this.props.source.uri ?
-                            <View style={styles.notificationIconCircle}>{remove_image}</View>
+                        {this.state.photo || this.props.source.uri ?
+                            <View style={styles.notificationIconCircle}>{remove_image_icon}</View>
                             : null}
                     </TouchableOpacity>
 
@@ -70,7 +84,15 @@ class ImageSelector extends Component {
                         style={styles.ImageSelectorButton}
                         onPress={this.choosePhotoHandler}>
                         <View style={{ alignItems: 'center' }}>
-                            {imgButton}
+
+                            {this.state.photo || this.props.source.uri ?
+                                <Image source={{ uri: imageSource }}
+                                    style={this.props.parentRoute === "ProfilePageRoute" ||
+                                        this.props.parentRoute === "CreateAccountPageRoute" ?
+                                        styles.profileImage :
+                                        styles.eventImage} /> :
+                                <View>{uploadIcon}</View>
+                            }
                             <Text style={styles.ImageSelectorTxt}>{this.props.children}</Text>
                         </View>
                     </TouchableOpacity>

@@ -39,8 +39,8 @@ class LoginPage extends Component {
 
         this.state = {
             messageColor: null,
-            username: 'tom.althin@gmail.com',
-            password: 'a',
+            username: '',
+            password: '',
             userID: null,
             isLoading: false,
         }
@@ -179,6 +179,7 @@ class LoginPage extends Component {
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
                         style={this.messageColor(this.state.messageColor)}
+                        //style={true ? styles.X : styles.Y}//Write like this instead
                         position='top'
                         positionValue={0} />
                 </View>

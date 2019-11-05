@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
     container:{
@@ -12,22 +12,23 @@ export default StyleSheet.create({
         justifyContent: 'flex-end',
     },
     
-    ImageSelectorBtn:{
-        // marginVertical: 20,
-    },
-
     profileImage:{
         width: 150, 
         height: 150,
         borderRadius: 75,
-    }, 
+    },
+    
+    eventImage:{
+        width: Dimensions.get('window').width * 0.85,
+        height: 200,
+    },
     
     ImageSelectorTxt:{
         fontSize: 17,
         fontWeight: '500',
         paddingVertical:10,
     },
-
+    
     removeIconButton: {
         position: 'absolute',
         zIndex: 1,
@@ -40,8 +41,9 @@ export default StyleSheet.create({
         height: 40,
         borderRadius: 20,
     },
-
+    
     ImageSelectorButton: {
-    }
+        // marginVertical: 20,
+    },
 
 });
