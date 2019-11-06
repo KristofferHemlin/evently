@@ -94,11 +94,12 @@ class ChangeInfoPage extends Component {
                 formErrors.confirmPassword = value === fields['confirmPassword'].value ? "" : "Passwords must match";
                 break;
             case 'Confirm Password':
-                formErrors.confirmPassword = value === fields['password'].value ? "" : "Passwords must match";
+                formErrors.confirmPassword = value === fields['newPassword'].value ? "" : "Passwords must match";
                 break;
             default:
                 break;
         }
+        console.log('formErrors', this.state.formErrors);
         this.setState({ fields: fields, formErrors: formErrors }, () => console.log('formError', this.state.formErrors));
     };
 
@@ -155,6 +156,7 @@ class ChangeInfoPage extends Component {
                     .catch((error) => {
                         console.log(error.response);
                         this.setState({ isLoading: false })
+                        this.showToasterHandler(error.response.data.message, false);
                     })
             })
         } else {

@@ -48,18 +48,21 @@ class SettingsModal extends Component {
                 currentPassword: {
                     label: 'Current Password',
                     value: '',
+                    key: 'currentPassword',
                     autoCapitalize: 'none',
                     secureText: true,
                 },
-                password: {
+                newPassword: {
                     label: 'New Password',
                     value: '',
+                    key: 'password',
                     autoCapitalize: 'none',
                     secureText: true,
                 },
                 confirmPassword: {
                     label: 'Confirm Password',
                     value: '',
+                    key: 'confirmPassword',
                     autoCapitalize: 'none',
                     secureText: true,
                 }
