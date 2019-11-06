@@ -26,16 +26,15 @@ export default StyleSheet.create({
     ImageSelectorTxt:{
         fontSize: 17,
         fontWeight: '500',
-        paddingVertical:10,
+        paddingVertical: 10,
     },
     
     removeIconButton: {
         position: 'absolute',
         zIndex: 1,
-        margin: 10,
     },
     
-    notificationIconCircle: {
+    removeIconCircle: {
         backgroundColor: 'white',
         width: 40,
         height: 40,
