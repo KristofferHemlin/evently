@@ -38,6 +38,7 @@ class ActivityPage extends Component {
             startTime: '',
             endTime: '',
             contact: '',
+            coverImageUrl: '',
             showEditButton: false,
             infoAllowedChange: true,
         }
@@ -61,24 +62,25 @@ class ActivityPage extends Component {
 
     fetchActivityData = () => {
         axios.get(URL + 'activities/' + this.props.activityID)
-        .then((response) => {
+            .then((response) => {
 
-            const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-            const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
 
-            this.setState({
-                activityTitle: response.data.title,
-                activityDesc: response.data.description,
-                activityLocation: response.data.location,
-                goodToKnow: response.data.goodToKnow,
-                startTime: startTime,
-                endTime: endTime,
-            }
-            )
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+                this.setState({
+                    activityTitle: response.data.title,
+                    activityDesc: response.data.description,
+                    activityLocation: response.data.location,
+                    goodToKnow: response.data.goodToKnow,
+                    startTime: startTime,
+                    endTime: endTime,
+                    coverImageUrl: response.data.coverImageUrl,
+                }
+                )
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
     }
 
@@ -98,6 +100,7 @@ class ActivityPage extends Component {
             roleID: this.props.roleID,
             parentRoute: 'ActivityOverviewRoute',
             http_update_url: URL + 'activities/' + this.props.activityID,
+            imageUrl: this.state.coverImageUrl,
             fields: {
                 description: {
                     label: 'Description',
@@ -153,13 +156,16 @@ class ActivityPage extends Component {
                     <Toast ref="toast"
                         style={toasterStyle.successMessage}
                         position='top'
-                        positionValue={0}/>
+                        positionValue={0} />
                 </View>
 
-                <Header/>
+                <Header />
                 <ScrollView>
 
-                    <EventImageHeader eventTitle={this.props.eventTitle}></EventImageHeader>
+                    <EventImageHeader
+                        eventTitle={this.props.eventTitle}
+                        source={this.state.coverImageUrl}>
+                    </EventImageHeader>
 
                     <View style={styles.eventInfo}>
 
@@ -191,7 +197,7 @@ class ActivityPage extends Component {
                     </View>
                 </ScrollView>
 
-                <Footer/>
+                <Footer />
             </View>
         )
     }

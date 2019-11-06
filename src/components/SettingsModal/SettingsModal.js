@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    AsyncStorage
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -31,10 +32,11 @@ class SettingsModal extends Component {
 
     logoutHandler = () => {
         OneSignal.setSubscription(false); // Mark device as unsubscribed
-        this.props.onDeleteToken();
+        this.props.onUserLogout();
         this.props.exitModal();
         this.props.navigation.navigate('LoginRoute');
     }
+
 
     changePasswordNavigationHandler = () => {
         this.props.exitModal();
@@ -115,8 +117,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onDeleteToken: () => dispatch({
-            type: actionTypes.ON_DELETE_TOKEN,
+        onUserLogout: () => dispatch({
+            type: actionTypes.USER_LOGOUT,
         }),
     };
 };

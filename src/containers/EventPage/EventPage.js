@@ -35,6 +35,7 @@ class EventPage extends Component {
             startTime: '',
             endTime: '',
             goodToKnow: '',
+            coverImageUrl: '',
             showEditButton: false,
             infoAllowedChange: true,
         }
@@ -60,36 +61,36 @@ class EventPage extends Component {
 
     fetchEventData = () => {
         axios.get(URL + 'users/' + this.props.userID + '/currentevent')
-        .then((response) => {
+            .then((response) => {
+                console.log("EP: ", response);
+                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
+                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
+                this.props.onSaveEventTitle(response.data.title)
 
-            const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
-            const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
-            this.props.onSaveEventTitle(response.data.title)
-
-            this.setState({
-                eventTitle: response.data.title,
-                eventId: response.data.id,
-                eventDesc: response.data.description,
-                eventLocation: response.data.location,
-                goodToKnow: response.data.goodToKnow,
-                startTime: startTime,
-                endTime: endTime,
+                this.setState({
+                    eventTitle: response.data.title,
+                    eventId: response.data.id,
+                    eventDesc: response.data.description,
+                    eventLocation: response.data.location,
+                    goodToKnow: response.data.goodToKnow,
+                    startTime: startTime,
+                    endTime: endTime,
+                    coverImageUrl: response.data.coverImageUrl,
+                })
             })
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
-    componentWillUnmount() {
-        OneSignal.removeEventListener('ids', this.onIds);
-    }
-
+    // Skickar onesignal ID till databasen
     onIds = (device) => {
         // Send player_id to BE   
-        axios.post(URL + 'users/'+this.props.userID+"/playerids", {
+        axios.post(URL + 'users/' + this.props.userID + "/playerids", {
             playerId: device.userId,
         })
+        // tar bort onesignal listener
+        OneSignal.removeEventListener('ids', this.onIds);
     }
 
     handleEditPress = () => {
@@ -100,6 +101,7 @@ class EventPage extends Component {
             parentRoute: 'EventPageRoute',
             http_update_url: URL + 'events/' + 1,
             http_get_url: URL + 'users/' + this.props.userID + '/currentevent',
+            imageUrl: this.state.coverImageUrl,
             fields: {
                 description: {
                     label: 'Description',
@@ -160,7 +162,11 @@ class EventPage extends Component {
                 </View>
                 <Header />
                 <ScrollView>
-                    <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
+                    <EventImageHeader
+                        eventTitle={this.state.eventTitle}
+                        source={this.state.coverImageUrl}>
+                    </EventImageHeader>
+
                     <View style={styles.eventInfo}>
                         <HeadlineOverview
                             onEditPress={() => this.handleEditPress()}

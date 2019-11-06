@@ -124,18 +124,12 @@ class ChangeInfoPage extends Component {
                 }
                 body.append("image", image)
 
-                if (this.state.imageData == null) {
-                    let axiosUrl;
-                    if (this.state.parentRoute === "ProfilePageRoute") {
-                        axiosUrl = URL + 'users/' + this.props.userID + '/profileimage';
-                    } else {
-                        //add this line when delete event image works in BE
-                        //axiosUrl = http_update_url + '/coverImage';
-                    }
-                    axios.delete(axiosUrl)
-                        .catch((error) => {
-                            console.log(error.response);
-                        })
+            if (this.state.imageUrl == null) {
+                let axiosUrl;
+                if (this.state.parentRoute === "ProfilePageRoute") {
+                    axiosUrl = URL + 'users/' + this.props.userID + '/profileimage';
+                } else {
+                    axiosUrl = this.state.http_update_url + '/coverimage';
                 }
             }
             console.log("body: ", body);
@@ -169,10 +163,7 @@ class ChangeInfoPage extends Component {
     }
 
     deleteImageHandler = () => {
-        this.setState({
-            imageData: null,
-            imageUrl: null
-        });
+        this.setState({ imageUrl: null });
     }
 
     showToasterHandler = (toasterResponse, success) => {

@@ -69,7 +69,6 @@ class ImageSelector extends Component {
         const imageSource = values[1];
 
         return (
-
             <View style={styles.container}>
                 <View style={styles.imageSelectorContainer}>
                     <TouchableOpacity

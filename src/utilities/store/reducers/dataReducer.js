@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions';
+import { AsyncStorage } from 'react-native';
 
 const initialState = {
     userID: null,
@@ -41,13 +42,14 @@ const dataReducer = (state = initialState, action) => {
                 ...state,
                 notificationStatus: action.payload.notificationStatus,
             }
-        case actionTypes.ON_DELETE_TOKEN:
-            return {
-                ...state,
-                accessToken: null,
-                refreshToken: null,
+        case actionTypes.USER_LOGOUT:
+            AsyncStorage.getAllKeys()
+                .then(keys => AsyncStorage.multiRemove(keys))
+                .catch((error) => {
+                    console.log('error', error);
+                })
+                return initialState
 
-            }
         default:
             return state
     }
