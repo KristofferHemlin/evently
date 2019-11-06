@@ -17,6 +17,8 @@ import * as actionTypes from '../../utilities/store/actions';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import styles from './EventPage.style';
 
+import Croatia from '../../images/CROT.jpg';
+
 class EventPage extends Component {
 
 
@@ -35,6 +37,7 @@ class EventPage extends Component {
             startTime: '',
             endTime: '',
             goodToKnow: '',
+            coverImageUrl: '',
             showEditButton: false,
             infoAllowedChange: true,
         }
@@ -61,7 +64,7 @@ class EventPage extends Component {
     componentDidMount() {        
         axios.get(URL + 'users/' + this.props.userID + '/currentevent')
             .then((response) => {
-
+                console.log("EP: ", response);
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
                 const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
                 this.props.onSaveEventTitle(response.data.title)
@@ -74,6 +77,7 @@ class EventPage extends Component {
                     goodToKnow: response.data.goodToKnow,
                     startTime: startTime,
                     endTime: endTime,
+                    coverImageUrl: response.data.coverImageUrl,
                 })
             })
             .catch((error) => {
@@ -164,6 +168,7 @@ class EventPage extends Component {
 
 
     render() {
+        console.log("render EP: "); 
         return (
             <View style={styles.pageContainer}>
                 <View style={toasterStyle.container}>
@@ -174,7 +179,11 @@ class EventPage extends Component {
                 </View>
                 <Header />
                 <ScrollView>
-                    <EventImageHeader eventTitle={this.state.eventTitle}></EventImageHeader>
+                    <EventImageHeader
+                        eventTitle={this.state.eventTitle}
+                        source={this.state.coverImageUrl}>
+                    </EventImageHeader>
+
                     <View style={styles.eventInfo}>
                         <HeadlineOverview
                             onEditPress={() => this.handleEditPress()}
