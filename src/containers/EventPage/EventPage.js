@@ -17,8 +17,6 @@ import * as actionTypes from '../../utilities/store/actions';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import styles from './EventPage.style';
 
-import Croatia from '../../images/CROT.jpg';
-
 class EventPage extends Component {
 
 
@@ -51,17 +49,17 @@ class EventPage extends Component {
                 this.setState({ infoAllowedChange: false })
                 this.refs.toast.show('Your changes have been submitted!', 2000);
             }
-
             if (this.props.roleID == 1) {
                 this.setState({ showEditButton: true })
             } else {
                 this.setState({ showEditButton: false })
             }
+            this.fetchEventData();
         })
         console.disableYellowBox = true;
     }
 
-    componentDidMount() {        
+    fetchEventData = () => {
         axios.get(URL + 'users/' + this.props.userID + '/currentevent')
             .then((response) => {
                 console.log("EP: ", response);
@@ -78,12 +76,11 @@ class EventPage extends Component {
                     startTime: startTime,
                     endTime: endTime,
                     coverImageUrl: response.data.coverImageUrl,
-                })
             })
-            .catch((error) => {
-                console.log(error);
-            });
-
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     componentWillUnmount() {
@@ -97,27 +94,15 @@ class EventPage extends Component {
         })
     }
 
-    onEditSubmit(input) {
-        this.setState({
-            eventDesc: input.description,
-            goodToKnow: input.goodToKnow,
-            eventLocation: input.location,
-            startTime: input.startTime,
-            endTime: input.endTime,
-            infoAllowedChange: true,
-        })
-    }
-
     handleEditPress = () => {
-        this.onEditSubmit = this.onEditSubmit.bind(this)
         this.props.navigation.navigate('ChangeInfoRoute', {
-            onEditSubmit: (input) => this.onEditSubmit(input),
             uID: this.props.userID,
             roleID: this.props.roleID,
             title: this.state.eventTitle,
             parentRoute: 'EventPageRoute',
             http_update_url: URL + 'events/' + 1,
             http_get_url: URL + 'users/' + this.props.userID + '/currentevent',
+            imageUrl: this.state.coverImageUrl,
             fields: {
                 description: {
                     label: 'Description',
@@ -168,7 +153,6 @@ class EventPage extends Component {
 
 
     render() {
-        console.log("render EP: "); 
         return (
             <View style={styles.pageContainer}>
                 <View style={toasterStyle.container}>

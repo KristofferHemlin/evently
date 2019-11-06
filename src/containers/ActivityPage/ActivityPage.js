@@ -38,6 +38,7 @@ class ActivityPage extends Component {
             startTime: '',
             endTime: '',
             contact: '',
+            coverImageUrl: '',
             showEditButton: false,
             infoAllowedChange: true,
         }
@@ -54,15 +55,12 @@ class ActivityPage extends Component {
             } else {
                 this.setState({ showEditButton: false })
             }
+            this.fetchActivityData();
         })
         console.disableYellowBox = true;
     }
 
-
-
-
-
-    componentDidMount() {
+    fetchActivityData = () => {
         axios.get(URL + 'activities/' + this.props.activityID)
             .then((response) => {
 
@@ -76,6 +74,7 @@ class ActivityPage extends Component {
                     goodToKnow: response.data.goodToKnow,
                     startTime: startTime,
                     endTime: endTime,
+                    coverImageUrl: response.data.coverImageUrl,
                 }
                 )
             })
@@ -94,26 +93,14 @@ class ActivityPage extends Component {
         })
     }
 
-    onEditSubmit(input) {
-        this.setState({
-            activityDesc: input.description,
-            activityLocation: input.location,
-            startTime: input.startTime,
-            endTime: input.endTime,
-            goodToKnow: input.goodToKnow,
-            infoAllowedChange: true,
-        })
-    }
-
     handleEditPress = () => {
-        this.onEditSubmit = this.onEditSubmit.bind(this)
         this.props.navigation.navigate('ChangeInfoRoute', {
-            onEditSubmit: (input) => this.onEditSubmit(input),
             uID: this.props.userID,
             title: this.state.activityTitle,
             roleID: this.props.roleID,
             parentRoute: 'ActivityOverviewRoute',
             http_update_url: URL + 'activities/' + this.props.activityID,
+            imageUrl: this.state.coverImageUrl,
             fields: {
                 description: {
                     label: 'Description',
@@ -169,13 +156,16 @@ class ActivityPage extends Component {
                     <Toast ref="toast"
                         style={toasterStyle.successMessage}
                         position='top'
-                        positionValue={0}/>
+                        positionValue={0} />
                 </View>
 
-                <Header/>
+                <Header />
                 <ScrollView>
 
-                    <EventImageHeader eventTitle={this.props.eventTitle}></EventImageHeader>
+                    <EventImageHeader
+                        eventTitle={this.state.eventTitle}
+                        source={this.state.coverImageUrl}>
+                    </EventImageHeader>
 
                     <View style={styles.eventInfo}>
 
@@ -207,7 +197,7 @@ class ActivityPage extends Component {
                     </View>
                 </ScrollView>
 
-                <Footer/>
+                <Footer />
             </View>
         )
     }
