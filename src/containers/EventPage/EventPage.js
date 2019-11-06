@@ -76,22 +76,21 @@ class EventPage extends Component {
                     startTime: startTime,
                     endTime: endTime,
                     coverImageUrl: response.data.coverImageUrl,
+                })
             })
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
-    componentWillUnmount() {
-        OneSignal.removeEventListener('ids', this.onIds);
-    }
-
+    // Skickar onesignal ID till databasen
     onIds = (device) => {
         // Send player_id to BE   
-        axios.post(URL + 'users/'+this.props.userID+"/playerids", {
+        axios.post(URL + 'users/' + this.props.userID + "/playerids", {
             playerId: device.userId,
         })
+        // tar bort onesignal listener
+        OneSignal.removeEventListener('ids', this.onIds);
     }
 
     handleEditPress = () => {
