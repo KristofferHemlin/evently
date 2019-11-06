@@ -114,25 +114,19 @@ class ChangeInfoPage extends Component {
 
             if (this.state.showImagePicker) {
                 let image = null;
-                if (this.state.imageData) {
-                    image = {
-                        name: this.state.imageData.fileName,
-                        type: this.state.imageData.type,
-                        uri:
-                            Platform.OS === "android" ? this.state.imageData.uri : this.state.imageData.uri.replace("file://", "")
+                if (this.state.imageUrl == null) {
+                    let axiosUrl;
+                    if (this.state.parentRoute === "ProfilePageRoute") {
+                        axiosUrl = URL + 'users/' + this.props.userID + '/profileimage';
+                    } else {
+                        axiosUrl = this.state.http_update_url + '/coverimage';
                     }
                 }
-                body.append("image", image)
-
-            if (this.state.imageUrl == null) {
-                let axiosUrl;
-                if (this.state.parentRoute === "ProfilePageRoute") {
-                    axiosUrl = URL + 'users/' + this.props.userID + '/profileimage';
-                } else {
-                    axiosUrl = this.state.http_update_url + '/coverimage';
-                }
+                axios.delete(axiosUrl)
+                    .catch((error) => {
+                        console.log(error.response);
+                    })
             }
-            console.log("body: ", body);
 
             this.setState({ isLoading: true }, () => {
                 axios.put(this.state.http_update_url, body, {
