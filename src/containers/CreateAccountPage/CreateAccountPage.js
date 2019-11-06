@@ -273,7 +273,12 @@ class CreateAccountPage extends Component {
                         <View style={styles.creatAccContainer}>
                             <FormHeader>Create your profile</FormHeader>
                             <FormDescription>Welcome! Fill in the form below to set up your company and user account.</FormDescription>
-                            <ImageSelector saveImageHandler={this.saveImageHandler} source={{ uri: null }}>Please upload a photo of yourself</ImageSelector>
+                            <ImageSelector
+                                saveImageHandler={this.saveImageHandler}
+                                parentRoute={"CreateAccountPageRoute"}
+                                source={{ uri: null }}>
+                                Please upload a photo of yourself
+                            </ImageSelector>
                             <EditableForm
                                 fields={this.state.fields}
                                 formErrors={this.state.formErrors}
