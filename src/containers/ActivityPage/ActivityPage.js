@@ -163,7 +163,7 @@ class ActivityPage extends Component {
                 <ScrollView>
 
                     <EventImageHeader
-                        eventTitle={this.state.eventTitle}
+                        eventTitle={this.props.eventTitle}
                         source={this.state.coverImageUrl}>
                     </EventImageHeader>
 
