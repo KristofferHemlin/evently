@@ -135,13 +135,11 @@ class LoginPage extends Component {
     }
 
     storeUserAccessInfo = async (accessToken, refreshToken, userID, roleID) => {
-        console.log('accessToken som sparas', accessToken);
-        console.log('refreshToken som sparas', refreshToken);
         try {
             await AsyncStorage.setItem('REFRESH_TOKEN', refreshToken);
             await AsyncStorage.setItem('ACCESS_TOKEN', accessToken);
-            await AsyncStorage.setItem('USER_ID', userID);
-            await AsyncStorage.setItem('ROLE_ID', roleID);
+            await AsyncStorage.setItem('USER_ID', String(userID)); //castar som string så att det funkar på android
+            await AsyncStorage.setItem('ROLE_ID', String(roleID));
         } catch (error) {
             console.log(error);
         }
