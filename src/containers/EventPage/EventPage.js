@@ -48,38 +48,37 @@ class EventPage extends Component {
                 this.setState({ infoAllowedChange: false })
                 this.refs.toast.show('Your changes have been submitted!', 2000);
             }
-
             if (this.props.roleID == 1) {
                 this.setState({ showEditButton: true })
             } else {
                 this.setState({ showEditButton: false })
             }
+            this.fetchEventData();
         })
         console.disableYellowBox = true;
     }
 
-    componentDidMount() {        
+    fetchEventData = () => {
         axios.get(URL + 'users/' + this.props.userID + '/currentevent')
-            .then((response) => {
+        .then((response) => {
 
-                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
-                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
-                this.props.onSaveEventTitle(response.data.title)
+            const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
+            const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
+            this.props.onSaveEventTitle(response.data.title)
 
-                this.setState({
-                    eventTitle: response.data.title,
-                    eventId: response.data.id,
-                    eventDesc: response.data.description,
-                    eventLocation: response.data.location,
-                    goodToKnow: response.data.goodToKnow,
-                    startTime: startTime,
-                    endTime: endTime,
-                })
+            this.setState({
+                eventTitle: response.data.title,
+                eventId: response.data.id,
+                eventDesc: response.data.description,
+                eventLocation: response.data.location,
+                goodToKnow: response.data.goodToKnow,
+                startTime: startTime,
+                endTime: endTime,
             })
-            .catch((error) => {
-                console.log(error);
-            });
-
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     componentWillUnmount() {
@@ -93,21 +92,8 @@ class EventPage extends Component {
         })
     }
 
-    onEditSubmit(input) {
-        this.setState({
-            eventDesc: input.description,
-            goodToKnow: input.goodToKnow,
-            eventLocation: input.location,
-            startTime: input.startTime,
-            endTime: input.endTime,
-            infoAllowedChange: true,
-        })
-    }
-
     handleEditPress = () => {
-        this.onEditSubmit = this.onEditSubmit.bind(this)
         this.props.navigation.navigate('ChangeInfoRoute', {
-            onEditSubmit: (input) => this.onEditSubmit(input),
             uID: this.props.userID,
             roleID: this.props.roleID,
             title: this.state.eventTitle,

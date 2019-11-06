@@ -54,34 +54,31 @@ class ActivityPage extends Component {
             } else {
                 this.setState({ showEditButton: false })
             }
+            this.fetchActivityData();
         })
         console.disableYellowBox = true;
     }
 
-
-
-
-
-    componentDidMount() {
+    fetchActivityData = () => {
         axios.get(URL + 'activities/' + this.props.activityID)
-            .then((response) => {
+        .then((response) => {
 
-                const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-                const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+            const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+            const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
 
-                this.setState({
-                    activityTitle: response.data.title,
-                    activityDesc: response.data.description,
-                    activityLocation: response.data.location,
-                    goodToKnow: response.data.goodToKnow,
-                    startTime: startTime,
-                    endTime: endTime,
-                }
-                )
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            this.setState({
+                activityTitle: response.data.title,
+                activityDesc: response.data.description,
+                activityLocation: response.data.location,
+                goodToKnow: response.data.goodToKnow,
+                startTime: startTime,
+                endTime: endTime,
+            }
+            )
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 
     }
 
@@ -94,21 +91,8 @@ class ActivityPage extends Component {
         })
     }
 
-    onEditSubmit(input) {
-        this.setState({
-            activityDesc: input.description,
-            activityLocation: input.location,
-            startTime: input.startTime,
-            endTime: input.endTime,
-            goodToKnow: input.goodToKnow,
-            infoAllowedChange: true,
-        })
-    }
-
     handleEditPress = () => {
-        this.onEditSubmit = this.onEditSubmit.bind(this)
         this.props.navigation.navigate('ChangeInfoRoute', {
-            onEditSubmit: (input) => this.onEditSubmit(input),
             uID: this.props.userID,
             title: this.state.activityTitle,
             roleID: this.props.roleID,
