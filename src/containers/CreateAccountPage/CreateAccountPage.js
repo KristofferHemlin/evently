@@ -106,7 +106,6 @@ class CreateAccountPage extends Component {
                 value: '',
                 secureText: true,
             }
-
         },
         formErrors: {
             firstName: '',
@@ -119,7 +118,6 @@ class CreateAccountPage extends Component {
         },
         isLoading: false,
         messageColor: null,
-
         imageData: null,
     }
 

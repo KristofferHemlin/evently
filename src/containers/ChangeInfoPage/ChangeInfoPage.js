@@ -45,6 +45,7 @@ class ChangeInfoPage extends Component {
         wantToEdit: false,
         imageData: null,
         imageUrl: this.props.navigation.getParam('imageUrl', null),
+        showImagePicker: this.props.navigation.getParam('showImagePicker', true),
     }
 
     handleInputChange = (value, key) => {
@@ -84,9 +85,21 @@ class ChangeInfoPage extends Component {
             case 'Company Department':
                 formErrors.companyDepartment = value.length < 1 || value.length > 3 ? "Invalid department" : "";
                 break;
+            case 'Password':
+                formErrors.password = value.length < 6 ? "Minimum 6 characters required" : "";
+                formErrors.confirmPassword = value === fields['confirmPassword'].value ? "" : "Passwords must match";
+                break;
+            case 'New Password':
+                formErrors.password = value.length < 6 ? "Minimum 6 characters required" : "";
+                formErrors.confirmPassword = value === fields['confirmPassword'].value ? "" : "Passwords must match";
+                break;
+            case 'Confirm Password':
+                formErrors.confirmPassword = value === fields['newPassword'].value ? "" : "Passwords must match";
+                break;
             default:
                 break;
         }
+        console.log('formErrors', this.state.formErrors);
         this.setState({ fields: fields, formErrors: formErrors }, () => console.log('formError', this.state.formErrors));
     };
 
@@ -99,16 +112,17 @@ class ChangeInfoPage extends Component {
             }, new FormData())
             body.append("title", this.state.title);
 
-            let image = null;
-            if (this.state.imageData) {
-                image = {
-                    name: this.state.imageData.fileName,
-                    type: this.state.imageData.type,
-                    uri:
-                        Platform.OS === "android" ? this.state.imageData.uri : this.state.imageData.uri.replace("file://", "")
+            if (this.state.showImagePicker) {
+                let image = null;
+                if (this.state.imageData) {
+                    image = {
+                        name: this.state.imageData.fileName,
+                        type: this.state.imageData.type,
+                        uri:
+                            Platform.OS === "android" ? this.state.imageData.uri : this.state.imageData.uri.replace("file://", "")
+                    }
                 }
-            }
-            body.append("image", image)
+                body.append("image", image)
 
             if (this.state.imageUrl == null) {
                 let axiosUrl;
@@ -117,12 +131,7 @@ class ChangeInfoPage extends Component {
                 } else {
                     axiosUrl = this.state.http_update_url + '/coverimage';
                 }
-                axios.delete(axiosUrl)
-                    .catch((error) => {
-                        console.log(error.response);
-                    })
             }
-
             console.log("body: ", body);
 
             this.setState({ isLoading: true }, () => {
@@ -141,6 +150,7 @@ class ChangeInfoPage extends Component {
                     .catch((error) => {
                         console.log(error.response);
                         this.setState({ isLoading: false })
+                        this.showToasterHandler(error.response.data.message, false);
                     })
             })
         } else {
@@ -178,6 +188,7 @@ class ChangeInfoPage extends Component {
     }
 
     render() {
+
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
@@ -196,13 +207,17 @@ class ChangeInfoPage extends Component {
                             >{'Edit ' + this.state.title}
                             </HeadlineOverview>
 
-                            <ImageSelector
-                                saveImageHandler={this.saveImageHandler}
-                                deleteImageHandler={this.deleteImageHandler}
-                                parentRoute={this.state.parentRoute}
-                                source={{ uri: this.state.imageUrl }}>
-                                Press to change photo
-                            </ImageSelector>
+                            {
+                                this.state.showImagePicker ?
+                                    <ImageSelector
+                                        saveImageHandler={this.saveImageHandler}
+                                        deleteImageHandler={this.deleteImageHandler}
+                                        parentRoute={this.state.parentRoute}
+                                        source={{ uri: this.state.imageUrl }}>
+                                        Press to change photo
+                                    </ImageSelector> :
+                                    null
+                            }
 
                             <View style={styles.editFormContainer}>
                                 <EditableForm

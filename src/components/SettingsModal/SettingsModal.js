@@ -39,27 +39,40 @@ class SettingsModal extends Component {
 
 
     changePasswordNavigationHandler = () => {
+        this.props.exitModal();
         this.props.navigation.navigate('ChangeInfoRoute', {
-            onEditSubmit: () => { },
             uID: this.props.userID,
             title: 'Change Password',
             parentRoute: 'ProfilePageRoute',
             http_update_url: URL + 'account/password',
+            showImagePicker: false,
             fields: {
                 currentPassword: {
                     label: 'Current Password',
                     value: '',
+                    key: 'currentPassword',
                     autoCapitalize: 'none',
                     secureText: true,
-
                 },
                 newPassword: {
                     label: 'New Password',
                     value: '',
+                    key: 'password',
+                    autoCapitalize: 'none',
+                    secureText: true,
+                },
+                confirmPassword: {
+                    label: 'Confirm Password',
+                    value: '',
+                    key: 'confirmPassword',
                     autoCapitalize: 'none',
                     secureText: true,
                 }
-            }
+            },
+            formErrors: {
+                password: 'Minimum 6 characters required',
+                confirmPassword: '',
+            },
         })
     }
 
@@ -83,9 +96,9 @@ class SettingsModal extends Component {
                         <TouchableOpacity onPress={this.userInfoNavigationHandler}>
                             <Text style={styles.menuTxt}>User Profile Info</Text>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity onPress={this.changePasswordNavigationHandler}>
+                        <TouchableOpacity onPress={this.changePasswordNavigationHandler}>
                             <Text style={styles.menuTxt}>Change Account Password</Text>
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={this.logoutHandler}>
                             <Text style={styles.menuTxt}>Logout</Text>
                         </TouchableOpacity>
