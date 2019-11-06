@@ -76,7 +76,7 @@ class ImageSelector extends Component {
                         style={styles.removeIconButton}
                         onPress={this.removeImageHandler}>
                         {this.state.photo || this.props.source.uri ?
-                            <View style={styles.notificationIconCircle}>{remove_image_icon}</View>
+                            <View style={styles.removeIconCircle}>{remove_image_icon}</View>
                             : null}
                     </TouchableOpacity>
 

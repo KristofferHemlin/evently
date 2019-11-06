@@ -41,6 +41,9 @@ class SplashScreen extends Component {
 
                     })
             }
+            else {
+                this.props.navigate('Authstack')
+            }
         }
         catch (error) {
             console.log(error);
