@@ -183,8 +183,6 @@ class ActivityPage extends Component {
                         <Text style={styles.ordinaryText}>{this.state.activityLocation}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>What?</Text>
                         <Text style={styles.ordinaryText}>{this.state.activityDesc}</Text>
-                        <Text style={[styles.titles, styles.subTitles]}>Who to contact?</Text>
-                        <Text style={styles.ordinaryText}>{this.state.activityDesc}</Text>
                         <Text style={[styles.titles, styles.subTitles]}>Good-to-know</Text>
                         <Text style={styles.ordinaryText}>{this.state.goodToKnow}</Text>
 
