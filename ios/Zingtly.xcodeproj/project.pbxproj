@@ -66,7 +66,7 @@
 /* Begin PBXFileReference section */
 		00106E29C69FCB3DF612D79C /* Pods-evently-tvOS-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-tvOS-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-evently-tvOS-OneSignalNotificationServiceExtension/Pods-evently-tvOS-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* eventlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = eventlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* ZingtlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZingtlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* eventlyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = eventlyTests.m; sourceTree = "<group>"; };
 		0381686D3AC84AA4A719933F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		094DEFBF4E9B3FCFD6910F4E /* Pods-evently.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently.debug.xcconfig"; path = "Target Support Files/Pods-evently/Pods-evently.debug.xcconfig"; sourceTree = "<group>"; };
 		0D1BAD32D82F43DB867B918F /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		0F9E9455BE697DF2BC6EB06E /* Pods-evently-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-evently-OneSignalNotificationServiceExtension/Pods-evently-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* evently.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = evently.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Zingtly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zingtly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = evently/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = evently/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -86,8 +86,8 @@
 		15FD628160864CCCB5434CAE /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		1F56AFFAE67C495C85A7DA35 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		29E373A18EBC4E669B9A8151 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* evently-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "evently-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* evently-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "evently-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* Zingtly-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Zingtly-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* Zingtly-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Zingtly-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3056E2A29B01CB8A049C6A70 /* Pods-evently-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-evently-tvOS/Pods-evently-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		3703794C94BBB5CF6CA874E8 /* Pods-evently-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-evently-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-evently-tvOSTests/Pods-evently-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		39D9EEBE0C994AE0A01A1F94 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
@@ -276,10 +276,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* evently.app */,
-				00E356EE1AD99517003FC87E /* eventlyTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* evently-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* evently-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* Zingtly.app */,
+				00E356EE1AD99517003FC87E /* ZingtlyTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* Zingtly-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* Zingtly-tvOSTests.xctest */,
 				95A489A5234E1D490044D50D /* OneSignalNotificationServiceExtension.appex */,
 			);
 			name = Products;
@@ -341,9 +341,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* eventlyTests */ = {
+		00E356ED1AD99517003FC87E /* ZingtlyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "eventlyTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ZingtlyTests" */;
 			buildPhases = (
 				17F40494B093FCCDA3D498D7 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -355,14 +355,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = eventlyTests;
+			name = ZingtlyTests;
 			productName = eventlyTests;
-			productReference = 00E356EE1AD99517003FC87E /* eventlyTests.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* ZingtlyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* evently */ = {
+		13B07F861A680F5B00A75B9A /* Zingtly */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "evently" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Zingtly" */;
 			buildPhases = (
 				562010F485ECFFE2AA104554 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -378,14 +378,14 @@
 			dependencies = (
 				95A489AC234E1D490044D50D /* PBXTargetDependency */,
 			);
-			name = evently;
+			name = Zingtly;
 			productName = evently;
-			productReference = 13B07F961A680F5B00A75B9A /* evently.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Zingtly.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* evently-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* Zingtly-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "evently-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Zingtly-tvOS" */;
 			buildPhases = (
 				5A20D33DA65B493E830FAAD4 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -398,14 +398,14 @@
 			);
 			dependencies = (
 			);
-			name = "evently-tvOS";
+			name = "Zingtly-tvOS";
 			productName = "evently-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* evently-tvOS.app */;
+			productReference = 2D02E47B1E0B4A5D006451C7 /* Zingtly-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* evently-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* Zingtly-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "evently-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Zingtly-tvOSTests" */;
 			buildPhases = (
 				6BE36A89E1B0FE0ED3B534A6 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -417,9 +417,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "evently-tvOSTests";
+			name = "Zingtly-tvOSTests";
 			productName = "evently-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* evently-tvOSTests.xctest */;
+			productReference = 2D02E4901E0B4A5D006451C7 /* Zingtly-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		95A489A4234E1D490044D50D /* OneSignalNotificationServiceExtension */ = {
@@ -473,7 +473,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "evently" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Zingtly" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -486,10 +486,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* evently */,
-				00E356ED1AD99517003FC87E /* eventlyTests */,
-				2D02E47A1E0B4A5D006451C7 /* evently-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* evently-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* Zingtly */,
+				00E356ED1AD99517003FC87E /* ZingtlyTests */,
+				2D02E47A1E0B4A5D006451C7 /* Zingtly-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* Zingtly-tvOSTests */,
 				95A489A4234E1D490044D50D /* OneSignalNotificationServiceExtension */,
 			);
 		};
@@ -811,12 +811,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* evently */;
+			target = 13B07F861A680F5B00A75B9A /* Zingtly */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* evently-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* Zingtly-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 		95A489AC234E1D490044D50D /* PBXTargetDependency */ = {
@@ -859,7 +859,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "se.eventapp.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/evently.app/evently";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Zingtly.app/Zingtly";
 			};
 			name = Debug;
 		};
@@ -880,7 +880,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/evently.app/evently";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Zingtly.app/Zingtly";
 			};
 			name = Release;
 		};
@@ -901,7 +901,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = se.eventapp;
-				PRODUCT_NAME = evently;
+				PRODUCT_NAME = Zingtly;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -922,7 +922,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = se.eventapp;
-				PRODUCT_NAME = evently;
+				PRODUCT_NAME = Zingtly;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1005,7 +1005,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.evently-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/evently-tvOS.app/evently-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Zingtly-tvOS.app/Zingtly-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
@@ -1032,7 +1032,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.evently-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/evently-tvOS.app/evently-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Zingtly-tvOS.app/Zingtly-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -1193,7 +1193,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "eventlyTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ZingtlyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -1202,7 +1202,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "evently" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Zingtly" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -1211,7 +1211,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "evently-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Zingtly-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -1220,7 +1220,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "evently-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Zingtly-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1229,7 +1229,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "evently" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Zingtly" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

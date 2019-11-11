@@ -1,0 +1,8 @@
+Unstaged changes after reset:
+M	ios/Zingtly.xcodeproj/project.pbxproj
+M	ios/Zingtly.xcodeproj/xcshareddata/xcschemes/evently-tvOS.xcscheme
+M	ios/Zingtly.xcodeproj/xcshareddata/xcschemes/evently.xcscheme
+D	ios/evently.xcodeproj/xcshareddata/xcschemes/evently-tvOS.xcscheme
+D	ios/evently.xcodeproj/xcshareddata/xcschemes/evently.xcscheme
+M	ios/evently.xcworkspace/contents.xcworkspacedata
+M	ios/evently/Info.plist

@@ -5,7 +5,7 @@
       location = "group:../node_modules/react-native-vector-icons/Fonts">
    </FileRef>
    <FileRef
-      location = "group:evently.xcodeproj">
+      location = "group:/Users/marcus/Documents/ClaremontEventApp/evently/ios/Zingtly.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
