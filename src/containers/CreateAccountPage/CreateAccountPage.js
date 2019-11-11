@@ -119,6 +119,7 @@ class CreateAccountPage extends Component {
         isLoading: false,
         messageColor: null,
         imageData: null,
+        toasterMessageSuccess: false,
     }
 
 
@@ -190,24 +191,9 @@ class CreateAccountPage extends Component {
     };
 
     showToasterHandler = (toasterResponse, success) => {
-        if (success === true) {
-            this.setState({ messageColor: "#4a90e2" })
-        } else {
-            this.setState({ messageColor: "#e24a4a" })
-        }
+        this.setState({ toasterMessageSuccess: success })
         let errorString = String(toasterResponse);
         this.refs.toast.show(errorString, 2000);
-    }
-
-    messageColor = (color) => {
-        return {
-            backgroundColor: color,
-            padding: 10,
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            width: Dimensions.get('window').width,
-            height: 100,
-        }
     }
 
     handleSubmit = () => {
@@ -261,7 +247,7 @@ class CreateAccountPage extends Component {
             <View style={styles.pageContainer}>
                 <View style={toasterStyle.container}>
                     <Toast ref="toast"
-                        style={this.messageColor(this.state.messageColor)}
+                        style={this.state.toasterMessageSuccess ? toasterStyle.successMessage : toasterStyle.errorMessage}
                         position='top'
                         positionValue={0} />
                 </View>
