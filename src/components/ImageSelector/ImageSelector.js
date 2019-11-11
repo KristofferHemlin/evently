@@ -92,10 +92,10 @@ class ImageSelector extends Component {
                                         styles.eventImage} /> :
                                 <View>{uploadIcon}</View>
                             }
-                            <Text style={styles.ImageSelectorTxt}>{this.props.children}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
+                <Text style={styles.ImageSelectorTxt}>{this.props.children}</Text>
             </View>
         )
     }

@@ -2,14 +2,13 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
     container:{
-        flexDirection: 'row',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
         marginTop: 25,
     },
 
     imageSelectorContainer:{
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
+        flexDirection: 'column',
     },
     
     profileImage:{
@@ -32,6 +31,7 @@ export default StyleSheet.create({
     removeIconButton: {
         position: 'absolute',
         zIndex: 1,
+        alignSelf: 'flex-end',
     },
     
     removeIconCircle: {

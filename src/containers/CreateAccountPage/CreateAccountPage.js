@@ -242,6 +242,10 @@ class CreateAccountPage extends Component {
         this.setState({ imageData: image });
     }
 
+    deleteImageHandler = () => {
+        this.setState({ imageData: null });
+    }
+
     render() {
         return (
             <View style={styles.pageContainer}>
@@ -259,9 +263,10 @@ class CreateAccountPage extends Component {
                             <FormDescription>Welcome! Fill in the form below to set up your company and user account.</FormDescription>
                             <ImageSelector
                                 saveImageHandler={this.saveImageHandler}
+                                deleteImageHandler={this.deleteImageHandler}
                                 parentRoute={"CreateAccountPageRoute"}
                                 source={{ uri: null }}>
-                                Please upload a photo of yourself
+                                Upload a profile image
                             </ImageSelector>
                             <EditableForm
                                 fields={this.state.fields}
