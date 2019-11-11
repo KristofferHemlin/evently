@@ -31,7 +31,6 @@ class ShowParticipantsPage extends Component {
             firstName: '',
             lastName: '',
             companyDepartment: '',
-            filterWord: '',
             profileArray: [],
             profileArrayFiltered: [],
             headlineName: '',
@@ -97,7 +96,7 @@ class ShowParticipantsPage extends Component {
         });
 
         this.setState({ profileArrayFiltered: tempArray });
-
+        filterWord = '';
     }
 
     profilePreviewOnClickHandler = (participantID) => {
@@ -108,6 +107,8 @@ class ShowParticipantsPage extends Component {
     }
 
     render() {
+
+        console.log();
 
         return (
             <View style={styles.pageContainer}>
