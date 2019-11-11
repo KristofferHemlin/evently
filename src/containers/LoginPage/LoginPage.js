@@ -123,7 +123,9 @@ class LoginPage extends Component {
                     if (response.data.user.signupComplete === true) {
                         this.props.navigation.navigate('EventPageRoute');
                     } else {
-                        this.props.navigation.navigate('CreateAccountPageRoute');
+                        this.props.navigation.navigate('CreateAccountPageRoute', {
+                            parentRoute: "LoginRoute",
+                        });
                     }
                 })
                 .catch((error) => {
