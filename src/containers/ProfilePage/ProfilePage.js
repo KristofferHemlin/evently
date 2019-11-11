@@ -38,13 +38,11 @@ class ProfilePage extends Component {
             companyDepartment: '',
             about: '',
             allergies: '',
-            infoAllowedChange: true,
             profileImage: null,
         }
         props.navigation.addListener('willFocus', () => {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
-            if (infoChanged && this.state.infoAllowedChange) {
-                this.setState({ infoAllowedChange: false })
+            if (infoChanged) {
                 this.refs.toast.show('Your changes have been submitted!', 2000);
             }
 
@@ -57,7 +55,6 @@ class ProfilePage extends Component {
     fetchUserData = (userID) => {
         axios.get(URL + 'users/' + userID)
             .then((response) => {
-                console.log('ProfilePageRoute', response);
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
@@ -81,6 +78,7 @@ class ProfilePage extends Component {
             http_update_url: URL + 'users/' + this.props.userID,
             http_get_url: URL + 'users/' + this.props.userID,
             imageUrl: this.state.profileImage,
+            infoChanged: null,
             fields: {
                 firstName: {
                     label: 'First Name',
@@ -146,6 +144,9 @@ class ProfilePage extends Component {
     }
 
     render() {
+
+        console.log("PP rendered YO: ", this.state.infoChanged);
+
         return (
             <View style={styles.pageContainer}>
                 <View style={toasterStyle.container}>
@@ -168,7 +169,7 @@ class ProfilePage extends Component {
                                 {this.state.profileImage ?
                                     <View>
                                         <Image style={styles.profilePicture}
-                                        source={{ uri: this.state.profileImage }} />
+                                            source={{ uri: this.state.profileImage }} />
                                     </View>
                                     :
                                     <View>{profileAvatar}</View>
