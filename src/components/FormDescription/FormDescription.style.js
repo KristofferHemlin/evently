@@ -7,7 +7,6 @@ export default StyleSheet.create({
         fontSize: 25,
         borderBottomWidth: 1,
         borderColor: 'grey',
-        marginBottom: 25,
     },
     descText:{
         textAlign: 'center',
