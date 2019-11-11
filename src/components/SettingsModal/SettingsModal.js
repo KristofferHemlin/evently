@@ -3,13 +3,13 @@ import {
     View,
     Text,
     TouchableOpacity,
-    AsyncStorage
 } from 'react-native';
 
 import { connect } from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from 'react-navigation';
 import OneSignal from 'react-native-onesignal';
+import axios from 'axios';
 
 import * as actionTypes from '../../utilities/store/actions';
 
@@ -31,10 +31,17 @@ class SettingsModal extends Component {
     }
 
     logoutHandler = () => {
-        OneSignal.setSubscription(false); // Mark device as unsubscribed
-        this.props.onUserLogout();
-        this.props.exitModal();
-        this.props.navigation.navigate('LoginRoute');
+        axios.post(URL + 'logout')
+            .then((response) => {
+                OneSignal.setSubscription(false); // Mark device as unsubscribed
+                this.props.onUserLogout();
+                this.props.exitModal();
+                this.props.navigation.navigate('LoginRoute');
+            })
+            .catch((error) => {
+                console.log('error', error);
+            })
+
     }
 
 
