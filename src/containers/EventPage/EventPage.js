@@ -35,9 +35,8 @@ class EventPage extends Component {
             startTime: '',
             endTime: '',
             goodToKnow: '',
-            coverImageUrl: '',
+            coverImageUrl: null,
             showEditButton: false,
-            infoAllowedChange: true,
         }
 
         // Add eventListener for when oneSignal id is available
@@ -45,8 +44,7 @@ class EventPage extends Component {
 
         props.navigation.addListener('willFocus', () => {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
-            if (infoChanged && this.state.infoAllowedChange) {
-                this.setState({ infoAllowedChange: false })
+            if (infoChanged) {
                 this.refs.toast.show('Your changes have been submitted!', 2000);
             }
             if (this.props.roleID == 1) {
@@ -62,7 +60,6 @@ class EventPage extends Component {
     fetchEventData = () => {
         axios.get(URL + 'users/' + this.props.userID + '/currentevent')
             .then((response) => {
-                console.log("EP: ", response);
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
                 const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
                 this.props.onSaveEventTitle(response.data.title)
@@ -102,6 +99,7 @@ class EventPage extends Component {
             http_update_url: URL + 'events/' + 1,
             http_get_url: URL + 'users/' + this.props.userID + '/currentevent',
             imageUrl: this.state.coverImageUrl,
+            infoChanged: null,
             fields: {
                 description: {
                     label: 'Description',

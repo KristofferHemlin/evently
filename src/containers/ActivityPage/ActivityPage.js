@@ -40,13 +40,11 @@ class ActivityPage extends Component {
             contact: '',
             coverImageUrl: '',
             showEditButton: false,
-            infoAllowedChange: true,
         }
 
         props.navigation.addListener('willFocus', () => {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
-            if (infoChanged && this.state.infoAllowedChange) {
-                this.setState({ infoAllowedChange: false })
+            if (infoChanged) {
                 this.refs.toast.show('Your changes have been submitted!', 2000);
             }
 
@@ -101,6 +99,7 @@ class ActivityPage extends Component {
             parentRoute: 'ActivityOverviewRoute',
             http_update_url: URL + 'activities/' + this.props.activityID,
             imageUrl: this.state.coverImageUrl,
+            infoChanged: null,
             fields: {
                 description: {
                     label: 'Description',
