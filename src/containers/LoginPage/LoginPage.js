@@ -106,12 +106,7 @@ class LoginPage extends Component {
                         response.data.accessToken,
                         response.data.refreshToken
                     );
-                    this.storeUserAccessInfo(
-                        response.data.accessToken,
-                        response.data.refreshToken,
-                        response.data.user.id,
-                        response.data.user.role.id,
-                    )
+                   
 
                     // Set up onesignal notifications.
                     OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
@@ -121,6 +116,12 @@ class LoginPage extends Component {
                         isLoading: false,
                     });
                     if (response.data.user.signupComplete === true) {
+                        this.storeUserAccessInfo(
+                            response.data.accessToken,
+                            response.data.refreshToken,
+                            response.data.user.id,
+                            response.data.user.role.id,
+                        )
                         this.props.navigation.navigate('EventPageRoute');
                     } else {
                         this.props.navigation.navigate('CreateAccountPageRoute');

@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     View,
     ActivityIndicator,
-    Dimensions,
+    AsyncStorage,
     Platform
 } from 'react-native';
 
@@ -223,12 +223,20 @@ class CreateAccountPage extends Component {
                     }
                 })
                     .then((response) => {
+                    
+                        this.storeUserAccessInfo(
+                            this.props.accessToken,
+                            this.props.refreshToken,
+                            this.props.userID,
+                            this.props.roleID,
+                        )
                         this.setState({ isLoading: false });
                         this.props.navigation.navigate('EventPageRoute')
                     })
                     .catch((error) => {
-                        console.log(error);
+                        console.log('error', error.response);
                         this.setState({ isLoading: false })
+                        this.showToasterHandler(error.response.data.message, false);
                     })
             })
         } else {
@@ -236,6 +244,17 @@ class CreateAccountPage extends Component {
         }
 
     }
+
+    storeUserAccessInfo = async (accessToken, refreshToken, userID, roleID) => {        
+        try {
+            await AsyncStorage.setItem('REFRESH_TOKEN', refreshToken);
+            await AsyncStorage.setItem('ACCESS_TOKEN', accessToken);
+            await AsyncStorage.setItem('USER_ID', String(userID)); //castar som string så att det funkar på android
+            await AsyncStorage.setItem('ROLE_ID', String(roleID));
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
 
     saveImageHandler = (image) => {
@@ -286,6 +305,9 @@ class CreateAccountPage extends Component {
 const mapStateToProps = state => {
     return {
         userID: state.userID,
+        roleID: state.roleID,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
     }
 }
 export default connect(mapStateToProps)(CreateAccountPage);

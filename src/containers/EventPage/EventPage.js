@@ -59,6 +59,8 @@ class EventPage extends Component {
         console.disableYellowBox = true;
     }
 
+    
+
     fetchEventData = () => {
         axios.get(URL + 'users/' + this.props.userID + '/currentevent')
             .then((response) => {
