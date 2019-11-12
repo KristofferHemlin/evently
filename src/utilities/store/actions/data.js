@@ -48,3 +48,9 @@ export const saveNotificationStatus = (notificationStatus) => {
         }
     }
 }
+
+export const clearDataOnLogout = () => {
+    return {
+        type: actionTypes.CLEAR_DATA_ON_LOGOUT
+    }
+}
