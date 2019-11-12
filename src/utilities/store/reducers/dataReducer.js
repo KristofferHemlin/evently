@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions/actionsTypes';
 import { AsyncStorage } from 'react-native';
+import moment from 'moment';
 
 const initialState = {
     userID: null,
@@ -9,10 +10,19 @@ const initialState = {
     activityID: null,
     eventTitle: '',
     notificationStatus: null,
+    eventInformation: null,
 };
 
 const dataReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.SET_EVENT:
+            console.log('action.payload', action.payload);
+            action.payload.eventInformation.startTime = moment(new Date(action.payload.eventInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
+            action.payload.eventInformation.endTime = moment(new Date(action.payload.eventInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD'); 
+            return {
+                ...state,
+                eventInformation: action.payload.eventInformation,
+            }
         case actionTypes.SAVE_USER:
             return {
                 ...state, //kopierar över statet i den här komponenten för att unvdika mutability.
@@ -42,13 +52,13 @@ const dataReducer = (state = initialState, action) => {
                 ...state,
                 notificationStatus: action.payload.notificationStatus,
             }
-        case actionTypes.USER_LOGOUT:
+        case actionTypes.CLEAR_DATA_ON_LOGOUT:
             AsyncStorage.getAllKeys()
                 .then(keys => AsyncStorage.multiRemove(keys))
                 .catch((error) => {
                     console.log('error', error);
                 })
-                return initialState
+            return initialState
 
         default:
             return state

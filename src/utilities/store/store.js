@@ -1,7 +1,10 @@
-import { createStore } from 'redux';
-import { asyncStorage } from 'react-native';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import dataReducer from './reducers/dataReducer';
 
-const store = createStore(dataReducer);
+const store = createStore(
+    dataReducer,
+    applyMiddleware(thunk)
+    );
 
 export default store; 

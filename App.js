@@ -10,10 +10,6 @@ import AppNavigator from './src/utilities/navigation/AppNavigator';
 import NavigationService from './src/utilities/navigation/NavigationService';
 
 
-
-
-
-
 class App extends Component {
 
   componentDidMount() {

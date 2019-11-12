@@ -1,4 +1,28 @@
 import * as actionTypes from './actionsTypes';
+import axios from 'axios';
+import URL from '../../../config';
+
+export const initEvent = (userID) => {
+    return dispatch => {
+        axios.get(URL + 'users/' + userID + '/currentevent')
+            .then((response) => {
+                dispatch(setEvent(response.data))
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+}
+
+export const setEvent = (eventInformation) => {
+    console.log('eventInformation', eventInformation);
+    return {
+        type: actionTypes.SET_EVENT,
+        payload: {
+            eventInformation: eventInformation
+        }
+    }
+}
 
 export const saveUser = (userID, roleID, accessToken, refreshToken) => {
     return {

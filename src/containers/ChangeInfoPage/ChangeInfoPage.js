@@ -6,7 +6,6 @@ import {
     TextInput,
     TouchableOpacity,
     ActivityIndicator,
-    Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -36,7 +35,7 @@ class ChangeInfoPage extends Component {
     };
 
     state = {
-        title: this.props.navigation.getParam('title', ''),
+        // title: this.props.navigation.getParam('title', ''),
         parentRoute: this.props.navigation.getParam('parentRoute', ''),
         http_update_url: this.props.navigation.getParam('http_update_url', ''),
         fields: this.props.navigation.getParam('fields', ''),
@@ -111,7 +110,7 @@ class ChangeInfoPage extends Component {
                 map.append(key, this.state.fields[key].value)
                 return map
             }, new FormData())
-            body.append("title", this.state.title);
+            body.append("title", this.props.eventTitle);
 
             if (this.state.showImagePicker) {
                 let image = null;
@@ -194,7 +193,7 @@ class ChangeInfoPage extends Component {
                             <HeadlineOverview
                                 infoButtonStatus={false}
                                 editButtonStatus={this.state.wantToEdit}
-                            >{'Edit ' + this.state.title}
+                            >{'Edit ' + this.props.eventTitle}
                             </HeadlineOverview>
 
                             {
@@ -227,6 +226,7 @@ class ChangeInfoPage extends Component {
 
 const mapStateToProps = state => {
     return {
+        eventTitle: state.eventInformation.title,
         userID: state.userID,
         token: state.token,
     }
