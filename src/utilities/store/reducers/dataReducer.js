@@ -11,17 +11,22 @@ const initialState = {
     eventTitle: '',
     notificationStatus: null,
     eventInformation: null,
+    userInformation: null,
 };
 
 const dataReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SET_EVENT:
-            console.log('action.payload', action.payload);
             action.payload.eventInformation.startTime = moment(new Date(action.payload.eventInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
-            action.payload.eventInformation.endTime = moment(new Date(action.payload.eventInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD'); 
+            action.payload.eventInformation.endTime = moment(new Date(action.payload.eventInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
             return {
                 ...state,
                 eventInformation: action.payload.eventInformation,
+            }
+        case actionTypes.SET_USER:
+            return {
+                ...state,
+                userInformation: action.payload.userInformation,
             }
         case actionTypes.SAVE_USER:
             return {

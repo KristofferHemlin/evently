@@ -2,6 +2,27 @@ import * as actionTypes from './actionsTypes';
 import axios from 'axios';
 import URL from '../../../config';
 
+export const initUser = (userID) => {
+    return dispatch => {
+        axios.get(URL + 'users/' + userID)
+            .then((response) => {
+                dispatch(setUser(response.data))
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+}
+
+export const setUser = (userInformation) => {
+    return {
+        type: actionTypes.SET_USER,
+        payload: {
+            userInformation: userInformation
+        }
+    }
+}
+
 export const initEvent = (userID) => {
     return dispatch => {
         axios.get(URL + 'users/' + userID + '/currentevent')
