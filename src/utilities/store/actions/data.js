@@ -15,7 +15,6 @@ export const initEvent = (userID) => {
 }
 
 export const setEvent = (eventInformation) => {
-    console.log('eventInformation', eventInformation);
     return {
         type: actionTypes.SET_EVENT,
         payload: {
