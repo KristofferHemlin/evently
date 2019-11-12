@@ -31,6 +31,7 @@ class ShowParticipantsPage extends Component {
             firstName: '',
             lastName: '',
             companyDepartment: '',
+            profileImageUrl: null,
             profileArray: [],
             profileArrayFiltered: [],
             headlineName: '',
@@ -59,13 +60,15 @@ class ShowParticipantsPage extends Component {
         }
         this.setState({ isLoading: true }, () => {
             axios.get(url)
-                .then((response) => {
+            .then((response) => {
+                console.log("response ", response);
                     profileArray = response.data.map((user) => ({
                         firstName: user.firstName,
                         lastName: user.lastName,
                         participantID: user.id,
                         fullName: user.firstName + " " + user.lastName,
                         companyDepartment: user.companyDepartment,
+                        profileImageUrl: user.profileImageUrl,
                     }));
 
                     this.setState({
@@ -91,8 +94,8 @@ class ShowParticipantsPage extends Component {
                 || user.lastName.toLowerCase().includes(filterWord.toLowerCase())
                 || user.fullName.toLowerCase().includes(filterWord.toLowerCase())
                 || user.companyDepartment.toLowerCase().includes(filterWord.toLowerCase())
-        }).map(function ({ firstName, lastName, companyDepartment, participantID }) {
-            return { firstName, lastName, companyDepartment, participantID };
+        }).map(function ({ firstName, lastName, companyDepartment, participantID, profileImageUrl }) {
+            return { firstName, lastName, companyDepartment, participantID, profileImageUrl };
         });
 
         this.setState({ profileArrayFiltered: tempArray });
@@ -108,7 +111,7 @@ class ShowParticipantsPage extends Component {
 
     render() {
 
-        console.log();
+        console.log("profileArrayFiltered: ", this.state.profileArrayFiltered[13]);
 
         return (
             <View style={styles.pageContainer}>
@@ -130,6 +133,7 @@ class ShowParticipantsPage extends Component {
                         <View style={styles.profileList}>
                             {this.state.profileArrayFiltered.map((input, index) => {
                                 return <ProfilePreview
+                                    source={{ uri: this.state.profileArrayFiltered[index].profileImageUrl }}
                                     onClick={() => this.profilePreviewOnClickHandler(input.participantID)}
                                     key={index}
                                     companyDepartment={this.state.profileArrayFiltered[index].companyDepartment}>

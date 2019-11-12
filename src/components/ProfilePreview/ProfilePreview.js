@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     View,
     TouchableOpacity,
@@ -6,22 +6,17 @@ import {
     Image,
 } from 'react-native';
 
-import Croatia from '../../images/CROT.jpg';
 import styles from './ProfilePreview.style.js'
-
-// class ProfilePreview extends Component{
 
 const profilePreview = props => {
 
-    state = {
-        profilePicture: Croatia,
-    }
+    console.log("GIT PULL: ", props.source.uri);
 
-    return(
+    return (
         <TouchableOpacity
-        onPress={props.onClick}>
+            onPress={props.onClick}>
             <View style={styles.profileOverviewView}>
-                <Image source={this.state.profilePicture} style={styles.previewImg}></Image>
+                <Image source={{ uri: props.source.uri }} style={styles.previewImg}></Image>
                 <View style={styles.profileOverviewViewRight}>
                     <Text style={styles.textName}>{props.children}</Text>
                     <Text style={styles.textTitle}>{props.companyDepartment}</Text>
