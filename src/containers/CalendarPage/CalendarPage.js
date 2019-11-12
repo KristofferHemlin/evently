@@ -13,7 +13,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview'
 
-import * as actionTypes from '../../utilities/store/actions/actionsTypes'
+import * as dataActions from '../../utilities/store/actions/data';
 import URL from '../../config';
 import styles from './CalendarPage.style';
 
@@ -62,7 +62,7 @@ class CalendarPage extends Component {
   }
 
   eventClicked(event) {
-    this.props.onSaveActivityID(event.id)
+    this.props.saveActivityID(event.id)
     this.props.navigation.navigate('ActivityOverviewRoute')
   }
 
@@ -108,12 +108,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSaveActivityID: (activityID) => dispatch({
-      type: actionTypes.SAVE_ACTIVITY_ID,
-      payload: {
-        activityID: activityID,
-      }
-    }),
+    saveActivityID: (activityID) => dispatch(dataActions.saveActivityID(activityID))
   };
 };
 

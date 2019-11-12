@@ -12,7 +12,7 @@ import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
 import axios from 'axios';
 
-import * as actionTypes from '../../utilities/store/actions/actionsTypes'
+import * as dataActions from '../../utilities/store/actions/data';
 import URL from '../../config';
 import styles from './NotificationModal.style.js'
 
@@ -40,7 +40,7 @@ class NotificationModal extends Component {
         this.setState({ isLoading: true }, () => {
             axios.get(URL + 'users/' + this.props.userID + '/notifications')
                 .then((results) => {
-                    this.props.onSaveActivityID(results.data[0].activity.id)
+                    this.props.saveActivityID(results.data[0].activity.id)
                     var filteredRes = (results.data || []).reduce((map, { activity: { title, id, updatedAt } }) => {
                         map[id] = {
                             title,
@@ -104,12 +104,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveActivityID: (activityID) => dispatch({
-            type: actionTypes.SAVE_ACTIVITY_ID,
-            payload: {
-                activityID: activityID,
-            }
-        }),
+        saveActivityID: (activityID) => dispatch(dataActions.saveActivityID(activityID))
     };
 };
 

@@ -15,7 +15,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import OneSignal from 'react-native-onesignal';
 
 import styles from './Header.style';
-import * as actionTypes from '../../utilities/store/actions/actionsTypes'
+import * as dataActions from '../../utilities/store/actions/data';
 import ZingtonLogo from '../../images/Zington_Logotyp_Neg_RGB.png';
 
 const bell_icon = <FontAwesome5 size={25} name={'bell'} light color="white" />;
@@ -43,7 +43,7 @@ class Header extends Component {
     }
 
     onReceived = (notification) => {
-        this.props.onSaveNotificationStatus(true)
+        this.props.saveNotificationStatus(true)
         this._storeData(true);
     }
 
@@ -53,7 +53,7 @@ class Header extends Component {
             showNotificationBadgeParsed = Boolean(JSON.parse(showNotificationBadge));
 
             if (showNotificationBadgeParsed !== null) {
-               this.props.onSaveNotificationStatus(showNotificationBadgeParsed)
+               this.props.saveNotificationStatus(showNotificationBadgeParsed)
             }
         } catch (error) {
             console.log(error);
@@ -70,7 +70,7 @@ class Header extends Component {
     };
 
     notificationIconClickHandler = () => {
-        this.props.onSaveNotificationStatus(false);
+        this.props.saveNotificationStatus(false);
         this._storeData(false);
         this.setState({
             showBellModal: true,
@@ -136,12 +136,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveNotificationStatus: (notificationStatus) => dispatch({
-            type: actionTypes.SAVE_NOTIFICATION_STATUS,
-            payload:{
-                notificationStatus: notificationStatus
-            }
-        }),
+        saveNotificationStatus: (notificationStatus) => dispatch(dataActions.saveNotificationStatus(notificationStatus)),
     };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(Header);

@@ -13,7 +13,7 @@ import Header from '../../components/Header/Header';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 
 import URL from '../../config';
-import * as actionTypes from '../../utilities/store/actions/actionsTypes';
+import * as dataActions from '../../utilities/store/actions/data';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import styles from './EventPage.style';
 
@@ -57,14 +57,14 @@ class EventPage extends Component {
         console.disableYellowBox = true;
     }
 
-    
+
 
     fetchEventData = () => {
         axios.get(URL + 'users/' + this.props.userID + '/currentevent')
             .then((response) => {
                 const startTime = moment(new Date(response.data.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
                 const endTime = moment(new Date(response.data.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
-                this.props.onSaveEventTitle(response.data.title)
+                this.props.saveEventTitle(response.data.title)
 
                 this.setState({
                     eventTitle: response.data.title,
@@ -204,18 +204,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveEventTitle: (eventTitle) => dispatch({
-            type: actionTypes.SAVE_EVENT_TITLE,
-            payload: {
-                eventTitle: eventTitle
-            },
-        }),
-        onSaveAuthToken: (accessToken) => dispatch({
-            type: actionTypes.SAVE_AUTH_TOKEN,
-            payload: {
-                accessToken: accessToken
-            },
-        })
+        saveEventTitle: (eventTitle) => dispatch(dataActions.saveEventTitle(eventTitle)),
     };
 };
 
