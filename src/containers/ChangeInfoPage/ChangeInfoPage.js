@@ -164,7 +164,10 @@ class ChangeInfoPage extends Component {
     }
 
     saveImageHandler = (image) => {
-        this.setState({ imageData: image });
+        this.setState({
+            imageData: image,
+            imageUrl: image.uri, 
+        });
     }
 
     deleteImageHandler = () => {
