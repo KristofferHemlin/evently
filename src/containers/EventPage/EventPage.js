@@ -13,7 +13,7 @@ import Header from '../../components/Header/Header';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 
 import URL from '../../config';
-import * as actionTypes from '../../utilities/store/actions';
+import * as actionTypes from '../../utilities/store/actions/actionsTypes';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import styles from './EventPage.style';
 

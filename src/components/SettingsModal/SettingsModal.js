@@ -11,7 +11,7 @@ import { withNavigation } from 'react-navigation';
 import OneSignal from 'react-native-onesignal';
 import axios from 'axios';
 
-import * as actionTypes from '../../utilities/store/actions';
+import * as actionTypes from '../../utilities/store/actions/actionsTypes';
 
 import URL from '../../config';
 import styles from './SettingsModal.style'

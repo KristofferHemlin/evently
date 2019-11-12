@@ -13,7 +13,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview'
 
-import * as actionTypes from '../../utilities/store/actions'
+import * as actionTypes from '../../utilities/store/actions/actionsTypes'
 import URL from '../../config';
 import styles from './CalendarPage.style';
 

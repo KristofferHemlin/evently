@@ -12,7 +12,7 @@ import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
 import axios from 'axios';
 
-import * as actionTypes from '../../utilities/store/actions'
+import * as actionTypes from '../../utilities/store/actions/actionsTypes'
 import URL from '../../config';
 import styles from './NotificationModal.style.js'
 

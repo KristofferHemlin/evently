@@ -1,6 +1,6 @@
 import axios from 'axios';
 import store from '../store/store';
-import * as actionTypes from '../store/actions';
+import * as actionTypes from '../store/actions/actionsTypes';
 import URL from '../../config';
 
 import { AsyncStorage } from 'react-native';

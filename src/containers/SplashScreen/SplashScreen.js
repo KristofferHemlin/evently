@@ -6,7 +6,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import styles from './SplashScreen.style';
-import * as actionTypes from '../../utilities/store/actions';
+import * as actionTypes from '../../utilities/store/actions/actionsTypes';
 import URL from '../../config';
 
 class SplashScreen extends Component {
