@@ -122,16 +122,36 @@ class CreateAccountPage extends Component {
         toasterMessageSuccess: false,
     }
 
-    static getDerivedStateFromProps(props, state){
-        console.log('props',props);
-        console.log('state',state);
+    static getDerivedStateFromProps(props, state) {
+        if (props.userInformation) {
+            let fields = { ...state.fields };
+            for (field in fields) {
+                if (field === 'firstName') {
+                    fields[field].value = props.userInformation.firstName
+                }
+                if (field === 'lastName') {
+                    fields[field].value = props.userInformation.lastName
+                }
+                if (field === 'email') {
+                    fields[field].value = props.userInformation.email
+                }
+                if (field === 'phone') {
+                    fields[field].value = props.userInformation.phone
+                }
+                if (field === 'companyDepartment') {
+                    fields[field].value = props.userInformation.companyDepartment
+                }
+            }
+            console.log('userInformation', props.userInformation);
+            console.log('fields', fields);
+            return {
+                fields: fields
+            }
+        }
+
     }
     componentDidMount() {
         this.props.onInitUser(this.props.userID)
-        console.log('this.props.userInformation', this.props.userInformation);
-        if (this.props.userInformation) {
-            this.populateTextFields(this.props.userInformation)
-        }
         // axios.get(URL + 'users/' + this.props.userID)
         //     .then((response) => {
         //         let responseArray = []
@@ -162,30 +182,6 @@ class CreateAccountPage extends Component {
         //     .catch((error) => {
         //         console.log(error);
         //     });
-    }
-
-    populateTextFields = (userInformation) => {
-        let fields = { ...this.state.fields };
-        for (field in fields) {
-            if (field === 'firstName') {
-                fields[field].value = userInformation.firstName
-            }
-            if (field === 'lastName') {
-                fields[field].value = userInformation.lastName
-            }
-            if (field === 'email') {
-                fields[field].value = userInformation.email
-            }
-            if (field === 'phone') {
-                fields[field].value = userInformation.phone
-            }
-            if (field === 'companyDepartment') {
-                fields[field].value = userInformation.companyDepartment
-            }
-        }
-        console.log('userInformation', userInformation);
-        console.log('fields', fields);
-        this.setState({ fields: fields });
     }
 
     handleInputChange = (value, i) => {
