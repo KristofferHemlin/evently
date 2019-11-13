@@ -63,7 +63,7 @@ class CalendarPage extends Component {
 
   eventClicked(event) {
     this.props.onSaveActivityID(event.id)
-    this.props.navigation.navigate('ActivityOverviewRoute')
+    this.props.navigation.navigate('ActivityOverviewRoute', { infoChanged: false })
   }
 
   render() {

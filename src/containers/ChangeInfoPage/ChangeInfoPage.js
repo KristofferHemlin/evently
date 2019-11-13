@@ -122,21 +122,22 @@ class ChangeInfoPage extends Component {
                         uri:
                             Platform.OS === "android" ? this.state.imageData.uri : this.state.imageData.uri.replace("file://", "")
                     }
-                    body.append("image", image)
                 }
                 if (this.state.imageUrl == null) {
+                    image = null;
                     let axiosUrl;
                     if (this.state.parentRoute === "ProfilePageRoute") {
                         axiosUrl = URL + 'users/' + this.props.userID + '/profileimage';
                     } else {
                         axiosUrl = this.state.http_update_url + '/coverimage';
                     }
-                
-                axios.delete(axiosUrl)
+                    
+                    axios.delete(axiosUrl)
                     .catch((error) => {
                         console.log(error.response);
                     })
                 }
+                body.append("image", image)
             }
 
             this.setState({ isLoading: true }, () => {
@@ -164,7 +165,10 @@ class ChangeInfoPage extends Component {
     }
 
     saveImageHandler = (image) => {
-        this.setState({ imageData: image });
+        this.setState({
+            imageData: image,
+            imageUrl: image.uri, 
+        });
     }
 
     deleteImageHandler = () => {

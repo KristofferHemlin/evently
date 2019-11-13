@@ -65,7 +65,7 @@ class NotificationModal extends Component {
     navigateTo(routeType, itemID) {
         this.setState({ notifications: [] })
         this.props.exitModal()
-        this.props.navigation.navigate(routeType, { activityID: itemID })
+        this.props.navigation.navigate(routeType, { activityID: itemID, infoChanged: false })
     }
 
     render() {
