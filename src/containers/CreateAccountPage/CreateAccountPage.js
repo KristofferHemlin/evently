@@ -19,11 +19,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import FormDescription from '../../components/FormDescription/FormDescription';
 import FormHeader from '../../components/FormHeader/FormHeader';
 import BackButton from '../../components/BackButton/BackButton';
-import Header from '../../components/Header/Header';
 import ImageSelector from '../../components/ImageSelector/ImageSelector';
 
 import URL from '../../config';
 import styles from './CreateAccountPage.style';
+import * as dataActions from '../../utilities/store/actions/data';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import {
     formValid,
@@ -122,38 +122,70 @@ class CreateAccountPage extends Component {
         toasterMessageSuccess: false,
     }
 
-
+    static getDerivedStateFromProps(props, state){
+        console.log('props',props);
+        console.log('state',state);
+    }
     componentDidMount() {
-        axios.get(URL + 'users/' + this.props.userID)
-            .then((response) => {
-                let responseArray = []
-                let fields = { ...this.state.fields };
-                for (key in response) {
-                    responseArray.push(response[key]);
-                }
-                for (field in fields) {
+        this.props.onInitUser(this.props.userID)
+        console.log('this.props.userInformation', this.props.userInformation);
+        if (this.props.userInformation) {
+            this.populateTextFields(this.props.userInformation)
+        }
+        // axios.get(URL + 'users/' + this.props.userID)
+        //     .then((response) => {
+        //         let responseArray = []
+        //         let fields = { ...this.state.fields };
+        //         for (key in response) {
+        //             responseArray.push(response[key]);
+        //         }
+        //         for (field in fields) {
 
-                    if (field === 'firstName') {
-                        fields[field].value = responseArray[0].firstName
-                    }
-                    if (field === 'lastName') {
-                        fields[field].value = responseArray[0].lastName
-                    }
-                    if (field === 'email') {
-                        fields[field].value = responseArray[0].email
-                    }
-                    if (field === 'phone') {
-                        fields[field].value = responseArray[0].phone
-                    }
-                    if (field === 'companyDepartment') {
-                        fields[field].value = responseArray[0].companyDepartment
-                    }
-                }
-                this.setState({ fields: fields });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        //             if (field === 'firstName') {
+        //                 fields[field].value = responseArray[0].firstName
+        //             }
+        //             if (field === 'lastName') {
+        //                 fields[field].value = responseArray[0].lastName
+        //             }
+        //             if (field === 'email') {
+        //                 fields[field].value = responseArray[0].email
+        //             }
+        //             if (field === 'phone') {
+        //                 fields[field].value = responseArray[0].phone
+        //             }
+        //             if (field === 'companyDepartment') {
+        //                 fields[field].value = responseArray[0].companyDepartment
+        //             }
+        //         }
+        //         this.setState({ fields: fields });
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+    }
+
+    populateTextFields = (userInformation) => {
+        let fields = { ...this.state.fields };
+        for (field in fields) {
+            if (field === 'firstName') {
+                fields[field].value = userInformation.firstName
+            }
+            if (field === 'lastName') {
+                fields[field].value = userInformation.lastName
+            }
+            if (field === 'email') {
+                fields[field].value = userInformation.email
+            }
+            if (field === 'phone') {
+                fields[field].value = userInformation.phone
+            }
+            if (field === 'companyDepartment') {
+                fields[field].value = userInformation.companyDepartment
+            }
+        }
+        console.log('userInformation', userInformation);
+        console.log('fields', fields);
+        this.setState({ fields: fields });
     }
 
     handleInputChange = (value, i) => {
@@ -223,7 +255,7 @@ class CreateAccountPage extends Component {
                     }
                 })
                     .then((response) => {
-                    
+
                         this.storeUserAccessInfo(
                             this.props.accessToken,
                             this.props.refreshToken,
@@ -245,7 +277,7 @@ class CreateAccountPage extends Component {
 
     }
 
-    storeUserAccessInfo = async (accessToken, refreshToken, userID, roleID) => {        
+    storeUserAccessInfo = async (accessToken, refreshToken, userID, roleID) => {
         try {
             await AsyncStorage.setItem('REFRESH_TOKEN', refreshToken);
             await AsyncStorage.setItem('ACCESS_TOKEN', accessToken);
@@ -266,6 +298,7 @@ class CreateAccountPage extends Component {
     }
 
     render() {
+        console.log('this.props.userInformation', this.props.userInformation);
         return (
             <View style={styles.pageContainer}>
                 <View style={toasterStyle.container}>
@@ -304,13 +337,21 @@ class CreateAccountPage extends Component {
 
 const mapStateToProps = state => {
     return {
+        userInformation: state.userInformation,
         userID: state.userID,
         roleID: state.roleID,
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
     }
 }
-export default connect(mapStateToProps)(CreateAccountPage);
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onInitUser: (userID) => dispatch(dataActions.initUser(userID)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateAccountPage);
 
 const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInputChange, formStyle }) => {
 

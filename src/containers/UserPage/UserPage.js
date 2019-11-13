@@ -25,13 +25,12 @@ class UserPage extends Component {
         header: null,
     };
 
-    constructor(props) {
-        super(props)
+    state = {
+        isCompanyManager: false,
+    }
 
-        this.state = {
-            isCompanyManager: false,
-        }
-        props.navigation.addListener('willFocus', () => {
+    componentDidMount() {
+        this.props.navigation.addListener('willFocus', () => {
             const userID = Number(this.props.navigation.getParam('participantID', null));
 
             if (this.props.roleID == 1) {
@@ -89,7 +88,7 @@ class UserPage extends Component {
                         </View>
                     </KeyboardAwareScrollView>
                 </ScrollView>
-                <Footer/>
+                <Footer />
             </View>
         )
     }

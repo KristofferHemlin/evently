@@ -28,13 +28,8 @@ class ProfilePage extends Component {
         header: null,
     };
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
-        }
-        
-        props.navigation.addListener('willFocus', () => {
+    componentDidMount() {
+        this.props.navigation.addListener('willFocus', () => {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
             if (infoChanged) {
                 this.refs.toast.show('Your changes have been submitted!', 2000);
@@ -120,7 +115,6 @@ class ProfilePage extends Component {
     }
 
     render() {
-
         return (
             <View style={styles.pageContainer}>
                 <View style={toasterStyle.container}>
@@ -139,7 +133,6 @@ class ProfilePage extends Component {
                                 onEditPress={() => this.handleEditPress()}
                             >User Profile</HeadlineOverview>
                             <View style={styles.profilePictureView}>
-
                                 {this.props.userInformation ?
                                     this.props.userInformation.profileImageUrl ?
                                         <View>
