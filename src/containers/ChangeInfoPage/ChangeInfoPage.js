@@ -54,7 +54,6 @@ class ChangeInfoPage extends Component {
         fields[key].value = value;
         const formErrors = this.state.formErrors;
         const label = fields[key].label;
-        //console.log('label', label);
         switch (label) {
             case 'Location':
                 formErrors.location = value.length < 1 ? "A location is required" : "";
