@@ -12,6 +12,7 @@ const initialState = {
     notificationStatus: null,
     eventInformation: null,
     userInformation: null,
+    activityInformation: null,
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -27,6 +28,11 @@ const dataReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userInformation: action.payload.userInformation,
+            }
+        case actionTypes.SET_ACTIVITIES:
+            return {
+                ...state,
+                activityInformation: action.payload.activityInformation,
             }
         case actionTypes.SAVE_USER:
             return {

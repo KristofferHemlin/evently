@@ -44,6 +44,27 @@ export const setEvent = (eventInformation) => {
     }
 }
 
+export const initActivities = (userID) => {
+    return dispatch => {
+        axios.get(URL + 'users/' + userID + '/events/1/activities')
+            .then((response) => {
+                dispatch(setActivities(response.data))
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+}
+
+export const setActivities = (activityInformation) => {
+    return {
+        type: actionTypes.SET_ACTIVITIES,
+        payload: {
+            activityInformation: activityInformation
+        }
+    }
+}
+
 export const saveUser = (userID, roleID, accessToken, refreshToken) => {
     return {
         type: actionTypes.SAVE_USER,

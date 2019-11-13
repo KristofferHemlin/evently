@@ -27,16 +27,14 @@ class CalendarPage extends Component {
     header: null,
   };
 
-  constructor(props) {
-    super(props)
 
-    this.state = {
-      activities: [],
-      isUpdated: false,
+  state = {
+    activities: [],
+    isUpdated: false,
+  }
 
-    }
-
-    props.navigation.addListener('willFocus', () => {
+  componentDidMount() {
+    this.props.navigation.addListener('willFocus', () => {
       axios.get(URL + 'users/' + this.props.userID + '/events/1/activities')
         .then((response) => {
           responseArray = response.data.map(activity => ({
@@ -58,7 +56,6 @@ class CalendarPage extends Component {
           console.log(error)
         })
     })
-    console.disableYellowBox = true;
   }
 
   eventClicked(event) {
@@ -93,7 +90,7 @@ class CalendarPage extends Component {
             //scroll to first event of the day (default true)
             /> : null}
         </View>
-        <Footer currentPage={'calendar'}/>
+        <Footer currentPage={'calendar'} />
       </View>
 
     )
