@@ -44,11 +44,11 @@ export const setEvent = (eventInformation) => {
     }
 }
 
-export const initActivities = (userID) => {
+export const initActivity = (activityID) => {
     return dispatch => {
-        axios.get(URL + 'users/' + userID + '/events/1/activities')
+        axios.get(URL + 'activities/' + activityID)
             .then((response) => {
-                dispatch(setActivities(response.data))
+                dispatch(setActivity(response.data))
             })
             .catch((error) => {
                 console.log(error);
@@ -56,9 +56,9 @@ export const initActivities = (userID) => {
     }
 }
 
-export const setActivities = (activityInformation) => {
+export const setActivity = (activityInformation) => {
     return {
-        type: actionTypes.SET_ACTIVITIES,
+        type: actionTypes.SET_ACTIVITY,
         payload: {
             activityInformation: activityInformation
         }

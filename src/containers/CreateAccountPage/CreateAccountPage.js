@@ -210,7 +210,6 @@ class CreateAccountPage extends Component {
 
         if (formValid(this.state.formErrors, this.state.fields)) {
             this.setState({ isLoading: true }, () => {
-                // axios.put(URL + 'users/' + this.props.userID + '/imageUpload', userData, {
                 axios.put(URL + 'users/' + this.props.userID + '/firstlogin', userData, {
                     headers: {
                         'content-type': 'multipart/form-data'
