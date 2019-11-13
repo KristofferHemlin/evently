@@ -27,7 +27,7 @@ class SettingsModal extends Component {
 
     userInfoNavigationHandler = () => {
         this.props.exitModal();
-        this.props.navigation.navigate('ProfilePageRoute');
+        this.props.navigation.navigate('ProfilePageRoute', { infoChanged: false });
     }
 
     logoutHandler = () => {
@@ -39,7 +39,7 @@ class SettingsModal extends Component {
                 this.props.navigation.navigate('LoginRoute');
             })
             .catch((error) => {
-                console.log('error', error);
+                console.log(error);
             })
 
     }

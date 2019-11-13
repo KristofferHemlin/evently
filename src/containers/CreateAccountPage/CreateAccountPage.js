@@ -236,7 +236,7 @@ class CreateAccountPage extends Component {
                         this.props.navigation.navigate('EventPageRoute')
                     })
                     .catch((error) => {
-                        console.log('error', error.response);
+                        console.log(error);
                         this.setState({ isLoading: false })
                         this.showToasterHandler(error.response.data.message, false);
                     })

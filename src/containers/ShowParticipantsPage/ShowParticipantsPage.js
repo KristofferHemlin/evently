@@ -108,8 +108,6 @@ class ShowParticipantsPage extends Component {
 
     render() {
 
-        console.log();
-
         return (
             <View style={styles.pageContainer}>
                 <Header/>
