@@ -67,7 +67,7 @@ class ProfilePage extends Component {
                 })
             })
             .catch((error) => {
-                console.log("userprofileError", error);
+                console.log(error);
             });
     }
 
@@ -144,8 +144,6 @@ class ProfilePage extends Component {
     }
 
     render() {
-
-        console.log("PP rendered YO: ", this.state.infoChanged);
 
         return (
             <View style={styles.pageContainer}>

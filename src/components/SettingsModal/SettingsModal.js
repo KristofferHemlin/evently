@@ -39,7 +39,7 @@ class SettingsModal extends Component {
                 this.props.navigation.navigate('LoginRoute');
             })
             .catch((error) => {
-                console.log('error', error);
+                console.log(error);
             })
 
     }
