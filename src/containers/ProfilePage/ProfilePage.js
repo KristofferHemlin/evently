@@ -30,8 +30,10 @@ class ProfilePage extends Component {
 
     constructor(props) {
         super(props)
+
         this.state = {
         }
+        
         props.navigation.addListener('willFocus', () => {
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
             if (infoChanged) {
