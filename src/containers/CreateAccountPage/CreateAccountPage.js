@@ -122,34 +122,38 @@ class CreateAccountPage extends Component {
         toasterMessageSuccess: false,
     }
 
-    static getDerivedStateFromProps(props, state) {
-        if (props.userInformation) {
-            let fields = { ...state.fields };
-            for (field in fields) {
-                if (field === 'firstName') {
-                    fields[field].value = props.userInformation.firstName
-                }
-                if (field === 'lastName') {
-                    fields[field].value = props.userInformation.lastName
-                }
-                if (field === 'email') {
-                    fields[field].value = props.userInformation.email
-                }
-                if (field === 'phone') {
-                    fields[field].value = props.userInformation.phone
-                }
-                if (field === 'companyDepartment') {
-                    fields[field].value = props.userInformation.companyDepartment
-                }
-            }
-            return {
-                fields: fields
-            }
-        }
 
-    }
     componentDidMount() {
-        this.props.onInitUser(this.props.userID)
+        axios.get(URL + 'users/' + this.props.userID)
+            .then((response) => {
+                let responseArray = []
+                let fields = { ...this.state.fields };
+                for (key in response) {
+                    responseArray.push(response[key]);
+                }
+                for (field in fields) {
+
+                    if (field === 'firstName') {
+                        fields[field].value = responseArray[0].firstName
+                    }
+                    if (field === 'lastName') {
+                        fields[field].value = responseArray[0].lastName
+                    }
+                    if (field === 'email') {
+                        fields[field].value = responseArray[0].email
+                    }
+                    if (field === 'phone') {
+                        fields[field].value = responseArray[0].phone
+                    }
+                    if (field === 'companyDepartment') {
+                        fields[field].value = responseArray[0].companyDepartment
+                    }
+                }
+                this.setState({ fields: fields });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     handleInputChange = (value, i) => {
@@ -262,7 +266,6 @@ class CreateAccountPage extends Component {
     }
 
     render() {
-        console.log('this.props.userInformation', this.props.userInformation);
         return (
             <View style={styles.pageContainer}>
                 <View style={toasterStyle.container}>

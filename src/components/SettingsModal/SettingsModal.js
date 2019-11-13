@@ -50,7 +50,7 @@ class SettingsModal extends Component {
         this.props.navigation.navigate('ChangeInfoRoute', {
             uID: this.props.userID,
             title: 'Change Password',
-            parentRoute: 'ProfilePageRoute',
+            parentRoute: 'EventPageRoute',
             http_update_url: URL + 'account/password',
             showImagePicker: false,
             fields: {
