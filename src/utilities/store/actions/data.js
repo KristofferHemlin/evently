@@ -65,6 +65,27 @@ export const setActivity = (activityInformation) => {
     }
 }
 
+export const initNotifications = (userID) => {
+    return dispatch => {
+        axios.get(URL + 'users/' + userID + '/notifications')
+            .then((response) => {
+                dispatch(setNotifications(response.data))
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+}
+
+export const setNotifications = (notificationInformation) => {
+    return {
+        type: actionTypes.SET_NOTIFICATIONS,
+        payload: {
+            notificationInformation: notificationInformation
+        }
+    }
+}
+
 export const saveUser = (userID, roleID, accessToken, refreshToken) => {
     return {
         type: actionTypes.SAVE_USER,

@@ -24,18 +24,23 @@ const dataReducer = (state = initialState, action) => {
                 ...state,
                 eventInformation: action.payload.eventInformation,
             }
+
         case actionTypes.SET_USER:
             return {
                 ...state,
                 userInformation: action.payload.userInformation,
             }
         case actionTypes.SET_ACTIVITY:
-            console.log('action.payload.activityInformation', action.payload.activityInformation);
             action.payload.activityInformation.startTime = moment(new Date(action.payload.activityInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
             action.payload.activityInformation.endTime = moment(new Date(action.payload.activityInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
             return {
                 ...state,
                 activityInformation: action.payload.activityInformation,
+            }
+        case actionTypes.SET_NOTIFICATIONS:
+            return {
+                ...state,
+                notificationInformation: action.payload.notificationInformation,
             }
         case actionTypes.SAVE_USER:
             return {

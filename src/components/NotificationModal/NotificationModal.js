@@ -10,10 +10,8 @@ import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
-import axios from 'axios';
 
 import * as dataActions from '../../utilities/store/actions/data';
-import URL from '../../config';
 import styles from './NotificationModal.style.js'
 
 
@@ -23,49 +21,45 @@ const cancelIcon = <FontAwesome5 size={40} name={'times'} solid color="white" />
 
 class NotificationModal extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            notifications: [],
-            isLoading: false,
-        }
+    state = {
+        notifications: [],
+        isLoading: false,
     }
 
     componentDidMount() {
-        this.fetchNotifications()
+        this.props.navigation.addListener('willFocus', () => {
+            this.fetchNotifications()
+        })
+    }
+
+    componentDidUpdate(props) {
+        if ((props !== this.props) && this.props.notificationInformation) {
+            var filteredRes = (this.props.notificationInformation || []).reduce((map, { activity: { title, id, updatedAt } }) => {
+                map[id] = {
+                    title,
+                    id,
+                    updatedAt: moment(new Date(updatedAt.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
+                    routeType: 'ActivityOverviewRoute'
+                }
+                return map
+            }, {})
+
+            this.setState({
+                notifications: Object.keys(filteredRes).map(key => filteredRes[key]),
+            })
+        }
     }
 
 
     fetchNotifications() {
-        this.setState({ isLoading: true }, () => {
-            axios.get(URL + 'users/' + this.props.userID + '/notifications')
-                .then((results) => {
-                    this.props.saveActivityID(results.data[0].activity.id)
-                    var filteredRes = (results.data || []).reduce((map, { activity: { title, id, updatedAt } }) => {
-                        map[id] = {
-                            title,
-                            id,
-                            updatedAt: moment(new Date(updatedAt.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
-                            routeType: 'ActivityOverviewRoute'
-                        }
-                        return map
-                    }, {})
-                    this.setState({
-                        notifications: Object.keys(filteredRes).map(key => filteredRes[key]),
-                        isLoading: false,
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                    this.setState({ isLoading: false })
-                });
-        })
+        this.props.onInitNotifications(this.props.userID);
     }
 
-    navigateTo(routeType, itemID) {
+    navigateTo(routeType, activityID) {
         this.setState({ notifications: [] })
+        this.props.onSaveActivityID(activityID)
         this.props.exitModal()
-        this.props.navigation.navigate(routeType, { activityID: itemID })
+        this.props.navigation.navigate(routeType)
     }
 
     render() {
@@ -98,13 +92,15 @@ class NotificationModal extends Component {
 
 const mapStateToProps = state => {
     return {
+        notificationInformation: state.notificationInformation,
         userID: state.userID,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveActivityID: (activityID) => dispatch(dataActions.saveActivityID(activityID))
+        onSaveActivityID: (activityID) => dispatch(dataActions.saveActivityID(activityID)),
+        onInitNotifications: (userID) => dispatch(dataActions.initNotifications(userID)),
     };
 };
 

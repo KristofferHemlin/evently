@@ -1,6 +1,7 @@
 export const SET_USER = 'SET_USER';
 export const SET_EVENT = 'SET_EVENT';
 export const SET_ACTIVITY = 'SET_ACTIVITY';
+export const SET_NOTIFICATIONS = 'SET_NOTIFICATIONS';
 export const SAVE_USER = 'SAVE_USER';
 export const SAVE_EVENT_TITLE = 'SAVE_EVENT_TITLE';
 export const SAVE_ACTIVITY_ID = 'SAVE_ACTIVITY_ID';
