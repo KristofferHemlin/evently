@@ -20,11 +20,14 @@ const initialState = {
 const dataReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.SET_EVENT:
-            action.payload.eventInformation.startTime = moment(new Date(action.payload.eventInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
-            action.payload.eventInformation.endTime = moment(new Date(action.payload.eventInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
+            const newEvent = {
+                ...action.payload.eventInformation,
+                startTime: moment(new Date(action.payload.eventInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD'),
+                endTime: moment(new Date(action.payload.eventInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD'),
+            }           
             return {
                 ...state,
-                eventInformation: action.payload.eventInformation,
+                eventInformation: newEvent,
             }
 
         case actionTypes.SET_USER:
@@ -33,11 +36,14 @@ const dataReducer = (state = initialState, action) => {
                 userInformation: action.payload.userInformation,
             }
         case actionTypes.SET_ACTIVITY:
-            action.payload.activityInformation.startTime = moment(new Date(action.payload.activityInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-            action.payload.activityInformation.endTime = moment(new Date(action.payload.activityInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+                const newActivity = {
+                    ...action.payload.activityInformation,
+                    startTime: moment(new Date(action.payload.activityInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
+                    endTime: moment(new Date(action.payload.activityInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
+                }
             return {
                 ...state,
-                activityInformation: action.payload.activityInformation,
+                activityInformation: newActivity
             }
         case actionTypes.SET_NOTIFICATIONS:
             return {
