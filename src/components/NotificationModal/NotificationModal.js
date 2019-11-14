@@ -23,17 +23,16 @@ class NotificationModal extends Component {
 
     state = {
         notifications: [],
-        isLoading: false,
     }
 
     componentDidMount() {
-        this.props.navigation.addListener('willFocus', () => {
-            this.fetchNotifications()
-        })
+        this.fetchNotifications()
     }
 
     componentDidUpdate(props) {
+        console.log('this.props.notificationInformation1', this.props.notificationInformation);
         if ((props !== this.props) && this.props.notificationInformation) {
+            console.log('this.props.notificationInformation2', this.props.notificationInformation);
             var filteredRes = (this.props.notificationInformation || []).reduce((map, { activity: { title, id, updatedAt } }) => {
                 map[id] = {
                     title,
@@ -52,11 +51,12 @@ class NotificationModal extends Component {
 
 
     fetchNotifications() {
+        console.log('fetch');
         this.props.onInitNotifications(this.props.userID);
     }
 
     navigateTo(routeType, activityID) {
-        this.setState({ notifications: [] })
+        // this.setState({ notifications: [] })
         this.props.onSaveActivityID(activityID)
         this.props.exitModal()
         this.props.navigation.navigate(routeType)
@@ -73,7 +73,7 @@ class NotificationModal extends Component {
                     </View>
                 </TouchableOpacity>
             </View>
-            {this.state.isLoading ?
+            {this.props.getNotificationsLoading ?
                 <ActivityIndicator size={'large'} style={styles.loadingIcon} color={'#FFF'} /> :
                 <NavigationEvents onWillFocus={payload => this.fetchNotifications(payload)} />}
             <View style={styles.menuContainer}>
@@ -93,6 +93,7 @@ class NotificationModal extends Component {
 const mapStateToProps = state => {
     return {
         notificationInformation: state.notificationInformation,
+        getNotificationsLoading: state.getNotificationsLoading,
         userID: state.userID,
     }
 }

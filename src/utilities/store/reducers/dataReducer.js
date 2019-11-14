@@ -14,6 +14,7 @@ const initialState = {
     userInformation: null,
     activityInformation: null,
     notificationInformation: null,
+    getNotificationsLoading: true, 
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -42,6 +43,7 @@ const dataReducer = (state = initialState, action) => {
             return {
                 ...state,
                 notificationInformation: action.payload.notificationInformation,
+                getNotificationsLoading: false,
             }
         case actionTypes.SAVE_USER:
             return {

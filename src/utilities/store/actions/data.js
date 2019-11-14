@@ -51,8 +51,7 @@ export const initActivity = (activityID) => {
                 dispatch(setActivity(response.data))
             })
             .catch((error) => {
-                console.log(error);
-            });
+             });
     }
 }
 
@@ -81,7 +80,8 @@ export const setNotifications = (notificationInformation) => {
     return {
         type: actionTypes.SET_NOTIFICATIONS,
         payload: {
-            notificationInformation: notificationInformation
+            notificationInformation: notificationInformation,
+            isLoading: false,
         }
     }
 }

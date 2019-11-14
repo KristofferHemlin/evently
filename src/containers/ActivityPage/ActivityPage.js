@@ -53,7 +53,7 @@ class ActivityPage extends Component {
     showParticipantsHandler = () => {
         this.props.navigation.navigate('ShowParticipantsRoute', {
             activity: true,
-            activityTitle: this.props.activityInformation.activityTitle,
+            activityTitle: this.props.activityInformation.title,
         })
     }
 

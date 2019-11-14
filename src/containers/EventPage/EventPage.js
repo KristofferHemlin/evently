@@ -29,8 +29,9 @@ class EventPage extends Component {
     componentDidMount() {
         // Add eventListener for when oneSignal id is available
         OneSignal.addEventListener('ids', this.onIds);
-
+        
         this.props.navigation.addListener('willFocus', () => {
+            
             let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
             if (infoChanged) {
                 this.refs.toast.show('Your changes have been submitted!', 2000);
