@@ -73,7 +73,7 @@ const dataReducer = (state = initialState, action) => {
             AsyncStorage.getAllKeys()
                 .then(keys => AsyncStorage.multiRemove(keys))
                 .catch((error) => {
-                    console.log('error', error);
+                    console.log(error);
                 })
             return initialState
 

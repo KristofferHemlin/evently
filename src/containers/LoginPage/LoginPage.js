@@ -47,7 +47,6 @@ class LoginPage extends Component {
         }
         this.props.navigation.addListener('willFocus', () => {
             const showErrorMessage = Boolean(this.props.navigation.getParam('showErrorMessage', false));
-            console.log('showErrorMessage', showErrorMessage);
             if (showErrorMessage) {
                 setTimeout(() => { this.showToasterHandler("Your session expired, log in again!", false) }, 500)
             }
@@ -99,8 +98,7 @@ class LoginPage extends Component {
                 password: this.state.password
             })
                 .then((response) => {
-                    console.log('response', response);
-                    this.props.saveUser(
+                    this.props.onSaveUser(
                         response.data.user.id,
                         response.data.user.role.id,
                         response.data.accessToken,
@@ -224,7 +222,7 @@ class LoginPage extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveUser: (userID, roleID, accessToken, refreshToken) => dispatch(dataActions.saveUser(userID, roleID, accessToken, refreshToken)),
+        onSaveUser: (userID, roleID, accessToken, refreshToken) => dispatch(dataActions.saveUser(userID, roleID, accessToken, refreshToken)),
     };
 };
 

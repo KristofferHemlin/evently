@@ -53,7 +53,6 @@ class ChangeInfoPage extends Component {
         fields[key].value = value;
         const formErrors = this.state.formErrors;
         const label = fields[key].label;
-        //console.log('label', label);
         switch (label) {
             case 'Location':
                 formErrors.location = value.length < 1 ? "A location is required" : "";
@@ -99,7 +98,6 @@ class ChangeInfoPage extends Component {
             default:
                 break;
         }
-        //console.log('formErrors', this.state.formErrors);
         this.setState({ fields: fields, formErrors: formErrors }, () => console.log('formError', this.state.formErrors));
     };
 
@@ -121,21 +119,22 @@ class ChangeInfoPage extends Component {
                         uri:
                             Platform.OS === "android" ? this.state.imageData.uri : this.state.imageData.uri.replace("file://", "")
                     }
-                    body.append("image", image)
                 }
                 if (this.state.imageUrl == null) {
+                    image = null;
                     let axiosUrl;
                     if (this.state.parentRoute === "ProfilePageRoute") {
                         axiosUrl = URL + 'users/' + this.props.userID + '/profileimage';
                     } else {
                         axiosUrl = this.state.http_update_url + '/coverimage';
                     }
-                
-                axios.delete(axiosUrl)
+                    
+                    axios.delete(axiosUrl)
                     .catch((error) => {
-                        console.log(error.response);
+                        console.log(error);
                     })
                 }
+                body.append("image", image)
             }
 
             this.setState({ isLoading: true }, () => {
@@ -152,7 +151,7 @@ class ChangeInfoPage extends Component {
                         })
                     )
                     .catch((error) => {
-                        console.log(error.response);
+                        console.log(error);
                         this.setState({ isLoading: false })
                         this.showToasterHandler(error.response.data.message, false);
                     })
@@ -163,7 +162,10 @@ class ChangeInfoPage extends Component {
     }
 
     saveImageHandler = (image) => {
-        this.setState({ imageData: image });
+        this.setState({
+            imageData: image,
+            imageUrl: image.uri, 
+        });
     }
 
     deleteImageHandler = () => {

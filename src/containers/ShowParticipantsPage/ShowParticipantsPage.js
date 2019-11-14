@@ -31,6 +31,7 @@ class ShowParticipantsPage extends Component {
             firstName: '',
             lastName: '',
             companyDepartment: '',
+            profileImageUrl: null,
             profileArray: [],
             profileArrayFiltered: [],
             headlineName: '',
@@ -48,14 +49,14 @@ class ShowParticipantsPage extends Component {
         const isActivity = this.props.navigation.getParam('activity', false);
         const activityTitle = this.props.navigation.getParam('activityTitle', '');
         let url;
-      
-        if(isEvent === true){
+
+        if (isEvent === true) {
             url = URL + 'events/1/users?sort=firstName:asc'
-            this.setState({headlineName: 'Event Participants'})
+            this.setState({ headlineName: 'Event Participants' })
         }
-        if(isActivity === true){
+        if (isActivity === true) {
             url = URL + 'activities/' + this.props.activityID + '/users?sort=firstName:asc'
-            this.setState({headlineName: activityTitle})
+            this.setState({ headlineName: activityTitle })
         }
         this.setState({ isLoading: true }, () => {
             axios.get(url)
@@ -66,6 +67,7 @@ class ShowParticipantsPage extends Component {
                         participantID: user.id,
                         fullName: user.firstName + " " + user.lastName,
                         companyDepartment: user.companyDepartment,
+                        profileImageUrl: user.profileImageUrl,
                     }));
 
                     this.setState({
@@ -91,8 +93,8 @@ class ShowParticipantsPage extends Component {
                 || user.lastName.toLowerCase().includes(filterWord.toLowerCase())
                 || user.fullName.toLowerCase().includes(filterWord.toLowerCase())
                 || user.companyDepartment.toLowerCase().includes(filterWord.toLowerCase())
-        }).map(function ({ firstName, lastName, companyDepartment, participantID }) {
-            return { firstName, lastName, companyDepartment, participantID };
+        }).map(function ({ firstName, lastName, companyDepartment, participantID, profileImageUrl }) {
+            return { firstName, lastName, companyDepartment, participantID, profileImageUrl };
         });
 
         this.setState({ profileArrayFiltered: tempArray });
@@ -108,11 +110,9 @@ class ShowParticipantsPage extends Component {
 
     render() {
 
-        console.log();
-
         return (
             <View style={styles.pageContainer}>
-                <Header/>
+                <Header />
                 <ScrollView>
                     <HeadlineOverview infoButtonStatus={false} editButtonStatus={false}>{this.state.headlineName}</HeadlineOverview>
 
@@ -126,10 +126,12 @@ class ShowParticipantsPage extends Component {
                     <Text style={styles.subTitles}>Participants</Text>
                     <View style={styles.line}></View>
 
-                    {this.state.isLoading ? <ActivityIndicator size={'small'} style={styles.loadingIcon} color={'#rgba(74,144,226,1)'} /> :
+                    {this.state.isLoading ?
+                        <ActivityIndicator size={'small'} style={styles.loadingIcon} color={'#rgba(74,144,226,1)'} /> :
                         <View style={styles.profileList}>
                             {this.state.profileArrayFiltered.map((input, index) => {
                                 return <ProfilePreview
+                                    source={{ uri: this.state.profileArrayFiltered[index].profileImageUrl }}
                                     onClick={() => this.profilePreviewOnClickHandler(input.participantID)}
                                     key={index}
                                     companyDepartment={this.state.profileArrayFiltered[index].companyDepartment}>
@@ -140,7 +142,7 @@ class ShowParticipantsPage extends Component {
                     }
 
                 </ScrollView>
-                <Footer currentPage={'showParticipants'}/>
+                <Footer currentPage={'showParticipants'} />
             </View>
         )
     }

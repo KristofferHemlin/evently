@@ -73,10 +73,9 @@ class CreateAccountPage extends Component {
                 secureText: false,
             },
             companyDepartment: {
-                key: 'companyDepartment',
-                name: 'Company Department',
-                type: 'text',
                 label: 'Company Department',
+                key: 'companyDepartment',
+                type: 'text',
                 value: '',
                 secureText: false,
             },
@@ -112,7 +111,7 @@ class CreateAccountPage extends Component {
             lastName: '',
             email: '',
             phone: '',
-            department: '',
+            companyDepartment: '',
             password: 'Minimum 6 characters required',
             confirmPassword: '',
         },
@@ -155,6 +154,7 @@ class CreateAccountPage extends Component {
         let formErrors = this.state.formErrors;
         const label = fields[i].label;
         fields[i].value = value;
+        console.log('label', label);
         switch (label) {
             case 'First Name':
                 formErrors.firstName = value.length < 1 ? "Minimum 2 characters required" : "";
@@ -169,7 +169,8 @@ class CreateAccountPage extends Component {
                 formErrors.phone = phoneRegex.test(value) ? "" : "Invalid phone number";
                 break;
             case 'Company Department':
-                formErrors.department = value.length < 1 || value.length > 3 ? "Invalid department" : "";
+                console.log('HAELLSALÅ');
+                formErrors.companyDepartment = value.length < 1 || value.length > 3 ? "Invalid department" : "";
                 break;
             case 'Password':
                 formErrors.password = value.length < 6 ? "Minimum 6 characters required" : "";
@@ -181,6 +182,7 @@ class CreateAccountPage extends Component {
             default:
                 break;
         }
+        console.log('formerros', formErrors);
         this.setState({ fields: fields, formErrors: formErrors })
     };
 
@@ -227,7 +229,7 @@ class CreateAccountPage extends Component {
                         this.props.navigation.navigate('EventPageRoute')
                     })
                     .catch((error) => {
-                        console.log('error', error.response);
+                        console.log(error);
                         this.setState({ isLoading: false })
                         this.showToasterHandler(error.response.data.message, false);
                     })

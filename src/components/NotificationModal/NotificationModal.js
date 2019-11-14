@@ -59,7 +59,7 @@ class NotificationModal extends Component {
         // this.setState({ notifications: [] })
         this.props.onSaveActivityID(activityID)
         this.props.exitModal()
-        this.props.navigation.navigate(routeType)
+        this.props.navigation.navigate(routeType, { infoChanged: false })
     }
 
     render() {

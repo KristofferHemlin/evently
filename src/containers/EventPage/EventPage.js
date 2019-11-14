@@ -114,6 +114,7 @@ class EventPage extends Component {
         });
     }
     render() {
+
         return (
             <View style={styles.pageContainer}>
                 <View style={toasterStyle.container}>
