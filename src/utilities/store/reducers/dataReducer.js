@@ -13,6 +13,7 @@ const initialState = {
     eventInformation: null,
     userInformation: null,
     activityInformation: null,
+    notificationInformation: null,
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -55,11 +56,6 @@ const dataReducer = (state = initialState, action) => {
                 ...state,
                 accessToken: action.payload.accessToken,
                 refreshToken: action.payload.refreshToken,
-            }
-        case actionTypes.SAVE_EVENT_TITLE:
-            return {
-                ...state,
-                eventTitle: action.payload.eventTitle,
             }
         case actionTypes.SAVE_ACTIVITY_ID:
             return {

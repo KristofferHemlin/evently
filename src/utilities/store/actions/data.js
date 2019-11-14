@@ -108,15 +108,6 @@ export const saveTokens = (accessToken, refreshToken) => {
     }
 }
 
-export const saveEventTitle = (eventTitle) => {
-    return {
-        type: actionTypes.SAVE_EVENT_TITLE,
-        payload: {
-            eventTitle: eventTitle,
-        }
-    }
-}
-
 export const saveActivityID = (activityID) => {
     return {
         type: actionTypes.SAVE_ACTIVITY_ID,

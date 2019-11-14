@@ -166,7 +166,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveEventTitle: (eventTitle) => dispatch(dataActions.saveEventTitle(eventTitle)),
         onInitEvent: (userID) => dispatch(dataActions.initEvent(userID)),
     };
 };
