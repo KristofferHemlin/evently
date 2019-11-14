@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // Använde ett package då vanliga avoidkeybord inte funka
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
@@ -16,7 +15,7 @@ import Footer from '../../components/Footer/Footer';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 
 import styles from './UserPage.style';
-import URL from '../../config';
+import * as dataActions from '../../utilities/store/actions/data';
 
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
@@ -26,52 +25,28 @@ class UserPage extends Component {
         header: null,
     };
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            phone: '',
-            department: '',
-            about: '',
-            allergies: '',
-            isCompanyManager: false,
-            profileImage: '',
-        }
-        props.navigation.addListener('willFocus', () => {
-            const participantID = Number(this.props.navigation.getParam('participantID', null));
+    state = {
+        isCompanyManager: false,
+    }
 
-            this.fetchUserData(participantID);
+    componentDidMount() {
+        this.props.navigation.addListener('willFocus', () => {
+            const userID = Number(this.props.navigation.getParam('participantID', null));
 
-            if (this.props.roleID === 1) {
+            if (this.props.roleID == 1) {
                 this.setState({ isCompanyManager: true })
             }
 
+            this.fetchUserData(userID);
         })
-        console.disableYellowBox = true;
     }
 
-    fetchUserData = (participantID) => {
-        axios.get(URL + 'users/' + participantID)
-            .then((response) => {
-                this.setState({
-                    firstName: response.data.firstName,
-                    lastName: response.data.lastName,
-                    email: response.data.email,
-                    phone: response.data.phone,
-                    department: response.data.companyDepartment,
-                    about: response.data.aboutMe,
-                    allergies: response.data.allergiesOrPreferences,
-                    profileImage: response.data.profileImageUrl,
-                })
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    fetchUserData = (userID) => {
+        this.props.onInitUser(userID);
     }
 
     render() {
+        console.log('isCompanyManager', this.state.isCompanyManager);
         return (
             <View style={styles.pageContainer}>
                 <Header />
@@ -83,34 +58,32 @@ class UserPage extends Component {
                                 editButtonStatus={false}
                             >User Profile</HeadlineOverview>
                             <View style={styles.profilePictureView}>
-                                {this.state.profileImage ?
-                                    <View>
-                                        <Image style={styles.profilePicture}
-                                            source={{ uri: this.state.profileImage }} />
-                                    </View>
-                                    :
-                                    <View>{profileAvatar}</View>
-                                }
-                                <Text style={styles.nameText}>{this.state.firstName} {this.state.lastName}</Text>
+                                {this.props.userInformation ?
+                                    this.props.userInformation.profileImageUrl ?
+                                        <View>
+                                            <Image style={styles.profilePicture}
+                                                source={{ uri: this.props.userInformation.profileImageUrl }} />
+                                        </View> :
+                                        <View>{profileAvatar}</View>
+                                    : null}
+                                <Text style={styles.nameText}>{this.props.userInformation ? this.props.userInformation.firstName : ""} {this.props.userInformation ? this.props.userInformation.lastName : ""}</Text>
                             </View>
                             <View style={styles.line}></View>
 
                             <View>
                                 <Text style={styles.subTitles}>Email</Text>
-                                <Text style={styles.ordinaryText}>{this.state.email}</Text>
+                                <Text style={styles.ordinaryText}>{this.props.userInformation ? this.props.userInformation.email : ""}</Text>
                                 <Text style={styles.subTitles}>Phone</Text>
-                                <Text style={styles.ordinaryText}>{this.state.phone}</Text>
+                                <Text style={styles.ordinaryText}>{this.props.userInformation ? this.props.userInformation.phone : ""}</Text>
                                 <Text style={styles.subTitles}>Company Department</Text>
-                                <Text style={styles.ordinaryText}>{this.state.department}</Text>
+                                <Text style={styles.ordinaryText}>{this.props.userInformation ? this.props.userInformation.companyDepartment : ""}</Text>
                                 <Text style={styles.subTitles}>About Me</Text>
-                                <Text style={styles.ordinaryText}>{this.state.about}</Text>
-                                {this.state.ownProfilePage || this.state.isCompanyManager ?
+                                <Text style={styles.ordinaryText}>{this.props.userInformation ? this.props.userInformation.aboutMe : ""}</Text>
+                                {this.state.isCompanyManager ?
                                     <View>
                                         <Text style={styles.subTitles}>Allergies</Text>
-                                        <Text style={styles.ordinaryText}>{this.state.allergies}</Text>
+                                        <Text style={styles.ordinaryText}>{this.props.userInformation ? this.props.userInformation.allergiesOrPreferences : ""}</Text>
                                     </View> : null}
-
-
                             </View>
                         </View>
                     </KeyboardAwareScrollView>
@@ -123,10 +96,16 @@ class UserPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        userID: state.userID,
+        userInformation: state.userInformation,
         roleID: state.roleID
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        onInitUser: (userID) => dispatch(dataActions.initUser(userID)),
+    };
+};
 
-export default connect(mapStateToProps)(UserPage);
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage);

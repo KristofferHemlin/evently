@@ -25,7 +25,7 @@ import ResetPasswordForm from '../../components/ResetPasswordForm/ResetPasswordF
 import styles from './LoginPage.style';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import URL from '../../config';
-import * as actionTypes from '../../utilities/store/actions';
+import * as dataActions from '../../utilities/store/actions/data';
 
 
 
@@ -104,7 +104,7 @@ class LoginPage extends Component {
                         response.data.accessToken,
                         response.data.refreshToken
                     );
-                   
+
 
                     // Set up onesignal notifications.
                     OneSignal.init("4a9de87e-f4be-42e2-a00a-0246fb25df01");
@@ -222,15 +222,7 @@ class LoginPage extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveUser: (userID, roleID, accessToken, refreshToken) => dispatch({
-            type: actionTypes.SAVE_USER,
-            payload: {
-                userID: userID,
-                roleID: roleID,
-                accessToken: accessToken,
-                refreshToken: refreshToken,
-            }
-        }),
+        onSaveUser: (userID, roleID, accessToken, refreshToken) => dispatch(dataActions.saveUser(userID, roleID, accessToken, refreshToken)),
     };
 };
 

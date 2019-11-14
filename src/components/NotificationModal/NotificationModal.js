@@ -10,10 +10,8 @@ import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
-import axios from 'axios';
 
-import * as actionTypes from '../../utilities/store/actions'
-import URL from '../../config';
+import * as dataActions from '../../utilities/store/actions/data';
 import styles from './NotificationModal.style.js'
 
 
@@ -23,49 +21,45 @@ const cancelIcon = <FontAwesome5 size={40} name={'times'} solid color="white" />
 
 class NotificationModal extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            notifications: [],
-            isLoading: false,
-        }
+    state = {
+        notifications: [],
     }
 
     componentDidMount() {
         this.fetchNotifications()
     }
 
+    componentDidUpdate(props) {
+        console.log('this.props.notificationInformation1', this.props.notificationInformation);
+        if ((props !== this.props) && this.props.notificationInformation) {
+            console.log('this.props.notificationInformation2', this.props.notificationInformation);
+            var filteredRes = (this.props.notificationInformation || []).reduce((map, { activity: { title, id, updatedAt } }) => {
+                map[id] = {
+                    title,
+                    id,
+                    updatedAt: moment(new Date(updatedAt.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
+                    routeType: 'ActivityOverviewRoute'
+                }
+                return map
+            }, {})
 
-    fetchNotifications() {
-        this.setState({ isLoading: true }, () => {
-            axios.get(URL + 'users/' + this.props.userID + '/notifications')
-                .then((results) => {
-                    this.props.onSaveActivityID(results.data[0].activity.id)
-                    var filteredRes = (results.data || []).reduce((map, { activity: { title, id, updatedAt } }) => {
-                        map[id] = {
-                            title,
-                            id,
-                            updatedAt: moment(new Date(updatedAt.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
-                            routeType: 'ActivityOverviewRoute'
-                        }
-                        return map
-                    }, {})
-                    this.setState({
-                        notifications: Object.keys(filteredRes).map(key => filteredRes[key]),
-                        isLoading: false,
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-                    this.setState({ isLoading: false })
-                });
-        })
+            this.setState({
+                notifications: Object.keys(filteredRes).map(key => filteredRes[key]),
+            })
+        }
     }
 
-    navigateTo(routeType, itemID) {
-        this.setState({ notifications: [] })
+
+    fetchNotifications() {
+        console.log('fetch');
+        this.props.onInitNotifications(this.props.userID);
+    }
+
+    navigateTo(routeType, activityID) {
+        // this.setState({ notifications: [] })
+        this.props.onSaveActivityID(activityID)
         this.props.exitModal()
-        this.props.navigation.navigate(routeType, { activityID: itemID, infoChanged: false })
+        this.props.navigation.navigate(routeType, { infoChanged: false })
     }
 
     render() {
@@ -79,7 +73,7 @@ class NotificationModal extends Component {
                     </View>
                 </TouchableOpacity>
             </View>
-            {this.state.isLoading ?
+            {this.props.getNotificationsLoading ?
                 <ActivityIndicator size={'large'} style={styles.loadingIcon} color={'#FFF'} /> :
                 <NavigationEvents onWillFocus={payload => this.fetchNotifications(payload)} />}
             <View style={styles.menuContainer}>
@@ -98,18 +92,16 @@ class NotificationModal extends Component {
 
 const mapStateToProps = state => {
     return {
+        notificationInformation: state.notificationInformation,
+        getNotificationsLoading: state.getNotificationsLoading,
         userID: state.userID,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveActivityID: (activityID) => dispatch({
-            type: actionTypes.SAVE_ACTIVITY_ID,
-            payload: {
-                activityID: activityID,
-            }
-        }),
+        onSaveActivityID: (activityID) => dispatch(dataActions.saveActivityID(activityID)),
+        onInitNotifications: (userID) => dispatch(dataActions.initNotifications(userID)),
     };
 };
 

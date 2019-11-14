@@ -11,7 +11,7 @@ import { withNavigation } from 'react-navigation';
 import OneSignal from 'react-native-onesignal';
 import axios from 'axios';
 
-import * as actionTypes from '../../utilities/store/actions';
+import * as dataActions from '../../utilities/store/actions/data';
 
 import URL from '../../config';
 import styles from './SettingsModal.style'
@@ -34,7 +34,7 @@ class SettingsModal extends Component {
         axios.post(URL + 'logout')
             .then((response) => {
                 OneSignal.setSubscription(false); // Mark device as unsubscribed
-                this.props.onUserLogout();
+                this.props.clearDataOnLogout();
                 this.props.exitModal();
                 this.props.navigation.navigate('LoginRoute');
             })
@@ -124,9 +124,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onUserLogout: () => dispatch({
-            type: actionTypes.USER_LOGOUT,
-        }),
+        clearDataOnLogout: () => dispatch(dataActions.clearDataOnLogout())
     };
 };
 

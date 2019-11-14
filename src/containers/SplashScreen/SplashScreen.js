@@ -6,7 +6,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import styles from './SplashScreen.style';
-import * as actionTypes from '../../utilities/store/actions';
+import * as dataActions from '../../utilities/store/actions/data';
 import URL from '../../config';
 
 class SplashScreen extends Component {
@@ -23,7 +23,7 @@ class SplashScreen extends Component {
             const roleID = await AsyncStorage.getItem('ROLE_ID');
 
             if (refreshToken && accessToken && userID && roleID) {
-                this.props.onSaveUser(
+                this.props.saveUser(
                     userID,
                     roleID,
                     accessToken,
@@ -65,15 +65,7 @@ class SplashScreen extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveUser: (userID, roleID, accessToken, refreshToken) => dispatch({
-            type: actionTypes.SAVE_USER,
-            payload: {
-                userID: userID,
-                roleID: roleID,
-                accessToken: accessToken,
-                refreshToken: refreshToken,
-            }
-        }),
+        saveUser: (userID, roleID, accessToken, refreshToken) => dispatch(dataActions.saveUser(userID, roleID, accessToken, refreshToken)),
     };
 };
 

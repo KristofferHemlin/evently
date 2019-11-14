@@ -1,5 +1,6 @@
-import * as actionTypes from '../actions';
+import * as actionTypes from '../actions/actionsTypes';
 import { AsyncStorage } from 'react-native';
+import moment from 'moment';
 
 const initialState = {
     userID: null,
@@ -9,10 +10,41 @@ const initialState = {
     activityID: null,
     eventTitle: '',
     notificationStatus: null,
+    eventInformation: null,
+    userInformation: null,
+    activityInformation: null,
+    notificationInformation: null,
+    getNotificationsLoading: true, 
 };
 
 const dataReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.SET_EVENT:
+            action.payload.eventInformation.startTime = moment(new Date(action.payload.eventInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
+            action.payload.eventInformation.endTime = moment(new Date(action.payload.eventInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
+            return {
+                ...state,
+                eventInformation: action.payload.eventInformation,
+            }
+
+        case actionTypes.SET_USER:
+            return {
+                ...state,
+                userInformation: action.payload.userInformation,
+            }
+        case actionTypes.SET_ACTIVITY:
+            action.payload.activityInformation.startTime = moment(new Date(action.payload.activityInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+            action.payload.activityInformation.endTime = moment(new Date(action.payload.activityInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+            return {
+                ...state,
+                activityInformation: action.payload.activityInformation,
+            }
+        case actionTypes.SET_NOTIFICATIONS:
+            return {
+                ...state,
+                notificationInformation: action.payload.notificationInformation,
+                getNotificationsLoading: false,
+            }
         case actionTypes.SAVE_USER:
             return {
                 ...state, //kopierar över statet i den här komponenten för att unvdika mutability.
@@ -27,11 +59,6 @@ const dataReducer = (state = initialState, action) => {
                 accessToken: action.payload.accessToken,
                 refreshToken: action.payload.refreshToken,
             }
-        case actionTypes.SAVE_EVENT_TITLE:
-            return {
-                ...state,
-                eventTitle: action.payload.eventTitle,
-            }
         case actionTypes.SAVE_ACTIVITY_ID:
             return {
                 ...state,
@@ -42,13 +69,13 @@ const dataReducer = (state = initialState, action) => {
                 ...state,
                 notificationStatus: action.payload.notificationStatus,
             }
-        case actionTypes.USER_LOGOUT:
+        case actionTypes.CLEAR_DATA_ON_LOGOUT:
             AsyncStorage.getAllKeys()
                 .then(keys => AsyncStorage.multiRemove(keys))
                 .catch((error) => {
                     console.log(error);
                 })
-                return initialState
+            return initialState
 
         default:
             return state

@@ -13,7 +13,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview'
 
-import * as actionTypes from '../../utilities/store/actions'
+import * as dataActions from '../../utilities/store/actions/data';
 import URL from '../../config';
 import styles from './CalendarPage.style';
 
@@ -27,16 +27,14 @@ class CalendarPage extends Component {
     header: null,
   };
 
-  constructor(props) {
-    super(props)
 
-    this.state = {
-      activities: [],
-      isUpdated: false,
+  state = {
+    activities: [],
+    isUpdated: false,
+  }
 
-    }
-
-    props.navigation.addListener('willFocus', () => {
+  componentDidMount() {
+    this.props.navigation.addListener('willFocus', () => {
       axios.get(URL + 'users/' + this.props.userID + '/events/1/activities')
         .then((response) => {
           responseArray = response.data.map(activity => ({
@@ -58,7 +56,6 @@ class CalendarPage extends Component {
           console.log(error)
         })
     })
-    console.disableYellowBox = true;
   }
 
   eventClicked(event) {
@@ -93,7 +90,7 @@ class CalendarPage extends Component {
             //scroll to first event of the day (default true)
             /> : null}
         </View>
-        <Footer currentPage={'calendar'}/>
+        <Footer currentPage={'calendar'} />
       </View>
 
     )
@@ -108,12 +105,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSaveActivityID: (activityID) => dispatch({
-      type: actionTypes.SAVE_ACTIVITY_ID,
-      payload: {
-        activityID: activityID,
-      }
-    }),
+    saveActivityID: (activityID) => dispatch(dataActions.saveActivityID(activityID))
   };
 };
 
