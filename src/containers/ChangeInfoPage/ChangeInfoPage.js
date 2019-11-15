@@ -44,7 +44,7 @@ class ChangeInfoPage extends Component {
         imageData: null,
         imageUrl: this.props.navigation.getParam('imageUrl', null),
         showImagePicker: this.props.navigation.getParam('showImagePicker', true),
-        // toasterMessageSuccess: false,
+        headlineTitle: this.props.navigation.getParam('headlineTitle', ''),
     }
 
     componentDidMount() {
@@ -168,7 +168,6 @@ class ChangeInfoPage extends Component {
     }
 
     showToasterHandler = (toasterResponse) => {
-        this.setState({ toasterMessageSuccess: success })
         let errorString = String(toasterResponse);
         this.refs.toast.show(errorString, 2000);
     }
@@ -179,7 +178,7 @@ class ChangeInfoPage extends Component {
                 <View style={styles.pageContainer}>
                     <View style={toasterStyle.container}>
                         <Toast ref="toast"
-                            // style={this.state.toasterMessageSuccess ? toasterStyle.successMessage : toasterStyle.errorMessage}
+                            style={toasterStyle.errorMessage}
                             position='top'
                             positionValue={0} />
                     </View>
@@ -189,7 +188,7 @@ class ChangeInfoPage extends Component {
                             <HeadlineOverview
                                 infoButtonStatus={false}
                                 editButtonStatus={this.state.wantToEdit}
-                            >{'Edit ' + this.props.eventTitle}
+                            >{'Edit ' + this.state.headlineTitle}
                             </HeadlineOverview>
 
                             {

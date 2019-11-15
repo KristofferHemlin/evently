@@ -67,6 +67,7 @@ class EventPage extends Component {
             http_update_url: URL + 'events/' + 1,
             http_get_url: URL + 'users/' + this.props.userID + '/currentevent',
             imageUrl: this.props.eventInformation.coverImageUrl,
+            headlineTitle: this.props.eventInformation.title,
             infoChanged: null,
             fields: {
                 description: {

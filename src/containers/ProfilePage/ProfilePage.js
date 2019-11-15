@@ -52,6 +52,7 @@ class ProfilePage extends Component {
             http_update_url: URL + 'users/' + this.props.userID,
             http_get_url: URL + 'users/' + this.props.userID,
             imageUrl: this.props.userInformation.profileImageUrl,
+            headlineTitle: 'User',
             infoChanged: null,
             fields: {
                 firstName: {

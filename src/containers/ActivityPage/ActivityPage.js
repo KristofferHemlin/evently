@@ -65,6 +65,7 @@ class ActivityPage extends Component {
             parentRoute: 'ActivityOverviewRoute',
             http_update_url: URL + 'activities/' + this.props.activityInformation.id,
             imageUrl: this.props.activityInformation.coverImageUrl,
+            headlineTitle: this.props.activityInformation.title,
             infoChanged: null,
             fields: {
                 description: {
