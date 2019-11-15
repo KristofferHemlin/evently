@@ -36,7 +36,6 @@ class ChangeInfoPage extends Component {
     };
 
     state = {
-        // title: this.props.navigation.getParam('title', ''),
         parentRoute: this.props.navigation.getParam('parentRoute', ''),
         http_update_url: this.props.navigation.getParam('http_update_url', ''),
         fields: this.props.navigation.getParam('fields', ''),
@@ -45,7 +44,7 @@ class ChangeInfoPage extends Component {
         imageData: null,
         imageUrl: this.props.navigation.getParam('imageUrl', null),
         showImagePicker: this.props.navigation.getParam('showImagePicker', true),
-        toasterMessageSuccess: false,
+        // toasterMessageSuccess: false,
     }
 
     componentDidMount() {
@@ -54,8 +53,6 @@ class ChangeInfoPage extends Component {
 
     componentDidUpdate() {
         if (this.props.showToasterMessage === true && this.props.formDataSaved === false) {
-            console.log('this.props.formError.data', this.props.formError.data);
-            // console.log('this.props.formError.data.message', this.props.formError.data.message);
             this.refs.toast.show(this.props.formError.response.data.message, 2000);
             this.props.setToasterHide();
         }
@@ -154,25 +151,6 @@ class ChangeInfoPage extends Component {
             }
             this.props.onSaveFormData(this.state.http_update_url, body);
 
-            // this.setState({ isLoading: true }, () => {
-            //     axios.put(this.state.http_update_url, body, {
-            //         headers: {
-            //             'content-type': 'multipart/form-data'
-            //         }
-            //     })
-            //         .then(() =>
-            //             this.setState({ isLoading: false }, () => {
-            //                 this.props.setToasterShow();
-            //                 this.props.navigation.navigate(this.state.parentRoute)
-            //             })
-            //         )
-            //         .catch((error) => {
-            //             console.log(error);
-            //             this.setState({ isLoading: false })
-            //             this.showToasterHandler(error.response.data.message, false);
-            //         })
-            // })
-
         } else {
             this.showToasterHandler("One or more invalid fields!");
         }
@@ -190,7 +168,7 @@ class ChangeInfoPage extends Component {
     }
 
     showToasterHandler = (toasterResponse) => {
-        // this.setState({ toasterMessageSuccess: success })
+        this.setState({ toasterMessageSuccess: success })
         let errorString = String(toasterResponse);
         this.refs.toast.show(errorString, 2000);
     }
@@ -201,7 +179,7 @@ class ChangeInfoPage extends Component {
                 <View style={styles.pageContainer}>
                     <View style={toasterStyle.container}>
                         <Toast ref="toast"
-                            style={this.state.toasterMessageSuccess ? toasterStyle.successMessage : toasterStyle.errorMessage}
+                            // style={this.state.toasterMessageSuccess ? toasterStyle.successMessage : toasterStyle.errorMessage}
                             position='top'
                             positionValue={0} />
                     </View>
