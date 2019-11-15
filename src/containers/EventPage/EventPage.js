@@ -29,13 +29,8 @@ class EventPage extends Component {
     componentDidMount() {
         // Add eventListener for when oneSignal id is available
         OneSignal.addEventListener('ids', this.onIds);
-        
+
         this.props.navigation.addListener('willFocus', () => {
-            
-            let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
-            if (infoChanged) {
-                this.refs.toast.show('Your changes have been submitted!', 2000);
-            }
             if (this.props.roleID == 1) {
                 this.setState({ showEditButton: true })
             } else {
@@ -43,6 +38,13 @@ class EventPage extends Component {
             }
             this.fetchEventData();
         })
+    }
+
+    componentDidUpdate = () => {
+        if(this.props.showToasterMessage){
+            this.refs.toast.show('Your changes have been submitted!', 2000);
+            this.props.setToasterHide();
+        }
     }
 
     fetchEventData = () => {
@@ -163,12 +165,14 @@ const mapStateToProps = state => {
         roleID: state.roleID,
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
-    }
+        showToasterMessage: state.showToasterMessage,
+    };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onInitEvent: (userID) => dispatch(dataActions.initEvent(userID)),
+        setToasterHide: () => dispatch(dataActions.setToasterHide()),
     };
 };
 

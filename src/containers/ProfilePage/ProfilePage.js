@@ -30,13 +30,16 @@ class ProfilePage extends Component {
 
     componentDidMount() {
         this.props.navigation.addListener('willFocus', () => {
-            let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
-            if (infoChanged) {
-                this.refs.toast.show('Your changes have been submitted!', 2000);
-            }
             this.fetchUserData(this.props.userID);
 
         })
+    }
+
+    componentDidUpdate = () => {
+        if(this.props.showToasterMessage){
+            this.refs.toast.show('Your changes have been submitted!', 2000);
+            this.props.setToasterHide();
+        }
     }
 
     fetchUserData = (userID) => {
@@ -173,12 +176,14 @@ const mapStateToProps = state => {
         roleID: state.roleID,
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
+        showToasterMessage: state.showToasterMessage,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onInitUser: (userID) => dispatch(dataActions.initUser(userID)),
+        setToasterHide: () => dispatch(dataActions.setToasterHide()),
     };
 };
 

@@ -18,6 +18,7 @@ const initialState = {
     saveFormDataLoading: false,
     formDataSaved: false,
     formError: null,
+    showToasterMessage: false,
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -33,9 +34,9 @@ const dataReducer = (state = initialState, action) => {
                 saveFormDataLoading: true
             }
         case actionTypes.SAVE_FORMDATA_SUCESS:
-            console.log('action.payload.formData', action.payload.response);
             return {
                 ...state,
+                showToasterMessage: true,
                 saveFormDataLoading: false,
                 formDataSaved: true,
                 formData: action.payload.formData
@@ -43,8 +44,19 @@ const dataReducer = (state = initialState, action) => {
         case actionTypes.SAVE_FORMDATA_FAILED:
             return {
                 ...state,
+                showToasterMessage: true,
                 saveFormDataLoading: false,
                 formError: action.payload.formError,
+            }
+        case actionTypes.SET_TOASTER_SHOW:
+            return {
+                ...state,
+                showToasterMessage: true,
+            }
+        case actionTypes.SET_TOASTER_HIDE:
+            return {
+                ...state,
+                showToasterMessage: false,
             }
         case actionTypes.SET_EVENT:
             const newEvent = {
@@ -109,7 +121,6 @@ const dataReducer = (state = initialState, action) => {
                     console.log(error);
                 })
             return initialState
-
         default:
             return state
     }

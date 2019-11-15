@@ -16,10 +16,9 @@ import BackButton from '../../components/BackButton/BackButton';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 import ImageSelector from '../../components/ImageSelector/ImageSelector';
 import URL from '../../config';
-
+import * as dataActions from '../../utilities/store/actions/data';
 import styles from './ChangeInfoPage.style';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
-import * as dataActions from '../../utilities/store/actions/data';
 import {
     formValid,
     dateRegex,
@@ -27,6 +26,7 @@ import {
     emailRegex,
     phoneRegex
 } from '../../helpers/formValidation';
+
 
 class ChangeInfoPage extends Component {
 
@@ -53,11 +53,15 @@ class ChangeInfoPage extends Component {
     }
 
     componentDidUpdate() {
-        // if(this.props.formError){
-
-        // }
-        // { this.props.formError ? this.showToasterHandler(this.props.formError.response.data.message, false) : null }
-        { this.props.formDataSaved ? this.props.navigation.navigate(this.state.parentRoute) : null }
+        if (this.props.showToasterMessage === true && this.props.formDataSaved === false) {
+            console.log('this.props.formError.data', this.props.formError.data);
+            // console.log('this.props.formError.data.message', this.props.formError.data.message);
+            this.refs.toast.show(this.props.formError.response.data.message, 2000);
+            this.props.setToasterHide();
+        }
+        if (this.props.formDataSaved) {
+            this.props.navigation.navigate(this.state.parentRoute)
+        }
     }
 
     handleInputChange = (value, key) => {
@@ -148,30 +152,29 @@ class ChangeInfoPage extends Component {
                 }
                 body.append("image", image)
             }
-
             this.props.onSaveFormData(this.state.http_update_url, body);
 
-
-            // axios.put(this.state.http_update_url, body, {
-            //     headers: {
-            //         'content-type': 'multipart/form-data'
-            //     }
-            // })
-            //     .then(() =>
-            //         this.setState({ isLoading: false }, () => {
-            //             this.props.navigation.navigate(this.state.parentRoute, {
-            //                 infoChanged: true,
-            //             })
-            //         })
-            //     )
-            //     .catch((error) => {
-            //         console.log(error);
-            //         this.setState({ isLoading: false })
-            //         this.showToasterHandler(error.response.data.message, false);
+            // this.setState({ isLoading: true }, () => {
+            //     axios.put(this.state.http_update_url, body, {
+            //         headers: {
+            //             'content-type': 'multipart/form-data'
+            //         }
             //     })
+            //         .then(() =>
+            //             this.setState({ isLoading: false }, () => {
+            //                 this.props.setToasterShow();
+            //                 this.props.navigation.navigate(this.state.parentRoute)
+            //             })
+            //         )
+            //         .catch((error) => {
+            //             console.log(error);
+            //             this.setState({ isLoading: false })
+            //             this.showToasterHandler(error.response.data.message, false);
+            //         })
+            // })
 
         } else {
-            this.showToasterHandler("One or more invalid fields!", false);
+            this.showToasterHandler("One or more invalid fields!");
         }
     }
 
@@ -186,8 +189,8 @@ class ChangeInfoPage extends Component {
         this.setState({ imageUrl: null });
     }
 
-    showToasterHandler = (toasterResponse, success) => {
-        this.setState({ toasterMessageSuccess: success })
+    showToasterHandler = (toasterResponse) => {
+        // this.setState({ toasterMessageSuccess: success })
         let errorString = String(toasterResponse);
         this.refs.toast.show(errorString, 2000);
     }
@@ -247,13 +250,15 @@ const mapStateToProps = state => {
         saveFormDataLoading: state.saveFormDataLoading,
         formDataSaved: state.formDataSaved,
         formError: state.formError,
+        showToasterMessage: state.showToasterMessage,
     }
 }
 
 
-
 const mapDispatchToProps = dispatch => {
     return {
+        setToasterShow: () => dispatch(dataActions.setToasterShow()),
+        setToasterHide: () => dispatch(dataActions.setToasterHide()),
         onSaveFormData: (http_update_url, body) => dispatch(dataActions.saveFormData(http_update_url, body)),
         onInitSaveFormData: () => dispatch(dataActions.saveFormDataInit()),
     };

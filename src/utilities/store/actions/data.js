@@ -51,6 +51,18 @@ export const saveFormData = (http_update_url, body) => {
 
 }
 
+export const setToasterShow = () => {
+    return {
+        type: actionTypes.SET_TOASTER_SHOW,
+    }
+}
+
+export const setToasterHide = () => {
+    return {
+        type: actionTypes.SET_TOASTER_HIDE
+    }
+}
+
 export const initUser = (userID) => {
     return dispatch => {
         axios.get(URL + 'users/' + userID)
@@ -180,3 +192,4 @@ export const clearDataOnLogout = () => {
         type: actionTypes.CLEAR_DATA_ON_LOGOUT
     }
 }
+
