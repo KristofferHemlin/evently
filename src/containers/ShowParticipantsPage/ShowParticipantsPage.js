@@ -33,12 +33,13 @@ class ShowParticipantsPage extends Component {
             companyDepartment: '',
             profileImageUrl: null,
             profileArray: [],
-            profileArrayFiltered: [],
             headlineName: '',
             isLoading: false,
+            filterWord: '',
         }
 
         props.navigation.addListener('willFocus', () => {
+            this.setState({filterWord: ''})
             this.fetchParticipants()
         })
         console.disableYellowBox = true;
@@ -72,7 +73,6 @@ class ShowParticipantsPage extends Component {
 
                     this.setState({
                         profileArray: profileArray,
-                        profileArrayFiltered: profileArray,
                         isLoading: false,
                     })
 
@@ -88,7 +88,7 @@ class ShowParticipantsPage extends Component {
     filterHandler(filterWord) {
 
         let tempArray = this.state.profileArray;
-        tempArray = tempArray.filter(function (user) {
+        return tempArray.filter(function (user) {
             return user.firstName.toLowerCase().includes(filterWord.toLowerCase())
                 || user.lastName.toLowerCase().includes(filterWord.toLowerCase())
                 || user.fullName.toLowerCase().includes(filterWord.toLowerCase())
@@ -96,9 +96,6 @@ class ShowParticipantsPage extends Component {
         }).map(function ({ firstName, lastName, companyDepartment, participantID, profileImageUrl }) {
             return { firstName, lastName, companyDepartment, participantID, profileImageUrl };
         });
-
-        this.setState({ profileArrayFiltered: tempArray });
-        filterWord = '';
     }
 
     profilePreviewOnClickHandler = (participantID) => {
@@ -110,6 +107,8 @@ class ShowParticipantsPage extends Component {
 
     render() {
 
+        let profileArrayFiltered = this.filterHandler(this.state.filterWord);
+
         return (
             <View style={styles.pageContainer}>
                 <Header />
@@ -120,7 +119,8 @@ class ShowParticipantsPage extends Component {
                         placeholder="Search current event participants ..."
                         placeholderTextColor="gray"
                         autoCorrect={false}
-                        onChangeText={(filterWord) => this.filterHandler(filterWord)}
+                        value={this.state.filterWord}
+                        onChangeText = { value => this.setState ({filterWord : value})}
                     >
                     </TextInput>
 
@@ -130,13 +130,13 @@ class ShowParticipantsPage extends Component {
                     {this.state.isLoading ?
                         <ActivityIndicator size={'small'} style={styles.loadingIcon} color={'#rgba(74,144,226,1)'} /> :
                         <View style={styles.profileList}>
-                            {this.state.profileArrayFiltered.map((input, index) => {
+                            {profileArrayFiltered.map((input, index) => {
                                 return <ProfilePreview
-                                    source={{ uri: this.state.profileArrayFiltered[index].profileImageUrl }}
+                                    source={{ uri: profileArrayFiltered[index].profileImageUrl }}
                                     onClick={() => this.profilePreviewOnClickHandler(input.participantID)}
                                     key={index}
-                                    companyDepartment={this.state.profileArrayFiltered[index].companyDepartment}>
-                                    {this.state.profileArrayFiltered[index].firstName} {this.state.profileArrayFiltered[index].lastName}
+                                    companyDepartment={profileArrayFiltered[index].companyDepartment}>
+                                    {profileArrayFiltered[index].firstName} {profileArrayFiltered[index].lastName}
                                 </ProfilePreview>
                             })}
                         </View>
