@@ -23,7 +23,7 @@ import ImageSelector from '../../components/ImageSelector/ImageSelector';
 
 import URL from '../../config';
 import styles from './CreateAccountPage.style';
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import {
     formValid,
@@ -299,17 +299,17 @@ class CreateAccountPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        userInformation: state.userInformation,
-        userID: state.userID,
-        roleID: state.roleID,
-        accessToken: state.accessToken,
-        refreshToken: state.refreshToken,
+        userInformation: state.informationHandler.userInformation,
+        userID: state.informationHandler.userID,
+        roleID: state.informationHandler.roleID,
+        accessToken: state.informationHandler.accessToken,
+        refreshToken: state.informationHandler.refreshToken,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onInitUser: (userID) => dispatch(dataActions.initUser(userID)),
+        onInitUser: (userID) => dispatch(informationHandlerActions.initUser(userID)),
     };
 };
 

@@ -1,9 +1,18 @@
-import { createStore, applyMiddleware } from 'redux';
+import { 
+    createStore, 
+    applyMiddleware,
+    combineReducers
+} from 'redux';
 import thunk from 'redux-thunk';
-import dataReducer from './reducers/dataReducer';
+import informationHandlerReducer from './reducers/informationHandlerReducer';
+import formReducer from './reducers/formReducer';
 
+const rootReducer = combineReducers({
+    informationHandler: informationHandlerReducer,
+    form: formReducer,
+})
 const store = createStore(
-    dataReducer,
+    rootReducer,
     applyMiddleware(thunk)
     );
 

@@ -15,7 +15,7 @@ import Footer from '../../components/Footer/Footer';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 
 import styles from './UserPage.style';
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
 
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
 
@@ -96,14 +96,14 @@ class UserPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        userInformation: state.userInformation,
-        roleID: state.roleID
+        userInformation: state.informationHandler.userInformation,
+        roleID: state.informationHandler.roleID
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onInitUser: (userID) => dispatch(dataActions.initUser(userID)),
+        onInitUser: (userID) => dispatch(informationHandlerActions.initUser(userID)),
     };
 };
 

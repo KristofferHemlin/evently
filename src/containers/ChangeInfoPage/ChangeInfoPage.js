@@ -16,7 +16,7 @@ import BackButton from '../../components/BackButton/BackButton';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 import ImageSelector from '../../components/ImageSelector/ImageSelector';
 import URL from '../../config';
-import * as dataActions from '../../utilities/store/actions/data';
+import * as formActions from '../../utilities/store/actions/form';
 import styles from './ChangeInfoPage.style';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import {
@@ -221,23 +221,23 @@ class ChangeInfoPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        eventTitle: state.eventInformation.title,
-        userID: state.userID,
-        token: state.token,
-        saveFormDataLoading: state.saveFormDataLoading,
-        formDataSaved: state.formDataSaved,
-        formError: state.formError,
-        showToasterMessage: state.showToasterMessage,
+        eventTitle: state.informationHandler.eventInformation.title,
+        userID: state.informationHandler.userID,
+        token: state.informationHandler.token,
+        saveFormDataLoading: state.form.saveFormDataLoading,
+        formDataSaved: state.form.formDataSaved,
+        formError: state.form.formError,
+        showToasterMessage: state.form.showToasterMessage,
     }
 }
 
 
 const mapDispatchToProps = dispatch => {
     return {
-        setToasterShow: () => dispatch(dataActions.setToasterShow()),
-        setToasterHide: () => dispatch(dataActions.setToasterHide()),
-        onSaveFormData: (http_update_url, body) => dispatch(dataActions.saveFormData(http_update_url, body)),
-        onInitSaveFormData: () => dispatch(dataActions.saveFormDataInit()),
+        setToasterShow: () => dispatch(formActions.setToasterShow()),
+        setToasterHide: () => dispatch(formActions.setToasterHide()),
+        onSaveFormData: (http_update_url, body) => dispatch(formActions.saveFormData(http_update_url, body)),
+        onInitSaveFormData: () => dispatch(formActions.saveFormDataInit()),
     };
 };
 
