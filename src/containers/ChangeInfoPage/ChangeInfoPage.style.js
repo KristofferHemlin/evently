@@ -37,8 +37,10 @@ export default StyleSheet.create({
         fontWeight: '500',
         borderWidth: 2,
         borderColor: "black",
-        paddingHorizontal: 15,
-        paddingVertical: 20,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingTop: 20,
+        paddingBottom: 20,
       },
 
     buttonContainer: {
