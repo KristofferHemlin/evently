@@ -14,7 +14,8 @@ const initialState = {
     userInformation: null,
     activityInformation: null,
     notificationInformation: null,
-    getNotificationsLoading: true, 
+    getNotificationsLoading: true,
+    showToasterMessage: false,
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -76,6 +77,16 @@ const dataReducer = (state = initialState, action) => {
                     console.log(error);
                 })
             return initialState
+        case actionTypes.SET_TOASTER_SHOW:
+            return {
+                ...state,
+                showToasterMessage: true,
+            }
+        case actionTypes.SET_TOASTER_HIDE:
+            return {
+                ...state,
+                showToasterMessage: false,
+            }
 
         default:
             return state
