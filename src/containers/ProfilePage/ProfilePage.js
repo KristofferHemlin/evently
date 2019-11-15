@@ -18,7 +18,7 @@ import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview
 import styles from './ProfilePage.style';
 import URL from '../../config';
 import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
-import * as formReducer from '../../utilities/store/reducers/formReducer';
+import * as formActions from '../../utilities/store/actions/form';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
@@ -185,7 +185,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onInitUser: (userID) => dispatch(informationHandlerActions.initUser(userID)),
-        setToasterHide: () => dispatch(formReducer.setToasterHide()),
+        setToasterHide: () => dispatch(formActions.setToasterHide()),
     };
 };
 
