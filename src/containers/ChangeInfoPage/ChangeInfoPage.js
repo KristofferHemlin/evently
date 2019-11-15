@@ -17,7 +17,6 @@ import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview
 import ImageSelector from '../../components/ImageSelector/ImageSelector';
 import URL from '../../config';
 import * as dataActions from '../../utilities/store/actions/data';
-
 import styles from './ChangeInfoPage.style';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import {
@@ -37,17 +36,29 @@ class ChangeInfoPage extends Component {
     };
 
     state = {
-        // title: this.props.navigation.getParam('title', ''),
         parentRoute: this.props.navigation.getParam('parentRoute', ''),
         http_update_url: this.props.navigation.getParam('http_update_url', ''),
         fields: this.props.navigation.getParam('fields', ''),
         formErrors: this.props.navigation.getParam('formErrors', ''),
-        isLoading: false,
         wantToEdit: false,
         imageData: null,
         imageUrl: this.props.navigation.getParam('imageUrl', null),
         showImagePicker: this.props.navigation.getParam('showImagePicker', true),
-        toasterMessageSuccess: false,
+        // toasterMessageSuccess: false,
+    }
+
+    componentDidMount() {
+        this.props.onInitSaveFormData()
+    }
+
+    componentDidUpdate() {
+        if (this.props.showToasterMessage === true && this.props.formDataSaved === false) {
+            this.refs.toast.show(this.props.formError.response.data.message, 2000);
+            this.props.setToasterHide();
+        }
+        if (this.props.formDataSaved) {
+            this.props.navigation.navigate(this.state.parentRoute)
+        }
     }
 
     handleInputChange = (value, key) => {
@@ -100,7 +111,7 @@ class ChangeInfoPage extends Component {
             default:
                 break;
         }
-        this.setState({ fields: fields, formErrors: formErrors }, () => console.log('formError', this.state.formErrors));
+        this.setState({ fields: fields, formErrors: formErrors });
     };
 
     handleSubmit = () => {
@@ -130,42 +141,25 @@ class ChangeInfoPage extends Component {
                     } else {
                         axiosUrl = this.state.http_update_url + '/coverimage';
                     }
-                    
+
                     axios.delete(axiosUrl)
-                    .catch((error) => {
-                        console.log(error);
-                    })
+                        .catch((error) => {
+                            console.log(error);
+                        })
                 }
                 body.append("image", image)
             }
+            this.props.onSaveFormData(this.state.http_update_url, body);
 
-            this.setState({ isLoading: true }, () => {
-                axios.put(this.state.http_update_url, body, {
-                    headers: {
-                        'content-type': 'multipart/form-data'
-                    }
-                })
-                    .then(() =>
-                        this.setState({ isLoading: false }, () => {
-                            this.props.setToasterShow();
-                            this.props.navigation.navigate(this.state.parentRoute)
-                        })
-                    )
-                    .catch((error) => {
-                        console.log(error);
-                        this.setState({ isLoading: false })
-                        this.showToasterHandler(error.response.data.message, false);
-                    })
-            })
         } else {
-            this.showToasterHandler("One or more invalid fields!", false);
+            this.showToasterHandler("One or more invalid fields!");
         }
     }
 
     saveImageHandler = (image) => {
         this.setState({
             imageData: image,
-            imageUrl: image.uri, 
+            imageUrl: image.uri,
         });
     }
 
@@ -173,20 +167,19 @@ class ChangeInfoPage extends Component {
         this.setState({ imageUrl: null });
     }
 
-    showToasterHandler = (toasterResponse, success) => {
+    showToasterHandler = (toasterResponse) => {
         this.setState({ toasterMessageSuccess: success })
         let errorString = String(toasterResponse);
         this.refs.toast.show(errorString, 2000);
     }
 
     render() {
-
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
                     <View style={toasterStyle.container}>
                         <Toast ref="toast"
-                            style={this.state.toasterMessageSuccess ? toasterStyle.successMessage : toasterStyle.errorMessage}
+                            // style={this.state.toasterMessageSuccess ? toasterStyle.successMessage : toasterStyle.errorMessage}
                             position='top'
                             positionValue={0} />
                     </View>
@@ -216,7 +209,7 @@ class ChangeInfoPage extends Component {
                                     fields={this.state.fields}
                                     formErrors={this.state.formErrors}
                                     handleSubmit={this.handleSubmit}
-                                    isLoading={this.state.isLoading}
+                                    isLoading={this.props.saveFormDataLoading}
                                     handleInputChange={this.handleInputChange}
                                     formStyle={styles} />
 
@@ -232,12 +225,20 @@ const mapStateToProps = state => {
         eventTitle: state.eventInformation.title,
         userID: state.userID,
         token: state.token,
+        saveFormDataLoading: state.saveFormDataLoading,
+        formDataSaved: state.formDataSaved,
+        formError: state.formError,
+        showToasterMessage: state.showToasterMessage,
     }
 }
+
 
 const mapDispatchToProps = dispatch => {
     return {
         setToasterShow: () => dispatch(dataActions.setToasterShow()),
+        setToasterHide: () => dispatch(dataActions.setToasterHide()),
+        onSaveFormData: (http_update_url, body) => dispatch(dataActions.saveFormData(http_update_url, body)),
+        onInitSaveFormData: () => dispatch(dataActions.saveFormDataInit()),
     };
 };
 

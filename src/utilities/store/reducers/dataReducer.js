@@ -8,24 +8,65 @@ const initialState = {
     accessToken: null,
     refreshToken: null,
     activityID: null,
-    eventTitle: '',
     notificationStatus: null,
     eventInformation: null,
     userInformation: null,
     activityInformation: null,
     notificationInformation: null,
     getNotificationsLoading: true,
+    formBody: null,
+    saveFormDataLoading: false,
+    formDataSaved: false,
+    formError: null,
     showToasterMessage: false,
 };
 
 const dataReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.SET_EVENT:
-            action.payload.eventInformation.startTime = moment(new Date(action.payload.eventInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD');
-            action.payload.eventInformation.endTime = moment(new Date(action.payload.eventInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD');
+        case actionTypes.SAVE_FORMDATA_INIT:
             return {
                 ...state,
-                eventInformation: action.payload.eventInformation,
+                formDataSaved: false,
+            }
+        case actionTypes.SAVE_FORMDATA_START:
+            return {
+                ...state,
+                saveFormDataLoading: true
+            }
+        case actionTypes.SAVE_FORMDATA_SUCESS:
+            return {
+                ...state,
+                showToasterMessage: true,
+                saveFormDataLoading: false,
+                formDataSaved: true,
+                formData: action.payload.formData
+            }
+        case actionTypes.SAVE_FORMDATA_FAILED:
+            return {
+                ...state,
+                showToasterMessage: true,
+                saveFormDataLoading: false,
+                formError: action.payload.formError,
+            }
+        case actionTypes.SET_TOASTER_SHOW:
+            return {
+                ...state,
+                showToasterMessage: true,
+            }
+        case actionTypes.SET_TOASTER_HIDE:
+            return {
+                ...state,
+                showToasterMessage: false,
+            }
+        case actionTypes.SET_EVENT:
+            const newEvent = {
+                ...action.payload.eventInformation,
+                startTime: moment(new Date(action.payload.eventInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD'),
+                endTime: moment(new Date(action.payload.eventInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD'),
+            }
+            return {
+                ...state,
+                eventInformation: newEvent,
             }
 
         case actionTypes.SET_USER:
@@ -34,11 +75,14 @@ const dataReducer = (state = initialState, action) => {
                 userInformation: action.payload.userInformation,
             }
         case actionTypes.SET_ACTIVITY:
-            action.payload.activityInformation.startTime = moment(new Date(action.payload.activityInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
-            action.payload.activityInformation.endTime = moment(new Date(action.payload.activityInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm');
+            const newActivity = {
+                ...action.payload.activityInformation,
+                startTime: moment(new Date(action.payload.activityInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
+                endTime: moment(new Date(action.payload.activityInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
+            }
             return {
                 ...state,
-                activityInformation: action.payload.activityInformation,
+                activityInformation: newActivity
             }
         case actionTypes.SET_NOTIFICATIONS:
             return {
@@ -77,17 +121,6 @@ const dataReducer = (state = initialState, action) => {
                     console.log(error);
                 })
             return initialState
-        case actionTypes.SET_TOASTER_SHOW:
-            return {
-                ...state,
-                showToasterMessage: true,
-            }
-        case actionTypes.SET_TOASTER_HIDE:
-            return {
-                ...state,
-                showToasterMessage: false,
-            }
-
         default:
             return state
     }
