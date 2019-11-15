@@ -32,11 +32,6 @@ class ActivityPage extends Component {
 
     componentDidMount() {
         this.props.navigation.addListener('willFocus', () => {
-            let infoChanged = Boolean(this.props.navigation.getParam('infoChanged', false));
-            if (infoChanged) {
-                this.refs.toast.show('Your changes have been submitted!', 2000);
-            }
-
             if (this.props.roleID == 1) {
                 this.setState({ showEditButton: true })
             } else {
@@ -44,6 +39,13 @@ class ActivityPage extends Component {
             }
             this.fetchActivityData();
         })
+    }
+
+    componentDidUpdate = () => {
+        if(this.props.showToasterMessage){
+            this.refs.toast.show('Your changes have been submitted!', 2000);
+            this.props.setToasterHide();
+        }
     }
 
     fetchActivityData = () => {
@@ -166,13 +168,15 @@ const mapStateToProps = state => {
         eventInformation: state.eventInformation,
         userID: state.userID,
         roleID: state.roleID,
-        activityID: state.activityID
+        activityID: state.activityID,
+        showToasterMessage: state.showToasterMessage,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onInitActivity: (activityID) => dispatch(dataActions.initActivity(activityID)),
+        setToasterHide: () => dispatch(dataActions.setToasterHide()),
     };
 };
 

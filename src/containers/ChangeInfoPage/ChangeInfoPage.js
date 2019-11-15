@@ -16,6 +16,7 @@ import BackButton from '../../components/BackButton/BackButton';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 import ImageSelector from '../../components/ImageSelector/ImageSelector';
 import URL from '../../config';
+import * as dataActions from '../../utilities/store/actions/data';
 
 import styles from './ChangeInfoPage.style';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
@@ -26,6 +27,7 @@ import {
     emailRegex,
     phoneRegex
 } from '../../helpers/formValidation';
+
 
 class ChangeInfoPage extends Component {
 
@@ -145,9 +147,8 @@ class ChangeInfoPage extends Component {
                 })
                     .then(() =>
                         this.setState({ isLoading: false }, () => {
-                            this.props.navigation.navigate(this.state.parentRoute, {
-                                infoChanged: true,
-                            })
+                            this.props.setToasterShow();
+                            this.props.navigation.navigate(this.state.parentRoute)
                         })
                     )
                     .catch((error) => {
@@ -234,7 +235,13 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ChangeInfoPage);
+const mapDispatchToProps = dispatch => {
+    return {
+        setToasterShow: () => dispatch(dataActions.setToasterShow()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangeInfoPage);
 
 
 const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInputChange, formStyle }) => {
