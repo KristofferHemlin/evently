@@ -8,23 +8,50 @@ const initialState = {
     accessToken: null,
     refreshToken: null,
     activityID: null,
-    eventTitle: '',
     notificationStatus: null,
     eventInformation: null,
     userInformation: null,
     activityInformation: null,
     notificationInformation: null,
-    getNotificationsLoading: true, 
+    getNotificationsLoading: true,
+    formBody: null,
+    saveFormDataLoading: false,
+    formDataSaved: false,
+    formError: null,
 };
 
 const dataReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.SAVE_FORMDATA_INIT:
+            return {
+                ...state,
+                formDataSaved: false,
+            }
+        case actionTypes.SAVE_FORMDATA_START:
+            return {
+                ...state,
+                saveFormDataLoading: true
+            }
+        case actionTypes.SAVE_FORMDATA_SUCESS:
+            console.log('action.payload.formData', action.payload.response);
+            return {
+                ...state,
+                saveFormDataLoading: false,
+                formDataSaved: true,
+                formData: action.payload.formData
+            }
+        case actionTypes.SAVE_FORMDATA_FAILED:
+            return {
+                ...state,
+                saveFormDataLoading: false,
+                formError: action.payload.formError,
+            }
         case actionTypes.SET_EVENT:
             const newEvent = {
                 ...action.payload.eventInformation,
                 startTime: moment(new Date(action.payload.eventInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD'),
                 endTime: moment(new Date(action.payload.eventInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD'),
-            }           
+            }
             return {
                 ...state,
                 eventInformation: newEvent,
@@ -36,11 +63,11 @@ const dataReducer = (state = initialState, action) => {
                 userInformation: action.payload.userInformation,
             }
         case actionTypes.SET_ACTIVITY:
-                const newActivity = {
-                    ...action.payload.activityInformation,
-                    startTime: moment(new Date(action.payload.activityInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
-                    endTime: moment(new Date(action.payload.activityInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
-                }
+            const newActivity = {
+                ...action.payload.activityInformation,
+                startTime: moment(new Date(action.payload.activityInformation.startTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
+                endTime: moment(new Date(action.payload.activityInformation.endTime.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
+            }
             return {
                 ...state,
                 activityInformation: newActivity

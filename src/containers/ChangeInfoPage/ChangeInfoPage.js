@@ -19,6 +19,7 @@ import URL from '../../config';
 
 import styles from './ChangeInfoPage.style';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
+import * as dataActions from '../../utilities/store/actions/data';
 import {
     formValid,
     dateRegex,
@@ -40,12 +41,23 @@ class ChangeInfoPage extends Component {
         http_update_url: this.props.navigation.getParam('http_update_url', ''),
         fields: this.props.navigation.getParam('fields', ''),
         formErrors: this.props.navigation.getParam('formErrors', ''),
-        isLoading: false,
         wantToEdit: false,
         imageData: null,
         imageUrl: this.props.navigation.getParam('imageUrl', null),
         showImagePicker: this.props.navigation.getParam('showImagePicker', true),
         toasterMessageSuccess: false,
+    }
+
+    componentDidMount() {
+        this.props.onInitSaveFormData()
+    }
+
+    componentDidUpdate() {
+        // if(this.props.formError){
+
+        // }
+        // { this.props.formError ? this.showToasterHandler(this.props.formError.response.data.message, false) : null }
+        { this.props.formDataSaved ? this.props.navigation.navigate(this.state.parentRoute) : null }
     }
 
     handleInputChange = (value, key) => {
@@ -98,7 +110,7 @@ class ChangeInfoPage extends Component {
             default:
                 break;
         }
-        this.setState({ fields: fields, formErrors: formErrors }, () => console.log('formError', this.state.formErrors));
+        this.setState({ fields: fields, formErrors: formErrors });
     };
 
     handleSubmit = () => {
@@ -128,34 +140,36 @@ class ChangeInfoPage extends Component {
                     } else {
                         axiosUrl = this.state.http_update_url + '/coverimage';
                     }
-                    
+
                     axios.delete(axiosUrl)
-                    .catch((error) => {
-                        console.log(error);
-                    })
+                        .catch((error) => {
+                            console.log(error);
+                        })
                 }
                 body.append("image", image)
             }
 
-            this.setState({ isLoading: true }, () => {
-                axios.put(this.state.http_update_url, body, {
-                    headers: {
-                        'content-type': 'multipart/form-data'
-                    }
-                })
-                    .then(() =>
-                        this.setState({ isLoading: false }, () => {
-                            this.props.navigation.navigate(this.state.parentRoute, {
-                                infoChanged: true,
-                            })
-                        })
-                    )
-                    .catch((error) => {
-                        console.log(error);
-                        this.setState({ isLoading: false })
-                        this.showToasterHandler(error.response.data.message, false);
-                    })
-            })
+            this.props.onSaveFormData(this.state.http_update_url, body);
+
+
+            // axios.put(this.state.http_update_url, body, {
+            //     headers: {
+            //         'content-type': 'multipart/form-data'
+            //     }
+            // })
+            //     .then(() =>
+            //         this.setState({ isLoading: false }, () => {
+            //             this.props.navigation.navigate(this.state.parentRoute, {
+            //                 infoChanged: true,
+            //             })
+            //         })
+            //     )
+            //     .catch((error) => {
+            //         console.log(error);
+            //         this.setState({ isLoading: false })
+            //         this.showToasterHandler(error.response.data.message, false);
+            //     })
+
         } else {
             this.showToasterHandler("One or more invalid fields!", false);
         }
@@ -164,7 +178,7 @@ class ChangeInfoPage extends Component {
     saveImageHandler = (image) => {
         this.setState({
             imageData: image,
-            imageUrl: image.uri, 
+            imageUrl: image.uri,
         });
     }
 
@@ -179,7 +193,6 @@ class ChangeInfoPage extends Component {
     }
 
     render() {
-
         return (
             !this.state ? <View /> :
                 <View style={styles.pageContainer}>
@@ -215,7 +228,7 @@ class ChangeInfoPage extends Component {
                                     fields={this.state.fields}
                                     formErrors={this.state.formErrors}
                                     handleSubmit={this.handleSubmit}
-                                    isLoading={this.state.isLoading}
+                                    isLoading={this.props.saveFormDataLoading}
                                     handleInputChange={this.handleInputChange}
                                     formStyle={styles} />
 
@@ -231,10 +244,22 @@ const mapStateToProps = state => {
         eventTitle: state.eventInformation.title,
         userID: state.userID,
         token: state.token,
+        saveFormDataLoading: state.saveFormDataLoading,
+        formDataSaved: state.formDataSaved,
+        formError: state.formError,
     }
 }
 
-export default connect(mapStateToProps)(ChangeInfoPage);
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSaveFormData: (http_update_url, body) => dispatch(dataActions.saveFormData(http_update_url, body)),
+        onInitSaveFormData: () => dispatch(dataActions.saveFormDataInit()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangeInfoPage);
 
 
 const EditableForm = ({ fields, formErrors, handleSubmit, isLoading, handleInputChange, formStyle }) => {
