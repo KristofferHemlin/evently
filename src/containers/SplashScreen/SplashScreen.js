@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Linking } from 'react-native';
 
 import { AsyncStorage } from 'react-native';
 import axios from 'axios';
@@ -12,9 +12,25 @@ import URL from '../../config';
 class SplashScreen extends Component {
 
     componentDidMount() {
-        console.log('didmount');
+        Linking.addEventListener('url', this.handleOpenURL)
         this.checkToken();
     }
+
+
+    componentWillUnmount() {
+        // deep linking stuff
+        Linking.removeEventListener('url', this.handleOpenURL);
+    }
+
+    
+// deep linking stuff
+    handleOpenURL = (event) => {
+        const route = event.url.replace(/.*?:\/\//g, '');
+        // const routeName = route.split('/')[0];
+        const deepLinkToken = route.split('/')[1]
+        this.props.onSaveDeepLinkToken(deepLinkToken)
+    }
+
 
     checkToken = async () => {
         try {
@@ -24,7 +40,7 @@ class SplashScreen extends Component {
             const roleID = await AsyncStorage.getItem('ROLE_ID');
 
             if (refreshToken && accessToken && userID && roleID) {
-                this.props.saveUser(
+                this.props.onSaveUser(
                     userID,
                     roleID,
                     accessToken,
@@ -66,7 +82,8 @@ class SplashScreen extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveUser: (userID, roleID, accessToken, refreshToken) => dispatch(informationHandlerActions.saveUser(userID, roleID, accessToken, refreshToken)),
+        onSaveUser: (userID, roleID, accessToken, refreshToken) => dispatch(informationHandlerActions.saveUser(userID, roleID, accessToken, refreshToken)),
+        onSaveDeepLinkToken: (deepLinkToken) => dispatch(informationHandlerActions.saveDeepLinkToken(deepLinkToken)),
     };
 };
 

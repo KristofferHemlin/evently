@@ -8,6 +8,7 @@ import { AsyncStorage } from 'react-native';
 import NavigationService from '../navigation/NavigationService';
 
 axios.interceptors.request.use(request => {
+    console.log('request', request);
     const state = store.getState();
 
     request.headers.Authorization = "Bearer " + state.informationHandler.accessToken;

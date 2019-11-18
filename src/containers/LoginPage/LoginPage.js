@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Toast, { DURATION } from 'react-native-easy-toast'
-import { Dimensions } from 'react-native';
+import Toast from 'react-native-easy-toast';
 import {
     View,
     TextInput,
@@ -25,7 +24,8 @@ import ResetPasswordForm from '../../components/ResetPasswordForm/ResetPasswordF
 import styles from './LoginPage.style';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import URL from '../../config';
-import * as informationHandler from '../../utilities/store/actions/informationHandler';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
+import * as formActions from '../../utilities/store/actions/form'
 
 
 
@@ -45,24 +45,28 @@ class LoginPage extends Component {
             isLoading: false,
             toasterMessageSuccess: false,
         }
-        this.props.navigation.addListener('willFocus', () => {
-            const showErrorMessage = Boolean(this.props.navigation.getParam('showErrorMessage', false));
-            if (showErrorMessage) {
-                setTimeout(() => { this.showToasterHandler("Your session expired, log in again!", false) }, 500)
-            }
-        })
     }
 
-
     componentDidMount() {
-        // deep linking stuff
-        Linking.addEventListener('url', this.handleOpenURL)
-        Linking.getInitialURL().then((url) => {
-            if (url) {
-                this.handleOpenURL({ url });
-            }
-        })
+        if (this.props.deepLinkToken) {
+            this.props.navigation.navigate('ResetPasswordRoute')
+        } else {
+            Linking.addEventListener('url', this.handleOpenURL)
+            Linking.getInitialURL().then((url) => {
+                if (url) {
+                    this.handleOpenURL({ url });
+                }
+            })
+        }
+    }
 
+    componentDidUpdate() {
+        if (this.props.showToasterMessage) {
+            this.setState({toasterMessageSuccess:true}, () => {
+                this.refs.toast.show('Your changes have been submitted!', 2000);
+            })
+            this.props.setToasterHide();
+        }
     }
 
     componentWillUnmount() {
@@ -71,24 +75,12 @@ class LoginPage extends Component {
     }
 
     handleOpenURL = (event) => {
-        this.navigate(event.url)
-
+        const route = event.url.replace(/.*?:\/\//g, '');
+        // const routeName = route.split('/')[0];
+        const deepLinkToken = route.split('/')[1];
+        this.props.onSaveDeepLinkToken(deepLinkToken);
+        this.props.navigation.navigate("ResetPasswordRoute")
     }
-
-    // deep linking stuff
-    navigate = (url) => {
-        const { navigate } = this.props.navigation;
-        const route = url.replace(/.*?:\/\//g, '');
-        const routeName = route.split('/')[0];
-        const deepLinkToken = route.split('/')[1]
-
-        if (routeName === 'resetpassword') {
-            navigate('ResetPasswordRoute', {
-                deepLinkToken: deepLinkToken
-            })
-        }
-    }
-
 
 
     authUser = () => {
@@ -159,6 +151,7 @@ class LoginPage extends Component {
     }
 
     render() {
+        console.log('deepLinkToken render', this.props.deepLinkToken);
         return (
             <ImageBackground source={bgImage} style={styles.pageContainer}>
                 <View style={toasterStyle.container}>
@@ -220,10 +213,19 @@ class LoginPage extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        deepLinkToken: state.informationHandler.deepLinkToken,
+        showToasterMessage: state.form.showToasterMessage,
+    };
+}
+
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveUser: (userID, roleID, accessToken, refreshToken) => dispatch(informationHandler.saveUser(userID, roleID, accessToken, refreshToken)),
+        onSaveUser: (userID, roleID, accessToken, refreshToken) => dispatch(informationHandlerActions.saveUser(userID, roleID, accessToken, refreshToken)),
+        onSaveDeepLinkToken: (deepLinkToken) => dispatch(informationHandlerActions.saveDeepLinkToken(deepLinkToken)),
+        setToasterHide: () => dispatch(formActions.setToasterHide()),
     };
 };
 
-export default connect(null, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

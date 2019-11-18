@@ -6,11 +6,13 @@ import {
     Text,
     ActivityIndicator
 } from 'react-native';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 import URL from '../../config';
 import styles from './ResetPasswordForm.style'
 import { withNavigation } from 'react-navigation';
+import * as formActions from '../../utilities/store/actions/form';
 
 class ResetPasswordForm extends Component {
 
@@ -19,16 +21,15 @@ class ResetPasswordForm extends Component {
         password: '',
         isLoading: false,
         loginScreen: this.props.fromLoginScreen,
-        deepLinkToken: this.props.deepLinkToken
     }
 
     checkEmail = () => {
-        this.setState({ isLoading: true }, () => { // so we can show loading indicator while fetching data
+        this.setState({ isLoading: true }, () => { 
             axios.post(URL + 'resetpassword', {
                 email: this.state.email
             })
                 .then((response) => {
-                    this.props.showToasterHandler("mail sent!", true);
+                    this.props.showToasterHandler("Mail sent!", true);
                     this.setState({ isLoading: false })
                 })
                 .catch((error) => {
@@ -41,19 +42,20 @@ class ResetPasswordForm extends Component {
     }
 
     resetPassword = () => {
-        this.setState({ isLoading: true }, () => { // so we can show loading indicator while fetching data
-            axios.post(URL + 'resetpassword/' + this.state.deepLinkToken, {
+        this.setState({ isLoading: true }, () => { 
+            axios.post(URL + 'resetpassword/' + this.props.deepLinkToken, {
                 password: this.state.password
             })
                 .then((response) => {
+                    console.log('response', response);
+                    this.props.setToasterShow();
                     this.setState({ isLoading: false }, () => {
                         this.props.navigation.navigate('LoginRoute')
                     })
                 })
                 .catch((error) => {
-                    this.props.showToasterHandler(error.response.data.message, false);
-                    alert(error);
-                    console.log(error);
+                    this.props.showToasterHandler(error.response.data.message);
+                    console.log(error.response.data);
                     this.setState({ isLoading: false })
                 });
         })
@@ -68,7 +70,7 @@ class ResetPasswordForm extends Component {
                             value={this.state.email}
                             autoCapitalize={'none'}
                             autoCorrect={false}
-                            type={'email'}
+                            keyboardType={'email-address'}
                             style={styles.input}
                             placeholder={'Email'}
                             placeholderTextColor={'rgba(255, 255, 255, 0.8)'}
@@ -105,4 +107,16 @@ class ResetPasswordForm extends Component {
 
 };
 
-export default withNavigation(ResetPasswordForm);
+const mapStateToProps = state => {
+    return {
+        deepLinkToken: state.informationHandler.deepLinkToken,
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setToasterShow: () => dispatch(formActions.setToasterShow()),
+    };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(withNavigation(ResetPasswordForm));
