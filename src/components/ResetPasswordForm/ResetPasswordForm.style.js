@@ -4,10 +4,10 @@ export default StyleSheet.create({
     
     inputForm:{
       width: Dimensions.get('window').width * 0.85,
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
     },
     input:{
       fontSize: 16,
-      backgroundColor: 'rgba(0, 0, 0, 0.6)',
       color: "#FFF",
       borderWidth: 2,
       borderColor: "#5da6d0",
