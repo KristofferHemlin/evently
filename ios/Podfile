@@ -27,6 +27,12 @@ target 'evently' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
+  pod 'react-native-onesignal', :path => '../node_modules/react-native-onesignal'
+
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   target 'eventlyTests' do
     inherit! :search_paths
     # Pods for testing
@@ -41,6 +47,10 @@ target 'evently-tvOS' do
   target 'evently-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
+  end
+
+  target 'OneSignalNotificationServiceExtension' do
+    pod 'OneSignal', '>= 2.9.3', '< 3.0'
   end
 
 end
