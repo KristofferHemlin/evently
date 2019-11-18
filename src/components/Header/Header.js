@@ -15,7 +15,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import OneSignal from 'react-native-onesignal';
 
 import styles from './Header.style';
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
 import ZingtonLogo from '../../images/Zington_Logotyp_Neg_RGB.png';
 
 const bell_icon = <FontAwesome5 size={25} name={'bell'} light color="white" />;
@@ -129,14 +129,14 @@ class Header extends Component {
 
 const mapStateToProps = state => {
     return {
-        notificationStatus: state.notificationStatus
+        notificationStatus: state.informationHandler.notificationStatus
         
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveNotificationStatus: (notificationStatus) => dispatch(dataActions.saveNotificationStatus(notificationStatus)),
+        saveNotificationStatus: (notificationStatus) => dispatch(informationHandlerActions.saveNotificationStatus(notificationStatus)),
     };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(Header);

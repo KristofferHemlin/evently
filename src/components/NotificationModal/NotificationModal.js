@@ -11,7 +11,7 @@ import { withNavigation } from 'react-navigation';
 import { NavigationEvents } from 'react-navigation';
 import moment from 'moment';
 
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
 import styles from './NotificationModal.style.js'
 
 
@@ -92,16 +92,16 @@ class NotificationModal extends Component {
 
 const mapStateToProps = state => {
     return {
-        notificationInformation: state.notificationInformation,
-        getNotificationsLoading: state.getNotificationsLoading,
-        userID: state.userID,
+        notificationInformation: state.informationHandler.notificationInformation,
+        getNotificationsLoading: state.informationHandler.getNotificationsLoading,
+        userID: state.informationHandler.userID,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveActivityID: (activityID) => dispatch(dataActions.saveActivityID(activityID)),
-        onInitNotifications: (userID) => dispatch(dataActions.initNotifications(userID)),
+        onSaveActivityID: (activityID) => dispatch(informationHandlerActions.saveActivityID(activityID)),
+        onInitNotifications: (userID) => dispatch(informationHandlerActions.initNotifications(userID)),
     };
 };
 

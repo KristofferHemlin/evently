@@ -14,7 +14,8 @@ import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview
 import EventImageHeader from '../../components/EventImageHeader/EventImageHeader';
 
 import URL from '../../config';
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
+import * as formActions from '../../utilities/store/actions/form';
 import styles from './ActivityPage.style';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 
@@ -165,19 +166,19 @@ class ActivityPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        activityInformation: state.activityInformation,
-        eventInformation: state.eventInformation,
-        userID: state.userID,
-        roleID: state.roleID,
-        activityID: state.activityID,
-        showToasterMessage: state.showToasterMessage,
+        activityInformation: state.informationHandler.activityInformation,
+        eventInformation: state.informationHandler.eventInformation,
+        userID: state.informationHandler.userID,
+        roleID: state.informationHandler.roleID,
+        activityID: state.informationHandler.activityID,
+        showToasterMessage: state.form.showToasterMessage,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onInitActivity: (activityID) => dispatch(dataActions.initActivity(activityID)),
-        setToasterHide: () => dispatch(dataActions.setToasterHide()),
+        onInitActivity: (activityID) => dispatch(informationHandlerActions.initActivity(activityID)),
+        setToasterHide: () => dispatch(formActions.setToasterHide()),
     };
 };
 

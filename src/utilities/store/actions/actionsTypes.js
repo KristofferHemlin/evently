@@ -1,3 +1,4 @@
+// InformationHandler actiontypes
 export const SET_USER = 'SET_USER';
 export const SET_EVENT = 'SET_EVENT';
 export const SET_ACTIVITY = 'SET_ACTIVITY';
@@ -7,7 +8,7 @@ export const SAVE_ACTIVITY_ID = 'SAVE_ACTIVITY_ID';
 export const SAVE_NOTIFICATION_STATUS = 'SAVE_NOTIFICATION_STATUS';
 export const SAVE_TOKENS = "SAVE_TOKENS";
 export const CLEAR_DATA_ON_LOGOUT = 'CLEAR_DATA_ON_LOGOUT';
-
+// Form actiontypes
 export const SAVE_FORMDATA_START = 'SAVE_FORMDATA_START';
 export const SAVE_FORMDATA_SUCESS = 'SAVE_FORMDATA_SUCESS';
 export const SAVE_FORMDATA_FAILED = 'SAVE_FORMDATA_FAILED';

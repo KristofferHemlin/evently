@@ -8,9 +8,9 @@ import { AsyncStorage } from 'react-native';
 import NavigationService from '../navigation/NavigationService';
 
 axios.interceptors.request.use(request => {
-    //console.log('request som skickas', request);
     const state = store.getState();
-    request.headers.Authorization = "Bearer " + state.accessToken;
+
+    request.headers.Authorization = "Bearer " + state.informationHandler.accessToken;
     return request;
 })
 
@@ -25,8 +25,8 @@ axios.interceptors.response.use(response => {
         originalRequest.headers.retry = true;
 
         return axios.post(URL + 'tokens/refresh', {
-            refreshToken: state.refreshToken,
-            userId: state.userID,
+            refreshToken: state.informationHandler.refreshToken,
+            userId: state.informationHandler.userID,
         })
             .then((response) => {
                 store.dispatch({
