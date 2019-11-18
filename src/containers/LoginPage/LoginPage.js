@@ -39,8 +39,8 @@ class LoginPage extends Component {
 
         this.state = {
             messageColor: null,
-            username: 'tom.althin@gmail.com',
-            password: 'aaaaaa',
+            username: '',
+            password: '',
             userID: null,
             isLoading: false,
             toasterMessageSuccess: false,
