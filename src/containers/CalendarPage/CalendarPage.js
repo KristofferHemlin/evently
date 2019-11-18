@@ -13,7 +13,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview'
 
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
 import URL from '../../config';
 import styles from './CalendarPage.style';
 
@@ -99,13 +99,13 @@ class CalendarPage extends Component {
 
 const mapStateToProps = state => {
   return {
-    userID: state.userID,
+    userID: state.informationHandler.userID,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveActivityID: (activityID) => dispatch(dataActions.saveActivityID(activityID))
+    onSaveActivityID: (activityID) => dispatch(informationHandlerActions.saveActivityID(activityID))
   };
 };
 

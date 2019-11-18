@@ -14,50 +14,10 @@ const initialState = {
     activityInformation: null,
     notificationInformation: null,
     getNotificationsLoading: true,
-    formBody: null,
-    saveFormDataLoading: false,
-    formDataSaved: false,
-    formError: null,
-    showToasterMessage: false,
 };
 
-const dataReducer = (state = initialState, action) => {
+const informationHandlerReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.SAVE_FORMDATA_INIT:
-            return {
-                ...state,
-                formDataSaved: false,
-            }
-        case actionTypes.SAVE_FORMDATA_START:
-            return {
-                ...state,
-                saveFormDataLoading: true
-            }
-        case actionTypes.SAVE_FORMDATA_SUCESS:
-            return {
-                ...state,
-                showToasterMessage: true,
-                saveFormDataLoading: false,
-                formDataSaved: true,
-                formData: action.payload.formData
-            }
-        case actionTypes.SAVE_FORMDATA_FAILED:
-            return {
-                ...state,
-                showToasterMessage: true,
-                saveFormDataLoading: false,
-                formError: action.payload.formError,
-            }
-        case actionTypes.SET_TOASTER_SHOW:
-            return {
-                ...state,
-                showToasterMessage: true,
-            }
-        case actionTypes.SET_TOASTER_HIDE:
-            return {
-                ...state,
-                showToasterMessage: false,
-            }
         case actionTypes.SET_EVENT:
             const newEvent = {
                 ...action.payload.eventInformation,
@@ -126,4 +86,4 @@ const dataReducer = (state = initialState, action) => {
     }
 };
 
-export default dataReducer;
+export default informationHandlerReducer;

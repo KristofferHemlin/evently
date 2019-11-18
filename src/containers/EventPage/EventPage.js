@@ -12,7 +12,8 @@ import Header from '../../components/Header/Header';
 import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview';
 
 import URL from '../../config';
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
+import * as formActions from '../../utilities/store/actions/form';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import styles from './EventPage.style';
 
@@ -161,19 +162,19 @@ class EventPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        eventInformation: state.eventInformation,
-        userID: state.userID,
-        roleID: state.roleID,
-        accessToken: state.accessToken,
-        refreshToken: state.refreshToken,
-        showToasterMessage: state.showToasterMessage,
+        eventInformation: state.informationHandler.eventInformation,
+        userID: state.informationHandler.userID,
+        roleID: state.informationHandler.roleID,
+        accessToken: state.informationHandler.accessToken,
+        refreshToken: state.informationHandler.refreshToken,
+        showToasterMessage: state.form.showToasterMessage,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onInitEvent: (userID) => dispatch(dataActions.initEvent(userID)),
-        setToasterHide: () => dispatch(dataActions.setToasterHide()),
+        onInitEvent: (userID) => dispatch(informationHandlerActions.initEvent(userID)),
+        setToasterHide: () => dispatch(formActions.setToasterHide()),
     };
 };
 

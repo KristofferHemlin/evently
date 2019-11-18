@@ -6,12 +6,13 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import styles from './SplashScreen.style';
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
 import URL from '../../config';
 
 class SplashScreen extends Component {
 
     componentDidMount() {
+        console.log('didmount');
         this.checkToken();
     }
 
@@ -65,7 +66,7 @@ class SplashScreen extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveUser: (userID, roleID, accessToken, refreshToken) => dispatch(dataActions.saveUser(userID, roleID, accessToken, refreshToken)),
+        saveUser: (userID, roleID, accessToken, refreshToken) => dispatch(informationHandlerActions.saveUser(userID, roleID, accessToken, refreshToken)),
     };
 };
 

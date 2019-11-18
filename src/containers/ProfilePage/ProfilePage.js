@@ -17,7 +17,8 @@ import HeadlineOverview from '../../components/HeadlineOverview/HeadlineOverview
 
 import styles from './ProfilePage.style';
 import URL from '../../config';
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
+import * as formActions from '../../utilities/store/actions/form';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 
 const profileAvatar = <FontAwesome5 size={130} name={'user-circle'} solid color="lightgray" />;
@@ -172,19 +173,19 @@ class ProfilePage extends Component {
 
 const mapStateToProps = state => {
     return {
-        userInformation: state.userInformation,
-        userID: state.userID,
-        roleID: state.roleID,
-        accessToken: state.accessToken,
-        refreshToken: state.refreshToken,
-        showToasterMessage: state.showToasterMessage,
+        userInformation: state.informationHandler.userInformation,
+        userID: state.informationHandler.userID,
+        roleID: state.informationHandler.roleID,
+        accessToken: state.informationHandler.accessToken,
+        refreshToken: state.informationHandler.refreshToken,
+        showToasterMessage: state.form.showToasterMessage,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onInitUser: (userID) => dispatch(dataActions.initUser(userID)),
-        setToasterHide: () => dispatch(dataActions.setToasterHide()),
+        onInitUser: (userID) => dispatch(informationHandlerActions.initUser(userID)),
+        setToasterHide: () => dispatch(formActions.setToasterHide()),
     };
 };
 

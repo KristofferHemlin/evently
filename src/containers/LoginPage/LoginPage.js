@@ -25,7 +25,7 @@ import ResetPasswordForm from '../../components/ResetPasswordForm/ResetPasswordF
 import styles from './LoginPage.style';
 import toasterStyle from '../../components/ToasterStyle/ToasterStyle.style';
 import URL from '../../config';
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandler from '../../utilities/store/actions/informationHandler';
 
 
 
@@ -222,7 +222,7 @@ class LoginPage extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSaveUser: (userID, roleID, accessToken, refreshToken) => dispatch(dataActions.saveUser(userID, roleID, accessToken, refreshToken)),
+        onSaveUser: (userID, roleID, accessToken, refreshToken) => dispatch(informationHandler.saveUser(userID, roleID, accessToken, refreshToken)),
     };
 };
 

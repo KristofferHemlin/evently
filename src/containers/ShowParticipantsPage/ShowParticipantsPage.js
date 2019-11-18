@@ -151,7 +151,7 @@ class ShowParticipantsPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        activityID: state.activityID
+        activityID: state.informationHandler.activityID
     }
 }
 

@@ -11,7 +11,7 @@ import { withNavigation } from 'react-navigation';
 import OneSignal from 'react-native-onesignal';
 import axios from 'axios';
 
-import * as dataActions from '../../utilities/store/actions/data';
+import * as informationHandlerActions from '../../utilities/store/actions/informationHandler';
 
 import URL from '../../config';
 import styles from './SettingsModal.style'
@@ -118,13 +118,13 @@ class SettingsModal extends Component {
 
 const mapStateToProps = state => {
     return {
-        userID: state.userID,
+        userID: state.informationHandler.userID,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        clearDataOnLogout: () => dispatch(dataActions.clearDataOnLogout())
+        clearDataOnLogout: () => dispatch(informationHandlerActions.clearDataOnLogout())
     };
 };
 
