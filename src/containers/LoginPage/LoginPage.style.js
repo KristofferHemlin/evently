@@ -52,19 +52,18 @@ export default StyleSheet.create({
         width: Dimensions.get('window').width * 0.85,
     },
 
+    inputContainer: {
+        marginBottom: 10,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    },
+
     input: {
         fontSize: 16,
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
         color: "#FFF",
-        // TODO:inputfärgen blir werid, beror förmodligen på background color
         borderWidth: 2,
         borderColor: "#5da6d0",
         paddingHorizontal: 15,
         paddingVertical: 20,
-    },
-
-    inputContainer: {
-        marginBottom: 10,
     },
 
     buttonContainer: {
