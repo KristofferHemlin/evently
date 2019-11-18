@@ -1,25 +1,28 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export default StyleSheet.create({
     headerContainer:{
         position: 'relative',
-        backgroundColor: '#211F57',
-        height: 80,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        zIndex: 1
+        backgroundColor: '#211F57',
+        height: (Platform.OS === 'ios') ? 80 : 60,
+        zIndex: 1,
     }, 
     headerLogo:{
-        marginTop: 35,
+        alignSelf: 'flex-end',
+        alignContent: 'flex-end',
         marginLeft: 15,
+        marginBottom: 5,
     },
     headerLogoImage:{
         width: 70,
         height: 40,
     },
     iconContainer:{
-        marginTop: 40,
         flexDirection: 'row',
+        alignSelf: 'flex-end',
+        marginBottom: 15,
     },
     notificationIcon:{
         marginRight: 30,

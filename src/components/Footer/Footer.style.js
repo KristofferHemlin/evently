@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export default StyleSheet.create({
     footerContainer:{
         backgroundColor:'rgb(239,239,239)',
-        height: 100,
+        height: (Platform.OS === 'ios') ? 90 : 75,
         borderTopWidth: 1,
         borderTopColor: 'rgb(230,230,230)',
         justifyContent: "center",
