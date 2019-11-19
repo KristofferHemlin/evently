@@ -151,7 +151,6 @@ class LoginPage extends Component {
     }
 
     render() {
-        console.log('deepLinkToken render', this.props.deepLinkToken);
         return (
             <ImageBackground source={bgImage} style={styles.pageContainer}>
                 <View style={toasterStyle.container}>

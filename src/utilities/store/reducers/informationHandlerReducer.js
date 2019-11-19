@@ -65,8 +65,7 @@ const informationHandlerReducer = (state = initialState, action) => {
                 accessToken: action.payload.accessToken,
                 refreshToken: action.payload.refreshToken,
             }
-        case actionTypes.SAVE_DEEP_LINK_TOKEN:
-                console.log('deepLinkToken 2', action.payload.deepLinkToken);
+        case actionTypes.SAVE_DEEP_LINK_TOKEN:                
             return {
                 ...state,
                 deepLinkToken: action.payload.deepLinkToken
