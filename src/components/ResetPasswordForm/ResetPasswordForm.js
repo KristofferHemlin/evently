@@ -47,7 +47,6 @@ class ResetPasswordForm extends Component {
                 password: this.state.password
             })
                 .then((response) => {
-                    console.log('response', response);
                     this.props.setToasterShow();
                     this.setState({ isLoading: false }, () => {
                         this.props.navigation.navigate('LoginRoute')
@@ -55,7 +54,7 @@ class ResetPasswordForm extends Component {
                 })
                 .catch((error) => {
                     this.props.showToasterHandler(error.response.data.message);
-                    console.log(error.response.data);
+                    console.log(error);
                     this.setState({ isLoading: false })
                 });
         })

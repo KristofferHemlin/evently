@@ -109,7 +109,6 @@ export const saveTokens = (accessToken, refreshToken) => {
 }
 
 export const saveDeepLinkToken = (deepLinkToken) => {
-    console.log('deepLinkToken 1', deepLinkToken);
     return {
         type: actionTypes.SAVE_DEEP_LINK_TOKEN,
         payload: {
