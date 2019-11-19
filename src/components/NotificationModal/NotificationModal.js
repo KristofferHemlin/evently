@@ -30,28 +30,24 @@ class NotificationModal extends Component {
     }
 
     componentDidUpdate(props) {
-        console.log('this.props.notificationInformation1', this.props.notificationInformation);
         if ((props !== this.props) && this.props.notificationInformation) {
-            console.log('this.props.notificationInformation2', this.props.notificationInformation);
-            var filteredRes = (this.props.notificationInformation || []).reduce((map, { activity: { title, id, updatedAt } }) => {
-                map[id] = {
+            const filteredRes = (this.props.notificationInformation || []).reduce((updatedArray, { activity: { title, id, updatedAt } }) => {
+                updatedArray.push({
                     title,
                     id,
                     updatedAt: moment(new Date(updatedAt.replace(' ', 'T'))).format('YYYY-MM-DD HH:mm'),
                     routeType: 'ActivityOverviewRoute'
-                }
-                return map
-            }, {})
-
+                });
+                return updatedArray;
+            }, [])
             this.setState({
-                notifications: Object.keys(filteredRes).map(key => filteredRes[key]),
+                notifications: filteredRes,
             })
         }
     }
 
 
     fetchNotifications() {
-        console.log('fetch');
         this.props.onInitNotifications(this.props.userID);
     }
 
